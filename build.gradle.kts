@@ -15,6 +15,9 @@ dependencies {
     testImplementation(kotlin("test-junit5"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+
+    implementation("org.junit.jupiter:junit-platform-commons:1.7.0")
+    implementation("org.apache.commons:commons-lang3:3.6")
     implementation("com.ginsberg:cirkle:1.0.1")
 }
 
