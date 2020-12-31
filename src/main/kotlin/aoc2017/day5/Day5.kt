@@ -23,3 +23,21 @@ fun exitMaze(list: List<Int>): Int {
     }
     return steps
 }
+
+fun exitMazePart2(list: List<Int>): Int {
+    var steps = 0
+    var index = 0
+    val mazeList = list.toMutableList()
+
+    while (mazeList.size > index) {
+        val current = mazeList[index]
+        if (current >= 3) {
+            mazeList[index] = current - 1
+        } else {
+            mazeList[index] = current + 1
+        }
+        index += current
+        steps++
+    }
+    return steps
+}
