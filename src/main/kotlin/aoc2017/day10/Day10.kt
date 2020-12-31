@@ -19,7 +19,7 @@ fun processListPart2(inputLength: List<Int>, listSize: Int = 256): String {
     return computeHexString(denseHashesList)
 }
 
-private fun knotHash(lengths: List<Int>, rounds: Int = 64, listSize: Int = 256): List<Int> {
+fun knotHash(lengths: List<Int>, rounds: Int = 64, listSize: Int = 256): List<Int> {
     var index = 0
     var skipValue = 0
     var inputList = (0 until listSize).toMutableList()

@@ -37,6 +37,12 @@ internal class Day10KtTest {
         assertEquals("3efbe78a8d82f29979031a4aa0b16a9d", processListPart2(convertListToASCII("1,2,3")))
         assertEquals("4a19451b02fb05416d73aea0ec8c00c0", processListPart2(asciiTestInput))
         assertEquals("a9d0e68649d0174c8756a59ba21d4dc6", processListPart2(asciiInput))
+
+        assertEquals("d4f76bdcbf838f8416ccfa8bc6d1f9e6", processListPart2(convertListToASCII("flqrgnkx-0")))
+        assertEquals("55eab3c4fbfede16dcec2c66dda26464", processListPart2(convertListToASCII("flqrgnkx-1")))
+        assertEquals("0adf13fa40e8ea815376776af3b7b231", processListPart2(convertListToASCII("flqrgnkx-2")))
+        assertEquals("ad3da28cd7b8fb99742c0e63672caf62", processListPart2(convertListToASCII("flqrgnkx-3")))
+        assertEquals("44c01a72626cee0e3bc0e8988d137463", processListPart2(convertListToASCII("flqrgnkx-6")))
     }
 
     @Test
