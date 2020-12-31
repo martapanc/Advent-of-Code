@@ -22,7 +22,7 @@ internal class Day5KtTest {
 
     @Test
     fun exitMazePart2() {
-        assertEquals(10, exitMazePart2(testInput))
-        assertEquals(28675390, exitMazePart2(input))
+        assertEquals(10, exitMaze(testInput, true))
+        assertEquals(28675390, exitMaze(input, true))
     }
 }
