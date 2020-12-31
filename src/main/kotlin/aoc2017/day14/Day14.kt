@@ -12,15 +12,15 @@ fun defragmentDisk(input: String): Int {
 fun countRegions(input: String): Int {
     val hashArray = generateHashList(input).map { it -> it.map { (it - '0') }.toTypedArray() }.toTypedArray()
     val neighborCoords = listOf(Coord(1, 0), Coord(-1, 0), Coord(0, 1), Coord(0, -1))
-    // Start from 2 to avoid overlapping with 0s and 1s
+    // Start from 2 to avoid overlapping with 0s and 1s - then subtract 2 at the end
     var groupCount = 2
 
     for ((rowId, row) in hashArray.withIndex())
-        for ((colId, char) in row.withIndex()) {
+        for ((colId, char) in row.withIndex())
             if (char == 1) {
                 hashArray[rowId][colId] = groupCount
                 val edge = mutableListOf(listOf(rowId, colId, groupCount))
-                // Implement BFS: progressively assign counter to neighbours until they've been all visited
+                // Implement BFS: assign counter to neighbours until they've all been visited
                 while (edge.isNotEmpty()) {
                     val (baseX, baseY, group) = edge.removeAt(0)
                     for (coord in neighborCoords) {
@@ -28,15 +28,14 @@ fun countRegions(input: String): Int {
                         val y = baseY + coord.y
                         try {
                             if (hashArray[x][y] == 1) {
-                                hashArray[x][y] = (group)
+                                hashArray[x][y] = group
                                 edge.add(listOf(x, y, group))
                             }
-                        } catch (_: Exception) { }
+                        } catch (e: Exception) {}
                     }
                 }
                 groupCount++
             }
-        }
     return groupCount - 2
 }
 
