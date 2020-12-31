@@ -5,10 +5,8 @@ fun computeTraps(input: String, rowCount: Int): Int {
     var currentRow = input
     rowsList.add(currentRow)
 
-    var i = 1
-    while (i < rowCount) {
+    repeat (rowCount - 1) {
         var newRow = ""
-
         for (k in currentRow.indices) {
             val left = if (k != 0) currentRow[k - 1] else '.'
             val center = currentRow[k]
@@ -23,7 +21,6 @@ fun computeTraps(input: String, rowCount: Int): Int {
         }
         currentRow = newRow
         rowsList.add(currentRow)
-        i++
     }
     return rowsList.sumBy { row -> row.count { it == '.' } }
 }
