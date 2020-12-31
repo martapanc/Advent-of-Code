@@ -14,4 +14,10 @@ internal class Day14KtTest {
         assertEquals(8108, defragmentDisk(testInput))
         assertEquals(8204, defragmentDisk(input))
     }
+
+    @Test
+    fun countRegions() {
+        assertEquals(1242, countRegions(testInput))
+        assertEquals(1089, countRegions(input))
+    }
 }
