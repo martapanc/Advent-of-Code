@@ -26,7 +26,10 @@ internal class Day13KtTest {
 
     @Test
     fun testComputeReachableCellsAtDistance() {
+        assertEquals(1, computeReachableCellsAtDistance(testInput, 0))
+        assertEquals(3, computeReachableCellsAtDistance(testInput, 1))
         assertEquals(151, computeReachableCellsAtDistance(testInput, 50))
+        assertEquals(12, computeReachableCellsAtDistance(input, 7))
         assertEquals(141, computeReachableCellsAtDistance(input, 50))
     }
 }
