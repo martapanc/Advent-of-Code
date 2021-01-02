@@ -2,16 +2,6 @@ package aoc2016.day13
 
 import aoc2020.day20.Coord
 
-fun computeCoordinate(coord: Coord, favouriteNumber: Int): Char {
-    val x = coord.x
-    val y = coord.y
-    val result = x * x + 3 * x + 2 * x * y + y + y * y + favouriteNumber
-    val oneCount = Integer.toBinaryString(result).count { it == '1' }
-    if (oneCount % 2 == 0)
-        return '.'
-    return '#'
-}
-
 fun computeManhattanDistanceOfTarget(favouriteNumber: Int, targetLocation: Coord): Int {
     val grid = generateGrid(targetLocation, favouriteNumber, 10)
     var edge = mutableListOf(Coord(1, 1))
@@ -20,8 +10,7 @@ fun computeManhattanDistanceOfTarget(favouriteNumber: Int, targetLocation: Coord
     while (!discoveredCells.containsKey(targetLocation)) {
         val newEdge = mutableListOf<Coord>()
         for (cell in edge) {
-            val neighbors = getUndiscoveredFreeNeighbors(cell, grid, discoveredCells)
-            for (neighbor in neighbors) {
+            for (neighbor in getUndiscoveredFreeNeighbors(cell, grid, discoveredCells)) {
                 discoveredCells[neighbor] = distance
                 newEdge.add(neighbor)
             }
@@ -40,8 +29,7 @@ fun computeReachableCellsAtDistance(favouriteNumber: Int, maxDistance: Int): Int
     while (distance < maxDistance) {
         val newEdge = mutableListOf<Coord>()
         for (cell in edge) {
-            val neighbors = getUndiscoveredFreeNeighbors(cell, grid, discoveredCells)
-            for (neighbor in neighbors) {
+            for (neighbor in getUndiscoveredFreeNeighbors(cell, grid, discoveredCells)) {
                 discoveredCells[neighbor] = distance
                 newEdge.add(neighbor)
             }
@@ -60,6 +48,16 @@ private fun generateGrid(targetLocation: Coord, favouriteNumber: Int, delta: Int
         for (x in 0..hiX)
             grid[Coord(x, y)] = computeCoordinate(Coord(x, y), favouriteNumber)
     return grid
+}
+
+fun computeCoordinate(coord: Coord, favouriteNumber: Int): Char {
+    val x = coord.x
+    val y = coord.y
+    val result = x * x + 3 * x + 2 * x * y + y + y * y + favouriteNumber
+    val oneCount = Integer.toBinaryString(result).count { it == '1' }
+    if (oneCount % 2 == 0)
+        return '.'
+    return '#'
 }
 
 private fun getUndiscoveredFreeNeighbors(cell: Coord, map: Map<Coord, Char>, discoveredMap: Map<Coord, Int>): List<Coord> {
