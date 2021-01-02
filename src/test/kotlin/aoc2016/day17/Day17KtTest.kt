@@ -25,4 +25,12 @@ internal class Day17KtTest {
         assertEquals("5745", md5("hijklDR"))
         assertEquals("528e", md5("hijklDU"))
     }
+
+    @Test
+    fun testFindLongestPathToVault() {
+        assertEquals(370, findLongestPathToVault(testInput1))
+        assertEquals(492, findLongestPathToVault(testInput2))
+        assertEquals(830, findLongestPathToVault(testInput3))
+        assertEquals(752, findLongestPathToVault(input))
+    }
 }
