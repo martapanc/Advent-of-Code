@@ -23,6 +23,12 @@ internal class Day9KtTest {
         assertEquals(37305, playMarbleGame(testInput5.highestMarble, testInput5.players))
         assertEquals(367634, playMarbleGame(input.highestMarble, input.players))
     }
+
+    @Test
+    fun testPlayMarbleGameV2() {
+        assertEquals(367634, playMarbleGameV2(input.highestMarble, input.players))
+        assertEquals(3020072891, playMarbleGameV2(input.highestMarble * 100, input.players))
+    }
 }
 
 class MarbleGame(val highestMarble: Int, val players: Int)
