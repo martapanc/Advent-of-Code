@@ -1,8 +1,8 @@
-package aoc2018.day2;
+package aoc2018.day02;
 
 import org.junit.jupiter.api.Test;
 
-import static aoc2018.day2.Day2.computeCheckSum;
+import static aoc2018.day02.Day2.computeCheckSum;
 import static org.junit.jupiter.api.Assertions.*;
 
 class Day2Test {

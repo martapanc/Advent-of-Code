@@ -1,4 +1,4 @@
-package aoc2018.day9
+package aoc2018.day09
 
 import com.ginsberg.cirkle.circular
 import java.util.*

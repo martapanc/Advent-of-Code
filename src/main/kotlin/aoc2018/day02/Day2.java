@@ -1,4 +1,4 @@
-package aoc2018.day2;
+package aoc2018.day02;
 
 
 import org.apache.commons.lang3.StringUtils;
