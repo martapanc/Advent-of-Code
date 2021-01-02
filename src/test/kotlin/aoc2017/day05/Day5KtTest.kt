@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test
 
 internal class Day5KtTest {
 
-    private val testInput = readInputToList("src/main/kotlin/aoc2017/day5/test_input")
-    private val input = readInputToList("src/main/kotlin/aoc2017/day5/input")
+    private val testInput = readInputToList("src/main/kotlin/aoc2017/day05/test_input")
+    private val input = readInputToList("src/main/kotlin/aoc2017/day05/input")
 
     @Test
     fun readInputToList() {
