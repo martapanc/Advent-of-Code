@@ -12,14 +12,8 @@ fun computeCoordinate(coord: Coord, favouriteNumber: Int): Char {
     return '#'
 }
 
-fun computeGrid(favouriteNumber: Int, targetLocation: Coord): Int {
-    val hiX = targetLocation.x + 100
-    val hiY = targetLocation.y + 100
-    val grid = mutableMapOf<Coord, Char>()
-    for (y in 0..hiY)
-        for (x in 0..hiX)
-            grid[Coord(x, y)] = computeCoordinate(Coord(x, y), favouriteNumber)
-
+fun computeManhattanDistanceOfTarget(favouriteNumber: Int, targetLocation: Coord): Int {
+    val grid = generateGrid(targetLocation, favouriteNumber, 10)
     var edge = mutableListOf(Coord(1, 1))
     val discoveredCells = mutableMapOf(Coord(1, 1) to 0)
     var distance = 1
@@ -36,6 +30,36 @@ fun computeGrid(favouriteNumber: Int, targetLocation: Coord): Int {
         distance++
     }
     return discoveredCells[targetLocation]!!
+}
+
+fun computeReachableCellsAtDistance(favouriteNumber: Int, maxDistance: Int): Int {
+    val grid = generateGrid(Coord(1, 1), favouriteNumber, 30)
+    var edge = mutableListOf(Coord(1, 1))
+    val discoveredCells = mutableMapOf(Coord(1, 1) to 0)
+    var distance = 0
+    while (distance < maxDistance) {
+        val newEdge = mutableListOf<Coord>()
+        for (cell in edge) {
+            val neighbors = getUndiscoveredFreeNeighbors(cell, grid, discoveredCells)
+            for (neighbor in neighbors) {
+                discoveredCells[neighbor] = distance
+                newEdge.add(neighbor)
+            }
+        }
+        edge = newEdge
+        distance++
+    }
+    return discoveredCells.size
+}
+
+private fun generateGrid(targetLocation: Coord, favouriteNumber: Int, delta: Int): Map<Coord, Char> {
+    val hiX = targetLocation.x + delta
+    val hiY = targetLocation.y + delta
+    val grid = mutableMapOf<Coord, Char>()
+    for (y in 0..hiY)
+        for (x in 0..hiX)
+            grid[Coord(x, y)] = computeCoordinate(Coord(x, y), favouriteNumber)
+    return grid
 }
 
 private fun getUndiscoveredFreeNeighbors(cell: Coord, map: Map<Coord, Char>, discoveredMap: Map<Coord, Int>): List<Coord> {
