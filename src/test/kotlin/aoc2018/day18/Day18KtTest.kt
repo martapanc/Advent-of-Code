@@ -18,5 +18,6 @@ internal class Day18KtTest {
     fun testPlayGameOfLumberyards() {
         assertEquals(1147, playGameOfLumberyards(testInput, 10))
         assertEquals(653184, playGameOfLumberyards(input, 10))
+//        assertEquals(653184, playGameOfLumberyards(input, 1000000000))
     }
 }

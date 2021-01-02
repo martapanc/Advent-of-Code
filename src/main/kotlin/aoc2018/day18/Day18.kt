@@ -16,9 +16,9 @@ fun readInputToMap(path: String): Map<Coord, Char> {
     return map
 }
 
-fun playGameOfLumberyards(inputMap: Map<Coord, Char>, minutes: Int): Int {
+fun playGameOfLumberyards(inputMap: Map<Coord, Char>, minutes: Long): Int {
     var fieldMap = inputMap.toMutableMap()
-    repeat(10) {
+    repeat(minutes) {
         val mapCopy = fieldMap.toMutableMap()
         for (acre in fieldMap.entries) {
             val neighborAcres = getNeighborAcres(acre.key, fieldMap)
@@ -58,13 +58,19 @@ fun getNeighborAcres(acre: Coord, map: Map<Coord, Char>): NeighborAcres {
 
 data class NeighborAcres(val openCount: Int, val treeCount: Int, val lumberYardCount: Int)
 
-fun printGrid(map: Map<Coord, Char>) {
-    val side = 10
-    for (y in 0 until side) {
-        for (x in 0 until side) {
-            print(map[Coord(x, y)])
-        }
-        println()
+//fun printGrid(map: Map<Coord, Char>) {
+//    val side = 10
+//    for (y in 0 until side) {
+//        for (x in 0 until side) {
+//            print(map[Coord(x, y)])
+//        }
+//        println()
+//    }
+//    println()
+//}
+
+inline fun repeat(times: Long, action: (Long) -> Unit) {
+    for (index in 0 until times) {
+        action(index)
     }
-    println()
 }
