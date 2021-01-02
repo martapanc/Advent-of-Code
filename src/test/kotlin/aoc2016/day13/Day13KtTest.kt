@@ -21,6 +21,6 @@ internal class Day13KtTest {
     @Test
     fun testComputeGrid() {
         assertEquals(11, computeGrid(testInput, Coord(7, 4)))
-        assertEquals(11, computeGrid(input, Coord(31, 39)))
+        assertEquals(96, computeGrid(input, Coord(31, 39)))
     }
 }
