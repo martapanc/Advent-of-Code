@@ -24,7 +24,7 @@ fun readInputFileToMap(path: String): Map<Pair<Int, Int>, Boolean> {
     return inputMap;
 }
 
-fun countTreesInMap(inputMap: Map<Pair<Int, Int>, Boolean>, maxX: Int, maxY: Int): Int {
+fun countTreesInMap(inputMap: Map<Pair<Int, Int>, Boolean>, maxX: Int): Int {
     var count = 0
     var x = 0
     var y = 0

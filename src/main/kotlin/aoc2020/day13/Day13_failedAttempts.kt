@@ -4,7 +4,7 @@ package aoc2020.day13
 // 1068781 = 152682 * 7
 // 1068782 = 82214 * 13
 // 1068785 = 18115 * 59
-fun findEarliestTimestamp(inputList: List<Int>, min: Int, max: Int, indices: List<Int>): Long {
+fun findEarliestTimestamp(inputList: List<Int>, min: Int, max: Int): Long {
     val listOfMultiplesOfFirstNumber = mutableListOf<Long>()
     val listOfMultiplesOfSecondNumber = mutableListOf<Long>()
     val listOfMultiplesOfThirdNumber = mutableListOf<Long>()

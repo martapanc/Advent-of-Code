@@ -16,7 +16,6 @@ fun drawFirstLine(tilesList: List<JigsawTile>) {
             print(tile.key)
         }
     }
-    val second = 1543
 }
 
 fun createCompletePuzzle(tilesList: List<JigsawTile>) {
