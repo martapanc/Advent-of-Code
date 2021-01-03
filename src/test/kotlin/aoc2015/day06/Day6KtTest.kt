@@ -20,4 +20,10 @@ internal class Day6KtTest {
         assertEquals(998996, buildGrid(testInput))
         assertEquals(400410, buildGrid(input))
     }
+
+    @Test
+    fun testBuildGridV2() {
+        assertEquals(1001996, buildGridV2(testInput))
+        assertEquals(15343601, buildGridV2(input))
+    }
 }
