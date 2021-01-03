@@ -3,4 +3,5 @@
 - [Day 1](https://adventofcode.com/2018/day/1) (Chronal Calibration): [code](day01/Day1.java) - [tests](../../../test/kotlin/aoc2018/day1/Day1Test.java)
 - [Day 2](https://adventofcode.com/2018/day/2) (Inventory Management System): [code](day02/Day2.java) - [tests](../../../test/kotlin/aoc2018/day2/Day2Test.java)
 - [Day 9](https://adventofcode.com/2018/day/9) (Marble Mania): [code](day09/Day9.kt) - [tests](../../../test/kotlin/aoc2018/day9/Day9KtTest.kt)
-- [Day 18](https://adventofcode.com/2018/day/18) (Settlers of The North Pole): [code](day018/Day18.kt) - [tests](../../../test/kotlin/aoc2018/day18/Day18KtTest.kt)
+- [Day 18](https://adventofcode.com/2018/day/18) (Settlers of The North Pole): [code](day18/Day18.kt) - [tests](../../../test/kotlin/aoc2018/day18/Day18KtTest.kt)
+- [Day 24](https://adventofcode.com/2018/day/24) (Immune System Simulator 20XX a.k.a. Corona vs Vaccine): [code](day24/Day24.kt) - [tests](../../../test/kotlin/aoc2018/day24/Day24KtTest.kt)
