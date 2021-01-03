@@ -27,40 +27,36 @@ fun readInputToInstructionList(path: String): List<Instruction> {
 }
 
 fun buildGrid(list: List<Instruction>): Int {
-    val lightMap = mutableMapOf<Coord, Boolean>()
-    for (y in 0..999) for (x in 0..999) lightMap[Coord(x, y)] = false
-
-    for (instruction in list) {
-        for (y in instruction.first.y..instruction.second.y) {
+    val lightGrid = Array(1000) { BooleanArray(1000) }
+    for (instruction in list)
+        for (y in instruction.first.y..instruction.second.y)
             for (x in instruction.first.x..instruction.second.x) {
                 when (instruction.mode) {
-                    Mode.TOGGLE -> lightMap[Coord(x, y)] = !lightMap[Coord(x, y)]!!
-                    Mode.ON -> lightMap[Coord(x, y)] = true
-                    Mode.OFF -> lightMap[Coord(x, y)] = false
+                    Mode.TOGGLE -> lightGrid[x][y] = !lightGrid[x][y]
+                    Mode.ON -> lightGrid[x][y] = true
+                    Mode.OFF -> lightGrid[x][y] = false
                 }
             }
-        }
-    }
-    return lightMap.values.count { it }
+    var litCount = 0
+    for (y in 0..999) repeat((0..999).filter { lightGrid[it][y] }.size) { litCount++ }
+    return litCount
 }
 
 fun buildGridV2(list: List<Instruction>): Int {
-    val lightMap = mutableMapOf<Coord, Int>()
-    for (y in 0..999) for (x in 0..999) lightMap[Coord(x, y)] = 0
-
-    for (instruction in list) {
-        for (y in instruction.first.y..instruction.second.y) {
+    val lightGrid = Array(1000) { IntArray(1000) }
+    for (instruction in list)
+        for (y in instruction.first.y..instruction.second.y)
             for (x in instruction.first.x..instruction.second.x) {
-                val brightness = lightMap[Coord(x, y)]!!
+                val brightness = lightGrid[x][y]
                 when (instruction.mode) {
-                    Mode.TOGGLE -> lightMap[Coord(x, y)] = brightness + 2
-                    Mode.ON -> lightMap[Coord(x, y)] = brightness + 1
-                    Mode.OFF -> lightMap[Coord(x, y)] = if (brightness > 0) brightness - 1 else 0
+                    Mode.TOGGLE -> lightGrid[x][y] = brightness + 2
+                    Mode.ON -> lightGrid[x][y] = brightness + 1
+                    Mode.OFF -> lightGrid[x][y] = if (brightness > 0) brightness - 1 else 0
                 }
             }
-        }
-    }
-    return lightMap.values.sum()
+    var litCount = 0
+    for (y in 0..999) for (x in 0..999) litCount += lightGrid[x][y]
+    return litCount
 }
 
 data class Instruction(val mode: Mode, val first: Coord, val second: Coord)
