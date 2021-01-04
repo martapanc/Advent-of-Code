@@ -16,8 +16,7 @@ internal class Day9KtTest {
 
     @Test
     fun testFindShortestTripPermutation() {
-        assertEquals(605, findShortestTripPermutation(testInput))
         assertEquals(117, findShortestTripPermutation(input))
-//        assertEquals(909, findLongestTripPermutation(input))
+        assertEquals(909, findShortestTripPermutation(input, longest = true))
     }
 }

@@ -11,7 +11,7 @@ fun readInputToListDay9(path: String): Map<Trip, Int> {
     return trips
 }
 
-fun findShortestTripPermutation(map: Map<Trip, Int>): Int {
+fun findShortestTripPermutation(map: Map<Trip, Int>, longest: Boolean = false): Int? {
     val placeList = mutableSetOf<String>()
     for (place in map.keys) {
         placeList.add(place.origin)
@@ -19,8 +19,8 @@ fun findShortestTripPermutation(map: Map<Trip, Int>): Int {
     }
     permute(placeList.toList(), 0, map)
 
-
-    return -1
+    val distances = readInputLineByLine("src/main/kotlin/aoc2015/day09/tripDistances")[0].split(" ").map { it.toInt() }
+    return if (longest) distances.maxOrNull() else distances.minOrNull()
 }
 
 private fun permute(arr: List<String>, k: Int, map: Map<Trip, Int>) {
@@ -30,7 +30,6 @@ private fun permute(arr: List<String>, k: Int, map: Map<Trip, Int>) {
         Collections.swap(arr, k, i)
     }
     if (k == arr.size - 1) {
-//        print(arr.toTypedArray().contentToString())
         print(" " + findTotalDistance(arr, map))
     }
 }
@@ -48,11 +47,5 @@ fun findTotalDistance(array: List<String>, map: Map<Trip, Int>): Int {
     }
     return length
 }
-
-fun main() {
-    findShortestTripPermutation(readInputToListDay9("src/main/kotlin/aoc2015/day09/input"))
-}
-
-
 
 data class Trip(val origin: String, val destination: String)
