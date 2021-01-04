@@ -13,5 +13,6 @@ internal class Day17KtTest {
     fun testRunSpinlock() {
         assertEquals(638, runSpinlock(testInput))
         assertEquals(1244, runSpinlock(input))
+        assertEquals(11162912, runSpinlockV2(input))
     }
 }
