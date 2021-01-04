@@ -32,6 +32,11 @@ internal class Day24KtTest {
 
     @Test
     fun testPlayRound() {
-        assertEquals(Units(listOf(), listOf()), playRound(testInput))
+        val playRound = playRound(testInput)
+        assertEquals(1, playRound.vaccineGroups.size)
+        assertEquals(905, playRound.vaccineGroups[0].size)
+        assertEquals(2, playRound.coronaGroups.size)
+        assertEquals(797, playRound.coronaGroups[0].size)
+        assertEquals(4434, playRound.coronaGroups[1].size)
     }
 }

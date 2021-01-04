@@ -65,27 +65,27 @@ fun parseWeaknessesAndImmunities(input: String): Pair<List<String>, List<String>
 
 fun playRound(units: Units): Units {
     val targetMap = mutableMapOf<Pair<String, String>, Int>()
-    val vaccineGroups = units.vaccineGroups
-    val coronaGroups = units.coronaGroups
+    var vaccineGroups = units.vaccineGroups
+    var coronaGroups = units.coronaGroups
 
-    val attackMap = mutableMapOf<String, Attack>()
+    var attackMap = mutableMapOf<String, Attack>()
     for ((vacId, vaccine) in vaccineGroups.withIndex()) {
         for ((covId, corona) in coronaGroups.withIndex()) {
             //vaccine attacks corona
             val currentCoronaId = "c$covId"
             val currentVaccineId = "v$vacId"
 
-            var attack = Attack(currentCoronaId, 0)
-            attack.effectivePower = when {
-                corona.weaknesses.contains(vaccine.attackType) -> vaccine.effectivePower * 2
+            var attack = Attack(currentCoronaId, 0, vaccine.initiative)
+            attack.effectivePowerMultiplier = when {
+                corona.weaknesses.contains(vaccine.attackType) -> 2
                 corona.immunities.contains(vaccine.attackType) -> 0
-                else -> vaccine.effectivePower
+                else -> 1
             }
             if (attackMap.containsKey(currentVaccineId)) {
                 val previouslyAddedAttack = attackMap[currentVaccineId]!!
                 when {
-                    attack.effectivePower > previouslyAddedAttack.effectivePower -> attackMap[currentVaccineId] = attack
-                    attack.effectivePower == previouslyAddedAttack.effectivePower -> {
+                    attack.effectivePowerMultiplier > previouslyAddedAttack.effectivePowerMultiplier -> attackMap[currentVaccineId] = attack
+                    attack.effectivePowerMultiplier == previouslyAddedAttack.effectivePowerMultiplier -> {
                         val candidateTargetId = Character.getNumericValue(previouslyAddedAttack.target[1])
                         if (coronaGroups[covId].effectivePower > coronaGroups[candidateTargetId].effectivePower) {
                             attackMap[currentVaccineId] = attack
@@ -101,17 +101,17 @@ fun playRound(units: Units): Units {
             }
 
             //corona attacks vaccine
-            attack = Attack(currentVaccineId, 0)
+            attack = Attack(currentVaccineId, 0, corona.initiative)
             when {
-                vaccine.weaknesses.contains(corona.attackType) -> attack.effectivePower = corona.effectivePower * 2
-                vaccine.immunities.contains(corona.attackType) -> attack.effectivePower = 0
-                else -> attack.effectivePower = corona.effectivePower
+                vaccine.weaknesses.contains(corona.attackType) -> attack.effectivePowerMultiplier = 2
+                vaccine.immunities.contains(corona.attackType) -> attack.effectivePowerMultiplier = 0
+                else -> attack.effectivePowerMultiplier = 1
             }
             if (attackMap.containsKey(currentCoronaId)) {
                 val previouslyAddedAttack = attackMap[currentCoronaId]!!
                 when {
-                    attack.effectivePower > previouslyAddedAttack.effectivePower -> attackMap[currentCoronaId] = attack
-                    attack.effectivePower == previouslyAddedAttack.effectivePower -> {
+                    attack.effectivePowerMultiplier > previouslyAddedAttack.effectivePowerMultiplier -> attackMap[currentCoronaId] = attack
+                    attack.effectivePowerMultiplier == previouslyAddedAttack.effectivePowerMultiplier -> {
                         val candidateTargetId = Character.getNumericValue(previouslyAddedAttack.target[1])
                         if (vaccineGroups[vacId].effectivePower > vaccineGroups[candidateTargetId].effectivePower) {
                             attackMap[currentCoronaId] = attack
@@ -140,13 +140,45 @@ fun playRound(units: Units): Units {
 //            }
         }
     }
+    attackMap = attackMap.toSortedMap(compareByDescending { attackMap[it]!!.initiative })
 
-    return Units(vaccineGroups, coronaGroups)
+    for (attack in attackMap.entries) {
+        val attackerId = Character.getNumericValue(attack.key[1])
+        val defenderId = Character.getNumericValue(attack.value.target[1])
+        var defender: Group
+        var attacker: Group
+        if (attack.value.target[0] == 'v') {
+            attacker = coronaGroups[attackerId]
+            defender = vaccineGroups[defenderId]
+        } else {
+            attacker = vaccineGroups[attackerId]
+            defender = coronaGroups[defenderId]
+        }
+        val kills: Int = attacker.effectivePower * attack.value.effectivePowerMultiplier / defender.hp
+        if (attack.value.target[0] == 'v') {
+            vaccineGroups[defenderId].killUnits(kills)
+        } else {
+            coronaGroups[defenderId].killUnits(kills)
+        }
+    }
+    val vaccineGroupsCopy = vaccineGroups.toMutableList()
+    val coronaGroupsCopy = coronaGroups.toMutableList()
+
+    for (group in vaccineGroups)
+        if (group.size == 0) {
+            vaccineGroupsCopy.remove(group)
+        }
+    for (group in coronaGroups)
+        if (group.size == 0) {
+            coronaGroupsCopy.remove(group)
+        }
+
+    return Units(vaccineGroupsCopy, coronaGroupsCopy)
 }
 
 private fun parseItems(toReplace: String, string: String) = string.replace(toReplace, "").split(",")
 
-data class Attack(var target: String, var effectivePower: Int)
+data class Attack(var target: String, var effectivePowerMultiplier: Int = 1, val initiative: Int)
 
 data class Group(
     var size: Int,
@@ -158,6 +190,11 @@ data class Group(
     val initiative: Int
 ) {
     var effectivePower = size * attackPoints
+
+    fun killUnits(kills: Int) {
+        size = if (kills < size) size - kills else 0
+        effectivePower = size * attackPoints
+    }
 }
 
 data class Units(val vaccineGroups: List<Group>, val coronaGroups: List<Group>)
