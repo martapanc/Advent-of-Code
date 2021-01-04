@@ -11,8 +11,12 @@ fun readListOfReindeers(path: String): List<RacerReindeer> {
     return reindeerList
 }
 
-fun runReindeerRace(reindeers: List<RacerReindeer>, raceTime: Int = 2503): Int? {
-    val distanceList = mutableListOf<Int>()
+fun runReindeerRace(reindeers: List<RacerReindeer>, raceTime: Int = 1000): Int? {
+    return getDistancesAfterSeconds(reindeers, raceTime).values.maxOrNull()
+}
+
+private fun getDistancesAfterSeconds(reindeers: List<RacerReindeer>, raceTime: Int): Map<String, Int> {
+    val distanceMap = mutableMapOf<String, Int>()
     for (racer in reindeers) {
         val sprintDistance = racer.sprintTime * racer.speed
         val div = raceTime / (racer.sprintTime + racer.restTime)
@@ -20,9 +24,26 @@ fun runReindeerRace(reindeers: List<RacerReindeer>, raceTime: Int = 2503): Int? 
         val diff = if (mod <= racer.sprintTime) {
             racer.speed * mod
         } else racer.speed * racer.sprintTime
-        distanceList.add(sprintDistance * div + diff)
+        distanceMap[racer.name] = sprintDistance * div + diff
     }
-    return distanceList.maxOrNull()
+    return distanceMap
+}
+
+fun findWinningScore(reindeers: List<RacerReindeer>, raceTime: Int = 1000): Int? {
+    val reindeerNames = reindeers.map { it.name }
+    val reindeerScores = mutableMapOf<String, Int>()
+    for (name in reindeerNames) reindeerScores[name] = 0
+    for (i in 1..raceTime) {
+        val distanceMap = getDistancesAfterSeconds(reindeers, i)
+        val winningReindeers = mutableListOf<String>()
+        for (entry in distanceMap) {
+            if (entry.value == distanceMap.values.maxOrNull()!!) winningReindeers.add(entry.key)
+        }
+        for (wr in winningReindeers) {
+            reindeerScores[wr] = reindeerScores[wr]!! + 1
+        }
+    }
+    return reindeerScores.values.maxOrNull()
 }
 
 data class RacerReindeer(val name: String, val speed: Int, val sprintTime: Int, val restTime: Int)

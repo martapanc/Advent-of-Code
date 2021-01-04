@@ -21,4 +21,10 @@ internal class Day14KtTest {
         assertEquals(1120, runReindeerRace(testInput, 1000))
         assertEquals(2655, runReindeerRace(input, 2503))
     }
+
+    @Test
+    fun testFindWinningScore() {
+        assertEquals(689, findWinningScore(testInput, 1000))
+        assertEquals(1059, findWinningScore(input, 2503))
+    }
 }
