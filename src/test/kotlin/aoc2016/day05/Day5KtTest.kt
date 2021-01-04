@@ -13,4 +13,10 @@ internal class Day5KtTest {
         assertEquals("18f47a30", findPassword(testInput))
         assertEquals("2414bc77", findPassword(input))
     }
+
+    @Test
+    fun testFindPasswordPart2() {
+        assertEquals("05ace8e3", findPasswordPart2(testInput))
+        assertEquals("437e60fc", findPasswordPart2(input))
+    }
 }
