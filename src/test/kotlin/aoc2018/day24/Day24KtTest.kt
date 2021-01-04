@@ -38,5 +38,10 @@ internal class Day24KtTest {
         assertEquals(2, playRound.coronaGroups.size)
         assertEquals(797, playRound.coronaGroups[0].size)
         assertEquals(4434, playRound.coronaGroups[1].size)
+
+        val play2Rounds = playRound(playRound(testInput))
+//        assertEquals(761, play2Rounds.vaccineGroups[0].size)
+//        assertEquals(789, play2Rounds.coronaGroups[0].size)
+//        assertEquals(4434, play2Rounds.coronaGroups[1].size)
     }
 }

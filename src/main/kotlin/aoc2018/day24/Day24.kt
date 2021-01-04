@@ -64,9 +64,8 @@ fun parseWeaknessesAndImmunities(input: String): Pair<List<String>, List<String>
 }
 
 fun playRound(units: Units): Units {
-    val targetMap = mutableMapOf<Pair<String, String>, Int>()
-    var vaccineGroups = units.vaccineGroups
-    var coronaGroups = units.coronaGroups
+    val vaccineGroups = units.vaccineGroups
+    val coronaGroups = units.coronaGroups
 
     var attackMap = mutableMapOf<String, Attack>()
     for ((vacId, vaccine) in vaccineGroups.withIndex()) {
@@ -125,19 +124,6 @@ fun playRound(units: Units): Units {
             } else {
                 attackMap[currentCoronaId] = attack
             }
-
-//            val vaccineToCorona = Pair(currentVaccineId, currentCoronaId)
-//            when {
-//                corona.weaknesses.contains(vaccine.attackType) -> targetMap[vaccineToCorona] = vaccine.effectivePower * 2
-//                corona.immunities.contains(vaccine.attackType) -> targetMap[vaccineToCorona] = 0
-//                else -> targetMap[vaccineToCorona] = vaccine.effectivePower
-//            }
-//            val coronaToVaccine = Pair(currentCoronaId, currentVaccineId)
-//            when {
-//                vaccine.weaknesses.contains(corona.attackType) -> targetMap[coronaToVaccine] = corona.effectivePower * 2
-//                vaccine.immunities.contains(corona.attackType) -> targetMap[coronaToVaccine] = 0
-//                else -> targetMap[coronaToVaccine] = corona.effectivePower
-//            }
         }
     }
     attackMap = attackMap.toSortedMap(compareByDescending { attackMap[it]!!.initiative })
@@ -187,13 +173,15 @@ data class Group(
     val immunities: List<String>,
     val attackPoints: Int,
     val attackType: String,
-    val initiative: Int
+    val initiative: Int,
+    var alive: Boolean = true
 ) {
     var effectivePower = size * attackPoints
 
     fun killUnits(kills: Int) {
         size = if (kills < size) size - kills else 0
         effectivePower = size * attackPoints
+        if (size == 0) alive = false
     }
 }
 
