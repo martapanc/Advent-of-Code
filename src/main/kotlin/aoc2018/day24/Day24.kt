@@ -2,9 +2,9 @@ package aoc2018.day24
 
 import util.readInputLineByLine
 
-fun readInputToList(path: String): Pair<List<Group>, List<Group>> {
-    val immuneSystemGroups = mutableListOf<Group>()
-    val infectionGroups = mutableListOf<Group>()
+fun readInputToList(path: String): Units {
+    val vaccineGroups = mutableListOf<Group>()
+    val coronaGroups = mutableListOf<Group>()
     val lines = readInputLineByLine(path)
     val iterator = lines.iterator()
     var line = iterator.next()
@@ -18,18 +18,26 @@ fun readInputToList(path: String): Pair<List<Group>, List<Group>> {
             val attackPointsAndType = line.substringAfter("attack that does ").substringBefore(" damage").split(" ")
             val initiative = line.substringAfter("initiative ").toInt()
 
-            val currentGroup = Group(size, hp, weaknesses, immunities, attackPointsAndType[0].toInt(), attackPointsAndType[1], initiative)
+            val currentGroup = Group(
+                size,
+                hp,
+                weaknesses,
+                immunities,
+                attackPointsAndType[0].toInt(),
+                attackPointsAndType[1],
+                initiative
+            )
             if (infectionSectionReached) {
-                infectionGroups.add(currentGroup)
+                coronaGroups.add(currentGroup)
             } else {
-                immuneSystemGroups.add(currentGroup)
+                vaccineGroups.add(currentGroup)
             }
         } else if (line == "Infection:") {
             infectionSectionReached = true
         }
         line = iterator.next()
     }
-    return Pair(immuneSystemGroups, infectionGroups)
+    return Units(vaccineGroups, coronaGroups)
 }
 
 fun parseWeaknessesAndImmunities(input: String): Pair<List<String>, List<String>> {
@@ -55,16 +63,43 @@ fun parseWeaknessesAndImmunities(input: String): Pair<List<String>, List<String>
     return Pair(weaknesses.map(String::trim), immunities.map(String::trim))
 }
 
+fun playRound(units: Units): Units {
+    val vaccineGroups = units.vaccineGroups
+    val coronaGroups = units.coronaGroups
+
+    val targetMap = mutableMapOf<Pair<String, String>, Int>()
+    for ((vacId, vaccine) in vaccineGroups.withIndex()) {
+        for ((covId, corona) in coronaGroups.withIndex()) {
+            val vaccineToCorona = Pair("v$vacId", "c$covId")
+            when {
+                corona.weaknesses.contains(vaccine.attackType) -> targetMap[vaccineToCorona] = vaccine.effectivePower * 2
+                corona.immunities.contains(vaccine.attackType) -> targetMap[vaccineToCorona] = 0
+                else -> targetMap[vaccineToCorona] = vaccine.effectivePower
+            }
+            val coronaToVaccine = Pair("c$covId", "v$vacId")
+            when {
+                vaccine.weaknesses.contains(corona.attackType) -> targetMap[coronaToVaccine] = corona.effectivePower * 2
+                vaccine.immunities.contains(corona.attackType) -> targetMap[coronaToVaccine] = 0
+                else -> targetMap[coronaToVaccine] = corona.effectivePower
+            }
+        }
+    }
+
+    return Units(vaccineGroups, coronaGroups)
+}
+
 private fun parseItems(toReplace: String, string: String) = string.replace(toReplace, "").split(",")
 
 data class Group(
-    val size: Int,
+    var size: Int,
     val hp: Int,
     val weaknesses: List<String>,
     val immunities: List<String>,
     val attackPoints: Int,
     val attackType: String,
     val initiative: Int
-)
+) {
+    var effectivePower = size * attackPoints
+}
 
-
+data class Units(val vaccineGroups: List<Group>, val coronaGroups: List<Group>)

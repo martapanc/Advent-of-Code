@@ -10,13 +10,12 @@ internal class Day24KtTest {
 
     @Test
     fun testReadInputToList() {
-        assertEquals(2, testInput.first.size)
-        assertEquals(2, testInput.second.size)
-        assertEquals(Group(4485, 2961, listOf("fire", "cold"), listOf("radiation"), 12, "slashing", 4), testInput.second[1])
-        assertEquals(10, input.first.size)
-        assertEquals(10, input.second.size)
-        assertEquals(Group(106, 3258, listOf(), listOf("slashing", "radiation"), 299, "cold", 13), input.first[9])
-
+        assertEquals(2, testInput.vaccineGroups.size)
+        assertEquals(2, testInput.coronaGroups.size)
+        assertEquals(Group(4485, 2961, listOf("fire", "cold"), listOf("radiation"), 12, "slashing", 4), testInput.coronaGroups[1])
+        assertEquals(10, input.vaccineGroups.size)
+        assertEquals(10, input.coronaGroups.size)
+        assertEquals(Group(106, 3258, listOf(), listOf("slashing", "radiation"), 299, "cold", 13), input.vaccineGroups[9])
     }
 
     @Test
@@ -29,5 +28,10 @@ internal class Day24KtTest {
         assertEquals(Pair(listOf("fire", "cold"), listOf("radiation")), parseWeaknessesAndImmunities("immune to radiation; weak to fire, cold"))
         assertEquals(Pair(listOf("cold"), listOf("fire", "radiation", "slashing")), parseWeaknessesAndImmunities("weak to cold; immune to fire, radiation, slashing"))
         assertEquals(Pair(listOf("bludgeoning", "slashing"), listOf("fire")), parseWeaknessesAndImmunities("immune to fire; weak to bludgeoning, slashing"))
+    }
+
+    @Test
+    fun testPlayRound() {
+        assertEquals(Units(listOf(), listOf()), playRound(testInput))
     }
 }
