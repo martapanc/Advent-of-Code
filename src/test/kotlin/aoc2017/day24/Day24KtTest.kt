@@ -19,4 +19,9 @@ internal class Day24KtTest {
         assertEquals(31, findStrongestBridge(testInput))
         assertEquals(1868, findStrongestBridge(input))
     }
+
+    @Test
+    fun testFindStrengthOfLongestBridge() {
+        assertEquals(1854, findStrengthOfLongestBridge(input))
+    }
 }

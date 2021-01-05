@@ -9,13 +9,20 @@ fun readInputBridges(path: String): List<Bridge> {
 }
 
 var maxStrength = 0
+var maxStrengthOfLongest = 0
+var maxDepth = 0
 
 fun findStrongestBridge(list: List<Bridge>): Int {
     createBridgeTree(list, 0, Node(Bridge(0, 0), mutableListOf()))
     return maxStrength
 }
 
-fun createBridgeTree(list: List<Bridge>, start: Int, parentNode: Node, sumSoFar: Int = 0): Node {
+fun findStrengthOfLongestBridge(list: List<Bridge>): Int {
+    createBridgeTree(list, 0, Node(Bridge(0, 0), mutableListOf()))
+    return maxStrengthOfLongest
+}
+
+fun createBridgeTree(list: List<Bridge>, start: Int, parentNode: Node, sumSoFar: Int = 0, depth: Int = 0): Node {
     val bridgesWithRightEnd = mutableListOf<Bridge>()
     for (item in list) {
         if (item.first == start || item.second == start) {
@@ -23,8 +30,10 @@ fun createBridgeTree(list: List<Bridge>, start: Int, parentNode: Node, sumSoFar:
         }
     }
     if (bridgesWithRightEnd.isEmpty()) {
-        if (parentNode.sum > maxStrength) {
-            maxStrength = parentNode.sum
+        if (parentNode.sum > maxStrength) maxStrength = parentNode.sum
+        if (depth >= maxDepth && maxStrength >= maxStrengthOfLongest) {
+            maxDepth = depth
+            maxStrengthOfLongest = maxStrength
         }
         return parentNode
     }
@@ -35,7 +44,8 @@ fun createBridgeTree(list: List<Bridge>, start: Int, parentNode: Node, sumSoFar:
                 list.minus(bridge),
                 newStart,
                 Node(bridge, mutableListOf(), sumSoFar + bridge.first + bridge.second),
-                sumSoFar + bridge.first + bridge.second
+                sumSoFar + bridge.first + bridge.second,
+                depth+1
             )
         )
     }
