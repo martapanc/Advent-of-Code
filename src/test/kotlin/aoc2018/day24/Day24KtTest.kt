@@ -91,13 +91,12 @@ internal class Day24KtTest {
 
     @Test
     fun testPlayGameOfCoronaWithBoosts() {
-//        assertEquals(5216, playGameOfCorona(testInput, 0).first)
-//        assertEquals(1083, playGameOfCorona(path, 79).first)
-//        assertEquals(24318, playGameOfCorona(input,50).first)
-//        assertEquals(24318, playGameOfCoronaWithBoosts(path, 0).first)
-//
-//        assertEquals(51, playGameOfCoronaWithBoosts("src/main/kotlin/aoc2018/day24/testInput"))
+        assertEquals(5216, playGameOfCorona(testPath, 0).first)
+        assertEquals(51, playGameOfCorona(testPath, 1570).first)
+        assertEquals(24318, playGameOfCorona(path, 0).first)
 
-//        assertEquals(24318, playGameOfCoronaWithBoosts("src/main/kotlin/aoc2018/day24/input"))
+        assertEquals(51, playGameOfCoronaWithBoosts(testPath))
+        assertEquals(1083, playGameOfCoronaWithBoosts(path))
+        assertEquals(1083, playGameOfCorona(path, 79).first)
     }
 }
