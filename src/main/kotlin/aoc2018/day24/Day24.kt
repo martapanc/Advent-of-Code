@@ -68,58 +68,8 @@ fun playRound(units: Units): Units {
     val coronaGroups = units.coronaGroups.sortedWith(compareBy({ -it.effectivePower }, { -it.initiative }))
     var attackMap = mutableMapOf<String, Attack>()
 
-    val candidateCoronaDefenders = coronaGroups.indices.toMutableList()
-    var vaccineIndex = 0
-    while (candidateCoronaDefenders.isNotEmpty() && vaccineIndex < vaccineGroups.size) {
-        val vaccine = vaccineGroups[vaccineIndex]
-        val candidates = mutableListOf<Attack>()
-        for (covId in candidateCoronaDefenders) {
-            val corona = coronaGroups[covId]
-            val attack = Attack("c$covId", 0, 0, corona.effectivePower, vaccine.initiative, corona.initiative)
-            attack.powerMultiplier = when {
-                corona.weaknesses.contains(vaccine.attackType) -> 2
-                corona.immunities.contains(vaccine.attackType) -> 0
-                else -> 1
-            }
-            attack.totalDamage = vaccine.effectivePower * attack.powerMultiplier
-            if (attack.totalDamage > 0)
-                candidates.add(attack)
-        }
-        // If all possible targets are immune, the group cannot attack
-        if (candidates.isNotEmpty()) {
-            val chosenAttack = candidates.sortedWith(compareBy({ -it.totalDamage }, { -it.targetEP }, { -it.initiative }))[0]
-            attackMap["v$vaccineIndex"] = chosenAttack
-            candidateCoronaDefenders.remove(Character.getNumericValue(chosenAttack.target[1]))
-        }
-        vaccineIndex++
-    }
-
-    val candidateVaccineDefenders = vaccineGroups.indices.toMutableList()
-    var coronaIndex = 0
-    while (candidateVaccineDefenders.isNotEmpty() && coronaIndex < coronaGroups.size) {
-        val corona = coronaGroups[coronaIndex]
-        val candidates = mutableListOf<Attack>()
-        for (vacId in candidateVaccineDefenders) {
-            val vaccine = vaccineGroups[vacId]
-            val attack = Attack("v$vacId", 0, 0, vaccine.effectivePower, corona.initiative, vaccine.initiative)
-            attack.powerMultiplier = when {
-                vaccine.weaknesses.contains(corona.attackType) -> 2
-                vaccine.immunities.contains(corona.attackType) -> 0
-                else -> 1
-            }
-            attack.totalDamage = corona.effectivePower * attack.powerMultiplier
-            if (attack.totalDamage > 0)
-                candidates.add(attack)
-        }
-        // If all possible targets are immune, the group cannot attack
-        if (candidates.isNotEmpty()) {
-            val chosenAttack =
-                candidates.sortedWith(compareBy({ -it.totalDamage }, { -it.targetEP }, { -it.initiative }))[0]
-            attackMap["c$coronaIndex"] = chosenAttack
-            candidateVaccineDefenders.remove(Character.getNumericValue(chosenAttack.target[1]))
-        }
-        coronaIndex++
-    }
+    attackersChooseDefenders(vaccineGroups, coronaGroups, attackMap, 'v', 'c')
+    attackersChooseDefenders(coronaGroups, vaccineGroups, attackMap, 'c', 'v')
 
     attackMap = attackMap.toSortedMap(compareByDescending { attackMap[it]!!.initiative })
     var anyUnitsKilled = false
@@ -157,6 +107,35 @@ fun playRound(units: Units): Units {
         .filter { it.size == 0 }
         .forEach { coronaGroupsCopy.remove(it) }
     return Units(vaccineGroupsCopy, coronaGroupsCopy)
+}
+
+private fun attackersChooseDefenders(attackerGroups: List<Group>, defenderGroups: List<Group>, attackMap: MutableMap<String, Attack>, attackerId: Char, defenderId: Char) {
+    val candidateDefenders = defenderGroups.indices.toMutableList()
+    var attackerIndex = 0
+    while (candidateDefenders.isNotEmpty() && attackerIndex < attackerGroups.size) {
+        val attacker = attackerGroups[attackerIndex]
+        val candidates = mutableListOf<Attack>()
+        for (defenderIndex in candidateDefenders) {
+            val defender = defenderGroups[defenderIndex]
+            val attack = Attack("$defenderId$defenderIndex", 0, 0, defender.effectivePower, attacker.initiative, defender.initiative)
+            attack.powerMultiplier = when {
+                defender.weaknesses.contains(attacker.attackType) -> 2
+                defender.immunities.contains(attacker.attackType) -> 0
+                else -> 1
+            }
+            attack.totalDamage = attacker.effectivePower * attack.powerMultiplier
+            if (attack.totalDamage > 0)
+                candidates.add(attack)
+        }
+        // If all possible targets are immune, the group cannot attack
+        if (candidates.isNotEmpty()) {
+            val chosenAttack =
+                candidates.sortedWith(compareBy({ -it.totalDamage }, { -it.targetEP }, { -it.initiative }))[0]
+            attackMap["$attackerId$attackerIndex"] = chosenAttack
+            candidateDefenders.remove(Character.getNumericValue(chosenAttack.target[1]))
+        }
+        attackerIndex++
+    }
 }
 
 fun playGameOfCorona(path: String): Int {
