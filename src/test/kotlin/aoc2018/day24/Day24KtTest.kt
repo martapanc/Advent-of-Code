@@ -39,9 +39,24 @@ internal class Day24KtTest {
         assertEquals(797, playRound.coronaGroups[0].size)
         assertEquals(4434, playRound.coronaGroups[1].size)
 
-        val play2Rounds = playRound(playRound(testInput))
-//        assertEquals(761, play2Rounds.vaccineGroups[0].size)
-//        assertEquals(789, play2Rounds.coronaGroups[0].size)
-//        assertEquals(4434, play2Rounds.coronaGroups[1].size)
+        val play2Rounds = playRound(playRound)
+        assertEquals(761, play2Rounds.vaccineGroups[0].size)
+        assertEquals(793, play2Rounds.coronaGroups[0].size)
+        assertEquals(4434, play2Rounds.coronaGroups[1].size)
+
+        val play3Rounds = playRound(play2Rounds)
+        assertEquals(618, play3Rounds.vaccineGroups[0].size)
+        assertEquals(789, play3Rounds.coronaGroups[0].size)
+        assertEquals(4434, play3Rounds.coronaGroups[1].size)
+
+        val play7Rounds = playRound(playRound(playRound(playRound(play3Rounds))))
+        assertEquals(49, play7Rounds.vaccineGroups[0].size)
+        assertEquals(782, play7Rounds.coronaGroups[0].size)
+        assertEquals(4434, play7Rounds.coronaGroups[1].size)
+
+        val play8Rounds = playRound(play7Rounds)
+        assertEquals(0, play8Rounds.vaccineGroups.size)
+        assertEquals(782, play8Rounds.coronaGroups[0].size)
+        assertEquals(4434, play8Rounds.coronaGroups[1].size)
     }
 }
