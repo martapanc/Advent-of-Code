@@ -18,8 +18,8 @@ internal class Day14KtTest {
 
     @Test
     fun testGenerateRecipesPart2() {
-        assertEquals(18, generateRecipesPart2("92510"))
-        assertEquals(2018, generateRecipesPart2("59414"))
-//        assertEquals(1345, generateRecipesPart2(input.toString()))
+        assertEquals(18, generateRecipesPart2(92510))
+        assertEquals(2018, generateRecipesPart2(59414))
+        assertEquals(20203532, generateRecipesPart2(input))
     }
 }
