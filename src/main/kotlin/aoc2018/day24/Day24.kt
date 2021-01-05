@@ -154,6 +154,17 @@ fun playRound(units: Units): Units {
     return Units(vaccineGroupsCopy, coronaGroupsCopy)
 }
 
+fun playGameOfCorona(units: Units): Int {
+    var roundUnits = playRound(units)
+    while (roundUnits.coronaGroups.isNotEmpty() && roundUnits.vaccineGroups.isNotEmpty()) {
+        roundUnits = playRound(roundUnits)
+    }
+    if (roundUnits.coronaGroups.isEmpty()) {
+        return roundUnits.vaccineGroups.sumBy { it.size }
+    }
+    return roundUnits.coronaGroups.sumBy { it.size }
+}
+
 private fun parseItems(toReplace: String, string: String) = string.replace(toReplace, "").split(",")
 
 data class Attack(

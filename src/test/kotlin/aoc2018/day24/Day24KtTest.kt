@@ -59,4 +59,10 @@ internal class Day24KtTest {
         assertEquals(782, play8Rounds.coronaGroups[0].size)
         assertEquals(4434, play8Rounds.coronaGroups[1].size)
     }
+
+    @Test
+    fun testPlayGameOfCorona() {
+        assertEquals(5216, playGameOfCorona(testInput))
+        assertEquals(24318, playGameOfCorona(input))
+    }
 }
