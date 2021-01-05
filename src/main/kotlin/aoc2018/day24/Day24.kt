@@ -145,24 +145,53 @@ fun playRound(units: Units): Units {
     return Units(vaccineGroupsCopy, coronaGroupsCopy)
 }
 
-fun playGameOfCorona(units: Units): Int {
-    var roundUnits = playRound(units)
+fun playGameOfCorona(path: String): Int {
+    return playGameOfCorona(path, 0).first
+}
+
+fun playGameOfCorona(path: String, boost: Int): Pair<Int, Boolean> {
+    var roundUnits = playRound(boostVaccine(readInputToList(path), boost))
     while (roundUnits.coronaGroups.isNotEmpty() && roundUnits.vaccineGroups.isNotEmpty()) {
         roundUnits = playRound(roundUnits)
     }
-    return if (roundUnits.coronaGroups.isEmpty()) roundUnits.vaccineGroups.sumBy { it.size }
-    else roundUnits.coronaGroups.sumBy { it.size }
+    return if (roundUnits.coronaGroups.isEmpty()) Pair(roundUnits.vaccineGroups.sumBy { it.size }, true)
+    else Pair(roundUnits.coronaGroups.sumBy { it.size }, false)
+}
+
+fun playGameOfCoronaWithBoosts(path: String): Int {
+    var boost = 0
+
+    var roundResult = playGameOfCorona(path, boost++)
+    while (!roundResult.second) {
+//        boost++
+        roundResult = playGameOfCorona(path, boost++)
+    }
+    return roundResult.first
+}
+
+fun boostVaccine(units: Units, boostValue: Int): Units {
+    val boostedVaccineGroups = mutableListOf<Group>()
+    for (group in units.vaccineGroups) {
+        group.boost(boostValue)
+        boostedVaccineGroups.add(group)
+    }
+    return Units(boostedVaccineGroups, units.coronaGroups)
 }
 
 private fun parseItems(toReplace: String, string: String) = string.replace(toReplace, "").split(",")
 
 data class Attack(var target: String, var powerMultiplier: Int = 1, var totalDamage: Int, var targetEP: Int = 0, val initiative: Int, val targetInitiative: Int)
 
-data class Group(var size: Int, val hp: Int, val weaknesses: List<String>, val immunities: List<String>, val attackPoints: Int, val attackType: String, val initiative: Int) {
+data class Group(var size: Int, val hp: Int, val weaknesses: List<String>, val immunities: List<String>, var attackPoints: Int, val attackType: String, val initiative: Int, val boost: Int = 0) {
     var effectivePower = size * attackPoints
 
     fun killUnits(kills: Int) {
         size = if (kills < size) size - kills else 0
+        effectivePower = size * attackPoints
+    }
+
+    fun boost(boost: Int) {
+        attackPoints += boost
         effectivePower = size * attackPoints
     }
 }

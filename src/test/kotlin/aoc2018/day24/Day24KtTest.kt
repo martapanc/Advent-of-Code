@@ -5,34 +5,57 @@ import kotlin.test.assertEquals
 
 internal class Day24KtTest {
 
-    private val testInput = readInputToList("src/main/kotlin/aoc2018/day24/testInput")
-    private val input = readInputToList("src/main/kotlin/aoc2018/day24/input")
+    private val testPath = "src/main/kotlin/aoc2018/day24/testInput"
+    private val path = "src/main/kotlin/aoc2018/day24/input"
 
     @Test
     fun testReadInputToList() {
+        val testInput = readInputToList(testPath)
         assertEquals(2, testInput.vaccineGroups.size)
         assertEquals(2, testInput.coronaGroups.size)
-        assertEquals(Group(4485, 2961, listOf("fire", "cold"), listOf("radiation"), 12, "slashing", 4), testInput.coronaGroups[1])
+        assertEquals(
+            Group(4485, 2961, listOf("fire", "cold"), listOf("radiation"), 12, "slashing", 4),
+            testInput.coronaGroups[1]
+        )
+        val input = readInputToList(path)
         assertEquals(10, input.vaccineGroups.size)
         assertEquals(10, input.coronaGroups.size)
-        assertEquals(Group(106, 3258, listOf(), listOf("slashing", "radiation"), 299, "cold", 13), input.vaccineGroups[9])
+        assertEquals(
+            Group(106, 3258, listOf(), listOf("slashing", "radiation"), 299, "cold", 13),
+            input.vaccineGroups[9]
+        )
     }
 
     @Test
     fun testParseWeaknessesAndImmunities() {
         assertEquals(Pair(listOf(), listOf()), parseWeaknessesAndImmunities(""))
-        assertEquals(Pair(listOf("radiation", "bludgeoning"), listOf()), parseWeaknessesAndImmunities("weak to radiation, bludgeoning"))
+        assertEquals(
+            Pair(listOf("radiation", "bludgeoning"), listOf()),
+            parseWeaknessesAndImmunities("weak to radiation, bludgeoning")
+        )
         assertEquals(Pair(listOf("radiation"), listOf()), parseWeaknessesAndImmunities("weak to radiation"))
         assertEquals(Pair(listOf(), listOf("fire")), parseWeaknessesAndImmunities("immune to fire"))
-        assertEquals(Pair(listOf(), listOf("fire", "radiation")), parseWeaknessesAndImmunities("immune to fire, radiation"))
-        assertEquals(Pair(listOf("fire", "cold"), listOf("radiation")), parseWeaknessesAndImmunities("immune to radiation; weak to fire, cold"))
-        assertEquals(Pair(listOf("cold"), listOf("fire", "radiation", "slashing")), parseWeaknessesAndImmunities("weak to cold; immune to fire, radiation, slashing"))
-        assertEquals(Pair(listOf("bludgeoning", "slashing"), listOf("fire")), parseWeaknessesAndImmunities("immune to fire; weak to bludgeoning, slashing"))
+        assertEquals(
+            Pair(listOf(), listOf("fire", "radiation")),
+            parseWeaknessesAndImmunities("immune to fire, radiation")
+        )
+        assertEquals(
+            Pair(listOf("fire", "cold"), listOf("radiation")),
+            parseWeaknessesAndImmunities("immune to radiation; weak to fire, cold")
+        )
+        assertEquals(
+            Pair(listOf("cold"), listOf("fire", "radiation", "slashing")),
+            parseWeaknessesAndImmunities("weak to cold; immune to fire, radiation, slashing")
+        )
+        assertEquals(
+            Pair(listOf("bludgeoning", "slashing"), listOf("fire")),
+            parseWeaknessesAndImmunities("immune to fire; weak to bludgeoning, slashing")
+        )
     }
 
     @Test
     fun testPlayRound() {
-        val playRound = playRound(testInput)
+        val playRound = playRound(readInputToList(testPath))
         assertEquals(1, playRound.vaccineGroups.size)
         assertEquals(905, playRound.vaccineGroups[0].size)
         assertEquals(2, playRound.coronaGroups.size)
@@ -62,7 +85,19 @@ internal class Day24KtTest {
 
     @Test
     fun testPlayGameOfCorona() {
-        assertEquals(5216, playGameOfCorona(testInput))
-        assertEquals(24318, playGameOfCorona(input))
+        assertEquals(5216, playGameOfCorona(testPath))
+        assertEquals(24318, playGameOfCorona(path))
+    }
+
+    @Test
+    fun testPlayGameOfCoronaWithBoosts() {
+//        assertEquals(5216, playGameOfCorona(testInput, 0).first)
+//        assertEquals(1083, playGameOfCorona(path, 79).first)
+//        assertEquals(24318, playGameOfCorona(input,50).first)
+//        assertEquals(24318, playGameOfCoronaWithBoosts(path, 0).first)
+//
+//        assertEquals(51, playGameOfCoronaWithBoosts("src/main/kotlin/aoc2018/day24/testInput"))
+
+//        assertEquals(24318, playGameOfCoronaWithBoosts("src/main/kotlin/aoc2018/day24/input"))
     }
 }
