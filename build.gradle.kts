@@ -9,6 +9,7 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -20,6 +21,8 @@ dependencies {
 
     implementation("org.apache.commons:commons-lang3:3.6")
     implementation("com.ginsberg:cirkle:1.0.1")
+    implementation("com.beust:klaxon:5.0.1")
+    implementation("org.json:json:20201115")
 }
 
 tasks.test {
