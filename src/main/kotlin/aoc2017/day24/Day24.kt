@@ -8,15 +8,14 @@ fun readInputBridges(path: String): List<Bridge> {
         .map { Bridge(it[0].toInt(), it[1].toInt()) }
 }
 
+var maxStrength = 0
+
 fun findStrongestBridge(list: List<Bridge>): Int {
-    val node = createBridgeTree(list, 0, Node(Bridge(0, 0), mutableListOf()))
-    return -1
+    createBridgeTree(list, 0, Node(Bridge(0, 0), mutableListOf()))
+    return maxStrength
 }
 
-fun createBridgeTree(list: List<Bridge>, start: Int, parentNode: Node): Node {
-    if (list.size == 1) {
-        return Node(list[0], mutableListOf())
-    }
+fun createBridgeTree(list: List<Bridge>, start: Int, parentNode: Node, sumSoFar: Int = 0): Node {
     val bridgesWithRightEnd = mutableListOf<Bridge>()
     for (item in list) {
         if (item.first == start || item.second == start) {
@@ -24,15 +23,25 @@ fun createBridgeTree(list: List<Bridge>, start: Int, parentNode: Node): Node {
         }
     }
     if (bridgesWithRightEnd.isEmpty()) {
+        if (parentNode.sum > maxStrength) {
+            maxStrength = parentNode.sum
+        }
         return parentNode
     }
     for (bridge in bridgesWithRightEnd) {
         val newStart = if (bridge.first == start) bridge.second else bridge.first
-        parentNode.children.add(createBridgeTree(list.minus(bridge), newStart, Node(bridge, mutableListOf())))
+        parentNode.children.add(
+            createBridgeTree(
+                list.minus(bridge),
+                newStart,
+                Node(bridge, mutableListOf(), sumSoFar + bridge.first + bridge.second),
+                sumSoFar + bridge.first + bridge.second
+            )
+        )
     }
     return parentNode
 }
 
 data class Bridge(val first: Int, val second: Int)
 
-data class Node(val bridge: Bridge, val children: MutableList<Node>)
+data class Node(val bridge: Bridge, val children: MutableList<Node>, val sum: Int = 0)
