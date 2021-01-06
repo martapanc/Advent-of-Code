@@ -1,4 +1,4 @@
-package aoc2019.day3;
+package aoc2019.day03;
 
 import java.util.HashMap;
 import java.util.Map;

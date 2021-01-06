@@ -1,8 +1,8 @@
-package aoc2019.day2;
+package aoc2019.day02;
 
 import org.junit.jupiter.api.Test;
 
-import static aoc2019.day2.Day2.readInput;
+import static aoc2019.day02.Day2.readInput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Day2Test {

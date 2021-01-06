@@ -1,4 +1,4 @@
-package aoc2019.day1
+package aoc2019.day01
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

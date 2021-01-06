@@ -1,8 +1,8 @@
-package aoc2019.day3;
+package aoc2019.day03;
 
 import org.junit.jupiter.api.Test;
 
-import static aoc2019.day3.Day3.getShortestDistances;
+import static aoc2019.day03.Day3.getShortestDistances;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Day3Test {
