@@ -30,8 +30,9 @@ fun createBridgeTree(list: List<Bridge>, start: Int, parentNode: Node, sumSoFar:
         }
     }
     if (bridgesWithRightEnd.isEmpty()) {
-        if (parentNode.sum > maxStrength) maxStrength = parentNode.sum
-        if (depth >= maxDepth && maxStrength >= maxStrengthOfLongest) {
+        if (parentNode.sum > maxStrength)
+            maxStrength = parentNode.sum
+        if (depth > maxDepth) {
             maxDepth = depth
             maxStrengthOfLongest = maxStrength
         }
@@ -45,7 +46,7 @@ fun createBridgeTree(list: List<Bridge>, start: Int, parentNode: Node, sumSoFar:
                 newStart,
                 Node(bridge, mutableListOf(), sumSoFar + bridge.first + bridge.second),
                 sumSoFar + bridge.first + bridge.second,
-                depth+1
+                depth + 1
             )
         )
     }

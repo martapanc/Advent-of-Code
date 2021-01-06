@@ -38,10 +38,9 @@ private fun getOnesDigitOfComputation(numbers: List<Int>, pattern: List<Int>): I
 }
 
 fun computePhase(numbers: List<Int>, phaseNum: Int, trim: Boolean): String {
-    var count = 0
     var phase = ""
     var numberList = numbers
-    while (count++ < phaseNum) {
+    repeat (phaseNum) {
         val sb = StringBuilder()
         for (i in 1..numberList.size) {
             sb.append(computeNthDigit(numberList, i))
@@ -57,10 +56,8 @@ fun computePhase(numbers: List<Int>, phaseNum: Int, trim: Boolean): String {
 
 fun tenThousandTimesList(numbers: List<Int>?): List<Int> {
     val tenThousandTimesList: MutableList<Int> = ArrayList()
-    IntStream.range(0, 10000).mapToObj { i: Int -> numbers }.forEach { c: List<Int>? ->
-        tenThousandTimesList.addAll(
-            c!!
-        )
+    IntStream.range(0, 10000).mapToObj { numbers }.forEach { c: List<Int>? ->
+        tenThousandTimesList.addAll(c!!)
     }
     return tenThousandTimesList
 }
