@@ -28,7 +28,7 @@ internal class Day1KtTest {
 
     @Test
     fun testReadInputFileToList() {
-        print(readInputFileToList("src/main/kotlin/aoc2019/day1/input.txt"))
+        print(readInputFileToList("src/main/kotlin/aoc2019/day01/input.txt"))
     }
 
     @Test
