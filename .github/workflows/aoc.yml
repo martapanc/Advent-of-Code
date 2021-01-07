@@ -1,0 +1,22 @@
+
+name: AoC Stars update
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  test_commentary:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Runs a single command using the runners shell
+      - name: HTTP Request Action
+        id: http_request
+        uses: fjogeleit/http-request-action@v1.6.1
+        with:
+          url: "https://aoc-data-api.herokuapp.com/stars"
+          method: 'GET'
+
+      - name: Display output
+        run: echo ${{join(steps.http_request.outputs.*, '\n')}}
