@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Gradle
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: Kotlin CI with Gradle
+name: Java & Kotlin CI with Gradle
 
 on:
   push:
@@ -11,7 +11,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -20,10 +19,13 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+
     - name: Build with Gradle
       run: ./gradlew build
+
     - name: Run Unit tests
       run: ./gradlew test
 
