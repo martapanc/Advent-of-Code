@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Day1Test {
-    public static final String INPUT1 = "src/main/kotlin/aoc2018/day01/input1";
-    public static final String INPUT2 = "src/main/kotlin/aoc2018/day01/input2";
+    public static final String INPUT1 = "src/main/java/aoc2018/day01/input1";
+    public static final String INPUT2 = "src/main/java/aoc2018/day01/input2";
 
     @Test
     public void test_addNumberTest() {

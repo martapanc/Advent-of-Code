@@ -1,7 +1,7 @@
 package aoc2018.day24
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 internal class Day24KtTest {
 
@@ -28,15 +28,16 @@ internal class Day24KtTest {
 
     @Test
     fun testParseWeaknessesAndImmunities() {
-        assertEquals(Pair(listOf(), listOf()), parseWeaknessesAndImmunities(""))
+        val empty = listOf<String>()
+        assertEquals(Pair(empty, empty), parseWeaknessesAndImmunities(""))
         assertEquals(
-            Pair(listOf("radiation", "bludgeoning"), listOf()),
+            Pair(listOf("radiation", "bludgeoning"), empty),
             parseWeaknessesAndImmunities("weak to radiation, bludgeoning")
         )
-        assertEquals(Pair(listOf("radiation"), listOf()), parseWeaknessesAndImmunities("weak to radiation"))
-        assertEquals(Pair(listOf(), listOf("fire")), parseWeaknessesAndImmunities("immune to fire"))
+        assertEquals(Pair(listOf("radiation"), empty), parseWeaknessesAndImmunities("weak to radiation"))
+        assertEquals(Pair(empty, listOf("fire")), parseWeaknessesAndImmunities("immune to fire"))
         assertEquals(
-            Pair(listOf(), listOf("fire", "radiation")),
+            Pair(empty, listOf("fire", "radiation")),
             parseWeaknessesAndImmunities("immune to fire, radiation")
         )
         assertEquals(

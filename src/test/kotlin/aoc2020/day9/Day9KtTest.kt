@@ -1,12 +1,13 @@
 package aoc2020.day9
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 internal class Day9KtTest {
 
     private val input = readInputToList("src/main/kotlin/aoc2020/day9/input")
     private val input0 = readInputToList("src/main/kotlin/aoc2020/day9/input0")
+
     //removed all numbers after N and some previous larger numbers:
     private val inputEdit = readInputToList("src/main/kotlin/aoc2020/day9/input")
 

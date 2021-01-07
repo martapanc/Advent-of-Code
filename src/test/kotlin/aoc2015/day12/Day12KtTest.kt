@@ -2,8 +2,8 @@ package aoc2015.day12
 
 import org.json.JSONArray
 import org.json.JSONObject
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 internal class Day12KtTest {
 
