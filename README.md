@@ -13,4 +13,3 @@ Collection of my solutions to the AoC challenges (2015-2020)
 - Advent of Code 2️⃣0️⃣1️⃣6️⃣ : [overview](src/main/kotlin/aoc2016/README.md) & [solutions](src/main/kotlin/aoc2016) - 8 / 50 ⭐️ 
 - Advent of Code 2️⃣0️⃣1️⃣5️⃣ : [overview](src/main/kotlin/aoc2015/README.md) & [solutions](src/main/kotlin/aoc2015) - 10 / 50 ⭐️ 
 
-
