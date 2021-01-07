@@ -20,7 +20,7 @@ class AoCStarsReader {
             val emojiYear = yearToEmojis(year)
             template += "- Advent of Code $emojiYear : [overview](src/main/kotlin/aoc$year/README.md) & [solutions](src/main/kotlin/aoc$year) - $stars / 50 ⭐️ \n"
         }
-        template += "&nbsp;".repeat(71) + "Total:  " + results.values.sum() + " / " + results.keys.count() * 50 + " ⭐"
+        template += "\n Total:  " + results.values.sum() + " / " + results.keys.count() * 50 + " ⭐"
 
         File("README.md").printWriter().use { out -> out.println(template) }
     }
