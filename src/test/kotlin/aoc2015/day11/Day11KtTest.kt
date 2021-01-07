@@ -1,9 +1,7 @@
 package aoc2015.day11
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import kotlin.test.assertTrue
 
 internal class Day11KtTest {
 

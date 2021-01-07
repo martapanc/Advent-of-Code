@@ -1,8 +1,8 @@
 package aoc2020.day18
 
 import aoc2020.day5.readInputToList
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 internal class Day18KtTest {
 
@@ -46,7 +46,13 @@ internal class Day18KtTest {
         assertEquals(23340, runOperations(listOf("( ( 2 + 4 * 9 ) * ( 6 + 9 * 8 + 6 ) + 6 ) + 2 + 4 * 2"), order))
         assertEquals(231, runOperations(listOf("1 + 2 * 3 + 4 * 5 + 6"), order))
         assertEquals(282, runOperations(listOf("1 + 2 * 3 + 4 * 5 + 6", "1 + ( 2 * 3 ) + ( 4 * ( 5 + 6 ) )"), order))
-        assertEquals(328, runOperations(listOf("1 + 2 * 3 + 4 * 5 + 6", "1 + ( 2 * 3 ) + ( 4 * ( 5 + 6 ) )", "2 * 3 + ( 4 * 5 )"), order))
+        assertEquals(
+            328,
+            runOperations(
+                listOf("1 + 2 * 3 + 4 * 5 + 6", "1 + ( 2 * 3 ) + ( 4 * ( 5 + 6 ) )", "2 * 3 + ( 4 * 5 )"),
+                order
+            )
+        )
         assertEquals(328, runOperations(input0, order))
         assertEquals(216975281211165, runOperations(input, order))
     }

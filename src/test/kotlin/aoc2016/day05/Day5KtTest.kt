@@ -1,7 +1,7 @@
 package aoc2016.day05
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 internal class Day5KtTest {
 
