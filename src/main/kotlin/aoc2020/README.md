@@ -1,13 +1,13 @@
 # 🎄 AoC 2020 🎅
-- [Day 1](https://adventofcode.com/2020/day/1) (Report Repair): [code](day01/Day1.kt) - [tests](../../../test/kotlin/aoc2020/day1/Day1KtTest.kt)
-- [Day 2](https://adventofcode.com/2020/day/2) (Password Philosophy): [code](day02/Day2.kt) - [tests](../../../test/kotlin/aoc2020/day2/Day2KtTest.kt)
-- [Day 3](https://adventofcode.com/2020/day/3) (Toboggan Trajectory): [code](day03/Day3.kt) - [tests](../../../test/kotlin/aoc2020/day3/Day3KtTest.kt)
-- [Day 4](https://adventofcode.com/2020/day/4) (Passport Processing): [code](day04/Day4.kt) - [tests](../../../test/kotlin/aoc2020/day4/Day4KtTest.kt)
-- [Day 5](https://adventofcode.com/2020/day/5) (Binary Boarding): [code](day05/Day5.kt) - [tests](../../../test/kotlin/aoc2020/day5/Day5KtTest.kt) - [seat map](day05/seatMap)
-- [Day 6](https://adventofcode.com/2020/day/6) (Custom Customs): [code](day06/Day6.kt) - [tests](../../../test/kotlin/aoc2020/day6/Day6KtTest.kt)
-- [Day 7](https://adventofcode.com/2020/day/7) (Handy Haversacks, a.k.a. A bag in a bag in a bag...): [code](day07/Day7.kt) - [tests](../../../test/kotlin/aoc2020/day7/Day7KtTest.kt) - visualisation: <img src="https://i.redd.it/gx6l9oavzp361.jpg" alt="Visualisation of Day 7" width="80"/>
-- [Day 8](https://adventofcode.com/2020/day/8) (Handheld Halting): [code](day08/Day8.kt) - [tests](../../../test/kotlin/aoc2020/day8/Day8KtTest.kt)   
-- [Day 9](https://adventofcode.com/2020/day/9) (Encoding Error): [code](day09/Day9.kt) - [tests](../../../test/kotlin/aoc2020/day9/Day9KtTest.kt)   
+- [Day 1](https://adventofcode.com/2020/day/1) (Report Repair): [code](day01/Day1.kt) - [tests](../../../test/kotlin/aoc2020/day01/Day1KtTest.kt)
+- [Day 2](https://adventofcode.com/2020/day/2) (Password Philosophy): [code](day02/Day2.kt) - [tests](../../../test/kotlin/aoc2020/day02/Day2KtTest.kt)
+- [Day 3](https://adventofcode.com/2020/day/3) (Toboggan Trajectory): [code](day03/Day3.kt) - [tests](../../../test/kotlin/aoc2020/day03/Day3KtTest.kt)
+- [Day 4](https://adventofcode.com/2020/day/4) (Passport Processing): [code](day04/Day4.kt) - [tests](../../../test/kotlin/aoc2020/day04/Day4KtTest.kt)
+- [Day 5](https://adventofcode.com/2020/day/5) (Binary Boarding): [code](day05/Day5.kt) - [tests](../../../test/kotlin/aoc2020/day05/Day5KtTest.kt) - [seat map](day05/seatMap)
+- [Day 6](https://adventofcode.com/2020/day/6) (Custom Customs): [code](day06/Day6.kt) - [tests](../../../test/kotlin/aoc2020/day06/Day6KtTest.kt)
+- [Day 7](https://adventofcode.com/2020/day/7) (Handy Haversacks, a.k.a. A bag in a bag in a bag...): [code](day07/Day7.kt) - [tests](../../../test/kotlin/aoc2020/day07/Day7KtTest.kt) - visualisation: <img src="https://i.redd.it/gx6l9oavzp361.jpg" alt="Visualisation of Day 7" width="80"/>
+- [Day 8](https://adventofcode.com/2020/day/8) (Handheld Halting): [code](day08/Day8.kt) - [tests](../../../test/kotlin/aoc2020/day08/Day8KtTest.kt)   
+- [Day 9](https://adventofcode.com/2020/day/9) (Encoding Error): [code](day09/Day9.kt) - [tests](../../../test/kotlin/aoc2020/day09/Day9KtTest.kt)   
 - [Day 10](https://adventofcode.com/2020/day/10) (Adapter Array, a.k.a. Don't do this on a plane): [code](day10/Day10.kt) - [tests](../../../test/kotlin/aoc2020/day10/Day10KtTest.kt) - visual: <img src="day10/day10.jpg" alt="Visualisation of Day 10" width="100" /> <img src="day10/day10_2.jpg" alt="Visualisation of Day 10" width="150" />
 - [Day 11](https://adventofcode.com/2020/day/11) (Seating System): [code](day11/Day11.kt) - [tests](../../../test/kotlin/aoc2020/day11/Day11KtTest.kt) 
 - [Day 12](https://adventofcode.com/2020/day/12) (Rain Risk): [code](day12/Day12.kt) - [tests](../../../test/kotlin/aoc2020/day12/Day12KtTest.kt) 
