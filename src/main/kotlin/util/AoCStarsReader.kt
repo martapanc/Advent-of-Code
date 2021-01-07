@@ -15,10 +15,12 @@ class AoCStarsReader {
                 "![Java & Kotlin CI with Gradle](https://github.com/martapanc/Advent-of-Code/workflows/Java%20&%20Kotlin%20CI%20with%20Gradle/badge.svg)\n\n" +
                 "Collection of my solutions to the AoC challenges (2015-2020)\n\n\n" +
                 "## Quick links\n\n"
-        for ((year, stars) in getResults().entries) {
+        val results = getResults()
+        for ((year, stars) in results.entries) {
             val emojiYear = yearToEmojis(year)
             template += "- Advent of Code $emojiYear : [overview](src/main/kotlin/aoc$year/README.md) & [solutions](src/main/kotlin/aoc$year) - $stars / 50 ⭐️ \n"
         }
+        template += "&nbsp;".repeat(71) + "Total:  " + results.values.sum() + " / " + results.keys.count() * 50 + " ⭐"
 
         File("README.md").printWriter().use { out -> out.println(template) }
     }
@@ -26,9 +28,10 @@ class AoCStarsReader {
     private fun getResults(): Map<Int, Int> {
         val url = URL("https://aoc-data-api.herokuapp.com/stars")
         val map = mutableMapOf<Int, Int>()
+        print("\nSending 'GET' request to URL : $url; ")
         with(url.openConnection() as HttpURLConnection) {
-            requestMethod = "GET"  // optional default is GET
-            println("\nSent 'GET' request to URL : $url; Response Code : $responseCode")
+            requestMethod = "GET"
+            println("Response Code : $responseCode\")")
             val response = JSONArray(Scanner(inputStream).useDelimiter("'\\Z").next())
             for (item in response) {
                 val year = (item as JSONObject).get("year") as Int
