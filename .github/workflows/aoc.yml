@@ -17,6 +17,7 @@ jobs:
         with:
           url: "https://aoc-data-api.herokuapp.com/stars"
           method: 'GET'
+          timeout: 60000
 
       - name: Display output
         run: echo ${{join(steps.http_request.outputs.*, '\n')}}
