@@ -1,5 +1,5 @@
 # Advent of Code 
-![Kotlin CI with Gradle](https://github.com/martapanc/Advent-of-Code/workflows/Kotlin%20CI%20with%20Gradle/badge.svg)
+![Java & Kotlin CI with Gradle](https://github.com/martapanc/Advent-of-Code/workflows/Java%20&%20Kotlin%20CI%20with%20Gradle/badge.svg)
 
 Collection of my solutions to the AoC challenges (2015-2020)
 
