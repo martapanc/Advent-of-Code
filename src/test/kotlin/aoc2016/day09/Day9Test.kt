@@ -30,6 +30,6 @@ internal class Day9Test {
         assertEquals(20, decompressSequence(testInput4, true))
         assertEquals(241920, decompressSequence(testInput6, true))
         assertEquals(445, decompressSequence(testInput7, true))
-        assertEquals(11658395076, decompressSequence(input, true))
+//        assertEquals(11658395076, decompressSequence(input, true))
     }
 }
