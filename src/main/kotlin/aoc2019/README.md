@@ -1,7 +1,7 @@
-# Advent of Code 2019
+# 🎄 Advent of Code 2019 🎄
 
-| Day num | Title | Code | Tests | Tags |
-| ------- | ----- | ---- | ----- | ---- |
+| Day  | Title | Code | Tests | Tags |
+| ---- | ----- | ---- | ----- | ---- |
 | [Day 1](https://adventofcode.com/2019/day/1) | The Tyranny of the Rocket Equation | [code](day01/Day1.kt) | [tests](../../../test/kotlin/aoc2019/day01/Day1KtTest.kt) | module; division |
 | [Day 2](https://adventofcode.com/2019/day/2) | 1202 Program Alarm | [code](../../java/aoc2019/day02/Day2.java) | [tests](../../../test/kotlin/aoc2019/day02/Day2KtTest.kt) | Intcode; add; multiply |
 | [Day 3](https://adventofcode.com/2019/day/3) | Crossed Wires | [code](../../java/aoc2019/day03/Day3.java) | [tests](../../../test/java/aoc2019/day03/Day3Test.java) | Manhattan distance; 2d; intersection |
