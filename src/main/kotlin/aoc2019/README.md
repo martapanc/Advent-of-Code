@@ -12,7 +12,7 @@
 | [Day 8](https://adventofcode.com/2019/day/8) | Space Image Format | [code](../../java/aoc2019/day08/Day8.java) | [tests](../../../test/java/aoc2019/day08/Day8Test.java) | image composition; layers |
 | [Day 9](https://adventofcode.com/2019/day/9) | Sensor Boost | [code](day09/Day9.kt) | [tests](../../../test/kotlin/aoc2019/day09/Day9KtTest.kt) | Intcode; relative mode; offset |
 | [Day 10](https://adventofcode.com/2019/day/10) | Monitoring Station | [code](../../java/aoc2019/day10/Day10.java) | [tests](../../../test/java/aoc2019/day10/Day10Test.java) | radar; 2d; rotate & destroy asteroids |
-| [Day 11](https://adventofcode.com/2019/day/11) | Space Police | [code](../../java/aoc2019/day11/Day11.java) | [tests](../../../test/java/aoc2019/day11/Day11Test.java) | Intcode; moving robot; 2d; paint black&white |
+| [Day 11](https://adventofcode.com/2019/day/11) | Space Police | [code](day11/Day11.kt) | [tests](../../../test/kotlin/aoc2019/day11/Day11KtTest.kt) | Intcode; moving robot; 2d; paint black&white |
 | [Day 12](https://adventofcode.com/2019/day/12) | The N-Body Problem | [code](../../java/aoc2019/day12/Day12.java) | [tests](../../../test/java/aoc2019/day12/Day12Test.java) | orbits; position; velocity; 3d; loop |
 | [Day 13](https://adventofcode.com/2019/day/13) | Care Package | [code](../../java/aoc2019/day13/Day13.java) | [tests](../../../test/java/aoc2019/day13/Day13Test.java) | Intcode; arkanoid; walls & blocks |
 | [Day 14](https://adventofcode.com/2019/day/14) | Space Stoichiometry | [code](../../java/aoc2019/day14/Day14.java) | [tests](../../../test/java/aoc2019/day14/Day14Test.java) | chemicals; dependencies |
