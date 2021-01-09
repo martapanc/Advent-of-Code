@@ -6,7 +6,7 @@ import java.io.IOException
 import java.util.*
 
 
-fun readInput(input: String?): ArrayList<Long> {
+fun readInput(input: String): ArrayList<Long> {
     val list = ArrayList<Long>()
     val reader: BufferedReader
     try {
