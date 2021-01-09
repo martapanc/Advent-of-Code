@@ -6,9 +6,9 @@
 | [Day 2](https://adventofcode.com/2019/day/2) | 1202 Program Alarm | [code](day02/Day2.kt) | [tests](../../../test/kotlin/aoc2019/day02/Day2KtTest.kt) | Intcode; add; multiply |
 | [Day 3](https://adventofcode.com/2019/day/3) | Crossed Wires | [code](../../java/aoc2019/day03/Day3.java) | [tests](../../../test/java/aoc2019/day03/Day3Test.java) | Manhattan distance; 2d; intersection |
 | [Day 4](https://adventofcode.com/2019/day/4) | Secure Container | [code](../../java/aoc2019/day04/Day4.java) | [tests](../../../test/java/aoc2019/day04/Day4Test.java) | numeric password; validation rules; combinations |
-| [Day 5](https://adventofcode.com/2019/day/5) | Sunny with a Chance of Asteroids | [code](day05/Day5.java) | [tests](../../../test/java/aoc2019/day05/Day5Test.java) | Intcode; i/o; parameter mode; jump; less than |
+| [Day 5](https://adventofcode.com/2019/day/5) | Sunny with a Chance of Asteroids | [code](day05/Day5.kt) | [tests](../../../test/kotlin/aoc2019/day05/Day5KtTest.kt) | Intcode; i/o; parameter mode; jump; less than |
 | [Day 6](https://adventofcode.com/2019/day/6) | Universal orbit map | [code](../../java/aoc2019/day06/Day6.java) | [tests](../../../test/java/aoc2019/day06/Day6Test.java) | orbits; chain of dependencies |
-| [Day 7](https://adventofcode.com/2019/day/7) | Amplification Circuit | [code](day07/Day7.java) | [tests](../../../test/kotlin/aoc2019/day07/Day7KtTest.kt) | Intcode; amplifiers; thrusters; feedback loop | 
+| [Day 7](https://adventofcode.com/2019/day/7) | Amplification Circuit | [code](day07/Day7.kt) | [tests](../../../test/kotlin/aoc2019/day07/Day7KtTest.kt) | Intcode; amplifiers; thrusters; feedback loop | 
 | [Day 8](https://adventofcode.com/2019/day/8) | Space Image Format | [code](../../java/aoc2019/day08/Day8.java) | [tests](../../../test/java/aoc2019/day08/Day8Test.java) | image composition; layers |
 | [Day 9](https://adventofcode.com/2019/day/9) | Sensor Boost | [code](../../java/aoc2019/day09/Day9.java) | [tests](../../../test/java/aoc2019/day09/Day9Test.java) | Intcode; relative mode; offset |
 | [Day 10](https://adventofcode.com/2019/day/10) | Monitoring Station | [code](../../java/aoc2019/day10/Day10.java) | [tests](../../../test/java/aoc2019/day10/Day10Test.java) | radar; 2d; rotate & destroy asteroids |

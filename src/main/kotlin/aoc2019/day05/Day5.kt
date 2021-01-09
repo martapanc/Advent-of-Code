@@ -1,11 +1,48 @@
 package aoc2019.day05
 
-import java.lang.StringBuilder
-import java.util.ArrayList
-import java.util.HashMap
+import java.io.BufferedReader
+import java.io.FileReader
+import java.io.IOException
+import java.util.*
 
-fun processInput(numbers: List<Int>, input: Int): Int {
-    val mutableNumbers = ArrayList(numbers)
+
+// 1: sum values at addresses (1) and (2), stores result at address (3)
+// 2: multiply values at addresses (1) and (2), stores result at address (3)
+// 3: read input and save it at address (1)
+// 4: output value of address (1)
+// 5: (1) != 0 set the pointer to the value of (2)
+// 6: (1) == 0 set the pointer to the value of (2)
+// 7: ((1) < (2) ? store 1 : store 0 ) at value of (3)
+// 8: ((1) == (2) ? store 1 : store 0 ) at value of (3)
+// 0 = position mode
+// 1 = immediate mode
+// Parameters that an instruction writes to will never be in immediate mode.
+// PARAMETER MODE DETAILS:
+// - Immediate mode for 4 (104) should output the value of the parameter (e.g. 104,0 -> out: 0). Otherwise it should output the
+//      value at index 0 (e.g. 3,...,104,0 -> out: 3)
+// - 5,6: 105 - (1) and (2) can be in immediate mode
+// - 7,8: 1107 - only (1) and (2) can be in immediate mode
+// The pointer should increment based on the number of parameters (e.g. 4 for Codes 1 and 2, 2 for Codes 3 and 4),
+// except for 5 and 6 where the pointer is updated as described
+fun readInput(input: String): ArrayList<Int> {
+    val list = ArrayList<Int>()
+    val reader: BufferedReader
+    try {
+        reader = BufferedReader(FileReader(input))
+        var line = reader.readLine()
+        while (line != null) {
+            Arrays.stream(line.split(",").toTypedArray()).map { s: String -> s.toInt() }
+                .forEachOrdered { e: Int? -> list.add(e!!) }
+            line = reader.readLine()
+        }
+        reader.close()
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+    return list
+}
+
+fun processInput(numbers: ArrayList<Int>, input: Int): Int {
     var i = 0
     val outputBuilder = StringBuilder()
     while (i < numbers.size) {
@@ -13,7 +50,7 @@ fun processInput(numbers: List<Int>, input: Int): Int {
         if (opCode == 99) {
             break
         }
-        val output = processParameterMode(mutableNumbers, i, opCode, input)
+        val output = processParameterMode(numbers, i, opCode, input)
         outputBuilder.append(output.code)
         i += output.index
     }
