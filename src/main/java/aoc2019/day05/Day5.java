@@ -1,6 +1,10 @@
 package aoc2019.day05;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +31,23 @@ public class Day5 {
 
     // The pointer should increment based on the number of parameters (e.g. 4 for Codes 1 and 2, 2 for Codes 3 and 4),
     // except for 5 and 6 where the pointer is updated as described
+
+    public static ArrayList<Integer> readInput(String input) {
+        ArrayList<Integer> list = new ArrayList();
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader(input));
+            String line = reader.readLine();
+            while (line != null) {
+                Arrays.stream(line.split(",")).map(Integer::parseInt).forEachOrdered(list::add);
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     static int processInput(ArrayList<Integer> numbers, int input) {
         int i = 0;

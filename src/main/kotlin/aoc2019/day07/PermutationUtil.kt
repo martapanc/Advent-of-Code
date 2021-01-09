@@ -4,6 +4,7 @@ import aoc2019.day07.PermutationUtil
 import java.util.ArrayList
 
 internal object PermutationUtil {
+    @JvmStatic
     fun generatePermutations(array: String): ArrayList<String> {
         val permutations = ArrayList<String>()
         if (array.length == 0) {
