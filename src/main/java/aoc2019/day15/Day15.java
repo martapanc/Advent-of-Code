@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 
-import static aoc2019.day09.Day9.processParameterMode;
+import static aoc2019.day09.Day9Kt.processParameterMode;
 
 
 public class Day15 {

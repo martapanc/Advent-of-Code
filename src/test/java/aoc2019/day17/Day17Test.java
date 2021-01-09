@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static aoc2019.day09.Day9.readInput;
+import static aoc2019.day09.Day9Kt.readInput;
 import static aoc2019.day17.Day17.*;
 import static org.junit.jupiter.api.Assertions.*;
 

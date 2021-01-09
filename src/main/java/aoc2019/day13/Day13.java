@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static aoc2019.day09.Day9.processParameterMode;
+import static aoc2019.day09.Day9Kt.processParameterMode;
 
 
 public class Day13 {

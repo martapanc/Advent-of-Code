@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static aoc2019.day09.Day9.readInput;
+import static aoc2019.day09.Day9Kt.readInput;
 import static aoc2019.day13.Day13.printTileMap;
 import static aoc2019.day13.Day13.processInput;
 import static org.junit.jupiter.api.Assertions.assertEquals;

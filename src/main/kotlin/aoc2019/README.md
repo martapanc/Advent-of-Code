@@ -10,7 +10,7 @@
 | [Day 6](https://adventofcode.com/2019/day/6) | Universal orbit map | [code](../../java/aoc2019/day06/Day6.java) | [tests](../../../test/java/aoc2019/day06/Day6Test.java) | orbits; chain of dependencies |
 | [Day 7](https://adventofcode.com/2019/day/7) | Amplification Circuit | [code](day07/Day7.kt) | [tests](../../../test/kotlin/aoc2019/day07/Day7KtTest.kt) | Intcode; amplifiers; thrusters; feedback loop | 
 | [Day 8](https://adventofcode.com/2019/day/8) | Space Image Format | [code](../../java/aoc2019/day08/Day8.java) | [tests](../../../test/java/aoc2019/day08/Day8Test.java) | image composition; layers |
-| [Day 9](https://adventofcode.com/2019/day/9) | Sensor Boost | [code](../../java/aoc2019/day09/Day9.java) | [tests](../../../test/java/aoc2019/day09/Day9Test.java) | Intcode; relative mode; offset |
+| [Day 9](https://adventofcode.com/2019/day/9) | Sensor Boost | [code](day09/Day9.kt) | [tests](../../../test/kotlin/aoc2019/day09/Day9KtTest.kt) | Intcode; relative mode; offset |
 | [Day 10](https://adventofcode.com/2019/day/10) | Monitoring Station | [code](../../java/aoc2019/day10/Day10.java) | [tests](../../../test/java/aoc2019/day10/Day10Test.java) | radar; 2d; rotate & destroy asteroids |
 | [Day 11](https://adventofcode.com/2019/day/11) | Space Police | [code](../../java/aoc2019/day11/Day11.java) | [tests](../../../test/java/aoc2019/day11/Day11Test.java) | Intcode; moving robot; 2d; paint black&white |
 | [Day 12](https://adventofcode.com/2019/day/12) | The N-Body Problem | [code](../../java/aoc2019/day12/Day12.java) | [tests](../../../test/java/aoc2019/day12/Day12Test.java) | orbits; position; velocity; 3d; loop |

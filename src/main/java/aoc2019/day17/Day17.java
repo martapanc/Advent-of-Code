@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static aoc2019.day09.Day9.processParameterMode;
+import static aoc2019.day09.Day9Kt.processParameterMode;
 
 public class Day17 {
 
