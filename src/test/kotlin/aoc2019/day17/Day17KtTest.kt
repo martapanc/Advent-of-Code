@@ -3,41 +3,28 @@ package aoc2019.day17
 import aoc2019.day09.readInput
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import java.awt.Point
 import java.util.*
 
 internal class Day17KtTest {
 
     companion object {
-        private const val INPUT1 = "src/main/kotlin/aoc2019/day17/input1"
-        private val READ_INPUT: ArrayList<Long> = readInput(INPUT1)
-        private val INTERSECTIONS = getIntersections(processInput(READ_INPUT))
+        private const val INPUT_PATH = "src/main/kotlin/aoc2019/day17/input1"
+        private val READ_INPUT: ArrayList<Long> = readInput(INPUT_PATH)
+        val input = readInput(INPUT_PATH)
     }
 
     @Test
     fun testReadInput() {
-        println(READ_INPUT)
+        assertEquals(1505, input.size)
     }
 
     @Test
-    fun testProcessInput() {
-        processInput(READ_INPUT)
+    fun testComputeIntersections() {
+        assertEquals(7720, computeIntersections(input))
     }
 
     @Test
-    fun testPrintMap() {
-        printMap(processInput(READ_INPUT))
-    }
-
-    @Test
-    fun testGetIntersections() {
-        println(INTERSECTIONS)
-    }
-
-    @Test
-    fun testMultiplyCoordinates() {
-        val pointList = listOf(Point(2, 2), Point(4, 2), Point(4, 6), Point(4, 10))
-        assertEquals(76, multiplyCoordinatesAndSum(pointList))
-        assertEquals(7720, multiplyCoordinatesAndSum(INTERSECTIONS))
+    fun testProcessInputPart2() {
+//        assertEquals(123, processInputPart2(READ_INPUT, Pair(2, 0)))
     }
 }

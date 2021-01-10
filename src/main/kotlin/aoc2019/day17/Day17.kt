@@ -1,62 +1,75 @@
 package aoc2019.day17
 
-import aoc2019.day09.processParameterMode
-import java.awt.Point
-import java.util.*
+import aoc2019.commons.IntCodeProgram
+import aoc2019.day09.readInput
+import aoc2020.day20.Coord
+import util.readInputLineByLine
 
-fun processInput(numbers: ArrayList<Long>): Map<Point, String> {
-    var number = 0
-    var relativeBase = 0
-    val map: MutableMap<Point, String> = HashMap()
+fun readInput(path: String): List<Long> {
+    return readInputLineByLine(path).map { it.toLong() }
+}
+
+fun computeIntersections(input: List<Long>): Int {
+    val output = IntCodeProgram(input)
+    output.execute()
+    val outputMap = asciiListToMap(output)
+    val intersections = getIntersections(outputMap)
+    return multiplyCoordinatesAndSum(intersections)
+}
+
+private fun asciiListToMap(output: IntCodeProgram): MutableMap<Coord, Char> {
+    val outputMap = mutableMapOf<Coord, Char>()
     var x = 0
     var y = 0
-    while (number < numbers.size) {
-        val opCode = Math.toIntExact(numbers[number])
-        if (opCode == 99) {
-            break
+    for (char in output.outputToAscii())
+        if (char == '\n') {
+            y++
+            x = 0
+        } else {
+            outputMap[Coord(x, y)] = char
+            x++
         }
-        val output = processParameterMode(numbers, number, opCode, 0, relativeBase)
-        if (output.code!!.isNotEmpty())
-            when (output.code) {
-                "35" -> map[Point(x++, y)] = "#"
-                "46" -> map[Point(x++, y)] = "."
-                "10" -> {
-                    x = 0
-                    y++
-                }
-            }
-        if (output.relativeBase != 0) {
-            relativeBase = output.relativeBase
-        }
-        number += output.index
-    }
-    return map
+    return outputMap
 }
 
-fun printMap(map: Map<Point, String>) {
-    val maxX = map.keys.stream().mapToInt { p: Point -> p.x }.max().orElse(-1)
-    val maxY = map.keys.stream().mapToInt { p: Point -> p.y }.max().orElse(-1)
-    for (y in 0 until maxY) {
-        for (x in 0 until maxX) {
-            val p = map[Point(x, y)]
+
+fun processInputPart2(input: List<Long>, putValAtIndex: Pair<Long, Int>): Map<Coord, Char> {
+    val output = IntCodeProgram(input)
+    output.execute()
+    val outputMap = asciiListToMap(output)
+    return outputMap
+}
+
+fun printMap(map: Map<Coord, Char>) {
+    val maxX = map.keys.stream().mapToInt { p: Coord -> p.x }.max().orElse(-1)
+    val maxY = map.keys.stream().mapToInt { p: Coord -> p.y }.max().orElse(-1)
+    for (y in 0..maxY)
+        for (x in 0..maxX) {
+            val p = map[Coord(x, y)]
             print(p ?: " ")
         }
-        println()
-    }
 }
 
-fun getIntersections(map: Map<Point, String>): List<Point> {
+fun getIntersections(map: Map<Coord, Char>): List<Coord> {
     return map.entries
-        .filter { it.value == "#" }
+        .filter { it.value == '#' }
         .map { it.key }
-        .filter { current: Point ->
-            "#" == map[Point(current.x, current.y - 1)]
-                    && "#" == map[Point(current.x, current.y + 1)]
-                    && "#" == map[Point(current.x - 1, current.y)]
-                    && "#" == map[Point(current.x + 1, current.y)]
+        .filter { current: Coord ->
+            '#' == map[Coord(current.x, current.y - 1)]
+                    && '#' == map[Coord(current.x, current.y + 1)]
+                    && '#' == map[Coord(current.x - 1, current.y)]
+                    && '#' == map[Coord(current.x + 1, current.y)]
         }
 }
 
-fun multiplyCoordinatesAndSum(list: List<Point>): Int {
-    return list.map { p: Point -> p.x * p.y }.sum()
+fun multiplyCoordinatesAndSum(list: List<Coord>): Int {
+    return list.map { p: Coord -> p.x * p.y }.sum()
+}
+
+fun main() {
+    val input = readInput("src/main/kotlin/aoc2019/day17/input1")
+    input[0] = 2
+    val output = IntCodeProgram(input)
+    output.execute()
+    printMap(asciiListToMap(output))
 }
