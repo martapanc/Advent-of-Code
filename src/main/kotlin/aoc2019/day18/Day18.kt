@@ -2,6 +2,8 @@ package aoc2019.day18
 
 import aoc2020.day20.Coord
 
+//https://www.reddit.com/r/adventofcode/comments/ehu7a7/2019_day_18_part_1/
+
 fun navigateMaze(grid: Map<Coord, Char>): Int {
     val steps = 0
     val initial = getCoordOfItem('@', grid)!!
