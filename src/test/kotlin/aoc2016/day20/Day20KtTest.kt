@@ -17,4 +17,9 @@ internal class Day20KtTest {
     fun testFindMinimumIPValue() {
         assertEquals(14975795, findMinimumIPValue(input))
     }
+
+    @Test
+    fun testCountValidIps() {
+        assertEquals(101, countValidIps(input))
+    }
 }

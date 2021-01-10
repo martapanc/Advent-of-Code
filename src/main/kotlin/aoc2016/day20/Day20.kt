@@ -12,18 +12,28 @@ fun readInputToRangeList(path: String): List<Pair<Long, Long>> {
 }
 
 fun findMinimumIPValue(list: List<Pair<Long, Long>>): Long {
+    return findValidIps(list).first()
+}
+
+fun countValidIps(list: List<Pair<Long, Long>>): Int {
+    return findValidIps(list).count()
+}
+
+private fun findValidIps(list: List<Pair<Long, Long>>): MutableList<Long> {
+    val validIps = mutableListOf<Long>()
     val sorted = list.sortedBy { it.first }
     var currentRangeMax = sorted[0].second
     for (range in sorted) {
         when {
             range.first == currentRangeMax + 1 -> currentRangeMax = range.second
-            range.first == currentRangeMax + 2 -> return currentRangeMax + 1
+            range.first == currentRangeMax + 2 -> {
+                validIps.add(currentRangeMax + 1)
+                currentRangeMax = range.second
+            }
             range.first < currentRangeMax -> {
-                if (range.second > currentRangeMax) {
-                    currentRangeMax = range.second
-                }
+                if (range.second > currentRangeMax) currentRangeMax = range.second
             }
         }
     }
-    return 0L
+    return validIps
 }
