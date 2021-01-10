@@ -1,5 +1,6 @@
 package aoc2016.day21
 
+import aoc2019.day07.PermutationUtil
 import util.readInputLineByLine
 
 fun readInputToListAndCompute(path: String, input: String): String {
@@ -8,6 +9,17 @@ fun readInputToListAndCompute(path: String, input: String): String {
         output = processInstruction(line, output)
     }
     return output
+}
+
+fun readInputToListAndComputeReversed(path: String, scrambled: String): String {
+    val generatePermutations = PermutationUtil.generatePermutations(scrambled)
+    for (permutation in generatePermutations) {
+        val output = readInputToListAndCompute(path, permutation)
+        if (output == scrambled) {
+            return permutation
+        }
+    }
+    return ""
 }
 
 fun processInstruction(line: String, input: String): String {

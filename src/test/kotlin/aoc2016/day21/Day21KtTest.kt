@@ -11,6 +11,13 @@ internal class Day21KtTest {
     fun readInputToListAndCompute() {
         assertEquals("decab", readInputToListAndCompute("${basePath}testInput", "abcde"))
         assertEquals("gbhcefad", readInputToListAndCompute("${basePath}input", "abcdefgh"))
+        assertEquals("fbgdceah", readInputToListAndCompute("${basePath}input", "gahedfcb"))
+    }
+
+    @Test
+    fun readInputToListAndComputeReversed() {
+        assertEquals("gahedfcb", readInputToListAndComputeReversed("${basePath}input", "fbgdceah"))
+//        assertEquals("abcdefgh", readInputToListAndComputeReversed("${basePath}input", "gbhcefad"))
     }
 
     @Test
