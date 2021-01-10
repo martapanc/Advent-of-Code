@@ -7,6 +7,10 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 
+fun main() {
+    AoCStarsReader().updateReadme()
+}
+
 class AoCStarsReader {
 
     fun updateReadme() {
@@ -64,9 +68,4 @@ class AoCStarsReader {
         }
         return string
     }
-}
-
-
-fun main() {
-    AoCStarsReader().updateReadme()
 }
