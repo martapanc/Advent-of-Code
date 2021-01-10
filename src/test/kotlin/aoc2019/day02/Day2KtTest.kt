@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test
 
 internal class Day2KtTest {
     companion object {
-        private const val INPUT1 = "src/main/java/aoc2019/day02/input1"
-        private const val INPUT2 = "src/main/java/aoc2019/day02/input2"
-        private const val INPUT3 = "src/main/java/aoc2019/day02/input3"
-        private const val INPUT4 = "src/main/java/aoc2019/day02/input4"
-        private const val INPUT5 = "src/main/java/aoc2019/day02/input5"
-        private const val INPUT1_2 = "src/main/java/aoc2019/day02/input1_2"
+        private const val INPUT1 = "src/main/kotlin/aoc2019/day02/input1"
+        private const val INPUT2 = "src/main/kotlin/aoc2019/day02/input2"
+        private const val INPUT3 = "src/main/kotlin/aoc2019/day02/input3"
+        private const val INPUT4 = "src/main/kotlin/aoc2019/day02/input4"
+        private const val INPUT5 = "src/main/kotlin/aoc2019/day02/input5"
+        private const val INPUT1_2 = "src/main/kotlin/aoc2019/day02/input1_2"
     }
 
     @Test

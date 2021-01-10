@@ -3,7 +3,7 @@ package aoc2019.day15;
 
 import org.junit.jupiter.api.Test;
 
-import static aoc2019.day09.Day9.readInput;
+import static aoc2019.day09.Day9Kt.readInput;
 import static aoc2019.day15.Day15.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
