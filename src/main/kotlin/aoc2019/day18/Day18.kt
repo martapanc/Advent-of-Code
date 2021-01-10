@@ -2,6 +2,13 @@ package aoc2019.day18
 
 import aoc2020.day20.Coord
 
+fun navigateMaze(grid: Map<Coord, Char>): Int {
+    val steps = 0
+    val initial = getCoordOfItem('@', grid)!!
+    val (reachableDoors, reachableKeys) = findReachableItems(initial, grid)
+
+    return steps
+}
 
 fun findRealDistanceToItem(initial: Coord, targetItem: Char, grid: Map<Coord, Char>): Int {
     val directions = listOf(Coord(0, 1), Coord(0, -1), Coord(1, 0), Coord(-1, 0))
@@ -52,17 +59,13 @@ fun findReachableItems(initial: Coord, grid: Map<Coord, Char>): Pair<List<Item>,
         }
         edge = newEdge
     }
-    return Pair(reachableDoors, reachableKeys)
+    return Pair(reachableDoors.sortedBy { it.char }, reachableKeys.sortedBy { it.char })
 }
 
-data class ReachableItem(val distance: Int, val isReachable: Boolean)
+fun isDoor(item: Char): Boolean = "[A-Z]".toRegex().matches(item.toString())
 
-fun isDoor(item: Char): Boolean {
-    return "[A-Z]".toRegex().matches(item.toString())
-}
+fun isKey(item: Char): Boolean = "[a-z]".toRegex().matches(item.toString())
 
-fun isKey(item: Char): Boolean {
-    return "[a-z]".toRegex().matches(item.toString())
-}
+fun getCoordOfItem(item: Char, grid: Map<Coord, Char>): Coord? = grid.entries.firstOrNull { it.value == item }?.key
 
 data class Item(val coord: Coord, val char: Char)

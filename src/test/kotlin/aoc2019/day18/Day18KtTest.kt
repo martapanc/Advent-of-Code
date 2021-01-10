@@ -47,13 +47,13 @@ internal class Day18KtTest {
     fun testFindReachableItems() {
         val keys = listOf('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
         val doors = keys.map { it.toUpperCase() }
-        assertEquals(doors, findReachableItems(Coord(8, 4), testInput3).first.map { it.char }.sorted())
-        assertEquals(keys, findReachableItems(Coord(8, 4), testInput3).second.map { it.char }.sorted())
+        assertEquals(doors, findReachableItems(Coord(8, 4), testInput3).first.map { it.char })
+        assertEquals(keys, findReachableItems(Coord(8, 4), testInput3).second.map { it.char })
 
-        assertEquals(listOf('B', 'C'), findReachableItems(Coord(6, 3), testInput2).first.map { it.char }.sorted())
-        assertEquals(listOf('a', 'b'), findReachableItems(Coord(6, 3), testInput2).second.map { it.char }.sorted())
+        assertEquals(listOf('B', 'C'), findReachableItems(Coord(6, 3), testInput2).first.map { it.char })
+        assertEquals(listOf('a', 'b'), findReachableItems(Coord(6, 3), testInput2).second.map { it.char })
 
-        assertEquals(listOf('D', 'K', 'Q', 'R', 'S', 'T', 'U', 'V', 'X'), findReachableItems(Coord(40, 40), input).first.map { it.char }.sorted())
-        assertEquals(listOf('d', 'm', 'o', 'q', 'r', 'v'), findReachableItems(Coord(40, 40), input).second.map { it.char }.sorted())
+        assertEquals(listOf('D', 'K', 'Q', 'R', 'S', 'T', 'U', 'V', 'X'), findReachableItems(Coord(40, 40), input).first.map { it.char })
+        assertEquals(listOf('d', 'm', 'o', 'q', 'r', 'v'), findReachableItems(Coord(40, 40), input).second.map { it.char })
     }
 }

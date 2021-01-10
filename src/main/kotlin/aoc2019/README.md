@@ -19,7 +19,7 @@
 | [Day 15](https://adventofcode.com/2019/day/15) | Oxygen System | [code](../../java/aoc2019/day15/Day15.java) | [tests](../../../test/java/aoc2019/day15/Day15Test.java) | Intcode; moving robot; walls & blocks; directions; 2d; flooding |
 | [Day 16](https://adventofcode.com/2019/day/16) | Flawed Frequency Transmission | [code](day16/Day16.kt) | [tests](../../../test/kotlin/aoc2019/day16/Day16KtTest.kt) | i/o; binaries; encoding |
 | [Day 17](https://adventofcode.com/2019/day/17) | Set and Forget | [code](day17/Day17.kt) | [tests](../../../test/kotlin/aoc2019/day17/Day17KtTest.kt) | Intcode |
-| [Day 18](https://adventofcode.com/2019/day/18) | Many-Worlds Interpretation | 
+| [Day 18](https://adventofcode.com/2019/day/18) | Many-Worlds Interpretation | [code](day18/Day18.kt) | [tests](../../../test/kotlin/aoc2019/day18/Day18KtTest.kt) | maze; exploration; 2d; doors & keys |
 | [Day 19](https://adventofcode.com/2019/day/19) | Tractor Beam | | | Intcode |
 | [Day 20](https://adventofcode.com/2019/day/20) | Donut Maze | 
 | [Day 21](https://adventofcode.com/2019/day/21) | Springdroid Adventure | | | Intcode |
