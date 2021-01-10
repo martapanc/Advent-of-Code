@@ -14,11 +14,11 @@
 | [Day 10](https://adventofcode.com/2019/day/10) | Monitoring Station | [code](../../java/aoc2019/day10/Day10.java) | [tests](../../../test/java/aoc2019/day10/Day10Test.java) | radar; 2d; rotate & destroy asteroids |
 | [Day 11](https://adventofcode.com/2019/day/11) | Space Police | [code](day11/Day11.kt) | [tests](../../../test/kotlin/aoc2019/day11/Day11KtTest.kt) | Intcode; moving robot; 2d; paint black&white |
 | [Day 12](https://adventofcode.com/2019/day/12) | The N-Body Problem | [code](../../java/aoc2019/day12/Day12.java) | [tests](../../../test/java/aoc2019/day12/Day12Test.java) | orbits; position; velocity; 3d; loop |
-| [Day 13](https://adventofcode.com/2019/day/13) | Care Package | [code](day13/Day13.java) | [tests](../../../test/java/aoc2019/day13/Day13Test.java) | Intcode; arkanoid; walls & blocks |
+| [Day 13](https://adventofcode.com/2019/day/13) | Care Package | [code](day13/Day13.kt) | [tests](../../../test/kotlin/aoc2019/day13/Day13KtTest.kt) | Intcode; arkanoid; walls & blocks |
 | [Day 14](https://adventofcode.com/2019/day/14) | Space Stoichiometry | [code](../../java/aoc2019/day14/Day14.java) | [tests](../../../test/java/aoc2019/day14/Day14Test.java) | chemicals; dependencies |
 | [Day 15](https://adventofcode.com/2019/day/15) | Oxygen System | [code](../../java/aoc2019/day15/Day15.java) | [tests](../../../test/java/aoc2019/day15/Day15Test.java) | Intcode; moving robot; walls & blocks; directions; 2d; flooding |
 | [Day 16](https://adventofcode.com/2019/day/16) | Flawed Frequency Transmission | [code](day16/Day16.kt) | [tests](../../../test/kotlin/aoc2019/day16/Day16KtTest.kt) | i/o; binaries; encoding |
-| [Day 17](https://adventofcode.com/2019/day/17) | Set and Forget | | | Intcode |
+| [Day 17](https://adventofcode.com/2019/day/17) | Set and Forget | [code](day17/Day17.kt) | [tests](../../../test/kotlin/aoc2019/day17/Day17KtTest.kt) | Intcode |
 | [Day 18](https://adventofcode.com/2019/day/18) | Many-Worlds Interpretation | 
 | [Day 19](https://adventofcode.com/2019/day/19) | Tractor Beam | | | Intcode |
 | [Day 20](https://adventofcode.com/2019/day/20) | Donut Maze | 
