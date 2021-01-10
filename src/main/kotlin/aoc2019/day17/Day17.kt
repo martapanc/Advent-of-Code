@@ -1,7 +1,6 @@
 package aoc2019.day17
 
 import aoc2019.commons.IntCodeProgram
-import aoc2019.day09.readInput
 import aoc2020.day20.Coord
 import util.readInputLineByLine
 
@@ -13,8 +12,7 @@ fun computeIntersections(input: List<Long>): Int {
     val output = IntCodeProgram(input)
     output.execute()
     val outputMap = asciiListToMap(output)
-    val intersections = getIntersections(outputMap)
-    return multiplyCoordinatesAndSum(intersections)
+    return multiplyCoordinatesAndSum(getIntersections(outputMap))
 }
 
 private fun asciiListToMap(output: IntCodeProgram): MutableMap<Coord, Char> {
@@ -32,22 +30,19 @@ private fun asciiListToMap(output: IntCodeProgram): MutableMap<Coord, Char> {
     return outputMap
 }
 
-
-fun processInputPart2(input: List<Long>, putValAtIndex: Pair<Long, Int>): Map<Coord, Char> {
+fun processInputPart2(input: List<Long>): Long {
     val output = IntCodeProgram(input)
+    output.mem[0] = 2
     output.execute()
-    val outputMap = asciiListToMap(output)
-    return outputMap
-}
 
-fun printMap(map: Map<Coord, Char>) {
-    val maxX = map.keys.stream().mapToInt { p: Coord -> p.x }.max().orElse(-1)
-    val maxY = map.keys.stream().mapToInt { p: Coord -> p.y }.max().orElse(-1)
-    for (y in 0..maxY)
-        for (x in 0..maxX) {
-            val p = map[Coord(x, y)]
-            print(p ?: " ")
-        }
+    val routinesAndFunctions = readInputLineByLine("src/main/kotlin/aoc2019/day17/directionString")
+
+    val (mainRoutine, functions) = Pair(routinesAndFunctions[4], routinesAndFunctions[5])
+    output.inputAscii(mainRoutine)
+    output.inputAscii(functions.split("; "))
+    output.inputAscii("n")
+    output.execute()
+    return output.output.removeAt(output.output.size - 1)
 }
 
 fun getIntersections(map: Map<Coord, Char>): List<Coord> {
@@ -64,12 +59,4 @@ fun getIntersections(map: Map<Coord, Char>): List<Coord> {
 
 fun multiplyCoordinatesAndSum(list: List<Coord>): Int {
     return list.map { p: Coord -> p.x * p.y }.sum()
-}
-
-fun main() {
-    val input = readInput("src/main/kotlin/aoc2019/day17/input1")
-    input[0] = 2
-    val output = IntCodeProgram(input)
-    output.execute()
-    printMap(asciiListToMap(output))
 }
