@@ -7,6 +7,7 @@ import java.awt.Point
 import java.util.*
 
 internal class Day17KtTest {
+
     companion object {
         private const val INPUT1 = "src/main/kotlin/aoc2019/day17/input1"
         private val READ_INPUT: ArrayList<Long> = readInput(INPUT1)
@@ -35,12 +36,8 @@ internal class Day17KtTest {
 
     @Test
     fun testMultiplyCoordinates() {
-        val pointList: MutableList<Point> = ArrayList()
-        pointList.add(Point(2, 2))
-        pointList.add(Point(4, 2))
-        pointList.add(Point(4, 6))
-        pointList.add(Point(4, 10))
-        assertEquals(76, multiplyCoordinates(pointList))
-        assertEquals(7720, multiplyCoordinates(INTERSECTIONS))
+        val pointList = listOf(Point(2, 2), Point(4, 2), Point(4, 6), Point(4, 10))
+        assertEquals(76, multiplyCoordinatesAndSum(pointList))
+        assertEquals(7720, multiplyCoordinatesAndSum(INTERSECTIONS))
     }
 }
