@@ -1,4 +1,4 @@
-# 🎄 AoC 2020 🎅
+# 🌠 Advent of Code 2020 ⭐️
 - [Day 1](https://adventofcode.com/2020/day/1) (Report Repair): [code](day01/Day1.kt) - [tests](../../../test/kotlin/aoc2020/day01/Day1KtTest.kt)
 - [Day 2](https://adventofcode.com/2020/day/2) (Password Philosophy): [code](day02/Day2.kt) - [tests](../../../test/kotlin/aoc2020/day02/Day2KtTest.kt)
 - [Day 3](https://adventofcode.com/2020/day/3) (Toboggan Trajectory): [code](day03/Day3.kt) - [tests](../../../test/kotlin/aoc2020/day03/Day3KtTest.kt)

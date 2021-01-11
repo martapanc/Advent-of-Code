@@ -1,4 +1,4 @@
-# Advent of Code 2015
+# 🦌 Advent of Code 2015 🛷
 
 - [Day 6](https://adventofcode.com/2015/day/6) (Probably a Fire Hazard): [code](day06/Day6.kt) - [tests](../../../test/kotlin/aoc2015/day06/Day6KtTest.kt)
 - [Day 9](https://adventofcode.com/2015/day/9) (All in a Single Night): [code](day09/Day9.kt) - [tests](../../../test/kotlin/aoc2015/day09/Day9KtTest.kt)

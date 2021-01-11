@@ -1,4 +1,4 @@
-# Advent of Code 2018
+# 🎁 Advent of Code 2018 🌟
 
 - [Day 1](https://adventofcode.com/2018/day/1) (Chronal Calibration): [code](../../java/aoc2018/day01/Day1.java) - [tests](../../../test/java/aoc2018/day01/Day1Test.java)
 - [Day 2](https://adventofcode.com/2018/day/2) (Inventory Management System): [code](../../java/aoc2018/day02/Day2.java) - [tests](../../../test/java/aoc2018/day02/Day2Test.java)
