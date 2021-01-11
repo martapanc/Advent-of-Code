@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import util.readInputLineByLine
 
-internal class Day9Test {
+internal class Day9KtTest {
 
     private val testInput1 = "A(1x5)BC"
     private val testInput2 = "(3x3)XYZ"
