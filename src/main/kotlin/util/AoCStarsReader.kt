@@ -23,7 +23,7 @@ class AoCStarsReader {
         for ((year, stars) in results.entries) {
             val emojiYear = yearToEmojis(year)
             val perc = percentage(stars, 50)
-            template += "- Advent of Code $emojiYear : [overview](src/main/kotlin/aoc$year/README.md) & [solutions](src/main/kotlin/aoc$year) - $stars / 50 ⭐️  - ![Progress](https://progress-bar.dev/$perc/) \n"
+            template += "- Advent of Code $emojiYear : [overview](src/main/kotlin/aoc$year/README.md) & [solutions](src/main/kotlin/aoc$year) - $stars / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/$perc/) \n"
         }
         val sum = results.values.sum()
         val total = results.keys.count() * 50
