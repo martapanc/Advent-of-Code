@@ -22,12 +22,19 @@ class AoCStarsReader {
         val results = getResults()
         for ((year, stars) in results.entries) {
             val emojiYear = yearToEmojis(year)
-            template += "- Advent of Code $emojiYear : [overview](src/main/kotlin/aoc$year/README.md) & [solutions](src/main/kotlin/aoc$year) - $stars / 50 ⭐️ \n"
+            val perc = percentage(stars, 50)
+            template += "- Advent of Code $emojiYear : [overview](src/main/kotlin/aoc$year/README.md) & [solutions](src/main/kotlin/aoc$year) - $stars / 50 ⭐️ - ![Progress](https://progress-bar.dev/$perc/) \n"
         }
-        template += "\n Total:  " + results.values.sum() + " / " + results.keys.count() * 50 + " ⭐"
+        val sum = results.values.sum()
+        val total = results.keys.count() * 50
+        template += "\n Total:  $sum / $total ⭐"
+        val totalPerc = percentage(sum, total)
+        template += "\n ![Progress](https://progress-bar.dev/$totalPerc/)"
 
         File("README.md").printWriter().use { out -> out.println(template) }
     }
+
+    private fun percentage(stars: Int, total: Int) = (stars.toDouble() / total * 100).toInt()
 
     private fun getResults(): Map<Int, Int> {
         val url = URL("https://aoc-data-api.herokuapp.com/stars")
