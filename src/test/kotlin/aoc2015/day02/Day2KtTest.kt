@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.*
 
 internal class Day2KtTest {
 
-    private val input = readInputToList("src/main/kotlin/aoc2015/day2/input")
+    private val input = readInputToList("src/main/kotlin/aoc2015/day02/input")
 
     @Test
     fun testReadInputToList() {
