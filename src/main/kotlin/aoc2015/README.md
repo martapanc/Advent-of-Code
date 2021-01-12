@@ -4,6 +4,7 @@
 | ---- | ----- | ---- | ----- | ---- |
 | [Day 6](https://adventofcode.com/2015/day/6)   | Probably a Fire Hazard       | [code](day06/Day6.kt)  | [tests](../../../test/kotlin/aoc2015/day06/Day6KtTest.kt)  | light status; switch on and off           |
 | [Day 9](https://adventofcode.com/2015/day/9)   | All in a Single Night        | [code](day09/Day9.kt)  | [tests](../../../test/kotlin/aoc2015/day09/Day9KtTest.kt)  | shortest trip; permutations               |
+| [Day 10](https://adventofcode.com/2015/day/10) | Elves Look, Elves Say        | [code](day10/Day10.kt) | [tests](../../../test/kotlin/aoc2015/day10/Day10KtTest.kt) | look-and-say; 11 = 21                     |
 | [Day 11](https://adventofcode.com/2015/day/11) | Corporate Policy             | [code](day11/Day11.kt) | [tests](../../../test/kotlin/aoc2015/day11/Day11KtTest.kt) | password; validation rules; regex         |
 | [Day 12](https://adventofcode.com/2015/day/12) | JSAbacusFramework.io         | [code](day12/Day12.kt) | [tests](../../../test/kotlin/aoc2015/day12/Day12KtTest.kt) | read json recursively                     |
 | [Day 13](https://adventofcode.com/2015/day/13) | Knights of the Dinner Table  | [code](day13/Day13.kt) | [tests](../../../test/kotlin/aoc2015/day13/Day13KtTest.kt) | permutations; people circle; happiness    |

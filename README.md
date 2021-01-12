@@ -11,8 +11,8 @@ Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2
 - Advent of Code 2️⃣0️⃣1️⃣8️⃣ : [overview](src/main/kotlin/aoc2018/README.md) & [solutions](src/main/kotlin/aoc2018) - 35 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/70/) 
 - Advent of Code 2️⃣0️⃣1️⃣7️⃣ : [overview](src/main/kotlin/aoc2017/README.md) & [solutions](src/main/kotlin/aoc2017) - 18 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/36/) 
 - Advent of Code 2️⃣0️⃣1️⃣6️⃣ : [overview](src/main/kotlin/aoc2016/README.md) & [solutions](src/main/kotlin/aoc2016) - 18 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/36/) 
-- Advent of Code 2️⃣0️⃣1️⃣5️⃣ : [overview](src/main/kotlin/aoc2015/README.md) & [solutions](src/main/kotlin/aoc2015) - 15 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/30/) 
+- Advent of Code 2️⃣0️⃣1️⃣5️⃣ : [overview](src/main/kotlin/aoc2015/README.md) & [solutions](src/main/kotlin/aoc2015) - 17 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/34/) 
 
- Total:  173 / 300 ⭐
+ Total:  175 / 300 ⭐
 
- ![Progress](https://progress-bar.dev/57/)
+ ![Progress](https://progress-bar.dev/58/)
