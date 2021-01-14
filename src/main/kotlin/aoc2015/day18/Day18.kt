@@ -1,0 +1,31 @@
+package aoc2015.day18
+
+import aoc2020.day20.Coord
+
+fun playGameOfLights(inputMap: Map<Coord, Char>, repeat: Int = 1): Int {
+    var map = inputMap
+    repeat(repeat) {
+        val mapCopy = mutableMapOf<Coord, Char>()
+        for (entry in map.entries) {
+            val onCount = getNeighbors(entry.key, map).count { it == '#' }
+            when (entry.value) {
+                '#' -> mapCopy[entry.key] = if (onCount == 2 || onCount == 3) '#' else '.'
+                '.' -> mapCopy[entry.key] = if (onCount == 3) '#' else '.'
+            }
+        }
+        map = mapCopy
+    }
+    return map.values.count { it == '#' }
+}
+
+fun getNeighbors(light: Coord, map: Map<Coord, Char>): List<Char> {
+    val deltaCoords = listOf(
+        Coord(-1, -1), Coord(0, -1), Coord(1, -1),
+        Coord(-1, 0), Coord(1, 0),
+        Coord(-1, 1), Coord(0, 1), Coord(1, 1)
+    )
+    return deltaCoords
+        .map { Coord(light.x + it.x, light.y + it.y) }
+        .filter { map[it] != null }
+        .map { map[it]!! }
+}
