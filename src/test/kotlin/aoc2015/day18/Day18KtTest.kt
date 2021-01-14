@@ -21,4 +21,11 @@ internal class Day18KtTest {
         assertEquals(4, playGameOfLights(testInput, 4))
         assertEquals(814, playGameOfLights(input, 100))
     }
+
+    @Test
+    fun testPlayGameOfLightsPart2() {
+        assertEquals(18, playGameOfLights(testInput, stuckCorners = true))
+        assertEquals(17, playGameOfLights(testInput, 5, true))
+        assertEquals(924, playGameOfLights(input, 100,true))
+    }
 }
