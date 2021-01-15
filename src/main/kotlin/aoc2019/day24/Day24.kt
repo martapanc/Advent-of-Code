@@ -1,9 +1,10 @@
 package aoc2019.day24
 
 import aoc2020.day11.mapToString
+import aoc2020.day20.Coord
 import kotlin.math.pow
 
-fun runRounds(map: Map<Pair<Int, Int>, Char>): Long {
+fun playGameOfBugs(map: Map<Coord, Char>): Long {
     var finalMap = computeRound(map)
     var mapString = mapToString(map)
     val listOfLayouts = mutableListOf<String>()
@@ -23,8 +24,12 @@ fun runRounds(map: Map<Pair<Int, Int>, Char>): Long {
     return biodiversitySum
 }
 
-fun computeRound(inputMap: Map<Pair<Int, Int>, Char>): Map<Pair<Int, Int>, Char> {
-    val finalMap = mutableMapOf<Pair<Int, Int>, Char>()
+fun playMultilayerGameOfBugs(initialMap: Map<Coord, Char>): Long {
+    return -1
+}
+
+fun computeRound(inputMap: Map<Coord, Char>): Map<Coord, Char> {
+    val finalMap = mutableMapOf<Coord, Char>()
     for (entry in inputMap.entries)
         when (entry.value) {
             '.' -> {
@@ -39,20 +44,20 @@ fun computeRound(inputMap: Map<Pair<Int, Int>, Char>): Map<Pair<Int, Int>, Char>
     return finalMap
 }
 
-fun areThereOneOrTwoAdjacentBugs(entry: Map.Entry<Pair<Int, Int>, Char>, map: Map<Pair<Int, Int>, Char>): Boolean {
+fun areThereOneOrTwoAdjacentBugs(entry: Map.Entry<Coord, Char>, map: Map<Coord, Char>): Boolean {
     val count = getAdjacentSpacesContent(entry, map).count { it == '#' }
     return count == 1 || count == 2
 }
 
-fun isThereOneAdjacentBug(entry: Map.Entry<Pair<Int, Int>, Char>, map: Map<Pair<Int, Int>, Char>): Boolean {
+fun isThereOneAdjacentBug(entry: Map.Entry<Coord, Char>, map: Map<Coord, Char>): Boolean {
     return getAdjacentSpacesContent(entry, map).count { it == '#' } == 1
 }
 
-fun getAdjacentSpacesContent(space: Map.Entry<Pair<Int, Int>, Char>, map: Map<Pair<Int, Int>, Char>): List<Char> {
+fun getAdjacentSpacesContent(space: Map.Entry<Coord, Char>, map: Map<Coord, Char>): List<Char> {
     val adjacentSpacesContent = mutableListOf<Char>()
-    val adjacentCoordinates = listOf(Pair(0, 1), Pair(0, -1), Pair(1, 0), Pair(-1, 0))
-    adjacentCoordinates.mapNotNullTo(adjacentSpacesContent) {
-        map[Pair(space.key.first + it.first, space.key.second + it.second)]
+    val deltas = listOf(Coord(0, 1), Coord(0, -1), Coord(1, 0), Coord(-1, 0))
+    deltas.mapNotNullTo(adjacentSpacesContent) {
+        map[Coord(space.key.x + it.x, space.key.y + it.y)]
     }
     return adjacentSpacesContent
 }

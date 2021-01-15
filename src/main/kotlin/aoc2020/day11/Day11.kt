@@ -1,23 +1,8 @@
 package aoc2020.day11
 
-import java.io.File
+import aoc2020.day20.Coord
 
-fun readInputToMap(path: String): Map<Pair<Int, Int>, Char> {
-    val lineList = mutableListOf<String>()
-    File(path).inputStream().bufferedReader().forEachLine { lineList.add(it) }
-    val inputMap = mutableMapOf<Pair<Int, Int>, Char>()
-    var x = 0
-    for ((y, line) in lineList.withIndex()) {
-        line.forEach { char ->
-            inputMap[Pair(x, y)] = char
-            x++
-        }
-        x = 0
-    }
-    return inputMap
-}
-
-fun runRounds(map: Map<Pair<Int, Int>, Char>, isPart1: Boolean): Int {
+fun runRounds(map: Map<Coord, Char>, isPart1: Boolean): Int {
     var finalMap = computeRound(map, isPart1)
     var mapString = mapToString(map)
     var finalMapString = mapToString(finalMap)
@@ -29,10 +14,10 @@ fun runRounds(map: Map<Pair<Int, Int>, Char>, isPart1: Boolean): Int {
     return finalMapString.count { it == '#' }
 }
 
-fun computeRound(inputMap: Map<Pair<Int, Int>, Char>, isPart1: Boolean): Map<Pair<Int, Int>, Char> {
+fun computeRound(inputMap: Map<Coord, Char>, isPart1: Boolean): Map<Coord, Char> {
     val emptySeatMethod = if (isPart1) ::areAdjacentSeatsFree else ::areVisibleSeatsFree
     val occupiedSeatMethod = if (isPart1) ::areFourOrMoreAdjacentSeatsOccupied else ::areFiveOrMoreVisibleSeatsOccupied
-    val finalMap = mutableMapOf<Pair<Int, Int>, Char>()
+    val finalMap = mutableMapOf<Coord, Char>()
     for (entry in inputMap.entries)
         when (entry.value) {
             'L' -> {
@@ -48,63 +33,63 @@ fun computeRound(inputMap: Map<Pair<Int, Int>, Char>, isPart1: Boolean): Map<Pai
     return finalMap
 }
 
-private fun areAdjacentSeatsFree(seat: Map.Entry<Pair<Int, Int>, Char>, map: Map<Pair<Int, Int>, Char>): Boolean {
+private fun areAdjacentSeatsFree(seat: Map.Entry<Coord, Char>, map: Map<Coord, Char>): Boolean {
     return getAdjacentSeatsContent(seat, map).all { it == 'L' || it == '.' }
 }
 
-private fun areFourOrMoreAdjacentSeatsOccupied(seat: Map.Entry<Pair<Int, Int>, Char>, map: Map<Pair<Int, Int>, Char>): Boolean {
+private fun areFourOrMoreAdjacentSeatsOccupied(seat: Map.Entry<Coord, Char>, map: Map<Coord, Char>): Boolean {
     return getAdjacentSeatsContent(seat, map).count { it == '#' } >= 4
 }
 
-private fun getAdjacentSeatsContent(seat: Map.Entry<Pair<Int, Int>, Char>, map: Map<Pair<Int, Int>, Char>): List<Char> {
+private fun getAdjacentSeatsContent(seat: Map.Entry<Coord, Char>, map: Map<Coord, Char>): List<Char> {
     val adjacentSeatsContent = mutableListOf<Char>()
-    val seatX = seat.key.first
-    val seatY = seat.key.second
+    val seatX = seat.key.x
+    val seatY = seat.key.y
     (seatY - 1).rangeTo(seatY + 1).forEach { y ->
         (seatX - 1).rangeTo(seatX + 1)
-            .filter { !(seatX == it && seatY == y) && map[Pair(it, y)] != null }
-            .mapTo(adjacentSeatsContent) { map[Pair(it, y)] ?: error("") }
+            .filter { !(seatX == it && seatY == y) && map[Coord(it, y)] != null }
+            .mapTo(adjacentSeatsContent) { map[Coord(it, y)] ?: error("") }
     }
     return adjacentSeatsContent
 }
 
-private fun areVisibleSeatsFree(seat: Map.Entry<Pair<Int, Int>, Char>, map: Map<Pair<Int, Int>, Char>): Boolean {
+private fun areVisibleSeatsFree(seat: Map.Entry<Coord, Char>, map: Map<Coord, Char>): Boolean {
     return getVisibleSeatsContent(seat, map).all { it == 'L' || it == '.' }
 }
 
-private fun areFiveOrMoreVisibleSeatsOccupied(seat: Map.Entry<Pair<Int, Int>, Char>, map: Map<Pair<Int, Int>, Char>): Boolean {
+private fun areFiveOrMoreVisibleSeatsOccupied(seat: Map.Entry<Coord, Char>, map: Map<Coord, Char>): Boolean {
     return getVisibleSeatsContent(seat, map).count { it == '#' } >= 5
 }
 
-private fun getVisibleSeatsContent(seat: Map.Entry<Pair<Int, Int>, Char>, map: Map<Pair<Int, Int>, Char>): List<Char> {
+private fun getVisibleSeatsContent(seat: Map.Entry<Coord, Char>, map: Map<Coord, Char>): List<Char> {
     val visibleSeatsContent = mutableListOf<Char>()
-    val directions = listOf(Pair(-1, -1), Pair(0, -1), Pair(1, -1),     // NW N NE
-                            Pair(-1, 0),               Pair(1, 0),      // W  .  E
-                            Pair(-1, 1),  Pair(0, 1),  Pair(1, 1))      // SW S SE
+    val directions = listOf(Coord(-1, -1), Coord(0, -1), Coord(1, -1),     // NW N NE
+                            Coord(-1, 0),                       Coord(1, 0),     // W  .  E
+                            Coord(-1, 1),  Coord(0, 1),  Coord(1, 1))      // SW S SE
     for (dir in directions) {
-        var currX = seat.key.first + dir.first
-        var currY = seat.key.second + dir.second
-        while (map[Pair(currX, currY)] != null && map[Pair(currX, currY)] == '.') {
-            currX += dir.first
-            currY += dir.second
+        var currX = seat.key.x + dir.x
+        var currY = seat.key.y + dir.y
+        while (map[Coord(currX, currY)] != null && map[Coord(currX, currY)] == '.') {
+            currX += dir.x
+            currY += dir.y
         }
-        if (map[Pair(currX, currY)] != null) {
-            visibleSeatsContent.add(map.getValue(Pair(currX, currY)))
+        if (map[Coord(currX, currY)] != null) {
+            visibleSeatsContent.add(map.getValue(Coord(currX, currY)))
         }
     }
     return visibleSeatsContent
 }
 
-fun mapToString(finalMap: Map<Pair<Int, Int>, Char>): String {
+fun mapToString(finalMap: Map<Coord, Char>): String {
     var mapString = ""
     for (value in finalMap.values) { mapString += value }
     return mapString
 }
 
-fun printSeatMap(map: Map<Pair<Int, Int>, Char>, maxX: Int, maxY: Int) {
+fun printSeatMap(map: Map<Coord, Char>, maxX: Int, maxY: Int) {
     for (y in 0..maxY) {
         for (x in 0..maxX) {
-            print(map[Pair(x, y)])
+            print(map[Coord(x, y)])
         }
         println()
     }

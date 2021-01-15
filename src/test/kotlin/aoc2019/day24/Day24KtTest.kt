@@ -2,11 +2,12 @@ package aoc2019.day24
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import util.readInputToMap
 
 internal class Day24KtTest {
 
-    private val input = aoc2020.day11.readInputToMap("src/main/kotlin/aoc2019/day24/input")
-    private val input0 = aoc2020.day11.readInputToMap("src/main/kotlin/aoc2019/day24/input0")
+    private val input = readInputToMap("src/main/kotlin/aoc2019/day24/input")
+    private val input0 = readInputToMap("src/main/kotlin/aoc2019/day24/input0")
 
     @Test
     fun testReadInputToMap() {
@@ -16,7 +17,7 @@ internal class Day24KtTest {
 
     @Test
     fun testRunRounds() {
-        assertEquals(2129920, runRounds(input0))
-        assertEquals(14539258, runRounds(input))
+        assertEquals(2129920, playGameOfBugs(input0))
+        assertEquals(14539258, playGameOfBugs(input))
     }
 }
