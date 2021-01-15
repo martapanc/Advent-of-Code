@@ -3,11 +3,12 @@ package aoc2015.day18
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import util.readInputToMap
 
 internal class Day18KtTest {
 
-    private val testInput = aoc2018.day18.readInputToMap("src/main/kotlin/aoc2015/day18/testInput")
-    private val input = aoc2018.day18.readInputToMap("src/main/kotlin/aoc2015/day18/input")
+    private val testInput = readInputToMap("src/main/kotlin/aoc2015/day18/testInput")
+    private val input = readInputToMap("src/main/kotlin/aoc2015/day18/input")
 
     @Test
     fun testReadInputToMap() {

@@ -13,3 +13,4 @@
 | [Day 20](https://adventofcode.com/2016/day/20) | Firewall Rules                           | [code](day20/Day20.kt) | [tests](../../../test/kotlin/aoc2016/day20/Day20KtTest.kt)   | number ranges                             |
 | [Day 21](https://adventofcode.com/2016/day/21) | Scrambled Letters and Hash               | [code](day21/Day21.kt) | [tests](../../../test/kotlin/aoc2016/day21/Day21KtTest.kt)   | swap; rotate; reverse; indices; letters   |
 | [Day 22](https://adventofcode.com/2016/day/22) | Grid Computing                           | [code](day22/Day22.kt) | [tests](../../../test/kotlin/aoc2016/day22/Day22KtTest.kt)   | disk nodes; manhattan distance            |
+| [Day 24](https://adventofcode.com/2016/day/24) | Air Duct Spelunking                      | [code](day24/Day24.kt) | [tests](../../../test/kotlin/aoc2016/day24/Day24KtTest.kt)   | 2d coord; traveler; dijkstra              |

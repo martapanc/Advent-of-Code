@@ -2,6 +2,7 @@ package aoc2018.day18
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import util.readInputToMap
 
 internal class Day18KtTest {
 

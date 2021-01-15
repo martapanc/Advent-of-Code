@@ -1,23 +1,12 @@
 package aoc2016.day13
 
 import aoc2020.day20.Coord
+import util.findDistanceInMap
+import util.getUndiscoveredFreeNeighbors
 
 fun computeManhattanDistanceOfTarget(favouriteNumber: Int, targetLocation: Coord): Int {
     val grid = generateGrid(targetLocation, favouriteNumber, 10)
-    var edge = mutableListOf(Coord(1, 1))
-    val discoveredCells = mutableMapOf(Coord(1, 1) to 0)
-    var distance = 1
-    while (!discoveredCells.containsKey(targetLocation)) {
-        val newEdge = mutableListOf<Coord>()
-        for (cell in edge) {
-            for (neighbor in getUndiscoveredFreeNeighbors(cell, grid, discoveredCells)) {
-                discoveredCells[neighbor] = distance
-                newEdge.add(neighbor)
-            }
-        }
-        edge = newEdge
-        distance++
-    }
+    val discoveredCells = findDistanceInMap(Coord(1, 1), targetLocation, grid)
     return discoveredCells[targetLocation]!!
 }
 
@@ -58,15 +47,6 @@ fun computeCoordinate(coord: Coord, favouriteNumber: Int): Char {
     if (oneCount % 2 == 0)
         return '.'
     return '#'
-}
-
-private fun getUndiscoveredFreeNeighbors(cell: Coord, map: Map<Coord, Char>, discoveredMap: Map<Coord, Int>): List<Coord> {
-    val neighbors = mutableListOf<Coord>()
-    val neighborsCoordDeltas = listOf(Coord(1, 0), Coord(-1, 0), Coord(0, 1), Coord(0, -1))
-    neighborsCoordDeltas
-        .map { Coord(cell.x + it.x, cell.y + it.y) }
-        .filterTo(neighbors) { map[it] != null && map[it] == '.' && !discoveredMap.containsKey(it)}
-    return neighbors
 }
 
 private fun printGrid(grid: Map<Coord, Char>, hiX: Int, hiY: Int, start: Coord, target: Coord) {

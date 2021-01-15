@@ -1,9 +1,9 @@
 package aoc2019.day18
 
-import aoc2018.day18.readInputToMap
 import aoc2020.day20.Coord
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import util.readInputToMap
 
 internal class Day18KtTest {
 

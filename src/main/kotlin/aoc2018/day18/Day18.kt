@@ -3,19 +3,6 @@ package aoc2018.day18
 import aoc2020.day20.Coord
 import util.readInputLineByLine
 
-fun readInputToMap(path: String): Map<Coord, Char> {
-    val map = mutableMapOf<Coord, Char>()
-    var x = 0
-    for ((y, line) in readInputLineByLine(path).withIndex()) {
-        for (char in line) {
-            map[Coord(x, y)] = char
-            x++
-        }
-        x = 0
-    }
-    return map
-}
-
 fun playGameOfLumberyards(inputMap: Map<Coord, Char>, minutes: Int): Int {
     var fieldMap = inputMap.toMutableMap()
     repeat(minutes) {
