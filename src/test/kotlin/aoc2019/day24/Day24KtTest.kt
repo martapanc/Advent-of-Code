@@ -7,17 +7,23 @@ import util.readInputToMap
 internal class Day24KtTest {
 
     private val input = readInputToMap("src/main/kotlin/aoc2019/day24/input")
-    private val input0 = readInputToMap("src/main/kotlin/aoc2019/day24/input0")
+    private val testInput = readInputToMap("src/main/kotlin/aoc2019/day24/input0")
 
     @Test
     fun testReadInputToMap() {
-        println(input0)
+        println(testInput)
         println(input)
     }
 
     @Test
     fun testRunRounds() {
-        assertEquals(2129920, playGameOfBugs(input0))
+        assertEquals(2129920, playGameOfBugs(testInput))
         assertEquals(14539258, playGameOfBugs(input))
+    }
+
+    @Test
+    fun testPlayMultilayerGameOfBugs() {
+        assertEquals(27, playMultilayerGameOfBugs(testInput))
+//        assertEquals(99, playMultilayerGameOfBugs(testInput, 10))
     }
 }

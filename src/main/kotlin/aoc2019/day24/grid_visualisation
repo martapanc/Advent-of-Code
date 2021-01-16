@@ -1,0 +1,37 @@
+    0 1 2 3 4
+ 0 |E|E|E|E|E|       External and internal cells have neighbors outside the current map
+   |-+-+-+-+-|       Normal cells don't
+ 1 |E|N|I|N|E|
+   |-+-+-+-+-|
+ 2 |E|I|?|I|E|
+   |-+-+-+-+-|
+ 3 |E|N|I|N|E|
+   |-+-+-+-+-|
+ 4 |E|E|E|E|E|
+
+
+Coordinates of external cells' neighbors in the parent map:
+
+       |  (2,1)  |
+-------+---------+-------
+       |A|B|C|D|E|
+       |-+-+-+-+-|             - The parent map's internal cells are neighbors of the current map's external cells
+       |F|G|H|I|J|             
+       |-+-+-+-+-|             - The child map's external cells are neighbors of the current map's internal cells
+ (1,2) |K|L|?|N|O| (3,2)
+       |-+-+-+-+-|
+       |P|Q|R|S|T|
+       |-+-+-+-+-|
+       |U|V|W|X|Y|
+-------+---------+-------
+       |  (2,3)  |
+
+       |  #  |
+    ---+-----+---
+       |....#|
+       |#..#.|
+    .  |#.?##| #
+       |..#..|
+       |#....|
+    ---+-----+---
+       |  #  |
