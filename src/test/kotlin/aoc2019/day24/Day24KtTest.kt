@@ -11,8 +11,8 @@ internal class Day24KtTest {
 
     @Test
     fun testReadInputToMap() {
-        println(testInput)
-        println(input)
+        assertEquals(25, testInput.size)
+        assertEquals(25, input.size)
     }
 
     @Test
