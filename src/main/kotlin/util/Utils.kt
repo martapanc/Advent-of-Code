@@ -4,6 +4,8 @@ import aoc2020.day20.Coord
 import java.io.File
 
 
+val deltas = listOf(Coord(0, 1), Coord(0, -1), Coord(1, 0), Coord(-1, 0))
+
 fun readInputLineByLine(path: String): List<String> {
     val lineList = mutableListOf<String>()
     File(path).inputStream().bufferedReader().forEachLine { lineList.add(it) }

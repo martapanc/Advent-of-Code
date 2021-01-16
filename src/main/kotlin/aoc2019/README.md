@@ -21,7 +21,7 @@
 | [Day 17](https://adventofcode.com/2019/day/17) | Set and Forget                     | [code](day17/Day17.kt)                      | [tests](../../../test/kotlin/aoc2019/day17/Day17KtTest.kt) | Intcode |
 | [Day 18](https://adventofcode.com/2019/day/18) | Many-Worlds Interpretation         | [code](day18/Day18.kt)                      | [tests](../../../test/kotlin/aoc2019/day18/Day18KtTest.kt) | maze; exploration; 2d; doors & keys |
 | [Day 19](https://adventofcode.com/2019/day/19) | Tractor Beam                       | [code](day19/Day19.kt)                      | [tests](../../../test/kotlin/aoc2019/day19/Day19KtTest.kt) | Intcode; 2d grid; find square in beam |
-| [Day 20](https://adventofcode.com/2019/day/20) | Donut Maze                         | | | 
+| [Day 20](https://adventofcode.com/2019/day/20) | Donut Maze                         | [code](day20/Day20.kt)                      | [tests](../../../test/kotlin/aoc2019/day20/Day20KtTest.kt) | Maze with portals |
 | [Day 21](https://adventofcode.com/2019/day/21) | Springdroid Adventure              | | | Intcode |
 | [Day 22](https://adventofcode.com/2019/day/22) | Slam Shuffle                       | 
 | [Day 23](https://adventofcode.com/2019/day/23) | Category Six                       | | | Intcode |
