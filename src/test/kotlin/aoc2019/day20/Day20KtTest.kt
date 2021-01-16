@@ -24,7 +24,7 @@ internal class Day20KtTest {
 
     @Test
     fun testFindCoordinatesOfCellsNextToPortals() {
-        assertEquals(22, findCoordinatesOfCellsNextToPortals(testInput).size)
+        assertEquals(21, findCoordinatesOfCellsNextToPortals(testInput).size)
         assertEquals(Portal(Coord(19,2), 'A'), findCoordinatesOfCellsNextToPortals(testInput)[0])
         assertEquals(56, findCoordinatesOfCellsNextToPortals(input).size)
         assertEquals(Portal(Coord(49, 2), 'E'), findCoordinatesOfCellsNextToPortals(input)[1])
