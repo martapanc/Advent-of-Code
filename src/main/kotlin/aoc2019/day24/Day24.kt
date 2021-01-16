@@ -30,17 +30,16 @@ fun playMultilayerGameOfBugs(initialMap: Map<Coord, Char>, rounds: Int = 1): Int
     var layerList = mutableListOf(initialMapLayered.toMap())
 
     for (r in 1..rounds) {
-        if (r % 2 == 1) {
-            layerList.add(0, createEmptyMap())
-            layerList.add(createEmptyMap())
-        }
+        layerList.add(0, createEmptyMap())
+        layerList.add(createEmptyMap())
         val layerListCopy = mutableListOf<Map<Coord, Char>>()
         for ((i, layer) in layerList.withIndex()) {
             val layerCopy = createEmptyMap().toMutableMap()
             for (coord in layer.entries) {
                 val parent = if (i == 0) null else layerList[i - 1]
                 val child = if (i == layerList.size - 1) null else layerList[i + 1]
-                val neighboringBugs = findNeighborsAcrossMultipleLayers(coord.key, parent, layerList[i], child).count { it == '#' }
+                val neighboringBugs =
+                    findNeighborsAcrossMultipleLayers(coord.key, parent, layerList[i], child).count { it == '#' }
                 when (coord.value) {
                     '#' -> layerCopy[coord.key] = if (neighboringBugs == 1) '#' else '.'
                     '.' -> layerCopy[coord.key] = if (neighboringBugs == 1 || neighboringBugs == 2) '#' else '.'
@@ -84,14 +83,23 @@ fun findNeighborsAcrossMultipleLayers(
     when (coord) {
         in external -> {
             if (parentMap == null) return listOf()
-            for (delta in normalDeltas) {
+            for (delta in listOf(Coord(-1, 0), Coord(1, 0))) {
                 val deltaCoord = Coord(coord.x + delta.x, coord.y + delta.y)
                 if (currentMap[deltaCoord] == null) {
-                    when {
-                        coord.x == 0 -> neighbors.add(parentMap[Coord(1, 2)]!!)
-                        coord.x == 4 -> neighbors.add(parentMap[Coord(3, 2)]!!)
-                        coord.y == 0 -> neighbors.add(parentMap[Coord(2, 1)]!!)
-                        coord.y == 4 -> neighbors.add(parentMap[Coord(2, 3)]!!)
+                    when (coord.x) {
+                        0 -> neighbors.add(parentMap[Coord(1, 2)]!!)
+                        4 -> neighbors.add(parentMap[Coord(3, 2)]!!)
+                    }
+                } else {
+                    neighbors.add(currentMap[deltaCoord]!!)
+                }
+            }
+            for (delta in listOf(Coord(0, -1), Coord(0, 1))) {
+                val deltaCoord = Coord(coord.x + delta.x, coord.y + delta.y)
+                if (currentMap[deltaCoord] == null) {
+                    when (coord.y) {
+                        0 -> neighbors.add(parentMap[Coord(2, 1)]!!)
+                        4 -> neighbors.add(parentMap[Coord(2, 3)]!!)
                     }
                 } else {
                     neighbors.add(currentMap[deltaCoord]!!)

@@ -24,6 +24,7 @@ internal class Day24KtTest {
     @Test
     fun testPlayMultilayerGameOfBugs() {
         assertEquals(27, playMultilayerGameOfBugs(testInput))
-//        assertEquals(99, playMultilayerGameOfBugs(testInput, 10))
+        assertEquals(99, playMultilayerGameOfBugs(testInput, 10))
+        assertEquals(1977, playMultilayerGameOfBugs(input, 200))
     }
 }
