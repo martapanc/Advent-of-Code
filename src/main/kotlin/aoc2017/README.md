@@ -9,4 +9,5 @@
 | [Day 15](https://adventofcode.com/2017/day/15) | Dueling Generators                       | [code](day15/Day15.kt) | [tests](../../../test/kotlin/aoc2017/day15/Day15KtTest.kt) | module; division; number generator; binary  |
 | [Day 16](https://adventofcode.com/2017/day/16) | Permutation Promenade                    | [code](day16/Day16.kt) | [tests](../../../test/kotlin/aoc2017/day16/Day16KtTest.kt) | string manipulation; swap letters; AoC16D21 |
 | [Day 17](https://adventofcode.com/2017/day/17) | Spinlock                                 | [code](day17/Day17.kt) | [tests](../../../test/kotlin/aoc2017/day17/Day17KtTest.kt) | |
+| [Day 21](https://adventofcode.com/2017/day/21) | Fractal Art                              | [code](day21/Day21.kt) | [tests](../../../test/kotlin/aoc2017/day21/Day21KtTest.kt) | fractals; repeated pattern; grid            |
 | [Day 24](https://adventofcode.com/2017/day/24) | Electromagnetic Moat                     | [code](day24/Day24.kt) | [tests](../../../test/kotlin/aoc2017/day24/Day24KtTest.kt) | |
