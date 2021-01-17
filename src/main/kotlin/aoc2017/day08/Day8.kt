@@ -26,34 +26,26 @@ fun readInputAndFindMaxRegisterValue(path: String, isPartTwo: Boolean = false): 
             else -> false
         }
 
-        if (editRegister) {
-            if (registers[regId] != null) {
-                if (increase) {
+        if (editRegister)
+            if (increase) {
+                if (registers[regId] != null) {
                     registers[regId] = registers[regId]!!.plus(changeValue)
-                    if (registers[regId]!! > maxRegisterValue) {
-                        maxRegisterValue = registers[regId]!!
-                    }
                 } else {
-                    registers[regId] = registers[regId]!!.minus(changeValue)
-                    if (registers[regId]!! > maxRegisterValue) {
-                        maxRegisterValue = registers[regId]!!
-                    }
+                    registers[regId] = changeValue
+                }
+                if (registers[regId]!! > maxRegisterValue) {
+                    maxRegisterValue = registers[regId]!!
                 }
             } else {
-                if (increase) {
-                    registers[regId] = changeValue
-                    if (registers[regId]!! > maxRegisterValue) {
-                        maxRegisterValue = registers[regId]!!
-                    }
+                if (registers[regId] != null) {
+                    registers[regId] = registers[regId]!!.minus(changeValue)
                 } else {
                     registers[regId] = -changeValue
-                    if (registers[regId]!! > maxRegisterValue) {
-                        maxRegisterValue = registers[regId]!!
-                    }
+                }
+                if (registers[regId]!! > maxRegisterValue) {
+                    maxRegisterValue = registers[regId]!!
                 }
             }
-        }
     }
-
     return if (isPartTwo) maxRegisterValue else registers.maxByOrNull { it.value }!!.value
 }
