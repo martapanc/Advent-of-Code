@@ -37,4 +37,10 @@ internal class Day22KtTest {
         assertEquals(114, Day22(testTarget, testDepth).computeTotalRiskLevel())
         assertEquals(4479, Day22(target, depth).computeTotalRiskLevel())
     }
+
+    @Test
+    fun testComputeCheapestPath() {
+        assertEquals(45, Day22(testTarget, testDepth).computeCheapestPath()?.cost)
+        assertEquals(1032, Day22(target, depth).computeCheapestPath()?.cost)
+    }
 }
