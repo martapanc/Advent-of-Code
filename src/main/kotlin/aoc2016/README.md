@@ -3,6 +3,7 @@
 | Day  | Title | Code | Tests | Visualisation | Tags |
 | ---- | ----- | ---- | ----- | ------------- | ---- |
 | [Day 5](https://adventofcode.com/2016/day/05)  | How About a Nice Game of Chess?          | [code](day05/Day5.kt)  | [tests](../../../test/kotlin/aoc2016/day05/Day5KtTest.kt)  | | password; hash; hex                       |
+| [Day 7](https://adventofcode.com/2016/day/07)  | Internet Protocol Version 7              | [code](day07/Day7.kt)  | [tests](../../../test/kotlin/aoc2016/day07/Day7KtTest.kt)  | | regex; ip validation                      |   
 | [Day 9](https://adventofcode.com/2016/day/09)  | Explosives in Cyberspace                 | [code](day09/Day9.kt)  | [tests](../../../test/kotlin/aoc2016/day09/Day9KtTest.kt)  | | decompress strings                        |   
 | [Day 11](https://adventofcode.com/2016/day/11) | Radioisotope Thermoelectric Generators   | [code](day11/Day11.kt) | [tests](../../../test/kotlin/aoc2016/day11/Day11KtTest.kt) | | missionaries & cannibals                  |
 | [Day 13](https://adventofcode.com/2016/day/13) | A Maze of Twisty Little Cubicles         | [code](day13/Day13.kt) | [tests](../../../test/kotlin/aoc2016/day13/Day13KtTest.kt) | | maze; manhattan distance; flooding        |
