@@ -12,4 +12,9 @@ internal class Day22KtTest {
     fun testRunNaiveShuffler() {
         assertEquals(6696, runNaiveShuffler(input))
     }
+
+    @Test
+    fun testRunInsaneShuffler() {
+        assertEquals(93750418158025, runInsaneShuffler(input))
+    }
 }
