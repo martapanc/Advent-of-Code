@@ -22,7 +22,7 @@
 | [Day 18](https://adventofcode.com/2019/day/18) | Many-Worlds Interpretation         | [code](day18/Day18.kt)                      | [tests](../../../test/kotlin/aoc2019/day18/Day18KtTest.kt) | maze; exploration; 2d; doors & keys |
 | [Day 19](https://adventofcode.com/2019/day/19) | Tractor Beam                       | [code](day19/Day19.kt)                      | [tests](../../../test/kotlin/aoc2019/day19/Day19KtTest.kt) | Intcode; 2d grid; find square in beam |
 | [Day 20](https://adventofcode.com/2019/day/20) | Donut Maze                         | [code](day20/Day20.kt)                      | [tests](../../../test/kotlin/aoc2019/day20/Day20KtTest.kt) | Maze with portals |
-| [Day 21](https://adventofcode.com/2019/day/21) | Springdroid Adventure              | | | Intcode |
+| [Day 21](https://adventofcode.com/2019/day/21) | Springdroid Adventure              | [code](day21/Day21.kt)                      | [tests](../../../test/kotlin/aoc2019/day21/Day21KtTest.kt) | Intcode; assembly; jumping droid |
 | [Day 22](https://adventofcode.com/2019/day/22) | Slam Shuffle                       | [code](day22/Day22.kt) | [tests](../../../test/kotlin/aoc2019/day22/Day22KtTest.kt) | card shuffling |
 | [Day 23](https://adventofcode.com/2019/day/23) | Category Six                       | [code](day23/Day23.kt) | [tests](../../../test/kotlin/aoc2019/day23/Day23KtTest.kt) | Intcode; network computers; addresses |
 | [Day 24](https://adventofcode.com/2019/day/24) | Planet of Discord                  | [code](day24/Day24.kt) | [tests](../../../test/kotlin/aoc2019/day24/Day24KtTest.kt) | bugs; game of life; nested |
