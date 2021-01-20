@@ -13,53 +13,37 @@ fun readInputAndRunInstructions(path: String): Long {
     val instructions = readInputLineByLine(path)
     loop@ while (index < instructions.size) {
         val split = instructions[index].split(" ")
+        val key = split[1].first()
         when (split[0]) {
-            "snd" -> {
-                val key = split[1].first()
-                lastFrequencyPlayed[key] = registers[key]!!.toLong()
-                index++
-            }
-            "set" -> {
-                val value = if (charRegex.matches(split[2])) registers[split[2].first()] else split[2].toLong()
-                registers[split[1].first()] = value!!
-                index++
-            }
-            "add" -> {
-                val value = if (charRegex.matches(split[2])) registers[split[2].first()] else split[2].toLong()
-                val key = split[1].first()
-                registers[key] = registers[key]!!.plus(value!!)
-                index++
-            }
+            "snd" -> lastFrequencyPlayed[key] = registers[key]!!.toLong()
+            "set" -> registers[key] = readOrGetRegisterValue(split, registers)!!
+            "add" -> registers[key] = registers[key]!! + readOrGetRegisterValue(split, registers)!!
             "mul" -> {
-                val value = if (charRegex.matches(split[2])) registers[split[2].first()] else split[2].toLong()
-                val key = split[1].first()
-                registers[key] = registers[key]!!.times(value!!)
-                index++
+                registers[key] = registers[key]!! * readOrGetRegisterValue(split, registers)!!
             }
             "mod" -> {
-                val value = if (charRegex.matches(split[2])) registers[split[2].first()] else split[2].toLong()
-                val key = split[1].first()
-                registers[key] = registers[key]!!.modulo(value!!)
-                index++
+                registers[key] = registers[key]!! % readOrGetRegisterValue(split, registers)!!
             }
             "rcv" -> {
-                val key = split[1].first()
                 if (registers[key] != 0L) {
                     lastKey = if (lastFrequencyPlayed[key] != 0L) key else 'b'
                     break@loop
                 }
-                else index++
             }
             "jgz" -> {
-                val key = split[1].first()
                 if (registers[key]!! > 0) {
-                    val value = if (charRegex.matches(split[2])) registers[split[2].first()] else split[2].toLong()
-                    val offset = (value!! % instructions.size).toInt()
-                    index += offset
-                } else index++
+                    val offset = (readOrGetRegisterValue(split, registers)!! % instructions.size).toInt()
+                    index += offset - 1
+                }
             }
         }
+        index++
     }
 
     return lastFrequencyPlayed[lastKey]!!
 }
+
+private fun readOrGetRegisterValue(
+    split: List<String>,
+    registers: MutableMap<Char, Long>
+) = if (charRegex.matches(split[2])) registers[split[2].first()] else split[2].toLong()
