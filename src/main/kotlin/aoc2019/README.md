@@ -26,4 +26,4 @@
 | [Day 22](https://adventofcode.com/2019/day/22) | Slam Shuffle                       | [code](day22/Day22.kt) | [tests](../../../test/kotlin/aoc2019/day22/Day22KtTest.kt) | card shuffling |
 | [Day 23](https://adventofcode.com/2019/day/23) | Category Six                       | [code](day23/Day23.kt) | [tests](../../../test/kotlin/aoc2019/day23/Day23KtTest.kt) | Intcode; network computers; addresses |
 | [Day 24](https://adventofcode.com/2019/day/24) | Planet of Discord                  | [code](day24/Day24.kt) | [tests](../../../test/kotlin/aoc2019/day24/Day24KtTest.kt) | bugs; game of life; nested |
-| [Day 25](https://adventofcode.com/2019/day/25) | Cryostasis                         | | | Intcode |
+| [Day 25](https://adventofcode.com/2019/day/25) | Cryostasis                         | [code](day24/Day24.kt) | [tests](../../../test/kotlin/aoc2019/day24/Day24KtTest.kt) | Intcode; explore rooms; take or drop items; combinations |
