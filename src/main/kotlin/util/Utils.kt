@@ -1,5 +1,6 @@
 package util
 
+import aoc2020.day14.binaryToDecimal
 import aoc2020.day20.Coord
 import java.io.File
 
@@ -50,4 +51,13 @@ fun getUndiscoveredFreeNeighbors(cell: Coord, map: Map<Coord, Char>, discoveredM
         .map { Coord(cell.x + it.x, cell.y + it.y) }
         .filterTo(neighbors) { map[it] != null && map[it] == '.' && !discoveredMap.containsKey(it)}
     return neighbors
+}
+
+fun not(y: Int): Int {
+    val binary = y.toString(2).padStart(16, '0')
+    var result = ""
+    for (i in binary.indices) {
+        result += if (binary[i] == '1') 0 else 1
+    }
+    return binaryToDecimal(result).toInt()
 }
