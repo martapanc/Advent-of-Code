@@ -1,7 +1,5 @@
 package aoc2015.day07
 
-import Day1
-import TestDay7
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import util.not
@@ -9,18 +7,18 @@ import util.not
 internal class Day7KtTest {
 
     private val input = "src/main/kotlin/aoc2015/day07/input"
+    private val inputPart2 = "src/main/kotlin/aoc2015/day07/inputPart2"
     private val testInput = "src/main/kotlin/aoc2015/day07/testInput"
 
     @Test
-    fun testReadInputToList() {
-        assertEquals(72, Day1(testInput).readInputAndRun())
-        assertEquals(956, Day1(input).readInputAndRun())
+    fun testPart1() {
+        assertEquals(72, Day7(testInput).readInputAndRun())
+        assertEquals(956, Day7(input).readInputAndRun())
     }
 
     @Test
-    fun testPart1() {
-        assertEquals(72, TestDay7(testInput).readInputAndRun())
-        assertEquals(956, TestDay7(input).readInputAndRun())
+    fun testPart2() {
+        assertEquals(40149, Day7(inputPart2).readInputAndRun())
     }
 
     @Test

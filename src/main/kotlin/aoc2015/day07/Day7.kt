@@ -2,26 +2,29 @@ package aoc2015.day07
 
 import util.not
 import util.readInputLineByLine
+import java.util.*
+import kotlin.collections.set
 
 
 class Day7(val path: String) {
+
     private val values = mutableMapOf<String, Int>()
     private val instructions = ArrayList<String>()
 
-    fun readInputAndRun(): Int {
+    fun readInputAndRun(): Int? {
         for (line in readInputLineByLine(path)) {
             val split = line.split(" ").toTypedArray()
             if (split.size == 3) {
                 try {
                     values[split[2]] = split[0].toInt()
-                } catch (e: Exception) {
                     continue
+                } catch (e: Exception) {
                 }
             }
             instructions.add(line)
         }
         findValueOfWire("a")
-        return values["a"]!!
+        return values["a"]
     }
 
     private fun findValueOfWire(wireId: String): String {
@@ -33,12 +36,8 @@ class Day7(val path: String) {
                 if (split[split.size - 1] == wireId) {
                     val str = split[split.size - 1]
                     when {
-                        split.size == 3 -> {
-                            values[str] = getValue(split[0])
-                        }
-                        split[0] == "NOT" -> {
-                            values[str] = not(getValue(split[1]))
-                        }
+                        split.size == 3 -> values[str] = getValue(split[0])
+                        split[0] == "NOT" -> values[str] = not(getValue(split[1]))
                         else -> {
                             when (split[1]) {
                                 "OR" -> values[str] = getValue(split[0]) or getValue(split[2])
@@ -63,4 +62,3 @@ class Day7(val path: String) {
         }
     }
 }
-
