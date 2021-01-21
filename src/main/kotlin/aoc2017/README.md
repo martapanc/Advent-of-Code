@@ -3,6 +3,7 @@
 | Day  | Title | Code | Tests | Tags |
 | ---- | ----- | ---- | ----- | ---- |
 | [Day 5](https://adventofcode.com/2017/day/5)   | A Maze of Twisty Trampolines, All Alike  | [code](day05/Day5.kt)  | [tests](../../../test/kotlin/aoc2017/day05/Day5KtTest.kt)  | |
+| [Day 7](https://adventofcode.com/2017/day/7)   | Recursive Circus                         | [code](day07/Day7.kt)  | [tests](../../../test/kotlin/aoc2017/day07/Day7KtTest.kt)  | tree; recursion                             |
 | [Day 8](https://adventofcode.com/2017/day/8)   | I Heard You Like Registers               | [code](day08/Day8.kt)  | [tests](../../../test/kotlin/aoc2017/day08/Day8KtTest.kt)  | register instructions; regex                |
 | [Day 9](https://adventofcode.com/2017/day/9)   | Stream Processing                        | [code](day09/Day9.kt)  | [tests](../../../test/kotlin/aoc2017/day09/Day9KtTest.kt)  | regex; bracket groups; recursive            |
 | [Day 10](https://adventofcode.com/2017/day/10) | Knot Hash                                | [code](day10/Day10.kt) | [tests](../../../test/kotlin/aoc2017/day10/Day10KtTest.kt) | |
