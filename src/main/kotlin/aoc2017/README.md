@@ -13,4 +13,5 @@
 | [Day 19](https://adventofcode.com/2017/day/19) | A Series of Tubes                        | [code](day19/Day19.kt) | [tests](../../../test/kotlin/aoc2017/day19/Day19KtTest.kt) | tubes; find path; tail rec                  |
 | [Day 18](https://adventofcode.com/2017/day/18) | Duet                                     | [code](day18/Day18.kt) | [tests](../../../test/kotlin/aoc2017/day18/Day18KtTest.kt) | instructions; coroutines |
 | [Day 21](https://adventofcode.com/2017/day/21) | Fractal Art                              | [code](day21/Day21.kt) | [tests](../../../test/kotlin/aoc2017/day21/Day21KtTest.kt) | fractals; repeated pattern; grid            |
+| [Day 23](https://adventofcode.com/2017/day/23) | Coprocessor Conflagration                | [code](day23/Day23.kt) | [tests](../../../test/kotlin/aoc2017/day23/Day23KtTest.kt) | instructions; registers; optimisation       |
 | [Day 24](https://adventofcode.com/2017/day/24) | Electromagnetic Moat                     | [code](day24/Day24.kt) | [tests](../../../test/kotlin/aoc2017/day24/Day24KtTest.kt) | |
