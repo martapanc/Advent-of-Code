@@ -14,4 +14,9 @@ internal class Day7KtTest {
         assertEquals("tknk", readInputAndFindRoot(testInput))
         assertEquals("vtzay", readInputAndFindRoot(input))
     }
+
+    @Test
+    fun testReadInputAndParseToTree() {
+        assertEquals(910, readInputAndParseToTree(input))
+    }
 }
