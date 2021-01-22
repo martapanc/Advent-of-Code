@@ -7,6 +7,7 @@
 | [Day 5](https://adventofcode.com/2015/day/5)   | Doesn't He Have Intern-Elves For This?   | [code](day05/Day5.kt)  | [tests](../../../test/kotlin/aoc2015/day05/Day5KtTest.kt)  | regex; string validation                   |
 | [Day 6](https://adventofcode.com/2015/day/6)   | Probably a Fire Hazard                   | [code](day06/Day6.kt)  | [tests](../../../test/kotlin/aoc2015/day06/Day6KtTest.kt)  | light status; switch on and off            |
 | [Day 7](https://adventofcode.com/2015/day/7)   | Some Assembly Required                   | [code](day07/Day7.kt)  | [tests](../../../test/kotlin/aoc2015/day07/Day7KtTest.kt)  | bitwise operations; chain                  |
+| [Day 8](https://adventofcode.com/2015/day/8)   | Matchsticks                              | [code](day08/Day8.kt)  | [tests](../../../test/kotlin/aoc2015/day08/Day8KtTest.kt)  | strings; string literals; char count       |
 | [Day 9](https://adventofcode.com/2015/day/9)   | All in a Single Night                    | [code](day09/Day9.kt)  | [tests](../../../test/kotlin/aoc2015/day09/Day9KtTest.kt)  | shortest trip; permutations                |
 | [Day 10](https://adventofcode.com/2015/day/10) | Elves Look, Elves Say                    | [code](day10/Day10.kt) | [tests](../../../test/kotlin/aoc2015/day10/Day10KtTest.kt) | look-and-say; 11 = 21                      |
 | [Day 11](https://adventofcode.com/2015/day/11) | Corporate Policy                         | [code](day11/Day11.kt) | [tests](../../../test/kotlin/aoc2015/day11/Day11KtTest.kt) | password; validation rules; regex          |
