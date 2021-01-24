@@ -7,6 +7,7 @@
 | [Day 8](https://adventofcode.com/2017/day/8)   | I Heard You Like Registers               | [code](day08/Day8.kt)  | [tests](../../../test/kotlin/aoc2017/day08/Day8KtTest.kt)  | register instructions; regex                |
 | [Day 9](https://adventofcode.com/2017/day/9)   | Stream Processing                        | [code](day09/Day9.kt)  | [tests](../../../test/kotlin/aoc2017/day09/Day9KtTest.kt)  | regex; bracket groups; recursive            |
 | [Day 10](https://adventofcode.com/2017/day/10) | Knot Hash                                | [code](day10/Day10.kt) | [tests](../../../test/kotlin/aoc2017/day10/Day10KtTest.kt) | |
+| [Day 13](https://adventofcode.com/2017/day/13) | Packet Scanners                          | [code](day13/Day13.kt) | [tests](../../../test/kotlin/aoc2017/day13/Day13KtTest.kt) | layers; ranges                              |
 | [Day 14](https://adventofcode.com/2017/day/14) | Disk Defragmentation                     | [code](day14/Day14.kt) | [tests](../../../test/kotlin/aoc2017/day14/Day14KtTest.kt) | |
 | [Day 15](https://adventofcode.com/2017/day/15) | Dueling Generators                       | [code](day15/Day15.kt) | [tests](../../../test/kotlin/aoc2017/day15/Day15KtTest.kt) | module; division; number generator; binary  |
 | [Day 16](https://adventofcode.com/2017/day/16) | Permutation Promenade                    | [code](day16/Day16.kt) | [tests](../../../test/kotlin/aoc2017/day16/Day16KtTest.kt) | string manipulation; swap letters; AoC16D21 |
