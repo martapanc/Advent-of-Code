@@ -27,8 +27,8 @@ fun readInputToInstructions(path: String): Pair<Int, List<Instruction>> {
     return Pair(instructionPointer, instruction)
 }
 
-// One of the registers gets soon populated with a big number (~ 10M). The program then will compute the sum of
-// even divisors of such number
+// Running part 2 (with reg[0] = 1) one of the registers gets soon populated with a big number (~ 10M).
+// The program then will compute the sum of even divisors of such number
 fun runProgram(input: Pair<Int, List<Instruction>>, isPart2: Boolean = false): Int {
     if (isPart2) {
         return 10551343.getFactors().sum()
