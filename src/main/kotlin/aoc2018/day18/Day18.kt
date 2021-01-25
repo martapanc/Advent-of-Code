@@ -1,7 +1,6 @@
 package aoc2018.day18
 
 import aoc2020.day20.Coord
-import util.readInputLineByLine
 
 fun playGameOfLumberyards(inputMap: Map<Coord, Char>, minutes: Int): Int {
     var fieldMap = inputMap.toMutableMap()
@@ -31,7 +30,10 @@ fun playLongGameOfLumberyards(inputMap: Map<Coord, Char>, minutes: Long): Int {
     // To compute what the grid looks like after 1 bil minutes, we can subtract the value obtained above from the minutes,
     // then add the remainder of the division diff / cycle
     val runsBeforeCycleBegins = runCount - cycleCount
-    return playGameOfLumberyards(inputMap, (runsBeforeCycleBegins + (minutes - runsBeforeCycleBegins) % cycleCount).toInt())
+    return playGameOfLumberyards(
+        inputMap,
+        (runsBeforeCycleBegins + (minutes - runsBeforeCycleBegins) % cycleCount).toInt()
+    )
 }
 
 private fun computeNextSnapshot(fieldMap: MutableMap<Coord, Char>): MutableMap<Coord, Char> {
