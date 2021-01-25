@@ -1,6 +1,5 @@
 package aoc2018.day19
 
-import aoc2018.day16.Operation
 import aoc2018.day16.Operation.addi
 import aoc2018.day16.Operation.addr
 import aoc2018.day16.Operation.bani
@@ -31,11 +30,11 @@ fun readInputToInstructions(path: String): Pair<Int, List<Instruction>> {
 // One of the registers gets soon populated with a big number (~ 10M). The program then will compute the sum of
 // even divisors of such number
 fun runProgram(input: Pair<Int, List<Instruction>>, isPart2: Boolean = false): Int {
-    val (instructionPointerIndex, instructions) = input
-    var registers = mutableListOf(0, 0, 0, 0, 0, 0)
     if (isPart2) {
         return 10551343.getFactors().sum()
     }
+    val (instructionPointerIndex, instructions) = input
+    var registers = mutableListOf(0, 0, 0, 0, 0, 0)
     var ip = registers[instructionPointerIndex]
     while (ip in instructions.indices) {
         val currentInstruction = instructions[ip]
@@ -48,8 +47,9 @@ fun runProgram(input: Pair<Int, List<Instruction>>, isPart2: Boolean = false): I
 
 data class Instruction(val opcodeString: String, val val1: Int, val val2: Int, val val3: Int) {
     private val opcodeMap = mapOf(
-        "gtri" to ::gtri, "bani" to ::bani, "eqrr" to ::eqrr, "gtir" to ::gtir, "eqir" to ::eqir, "bori" to ::bori, "seti" to ::seti, "setr" to ::setr,
-        "addr" to ::addr, "borr" to ::borr, "muli" to ::muli, "banr" to ::banr, "addi" to ::addi, "eqri" to ::eqri, "mulr" to ::mulr, "gtrr" to ::gtrr
+        "gtri" to ::gtri, "bani" to ::bani, "eqrr" to ::eqrr, "gtir" to ::gtir, "eqir" to ::eqir, "bori" to ::bori,
+        "seti" to ::seti, "setr" to ::setr, "addr" to ::addr, "borr" to ::borr, "muli" to ::muli, "banr" to ::banr,
+        "addi" to ::addi, "eqri" to ::eqri, "mulr" to ::mulr, "gtrr" to ::gtrr
     )
     val instructions = listOf(0, val1, val2, val3)
     val opcode = opcodeMap[opcodeString]
