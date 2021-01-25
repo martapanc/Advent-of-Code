@@ -23,15 +23,15 @@ class Day13Test {
 
     @Test
     void readInput() {
-        Thirteen.readInput(input1, ONE_X, ONE_Y);
-        Thirteen.readInput(input2, TWO_XY, TWO_XY);
-        Thirteen.readInput(input3, ONE_X, ONE_Y);
-        Thirteen.readInput(input4, FOUR_XY, FOUR_XY);
+        Day13.readInput(input1, ONE_X, ONE_Y);
+        Day13.readInput(input2, TWO_XY, TWO_XY);
+        Day13.readInput(input3, ONE_X, ONE_Y);
+        Day13.readInput(input4, FOUR_XY, FOUR_XY);
 
-        Thirteen.printMatrix(Thirteen.readInput(input1, ONE_X, ONE_Y));
-        Thirteen.printMatrix(Thirteen.readInput(input2, TWO_XY, TWO_XY));
-        Thirteen.printMatrix(Thirteen.readInput(input3, ONE_X, ONE_Y));
-        Thirteen.printMatrix(Thirteen.readInput(input4, FOUR_XY, FOUR_XY));
+        Day13.printMatrix(Day13.readInput(input1, ONE_X, ONE_Y));
+        Day13.printMatrix(Day13.readInput(input2, TWO_XY, TWO_XY));
+        Day13.printMatrix(Day13.readInput(input3, ONE_X, ONE_Y));
+        Day13.printMatrix(Day13.readInput(input4, FOUR_XY, FOUR_XY));
     }
 
     @Test
@@ -39,7 +39,7 @@ class Day13Test {
         List<Point> l1 = new ArrayList<>();
         l1.add(new Point(2, 0));
         l1.add(new Point(9, 3));
-        assertEquals(l1, Thirteen.findInitialPositions(input1, ONE_X, ONE_Y));
+        assertEquals(l1, Day13.findInitialPositions(input1, ONE_X, ONE_Y));
 
         List<Point> l2 = new ArrayList<>();
         l2.add(new Point(43, 14));
@@ -59,7 +59,7 @@ class Day13Test {
         l2.add(new Point(47, 117));
         l2.add(new Point(98, 119));
         l2.add(new Point(36, 135));
-        assertEquals(l2, Thirteen.findInitialPositions(input2, TWO_XY, TWO_XY));
+        assertEquals(l2, Day13.findInitialPositions(input2, TWO_XY, TWO_XY));
 
         List<Point> l3 = new ArrayList<>();
         l3.add(new Point(1, 0));
@@ -71,51 +71,51 @@ class Day13Test {
         l3.add(new Point(6, 5));
         l3.add(new Point(3, 6));
         l3.add(new Point(5, 6));
-        assertEquals(l3, Thirteen.findInitialPositions(input4, FOUR_XY, FOUR_XY));
+        assertEquals(l3, Day13.findInitialPositions(input4, FOUR_XY, FOUR_XY));
     }
 
     @Test
     void findFirstCollision() {
         assertEquals(new Point(7, 3),
-                Thirteen.findFirstCollisionPoint(
-                        Thirteen.readInput(input1, ONE_X, ONE_Y),
-                        Thirteen.findInitialPositions(input1, ONE_X, ONE_Y)));
+                Day13.findFirstCollisionPoint(
+                        Day13.readInput(input1, ONE_X, ONE_Y),
+                        Day13.findInitialPositions(input1, ONE_X, ONE_Y)));
         assertEquals(new Point(11, 4),
-                Thirteen.findFirstCollisionPoint(
-                        Thirteen.readInput(input3, ONE_X, ONE_Y),
-                        Thirteen.findInitialPositions(input3, ONE_X, ONE_Y)));
+                Day13.findFirstCollisionPoint(
+                        Day13.readInput(input3, ONE_X, ONE_Y),
+                        Day13.findInitialPositions(input3, ONE_X, ONE_Y)));
         assertEquals(new Point(2, 0),
-                Thirteen.findFirstCollisionPoint(
-                        Thirteen.readInput(input4, FOUR_XY, FOUR_XY),
-                        Thirteen.findInitialPositions(input4, FOUR_XY, FOUR_XY)));
+                Day13.findFirstCollisionPoint(
+                        Day13.readInput(input4, FOUR_XY, FOUR_XY),
+                        Day13.findInitialPositions(input4, FOUR_XY, FOUR_XY)));
     }
 
     @Test
     void findFirstCollision2() {
         assertEquals(new Point(41, 17),
-                Thirteen.findFirstCollisionPoint(
-                        Thirteen.readInput(input2, TWO_XY, TWO_XY),
-                        Thirteen.findInitialPositions(input2, TWO_XY, TWO_XY)));
+                Day13.findFirstCollisionPoint(
+                        Day13.readInput(input2, TWO_XY, TWO_XY),
+                        Day13.findInitialPositions(input2, TWO_XY, TWO_XY)));
     }
 
     @Test
     void test_findLastRemainingCursor() {
         assertEquals(new Point(134, 117),
-                Thirteen.findLastRemainingCursor(
-                        Thirteen.readInput(input2, TWO_XY, TWO_XY),
-                        Thirteen.findInitialPositions(input2, TWO_XY, TWO_XY)));
+                Day13.findLastRemainingCursor(
+                        Day13.readInput(input2, TWO_XY, TWO_XY),
+                        Day13.findInitialPositions(input2, TWO_XY, TWO_XY)));
         assertEquals(new Point(6, 5),
-                Thirteen.findLastRemainingCursor(
-                        Thirteen.readInput(input5, 30, 10),
-                        Thirteen.findInitialPositions(input5, 30, 10)));
+                Day13.findLastRemainingCursor(
+                        Day13.readInput(input5, 30, 10),
+                        Day13.findInitialPositions(input5, 30, 10)));
         assertEquals(new Point(6, 4),
-                Thirteen.findLastRemainingCursor(
-                        Thirteen.readInput(input4, FOUR_XY, FOUR_XY),
-                        Thirteen.findInitialPositions(input4, FOUR_XY, FOUR_XY)));
+                Day13.findLastRemainingCursor(
+                        Day13.readInput(input4, FOUR_XY, FOUR_XY),
+                        Day13.findInitialPositions(input4, FOUR_XY, FOUR_XY)));
         assertEquals(new Point(4, 1),
-                Thirteen.findLastRemainingCursor(
-                        Thirteen.readInput(input3, ONE_X, ONE_Y),
-                        Thirteen.findInitialPositions(input3, ONE_X, ONE_Y)));
+                Day13.findLastRemainingCursor(
+                        Day13.readInput(input3, ONE_X, ONE_Y),
+                        Day13.findInitialPositions(input3, ONE_X, ONE_Y)));
     }
 
     @Test
@@ -123,11 +123,11 @@ class Day13Test {
         List<Cursor> cursorList = new ArrayList<>();
         cursorList.add(new Cursor(Direction.NORTH, new Point(1, 2), Turn.LEFT, '-'));
         cursorList.add(new Cursor(Direction.NORTH, new Point(2, 3), Turn.LEFT, '-'));
-        assertTrue(Thirteen.areAllUnique(cursorList));
+        assertTrue(Day13.areAllUnique(cursorList));
 
         List<Cursor> cursorList2 = new ArrayList<>();
         cursorList2.add(new Cursor(Direction.NORTH, new Point(2, 3), Turn.LEFT, '-'));
         cursorList2.add(new Cursor(Direction.WEST, new Point(2, 3), Turn.STRAIGHT, '-'));
-        assertFalse(Thirteen.areAllUnique(cursorList2));
+        assertFalse(Day13.areAllUnique(cursorList2));
     }
 }

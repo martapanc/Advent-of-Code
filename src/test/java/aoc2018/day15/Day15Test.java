@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static aoc2018.day13.Thirteen.readInput;
+import static aoc2018.day13.Day13.readInput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class FifteenTest {
+class Day15Test {
 
     private final String input1 = "src/main/java/aoc2018/day15/input/input1";
     private final String input2 = "src/main/java/aoc2018/day15/input/input2";
@@ -49,7 +49,7 @@ class FifteenTest {
         pointList.add(new Point(5, 4));
         pointList.add(new Point(3, 4));
 
-        assertEquals(pointList, Fifteen.findPossibleTargets(
+        assertEquals(pointList, Day15.findPossibleTargets(
                 new Goblin(new Point(1,1)),
                 Utils.getInitialUnitPositions(readInput(input1, 9, 9)),
                 readInput(input1, 9, 9)
@@ -85,12 +85,12 @@ class FifteenTest {
         pointList.add(new Point(7, 6));
         pointList.add(new Point(6, 7));
 
-        assertEquals(pointList, Fifteen.findReachableTargets(
+        assertEquals(pointList, Day15.findReachableTargets(
                 new Elf(new Point(4,4)),
                 Utils.getInitialUnitPositions(readInput(input_flood, 9, 9)),
                 readInput(input_flood, 9, 9)));
 
-        assertEquals(new ArrayList<>(), Fifteen.findReachableTargets(
+        assertEquals(new ArrayList<>(), Day15.findReachableTargets(
                 new Goblin(new Point(1,1)),
                 Utils.getInitialUnitPositions(readInput(input_flood, 9, 9)),
                 readInput(input_flood, 9, 9)));
@@ -102,14 +102,14 @@ class FifteenTest {
         Unit e2 = new Elf(new Point(4,7));
         char[][] matrix1 = readInput(input_flood, 9, 9);
 
-        assertEquals(new Point(1, 5), Fifteen.getClosestTargetInReadingOrder(e1,
-                Fifteen.findReachableTargets(e1,
+        assertEquals(new Point(1, 5), Day15.getClosestTargetInReadingOrder(e1,
+                Day15.findReachableTargets(e1,
                         Utils.getInitialUnitPositions(matrix1),
                         matrix1),
                 matrix1)
         );
-        assertEquals(new Point(2, 7), Fifteen.getClosestTargetInReadingOrder(e2,
-                Fifteen.findReachableTargets(e2,
+        assertEquals(new Point(2, 7), Day15.getClosestTargetInReadingOrder(e2,
+                Day15.findReachableTargets(e2,
                         Utils.getInitialUnitPositions(matrix1),
                         matrix1),
                 matrix1)
@@ -119,14 +119,14 @@ class FifteenTest {
         Unit g1 = new Goblin(new Point(1,1));
         char[][] matrix2 = readInput(input1, 9, 9);
 
-        assertEquals(new Point(4, 2), Fifteen.getClosestTargetInReadingOrder(e3,
-                Fifteen.findReachableTargets(e3,
+        assertEquals(new Point(4, 2), Day15.getClosestTargetInReadingOrder(e3,
+                Day15.findReachableTargets(e3,
                         Utils.getInitialUnitPositions(matrix2),
                         matrix2),
                 matrix2)
         );
-        assertEquals(new Point(4,3), Fifteen.getClosestTargetInReadingOrder(g1,
-                Fifteen.findReachableTargets(g1,
+        assertEquals(new Point(4,3), Day15.getClosestTargetInReadingOrder(g1,
+                Day15.findReachableTargets(g1,
                         Utils.getInitialUnitPositions(matrix2),
                         matrix2),
                 matrix2)
@@ -137,25 +137,25 @@ class FifteenTest {
     public void testGetNextPositionInReadingOrder() {
         Unit e1 = new Elf(new Point(4,4));
         Unit e2 = new Elf(new Point(4,7));
-        assertEquals(new Point(4,5), Fifteen.getNextPositionInReadingOrder(e1, new Point(1, 4), readInput(input_flood, 9,9)));
-        assertEquals(new Point(4,5), Fifteen.getNextPositionInReadingOrder(e1, new Point(7, 4), readInput(input_flood, 9,9)));
-        assertEquals(new Point(3,7), Fifteen.getNextPositionInReadingOrder(e2, new Point(2, 7), readInput(input_flood, 9,9)));
-        assertEquals(new Point(4,6), Fifteen.getNextPositionInReadingOrder(e2, new Point(4, 5), readInput(input_flood, 9,9)));
-        assertEquals(new Point(5,7), Fifteen.getNextPositionInReadingOrder(e2, new Point(6, 7), readInput(input_flood, 9,9)));
-        assertEquals(new Point(4,6), Fifteen.getNextPositionInReadingOrder(e2, new Point(1, 6), readInput(input_flood, 9,9)));
-        assertEquals(new Point(4,6), Fifteen.getNextPositionInReadingOrder(e2, new Point(7, 6), readInput(input_flood, 9,9)));
+        assertEquals(new Point(4,5), Day15.getNextPositionInReadingOrder(e1, new Point(1, 4), readInput(input_flood, 9,9)));
+        assertEquals(new Point(4,5), Day15.getNextPositionInReadingOrder(e1, new Point(7, 4), readInput(input_flood, 9,9)));
+        assertEquals(new Point(3,7), Day15.getNextPositionInReadingOrder(e2, new Point(2, 7), readInput(input_flood, 9,9)));
+        assertEquals(new Point(4,6), Day15.getNextPositionInReadingOrder(e2, new Point(4, 5), readInput(input_flood, 9,9)));
+        assertEquals(new Point(5,7), Day15.getNextPositionInReadingOrder(e2, new Point(6, 7), readInput(input_flood, 9,9)));
+        assertEquals(new Point(4,6), Day15.getNextPositionInReadingOrder(e2, new Point(1, 6), readInput(input_flood, 9,9)));
+        assertEquals(new Point(4,6), Day15.getNextPositionInReadingOrder(e2, new Point(7, 6), readInput(input_flood, 9,9)));
 
         Unit g1 = new Goblin(new Point(1, 7));
-        assertEquals(new Point(2,7), Fifteen.getNextPositionInReadingOrder(g1, new Point(4, 7), readInput(input_flood, 9,9)));
-        assertEquals(new Point(1,6), Fifteen.getNextPositionInReadingOrder(g1, new Point(5, 6), readInput(input_flood, 9,9)));
+        assertEquals(new Point(2,7), Day15.getNextPositionInReadingOrder(g1, new Point(4, 7), readInput(input_flood, 9,9)));
+        assertEquals(new Point(1,6), Day15.getNextPositionInReadingOrder(g1, new Point(5, 6), readInput(input_flood, 9,9)));
     }
 
     @Test
     public void canUnitAttackDirectly() {
         Unit e1 = new Elf(new Point(4,3));
         Unit g1 = new Goblin(new Point(4,2));
-        assertTrue(Fifteen.canUnitAttack(e1, Utils.getInitialUnitPositions(readInput(input_attackFirst, 9,9))));
-        assertTrue(Fifteen.canUnitAttack(g1, Utils.getInitialUnitPositions(readInput(input_attackFirst, 9,9))));
+        assertTrue(Day15.canUnitAttack(e1, Utils.getInitialUnitPositions(readInput(input_attackFirst, 9,9))));
+        assertTrue(Day15.canUnitAttack(g1, Utils.getInitialUnitPositions(readInput(input_attackFirst, 9,9))));
     }
 
     @Test

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static aoc2018.day13.Thirteen.printMatrix;
+import static aoc2018.day13.Day13.printMatrix;
 
 public class Utils {
 

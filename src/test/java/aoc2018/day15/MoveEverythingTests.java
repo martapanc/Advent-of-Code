@@ -1,8 +1,5 @@
 package aoc2018.day15;
 
-import aoc2018.day13.Thirteen;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MoveEverythingTests {

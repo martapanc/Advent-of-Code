@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class Twelve {
+public class Day12 {
 
     static char[] readInput(String inputFile) {
 

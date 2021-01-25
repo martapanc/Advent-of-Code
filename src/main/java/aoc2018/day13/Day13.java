@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Thirteen {
+public class Day13 {
 
     public static char[][] readInput(String inputFile, int horLength, int verLength) {
 

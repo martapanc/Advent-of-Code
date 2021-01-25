@@ -1,6 +1,6 @@
 package aoc2018.day15;
 
-import aoc2018.day13.Thirteen;
+import aoc2018.day13.Day13;
 
 import java.awt.*;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 import static aoc2018.day15.Utils.*;
 
-public class Fifteen {
+public class Day15 {
 
     public static int moveEverything(List<Unit> unitList, char[][] matrix, int turns) {
         int times = 0;
@@ -37,7 +37,7 @@ public class Fifteen {
                     .thenComparing((Unit u) -> u.position.x)
             ).collect(Collectors.toList());
 
-            Thirteen.printMatrix(matrix);
+            Day13.printMatrix(matrix);
             System.out.println(unitList);
 
             times += 1;
