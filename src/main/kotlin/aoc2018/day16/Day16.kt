@@ -62,7 +62,7 @@ fun runProgram(instructions: List<List<Int>>): Int {
     return registers[0]
 }
 
-private object Operation {
+object Operation {
     val methods = listOf(
         ::addr, ::addi, ::mulr, ::muli, ::banr, ::bani, ::borr, ::bori, ::setr, ::seti, ::gtir, ::gtri, ::gtrr,
         ::eqir, ::eqri, ::eqrr
