@@ -12,4 +12,9 @@ internal class Day16KtTest {
     fun testReadInputPart1() {
         assertEquals(782, input1.size)
     }
+
+    @Test
+    fun testCountSamplesMatchingOpcodes() {
+        assertEquals(542, countSamplesMatchingOpcodes(input1))
+    }
 }

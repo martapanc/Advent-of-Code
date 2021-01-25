@@ -17,115 +17,67 @@ fun readInputPart1(path: String): List<Sample> {
 fun countSamplesMatchingOpcodes(samples: List<Sample>): Int {
     var matches3OrMoreOpcodesCount = 0
     for (sample in samples) {
-        var currentCount = 0
-        for (method in sample.methods) {
-
+        val currentCount = Operation.methods.count { it(sample.before, sample.instruction) == sample.after }
+        if (currentCount >= 3) {
+            matches3OrMoreOpcodesCount++
         }
     }
     return matches3OrMoreOpcodesCount
 }
 
-data class Sample(val before: List<Int>, val instruction: List<Int>, val after: List<Int>) {
-
+private object Operation {
     val methods = listOf(
         ::addr, ::addi, ::mulr, ::muli, ::banr, ::bani, ::borr, ::bori, ::setr, ::seti, ::gtir, ::gtri, ::gtrr,
         ::eqir, ::eqri, ::eqrr
     )
 
-    fun addr(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = outputRegisters[instruction[1]] + outputRegisters[instruction[2]]
-        return outputRegisters
-    }
+    fun addr(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = reg[instruction[1]] + reg[instruction[2]] }
 
-    fun addi(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = outputRegisters[instruction[1]] + instruction[2]
-        return outputRegisters
-    }
+    fun addi(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = reg[instruction[1]] + instruction[2] }
 
-    fun mulr(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = outputRegisters[instruction[1]] * outputRegisters[instruction[2]]
-        return outputRegisters
-    }
+    fun mulr(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = reg[instruction[1]] * reg[instruction[2]] }
 
-    fun muli(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = outputRegisters[instruction[1]] * instruction[2]
-        return outputRegisters
-    }
+    fun muli(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = reg[instruction[1]] * instruction[2] }
 
-    fun banr(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = outputRegisters[instruction[1]] and outputRegisters[instruction[2]]
-        return outputRegisters
-    }
+    fun banr(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = reg[instruction[1]] and reg[instruction[2]] }
 
-    fun bani(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = outputRegisters[instruction[1]] and instruction[2]
-        return outputRegisters
-    }
+    fun bani(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = reg[instruction[1]] and instruction[2] }
 
-    fun borr(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = outputRegisters[instruction[1]] or outputRegisters[instruction[2]]
-        return outputRegisters
-    }
+    fun borr(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = reg[instruction[1]] or reg[instruction[2]] }
 
-    fun bori(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = outputRegisters[instruction[1]] or instruction[2]
-        return outputRegisters
-    }
+    fun bori(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = reg[instruction[1]] or instruction[2] }
 
-    fun setr(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = outputRegisters[instruction[1]]
-        return outputRegisters
-    }
+    fun setr(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = reg[instruction[1]] }
 
-    fun seti(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = instruction[1]
-        return outputRegisters
-    }
+    fun seti(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = instruction[1] }
 
-    fun gtir(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = if (instruction[1] > outputRegisters[instruction[2]]) 1 else 0
-        return outputRegisters
-    }
+    fun gtir(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = if (instruction[1] > reg[instruction[2]]) 1 else 0 }
 
-    fun gtri(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = if (outputRegisters[instruction[1]] > instruction[2]) 1 else 0
-        return outputRegisters
-    }
+    fun gtri(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = if (reg[instruction[1]] > instruction[2]) 1 else 0 }
 
-    fun gtrr(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] =
-            if (outputRegisters[instruction[1]] > outputRegisters[instruction[2]]) 1 else 0
-        return outputRegisters
-    }
+    fun gtrr(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = if (reg[instruction[1]] > reg[instruction[2]]) 1 else 0 }
 
-    fun eqir(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = if (instruction[1] == outputRegisters[instruction[2]]) 1 else 0
-        return outputRegisters
-    }
+    fun eqir(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = if (instruction[1] == reg[instruction[2]]) 1 else 0 }
 
-    fun eqri(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = if (outputRegisters[instruction[1]] == instruction[2]) 1 else 0
-        return outputRegisters
-    }
+    fun eqri(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = if (reg[instruction[1]] == instruction[2]) 1 else 0 }
 
-    fun eqrr(registers: List<Int>, instruction: List<Int>): List<Int> {
-        val outputRegisters = registers.toMutableList()
-        outputRegisters[instruction[3]] = if (outputRegisters[instruction[1]] == outputRegisters[instruction[2]]) 1 else 0
-        return outputRegisters
-    }
+    fun eqrr(reg: List<Int>, instruction: List<Int>): List<Int> =
+        reg.toMutableList().apply { this[instruction[3]] = if (reg[instruction[1]] == reg[instruction[2]]) 1 else 0 }
 }
+
+data class Sample(val before: List<Int>, val instruction: List<Int>, val after: List<Int>)

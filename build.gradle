@@ -35,6 +35,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.16")
     testImplementation("org.projectlombok:lombok:1.18.16")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.16")
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
 }
 
 test {
