@@ -44,3 +44,10 @@ fun printTileMap(grid: Map<Coord, Char>) {
         println()
     }
 }
+
+fun countFlowingAndStillWater(gridPath: String): Pair<Int, Int> {
+    val input = readInputLineByLine(gridPath)
+    val stillWaterCount = input.sumBy { line -> line.count { it == '~' } }
+    val flowingWaterCount = stillWaterCount + input.sumBy { line -> line.count { it == '|' } }
+    return Pair(flowingWaterCount, stillWaterCount)
+}
