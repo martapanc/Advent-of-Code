@@ -19,5 +19,6 @@
 | [Day 18](https://adventofcode.com/2015/day/18) | Like a GIF For Your Yard                 | [code](day18/Day18.kt) | [tests](../../../test/kotlin/aoc2015/day18/Day18KtTest.kt) | game of life; lights; stuck corners        |
 | [Day 20](https://adventofcode.com/2015/day/20) | Infinite Elves and Infinite Houses       | [code](day20/Day20.kt) | [tests](../../../test/kotlin/aoc2015/day20/Day20KtTest.kt) | factors; modules                           |
 | [Day 23](https://adventofcode.com/2015/day/23) | Opening the Turing Lock                  | [code](day23/Day23.kt) | [tests](../../../test/kotlin/aoc2015/day23/Day23KtTest.kt) | instructions; registers; offsets           |
+| [Day 22](https://adventofcode.com/2015/day/22) | Wizard Simulator 20XX                    | [code](day22/Day22.kt) | [tests](../../../test/kotlin/aoc2015/day22/Day22KtTest.kt) | wizard vs boss; turns                      |
 | [Day 24](https://adventofcode.com/2015/day/24) | It Hangs in the Balance                  | [code](day24/Day24.kt) | [tests](../../../test/kotlin/aoc2015/day24/Day24KtTest.kt) | numbers; combinations                      |
 | [Day 25](https://adventofcode.com/2015/day/25) | Let it snow                              | [code](day25/Day25.kt) | [tests](../../../test/kotlin/aoc2015/day25/Day25KtTest.kt) | grid of increasing numbers; module; Gauss  |
