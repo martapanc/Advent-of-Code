@@ -4,20 +4,20 @@ import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
-fun playWizardSimulator(hp: Int = 71, damage: Int = 10, isPart2: Boolean = false): Int {
+fun playWizardSimulator(hitPoints: Int = 71, damage: Int = 10, isPart2: Boolean = false): Int {
     var minimumMana = Integer.MAX_VALUE
-    val boss = Boss(hp, damage)
+    val boss = Boss(hitPoints, damage)
     val wizardList = PriorityQueue<Wizard> { a, b -> b.manaUsed.compareTo(a.manaUsed) }
     wizardList.add(Wizard(50, 500, boss))
 
     while (wizardList.isNotEmpty()) {
-        val currentWizard = wizardList.poll()
-        if (isPart2 && currentWizard.hitPoints-- <= 0) continue
-        currentWizard.startEffect()
+        val current = wizardList.poll()
+        if (isPart2 && current.hitPoints-- <= 0) continue
+        current.startEffect()
 
-        for (spell in Wizard.spells) {
-            if (currentWizard.canCast(spell)) {
-                val next = currentWizard.clone()
+        for (spell in Wizard.spells)
+            if (current.canCast(spell)) {
+                val next = current.clone()
                 next.castSpell(spell)
                 next.startEffect()
 
@@ -31,7 +31,6 @@ fun playWizardSimulator(hp: Int = 71, damage: Int = 10, isPart2: Boolean = false
                     }
                 }
             }
-        }
     }
     return minimumMana
 }
