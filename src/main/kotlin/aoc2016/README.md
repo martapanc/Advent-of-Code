@@ -2,6 +2,8 @@
 
 | Day  | Title | Code | Tests | Visualisation | Tags |
 | ---- | ----- | ---- | ----- | ------------- | ---- |
+| [Day 1](https://adventofcode.com/2016/day/1)  | No Time for a Taxicab                     | [code](day01/Day1.kt)  | [tests](../../../test/kotlin/aoc2016/day01/Day1KtTest.kt)  | | grid; manhattan                           |
+| [Day 2](https://adventofcode.com/2016/day/2)  | Bathroom Security                         | [code](day02/Day2.kt)  | [tests](../../../test/kotlin/aoc2016/day02/Day2KtTest.kt)  | | grid; up, down, right, left; dial         |
 | [Day 3](https://adventofcode.com/2016/day/3)  | Squares With Three Sides                  | [code](day03/Day3.kt)  | [tests](../../../test/kotlin/aoc2016/day03/Day3KtTest.kt)  | | validate triangles                        |
 | [Day 4](https://adventofcode.com/2016/day/4)  | Security Through Obscurity                | [code](day04/Day4.kt)  | [tests](../../../test/kotlin/aoc2016/day04/Day4KtTest.kt)  | | regex; char count; caesar cypher          |
 | [Day 5](https://adventofcode.com/2016/day/5)  | How About a Nice Game of Chess?           | [code](day05/Day5.kt)  | [tests](../../../test/kotlin/aoc2016/day05/Day5KtTest.kt)  | | password; hash; hex                       |
