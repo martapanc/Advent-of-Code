@@ -10,9 +10,9 @@ Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2
 - Advent of Code 2️⃣0️⃣1️⃣9️⃣ : [overview](src/main/kotlin/aoc2019/README.md) & [solutions](src/main/kotlin/aoc2019) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/100/) 
 - Advent of Code 2️⃣0️⃣1️⃣8️⃣ : [overview](src/main/kotlin/aoc2018/README.md) & [solutions](src/main/kotlin/aoc2018) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/100/) 
 - Advent of Code 2️⃣0️⃣1️⃣7️⃣ : [overview](src/main/kotlin/aoc2017/README.md) & [solutions](src/main/kotlin/aoc2017) - 42 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/84/) 
-- Advent of Code 2️⃣0️⃣1️⃣6️⃣ : [overview](src/main/kotlin/aoc2016/README.md) & [solutions](src/main/kotlin/aoc2016) - 38 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/76/) 
+- Advent of Code 2️⃣0️⃣1️⃣6️⃣ : [overview](src/main/kotlin/aoc2016/README.md) & [solutions](src/main/kotlin/aoc2016) - 40 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/80/) 
 - Advent of Code 2️⃣0️⃣1️⃣5️⃣ : [overview](src/main/kotlin/aoc2015/README.md) & [solutions](src/main/kotlin/aoc2015) - 41 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/82/) 
 
- Total:  271 / 300 ⭐
+ Total:  273 / 300 ⭐
 
- ![Progress](https://progress-bar.dev/90/)
+ ![Progress](https://progress-bar.dev/91/)
