@@ -2,8 +2,10 @@
 
 | Day  | Title | Code | Tests | Tags |
 | ---- | ----- | ---- | ----- | ---- |
+| [Day 1](https://adventofcode.com/2015/day/1)   | Not Quite Lisp                           | [code](day01/Day1.kt)  | [tests](../../../test/kotlin/aoc2015/day01/Day1KtTest.kt)  | parentheses counts                         |
 | [Day 2](https://adventofcode.com/2015/day/2)   | I Was Told There Would Be No Math        | [code](day02/Day2.kt)  | [tests](../../../test/kotlin/aoc2015/day02/Day2KtTest.kt)  | gifts; perimeter; area; volume             |
 | [Day 3](https://adventofcode.com/2015/day/3)   | Perfectly Spherical Houses in a Vacuum   | [code](day03/Day3.kt)  | [tests](../../../test/kotlin/aoc2015/day03/Day3KtTest.kt)  | path; repeated stops; santa delivers gifts |
+| [Day 4](https://adventofcode.com/2015/day/4)   | The Ideal Stocking Stuffer               | [code](day04/Day4.kt)  | [tests](../../../test/kotlin/aoc2015/day04/Day4KtTest.kt)  | md5; repetitions; prefix                   |
 | [Day 5](https://adventofcode.com/2015/day/5)   | Doesn't He Have Intern-Elves For This?   | [code](day05/Day5.kt)  | [tests](../../../test/kotlin/aoc2015/day05/Day5KtTest.kt)  | regex; string validation                   |
 | [Day 6](https://adventofcode.com/2015/day/6)   | Probably a Fire Hazard                   | [code](day06/Day6.kt)  | [tests](../../../test/kotlin/aoc2015/day06/Day6KtTest.kt)  | light status; switch on and off            |
 | [Day 7](https://adventofcode.com/2015/day/7)   | Some Assembly Required                   | [code](day07/Day7.kt)  | [tests](../../../test/kotlin/aoc2015/day07/Day7KtTest.kt)  | bitwise operations; chain                  |
