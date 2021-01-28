@@ -15,6 +15,7 @@
 | [Day 16](https://adventofcode.com/2017/day/16) | Permutation Promenade                    | [code](day16/Day16.kt) | [tests](../../../test/kotlin/aoc2017/day16/Day16KtTest.kt) | string manipulation; swap letters; AoC16D21 |
 | [Day 17](https://adventofcode.com/2017/day/17) | Spinlock                                 | [code](day17/Day17.kt) | [tests](../../../test/kotlin/aoc2017/day17/Day17KtTest.kt) | |
 | [Day 19](https://adventofcode.com/2017/day/19) | A Series of Tubes                        | [code](day19/Day19.kt) | [tests](../../../test/kotlin/aoc2017/day19/Day19KtTest.kt) | tubes; find path; tail rec                  |
+| [Day 20](https://adventofcode.com/2017/day/20) | Particle Swarm                           | [code](day20/Day20.kt) | [tests](../../../test/kotlin/aoc2017/day20/Day20KtTest.kt) | 3d vector                                   |
 | [Day 18](https://adventofcode.com/2017/day/18) | Duet                                     | [code](day18/Day18.kt) | [tests](../../../test/kotlin/aoc2017/day18/Day18KtTest.kt) | instructions; coroutines |
 | [Day 21](https://adventofcode.com/2017/day/21) | Fractal Art                              | [code](day21/Day21.kt) | [tests](../../../test/kotlin/aoc2017/day21/Day21KtTest.kt) | fractals; repeated pattern; grid            |
 | [Day 22](https://adventofcode.com/2017/day/22) | Sporifica Virus                          | [code](day22/Day22.kt) | [tests](../../../test/kotlin/aoc2017/day22/Day22KtTest.kt) | 2d coord; grid; infections; rotation        |
