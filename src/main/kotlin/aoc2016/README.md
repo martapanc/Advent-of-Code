@@ -2,11 +2,13 @@
 
 | Day  | Title | Code | Tests | Visualisation | Tags |
 | ---- | ----- | ---- | ----- | ------------- | ---- |
-| [Day 5](https://adventofcode.com/2016/day/05)  | How About a Nice Game of Chess?          | [code](day05/Day5.kt)  | [tests](../../../test/kotlin/aoc2016/day05/Day5KtTest.kt)  | | password; hash; hex                       |
-| [Day 6](https://adventofcode.com/2016/day/06)  | Signals and Noise                        | [code](day06/Day6.kt)  | [tests](../../../test/kotlin/aoc2016/day06/Day6KtTest.kt)  | | string; read by column; most common chars |
-| [Day 7](https://adventofcode.com/2016/day/07)  | Internet Protocol Version 7              | [code](day07/Day7.kt)  | [tests](../../../test/kotlin/aoc2016/day07/Day7KtTest.kt)  | | regex; ip validation                      |   
-| [Day 8](https://adventofcode.com/2016/day/08)  | Two-Factor Authentication                | [code](day08/Day8.kt)  | [tests](../../../test/kotlin/aoc2016/day08/Day8KtTest.kt)  | | matrix; rotate arrays                     |   
-| [Day 9](https://adventofcode.com/2016/day/09)  | Explosives in Cyberspace                 | [code](day09/Day9.kt)  | [tests](../../../test/kotlin/aoc2016/day09/Day9KtTest.kt)  | | decompress strings                        |   
+| [Day 3](https://adventofcode.com/2016/day/3)  | Squares With Three Sides                  | [code](day03/Day3.kt)  | [tests](../../../test/kotlin/aoc2016/day03/Day3KtTest.kt)  | | validate triangles                        |
+| [Day 4](https://adventofcode.com/2016/day/4)  | Security Through Obscurity                | [code](day04/Day4.kt)  | [tests](../../../test/kotlin/aoc2016/day04/Day4KtTest.kt)  | | regex; char count; caesar cypher          |
+| [Day 5](https://adventofcode.com/2016/day/5)  | How About a Nice Game of Chess?           | [code](day05/Day5.kt)  | [tests](../../../test/kotlin/aoc2016/day05/Day5KtTest.kt)  | | password; hash; hex                       |
+| [Day 6](https://adventofcode.com/2016/day/6)  | Signals and Noise                         | [code](day06/Day6.kt)  | [tests](../../../test/kotlin/aoc2016/day06/Day6KtTest.kt)  | | string; read by column; most common chars |
+| [Day 7](https://adventofcode.com/2016/day/7)  | Internet Protocol Version 7               | [code](day07/Day7.kt)  | [tests](../../../test/kotlin/aoc2016/day07/Day7KtTest.kt)  | | regex; ip validation                      |   
+| [Day 8](https://adventofcode.com/2016/day/8)  | Two-Factor Authentication                 | [code](day08/Day8.kt)  | [tests](../../../test/kotlin/aoc2016/day08/Day8KtTest.kt)  | | matrix; rotate arrays                     |   
+| [Day 9](https://adventofcode.com/2016/day/9)  | Explosives in Cyberspace                  | [code](day09/Day9.kt)  | [tests](../../../test/kotlin/aoc2016/day09/Day9KtTest.kt)  | | decompress strings                        |   
 | [Day 10](https://adventofcode.com/2016/day/10) | Balance Bots                             | [code](day10/Day10.kt) | [tests](../../../test/kotlin/aoc2016/day10/Day10KtTest.kt) | | robots; low & high values                 |
 | [Day 11](https://adventofcode.com/2016/day/11) | Radioisotope Thermoelectric Generators   | [code](day11/Day11.kt) | [tests](../../../test/kotlin/aoc2016/day11/Day11KtTest.kt) | | missionaries & cannibals                  |
 | [Day 12](https://adventofcode.com/2016/day/12) | Leonardo's Monorail                      | [code](day12/Day12.kt) | [tests](../../../test/kotlin/aoc2016/day12/Day12KtTest.kt) | | assembunny code; instructions; registers  |
