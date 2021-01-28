@@ -21,3 +21,4 @@
 | [Day 22](https://adventofcode.com/2017/day/22) | Sporifica Virus                          | [code](day22/Day22.kt) | [tests](../../../test/kotlin/aoc2017/day22/Day22KtTest.kt) | 2d coord; grid; infections; rotation        |
 | [Day 23](https://adventofcode.com/2017/day/23) | Coprocessor Conflagration                | [code](day23/Day23.kt) | [tests](../../../test/kotlin/aoc2017/day23/Day23KtTest.kt) | instructions; registers; optimisation       |
 | [Day 24](https://adventofcode.com/2017/day/24) | Electromagnetic Moat                     | [code](day24/Day24.kt) | [tests](../../../test/kotlin/aoc2017/day24/Day24KtTest.kt) | |
+| [Day 25](https://adventofcode.com/2017/day/25) | The Halting Problem                      | [code](day25/Day25.kt) | [tests](../../../test/kotlin/aoc2017/day25/Day25KtTest.kt) | Turing machine                              |
