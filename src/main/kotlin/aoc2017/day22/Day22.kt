@@ -21,18 +21,48 @@ fun countInfectionBurst(initial: Coord, grid: MutableMap<Coord, NodeStatus>, tim
         if (grid.getOrDefault(current, NodeStatus.Clean) == NodeStatus.Clean) {
             infectionsCaused++
             grid[current] = NodeStatus.Infected
-            facing = facing.left()
+            facing = facing.turnLeft()
         } else {
             grid[current] = NodeStatus.Clean
-            facing = facing.right()
+            facing = facing.turnRight()
         }
         current += deltas[facing]
     }
     return infectionsCaused
 }
 
-private fun Int.left(): Int = if (this == 0) 3 else this - 1
+fun countInfectionBurstPart2(initial: Coord, grid: MutableMap<Coord, NodeStatus>, times: Int = 10_000_000): Int {
+    var current = initial
+    var facing = 0
+    var infectionsCaused = 0
+    repeat(times) {
+        when(grid.getOrDefault(current, NodeStatus.Clean)) {
+            NodeStatus.Clean -> {
+                facing = facing.turnLeft()
+                grid[current] = NodeStatus.Weakened
+            }
+            NodeStatus.Weakened -> {
+                infectionsCaused++
+                grid[current] = NodeStatus.Infected
+            }
+            NodeStatus.Infected -> {
+                facing = facing.turnRight()
+                grid[current] = NodeStatus.Flagged
+            }
+            NodeStatus.Flagged -> {
+                facing = facing.uTurn()
+                grid[current] = NodeStatus.Clean
+            }
+        }
+        current += deltas[facing]
+    }
+    return infectionsCaused
+}
 
-private fun Int.right(): Int = this.inc() % 4
+private fun Int.turnLeft(): Int = if (this == 0) 3 else this - 1
 
-enum class NodeStatus { Clean, Infected }
+private fun Int.turnRight(): Int = this.inc() % 4
+
+private fun Int.uTurn(): Int = (this + 2) % 4
+
+enum class NodeStatus { Clean, Infected, Flagged, Weakened }

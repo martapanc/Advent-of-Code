@@ -9,12 +9,16 @@ internal class Day22KtTest {
 
     private val path = "src/main/kotlin/aoc2017/day22/input"
     private val input = readInputToMap(path)
+    private val rawInput = readInputLineByLine(path)
+    private val initial = Coord(rawInput.size / 2, rawInput.first().length / 2)
 
     @Test
     fun testCountInfectionBurst() {
-        val rawInput = readInputLineByLine(path)
-        val initial = Coord(rawInput.size / 2, rawInput.first().length / 2)
         assertEquals(5411, countInfectionBurst(initial, input))
     }
 
+    @Test
+    fun testCountInfectionBurstPart2() {
+        assertEquals(2511416, countInfectionBurstPart2(initial, input))
+    }
 }
