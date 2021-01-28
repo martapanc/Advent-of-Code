@@ -1,8 +1,7 @@
 package aoc2017.day06
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class Day6KtTest {
 
@@ -14,6 +13,7 @@ internal class Day6KtTest {
         assertEquals(5, runRedistributionProgram(testInput))
         assertEquals(4074, runRedistributionProgram(input))
     }
+
     @Test
     fun testRunRedistributionProgramPart2() {
         assertEquals(4, runRedistributionProgram(testInput, true))

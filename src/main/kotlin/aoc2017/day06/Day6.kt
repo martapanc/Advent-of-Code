@@ -10,7 +10,8 @@ fun runRedistributionProgram(list: MutableList<Int>, isPart2: Boolean = false): 
         list[indexOfMax] = 0
         for (i in 1..maxBlocks) {
             indexOfMax++
-            if (indexOfMax == list.size) indexOfMax = 0
+            if (indexOfMax == list.size)
+                indexOfMax = 0
             list[indexOfMax]++
         }
         cycleCount++
