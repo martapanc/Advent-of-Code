@@ -31,9 +31,26 @@ fun findTheRightAuntSue(list: List<Map<Compound, Int?>>, isPart2: Boolean = fals
     )
     var auntSueNumber = 0
     for ((index, auntSue) in list.withIndex()) {
-        val match = Compound.values().all { auntSue[it] == null || auntSue[it]!! == mfcsamOutput[it]!! }
-        if (match)
+        if (!isPart2 && Compound.values().all { auntSue[it] == null || auntSue[it]!! == mfcsamOutput[it]!! }) {
             auntSueNumber = index + 1
+            break
+        }
+
+        if (isPart2 &&
+            listOf(Compound.cats, Compound.trees)
+                .all { auntSue[it] == null || auntSue[it]!! > mfcsamOutput[it]!! } &&
+            listOf(Compound.pomeranians, Compound.goldfish)
+                .all { auntSue[it] == null || auntSue[it]!! < mfcsamOutput[it]!! } &&
+            listOf(
+                Compound.children, Compound.samoyeds, Compound.akitas,
+                Compound.vizslas, Compound.cars, Compound.perfumes
+            )
+                .all { auntSue[it] == null || auntSue[it]!! == mfcsamOutput[it]!! }
+        ) {
+            auntSueNumber = index + 1
+            break
+        }
+
     }
     return auntSueNumber
 }

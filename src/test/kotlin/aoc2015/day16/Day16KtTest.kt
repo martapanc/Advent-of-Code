@@ -11,5 +11,6 @@ internal class Day16KtTest {
     @Test
     fun testFindTheRightAuntSue() {
         assertEquals(40, findTheRightAuntSue(input))
+        assertEquals(241, findTheRightAuntSue(input, isPart2 = true))
     }
 }
