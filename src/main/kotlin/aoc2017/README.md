@@ -7,6 +7,7 @@
 | [Day 8](https://adventofcode.com/2017/day/8)   | I Heard You Like Registers               | [code](day08/Day8.kt)  | [tests](../../../test/kotlin/aoc2017/day08/Day8KtTest.kt)  | register instructions; regex                |
 | [Day 9](https://adventofcode.com/2017/day/9)   | Stream Processing                        | [code](day09/Day9.kt)  | [tests](../../../test/kotlin/aoc2017/day09/Day9KtTest.kt)  | regex; bracket groups; recursive            |
 | [Day 10](https://adventofcode.com/2017/day/10) | Knot Hash                                | [code](day10/Day10.kt) | [tests](../../../test/kotlin/aoc2017/day10/Day10KtTest.kt) | |
+| [Day 11](https://adventofcode.com/2017/day/11) | Hex Ed                                   | [code](day11/Day11.kt) | [tests](../../../test/kotlin/aoc2017/day11/Day11KtTest.kt) | hexagons; hexacoords; manhattan             |
 | [Day 12](https://adventofcode.com/2017/day/12) | Digital Plumber                          | [code](day12/Day12.kt) | [tests](../../../test/kotlin/aoc2017/day12/Day12KtTest.kt) | connected programs; recursion               |
 | [Day 13](https://adventofcode.com/2017/day/13) | Packet Scanners                          | [code](day13/Day13.kt) | [tests](../../../test/kotlin/aoc2017/day13/Day13KtTest.kt) | layers; ranges                              |
 | [Day 14](https://adventofcode.com/2017/day/14) | Disk Defragmentation                     | [code](day14/Day14.kt) | [tests](../../../test/kotlin/aoc2017/day14/Day14KtTest.kt) | |
