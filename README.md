@@ -16,3 +16,6 @@ Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2
  Total:  300 / 300 ⭐
 
  ![Progress](https://progress-bar.dev/100/)
+
+ <img src="src/main/resources/300_stars.png" width="920"/>
+
