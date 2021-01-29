@@ -17,6 +17,28 @@ fun computeDistance(input: String): Int {
     return currentPos.manhattan()
 }
 
+fun computeDistancePart2(input: String): Int {
+    var currentPos = Coord(0, 0)
+    val visitedList = mutableListOf(currentPos)
+    var facing = Facing.N
+    val movements = input.split(", ")
+        .map { Movement(Rotation.valueOf(it[0].toString()), it.replace(Regex("[R|L]"), "").toInt()) }
+
+    for (mov in movements) {
+        facing = facing.turn(mov.rotationDir)
+        val delta = deltas[Facing.values().indexOf(facing)]
+        repeat(mov.distance) {
+            currentPos = Coord(currentPos.x + delta.x, currentPos.y + delta.y)
+            if (visitedList.contains(currentPos)) {
+                return currentPos.manhattan()
+            } else {
+                visitedList.add(currentPos)
+            }
+        }
+    }
+    return currentPos.manhattan()
+}
+
 data class Movement(val rotationDir: Rotation, var distance: Int)
 
 enum class Rotation { R, L }

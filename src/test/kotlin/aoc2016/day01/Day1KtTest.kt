@@ -19,7 +19,7 @@ internal class Day1KtTest {
 
     @Test
     fun testComputeDistancePart2() {
-//        assertEquals(4, computeDistance("R8, R4, R4, R8"))
-//        assertEquals(161, computeDistance(input))
+        assertEquals(4, computeDistancePart2("R8, R4, R4, R8"))
+        assertEquals(110, computeDistancePart2(input))
     }
 }
