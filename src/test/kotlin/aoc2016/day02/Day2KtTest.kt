@@ -12,4 +12,9 @@ internal class Day2KtTest {
     fun testReadInputAndDial() {
         assertEquals("99332", readInputAndDial(path))
     }
+
+    @Test
+    fun testReadInputAndDialPart2() {
+        assertEquals("DD483", readInputAndDial(path, isPart2 = true))
+    }
 }
