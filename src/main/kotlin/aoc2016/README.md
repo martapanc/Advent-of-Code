@@ -1,7 +1,7 @@
 # ☃️ Advent of Code 2016 ❄️
 
-| Day  | Title | Code | Tests | Visual | Tags |
-| ---- | ----- | ---- | ----- | ------------- | ---- |
+| Day   | Title | Code | Tests | Visual | Tags |
+| ----- | ----- | ---- | ----- | ------ | ---- |
 | [Day 1](https://adventofcode.com/2016/day/1)  | No Time for a Taxicab                     | [code](day01/Day1.kt)  | [tests](../../../test/kotlin/aoc2016/day01/Day1KtTest.kt)  | | grid; manhattan                           |
 | [Day 2](https://adventofcode.com/2016/day/2)  | Bathroom Security                         | [code](day02/Day2.kt)  | [tests](../../../test/kotlin/aoc2016/day02/Day2KtTest.kt)  | | grid; up, down, right, left; dial         |
 | [Day 3](https://adventofcode.com/2016/day/3)  | Squares With Three Sides                  | [code](day03/Day3.kt)  | [tests](../../../test/kotlin/aoc2016/day03/Day3KtTest.kt)  | | validate triangles                        |
