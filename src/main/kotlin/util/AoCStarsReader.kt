@@ -17,7 +17,7 @@ class AoCStarsReader {
         var template = "" +
                 "# \uD83C\uDF84 Advent of Code ⛄️\n" +
                 "![Java & Kotlin CI with Gradle](https://github.com/martapanc/Advent-of-Code/workflows/Java%20&%20Kotlin%20CI%20with%20Gradle/badge.svg)\n\n" +
-                "Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2015-2020)\n\n\n" +
+                "Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2015-2021)\n\n\n" +
                 "## Quick links\n\n"
         val results = getResults()
         for ((year, stars) in results.entries) {
