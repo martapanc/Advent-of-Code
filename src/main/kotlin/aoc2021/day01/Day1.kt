@@ -13,3 +13,20 @@ fun findIncreasingDepthValues(inputList: List<Int>): Int {
 
     return increasingDepthCount
 }
+
+fun findIncreasingThreeMeasurementDepthValues(inputList: ArrayList<Int>): Int {
+    var increasingDepthCount = 0
+    var currentThreeMeasurementDepthValue = inputList.take(3).sum()
+
+    while (inputList.isNotEmpty()) {
+        inputList.removeFirst()
+
+        val threeMeasurementDepthValue = inputList.take(3).sum()
+        if (threeMeasurementDepthValue > currentThreeMeasurementDepthValue) {
+            increasingDepthCount++
+        }
+        currentThreeMeasurementDepthValue = threeMeasurementDepthValue
+    }
+
+    return increasingDepthCount;
+}

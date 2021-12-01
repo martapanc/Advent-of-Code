@@ -15,4 +15,10 @@ internal class Day1KtTest {
         assertEquals(7, findIncreasingDepthValues(testInputList))
         assertEquals(1527, findIncreasingDepthValues(inputList))
     }
+
+    @Test
+    fun testFindIncreasingThreeMeasurementDepthValues() {
+        assertEquals(5, findIncreasingThreeMeasurementDepthValues(ArrayList(testInputList)))
+        assertEquals(1575, findIncreasingThreeMeasurementDepthValues(ArrayList(inputList)))
+    }
 }
