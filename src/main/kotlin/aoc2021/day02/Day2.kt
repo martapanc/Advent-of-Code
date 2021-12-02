@@ -2,63 +2,53 @@ package aoc2021.day02
 
 import java.awt.Point
 
-fun computeSubmarinePosition(inputList: List<String>): Int {
-    val initialPos = Point(0, 0)
+fun readInputToCommands(inputList: List<String>): List<SubmarineCommand> {
+    val submarineCommands = mutableListOf<SubmarineCommand>()
 
-    for (il: String in inputList) {
-        val split = il.split(" ")
+    inputList.forEach {inputString: String ->
+        val split = inputString.split(" ")
         val instruction = Instruction.valueOf(split[0].toUpperCase())
         val value = split[1].toInt()
-
-        when (instruction) {
-            Instruction.UP -> {
-                val currentY = initialPos.getY()
-                initialPos.y = currentY.toInt() - value
-            }
-            Instruction.DOWN -> {
-                val currentY = initialPos.getY()
-                initialPos.y = currentY.toInt() + value
-            }
-            Instruction.FORWARD -> {
-                val currentX = initialPos.getX()
-                initialPos.x = currentX.toInt() + value
-            }
-        }
+        submarineCommands.add(SubmarineCommand(instruction, value))
     }
 
-    return initialPos.x * initialPos.y;
+    return submarineCommands;
 }
 
-fun computeSubmarinePositionPart2(inputList: List<String>): Int {
-    val initialPos = Point(0, 0)
+fun computeSubmarinePosition(commands: List<SubmarineCommand>): Int {
+    val position = Point(0, 0)
+
+    commands.forEach { command: SubmarineCommand ->
+        when (command.instruction) {
+            Instruction.UP -> position.y -= command.value
+            Instruction.DOWN -> position.y += command.value
+            Instruction.FORWARD -> position.x += command.value
+        }
+    }
+
+    return position.x * position.y;
+}
+
+fun computeSubmarinePositionPart2(inputList: List<SubmarineCommand>): Int {
+    val position = Point(0, 0)
     var aim = 0
 
-    for (il: String in inputList) {
-        val split = il.split(" ")
-        val instruction = Instruction.valueOf(split[0].toUpperCase())
-        val value = split[1].toInt()
-
-        when (instruction) {
-            Instruction.UP -> {
-                aim -= value
-            }
-            Instruction.DOWN -> {
-                aim += value
-            }
+    inputList.forEach { command: SubmarineCommand ->
+        when (command.instruction) {
+            Instruction.UP -> aim -= command.value
+            Instruction.DOWN -> aim += command.value
             Instruction.FORWARD -> {
-                val currentX = initialPos.getX().toInt()
-                initialPos.x = currentX + value
-
-                val currentY = initialPos.getY().toInt()
-                initialPos.y = currentY + aim * value
+                position.x += command.value
+                position.y += aim * command.value
             }
         }
     }
 
-    return initialPos.x * initialPos.y;
+    return position.x * position.y;
 }
 
 enum class Instruction {
-    FORWARD(), UP(), DOWN()
-
+    FORWARD, UP, DOWN
 }
+
+data class SubmarineCommand(val instruction: Instruction, val value: Int)
