@@ -53,7 +53,7 @@ private fun updateValueList(
 private fun getBitCounts(inputList: List<String>, i: Int): Pair<Int, Int> {
     val positionList = mutableListOf<Int>()
     inputList.forEach { number: String ->
-        positionList.add(number[i].toString().toInt())
+        positionList.add(Character.getNumericValue(number[i]))
     }
     return Pair(positionList.count { x -> x == 0 }, positionList.count { x -> x == 1 })
 }
