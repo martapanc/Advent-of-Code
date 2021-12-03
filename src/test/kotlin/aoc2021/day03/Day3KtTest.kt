@@ -14,4 +14,10 @@ internal class Day3KtTest {
         assertEquals(198, getPowerConsumption(testInputList))
         assertEquals(3633500, getPowerConsumption(inputList))
     }
+
+    @Test
+    fun testGetLifeSupportRating() {
+        assertEquals(230, getLifeSupportRating(testInputList))
+        assertEquals(4550283, getLifeSupportRating(inputList))
+    }
 }
