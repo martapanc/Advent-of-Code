@@ -5,6 +5,7 @@ day=$1
 
 echo "Creating files for 2021: Day $1"
 
+# Read values from .env files
 if [ -f .env ]
 then
   export "$(cat .env | grep -v '#' | awk '/=/ {print $1}')"
@@ -18,11 +19,17 @@ else
   dir_name="day$day"
 fi
 
+# Append line to README.md
+echo "| [Day $day](https://adventofcode.com/2021/day/$day)   |  | [code]($dir_name/Day$day.kt) | [tests](../../../test/kotlin/aoc2021/$dir_name/Day$($day)KtTest.kt) |  |  |" >> "README.md"
+
+# Create src dir for the day
 mkdir "$dir_name"
 cd "$dir_name" || exit
 
-touch "Day$day.kt"
+# Create Main class
+echo "package aoc2021.$dir_name" > "Day$day.kt"
 
+# Create test input files
 mkdir "assets"
 cd "assets" || exit
 touch "input0"
