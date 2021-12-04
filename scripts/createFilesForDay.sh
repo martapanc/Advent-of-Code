@@ -2,8 +2,9 @@
 
 srcDir="src/main/kotlin/aoc2021"
 day=$1
+current_year=$(date +'%Y')
 
-echo "Creating files for 2021: Day $1"
+echo "Creating files for $current_year: Day $1"
 
 # Read values from .env files
 if [ -f .env ]
@@ -20,14 +21,14 @@ else
 fi
 
 # Append line to README.md
-echo "| [Day $day](https://adventofcode.com/2021/day/$day)   |  | [code]($dir_name/Day$day.kt) | [tests](../../../test/kotlin/aoc2021/$dir_name/Day$($day)KtTest.kt) |  |  |" >> "README.md"
+echo "| [Day $day](https://adventofcode.com/$current_year/day/$day)   |  | [code]($dir_name/Day$day.kt) | [tests](../../../test/kotlin/aoc${current_year}/$dir_name/Day${day}KtTest.kt) |  |  |" >> "README.md"
 
 # Create src dir for the day
 mkdir "$dir_name"
 cd "$dir_name" || exit
 
 # Create Main class
-echo "package aoc2021.$dir_name" > "Day$day.kt"
+echo "package aoc${current_year}.${dir_name}" > "Day${day}.kt"
 
 # Create test input files
 mkdir "assets"
@@ -35,5 +36,5 @@ cd "assets" || exit
 touch "input0"
 
 date
-curl --header "Cookie: session=$SESSION" "https://adventofcode.com/2021/day/$day/input" > "input"
+curl --header "Cookie: session=$SESSION" "https://adventofcode.com/$current_year/day/$day/input" > "input"
 
