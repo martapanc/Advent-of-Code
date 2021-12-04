@@ -21,37 +21,34 @@ fun readInputToSquidBingo(input: List<String>): Pair<List<Int>, List<SquidBingoB
 }
 
 fun playSquidBingo(numbersDrawn: List<Int>, boards: List<SquidBingoBoard>, isPart2: Boolean = false): Int {
-    val boardsNumber = boards.size
     var winningBoardCount = 0
 
     numbersDrawn.forEach { numDrawn ->
-
-        for (board: SquidBingoBoard in boards) {
+        boards.forEach { board: SquidBingoBoard ->
             if (!board.isWon) {
                 board.bingoNumbers
                     .find { bingoNumber -> bingoNumber.number == numDrawn }
                     ?.drawn = true
 
-                val isBingoWin = isBingoWin(board, numDrawn)
-                if (isBingoWin.isWin) {
-                    if (!isPart2) {
-                        return numDrawn * isBingoWin.sumOfUnmarkedNumbers
-                    } else {
+                val bingoGame = isBingoWin(board)
+                if (bingoGame.isWin) {
+                    if (isPart2) {
                         winningBoardCount++
                         board.isWon = true
-                        if (winningBoardCount == boardsNumber) {
-                            return numDrawn * isBingoWin.sumOfUnmarkedNumbers
+                        if (winningBoardCount == boards.size) {
+                            return numDrawn * bingoGame.sumOfUnmarkedNumbers
                         }
+                    } else {
+                        return numDrawn * bingoGame.sumOfUnmarkedNumbers
                     }
                 }
             }
         }
     }
-
     return -1
 }
 
-fun isBingoWin(board: SquidBingoBoard, lastNumDrawn: Int): BingoWin {
+fun isBingoWin(board: SquidBingoBoard): BingoWin {
     val rows = board.bingoNumbers.chunked(5)
     val columns = (0 until 5).map { index -> rows.map { it[index] } }
 
@@ -60,7 +57,6 @@ fun isBingoWin(board: SquidBingoBoard, lastNumDrawn: Int): BingoWin {
             return BingoWin(
                 isWin = true,
                 sumOfUnmarkedNumbers = board.bingoNumbers.filter { !it.drawn }.sumBy { it.number },
-                lastNumDrawn = lastNumDrawn
             )
         }
     }
@@ -75,4 +71,4 @@ class BingoNumber(val number: Int, var drawn: Boolean = false) {
     }
 }
 
-class BingoWin(val isWin: Boolean, val sumOfUnmarkedNumbers: Int = -1, val lastNumDrawn: Int = -1)
+class BingoWin(val isWin: Boolean, val sumOfUnmarkedNumbers: Int = -1)
