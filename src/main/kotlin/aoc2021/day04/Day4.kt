@@ -20,17 +20,30 @@ fun readInputToSquidBingo(input: List<String>): Pair<List<Int>, List<SquidBingoB
     return Pair(numbersDrawn, boardList)
 }
 
-fun playSquidBingo(numbersDrawn: List<Int>, boards: List<SquidBingoBoard>): Int {
+fun playSquidBingo(numbersDrawn: List<Int>, boards: List<SquidBingoBoard>, isPart2: Boolean = false): Int {
+    val boardsNumber = boards.size
+    var winningBoardCount = 0
+
     numbersDrawn.forEach { numDrawn ->
 
         for (board: SquidBingoBoard in boards) {
-            board.bingoNumbers
-                .find { bingoNumber -> bingoNumber.number == numDrawn }
-                ?.drawn = true
+            if (!board.isWon) {
+                board.bingoNumbers
+                    .find { bingoNumber -> bingoNumber.number == numDrawn }
+                    ?.drawn = true
 
-            val isBingoWin = isBingoWin(board, numDrawn)
-            if (isBingoWin.isWin) {
-                return numDrawn * isBingoWin.sumOfUnmarkedNumbers
+                val isBingoWin = isBingoWin(board, numDrawn)
+                if (isBingoWin.isWin) {
+                    if (!isPart2) {
+                        return numDrawn * isBingoWin.sumOfUnmarkedNumbers
+                    } else {
+                        winningBoardCount++
+                        board.isWon = true
+                        if (winningBoardCount == boardsNumber) {
+                            return numDrawn * isBingoWin.sumOfUnmarkedNumbers
+                        }
+                    }
+                }
             }
         }
     }
@@ -54,7 +67,7 @@ fun isBingoWin(board: SquidBingoBoard, lastNumDrawn: Int): BingoWin {
     return BingoWin(isWin = false)
 }
 
-class SquidBingoBoard(val bingoNumbers: List<BingoNumber>)
+class SquidBingoBoard(val bingoNumbers: List<BingoNumber>, var isWon: Boolean = false)
 
 class BingoNumber(val number: Int, var drawn: Boolean = false) {
     override fun toString(): String {

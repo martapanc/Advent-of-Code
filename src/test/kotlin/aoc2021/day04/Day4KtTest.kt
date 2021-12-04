@@ -20,6 +20,15 @@ internal class Day4KtTest {
     }
 
     @Test
+    fun playSquidBingoPart2() {
+        val (testNumbersDrawn, testBoardList) = readInputToSquidBingo(input0)
+        assertEquals(1924, playSquidBingo(testNumbersDrawn, testBoardList, isPart2 = true))
+
+        val (numbersDrawn, boardList) = readInputToSquidBingo(input)
+        assertEquals(19012, playSquidBingo(numbersDrawn, boardList, isPart2 = true))
+    }
+
+    @Test
     fun isBingoWin() {
         val (_, testBoardList) = readInputToSquidBingo(input0)
         assertFalse(isBingoWin(testBoardList[0], 4).isWin)
