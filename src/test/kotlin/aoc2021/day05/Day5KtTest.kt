@@ -19,4 +19,10 @@ internal class Day5KtTest {
         assertEquals(5, getOverlappingPoints(testInputList))
         assertEquals(6548, getOverlappingPoints(inputList))
     }
+
+    @Test
+    fun getOverlappingPointsPart2() {
+        assertEquals(12, getOverlappingPoints(testInputList, true))
+        assertEquals(19663, getOverlappingPoints(inputList, true))
+    }
 }

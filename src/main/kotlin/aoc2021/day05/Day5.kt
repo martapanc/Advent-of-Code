@@ -48,6 +48,55 @@ fun getOverlappingPoints(pointPairs: List<Pair<Point, Point>>, isPart2: Boolean 
                     ventilationMap[key] = 1
                 }
             }
+        } else if (isPart2) {
+            val a: Point = pair.first
+            val b: Point = pair.second
+
+            if (b.x > a.x && b.y > a.y) {
+                // lines like / (1st quadrant)
+                for (d in 0..(b.x - a.x)) {
+                    val key = Point(a.x + d, a.y + d)
+                    if (ventilationMap.containsKey(key)) {
+                        ventilationMap[key] = ventilationMap[key]!!.plus(1)
+                    } else {
+                        ventilationMap[key] = 1
+                    }
+                }
+            }
+
+            else if (b.x < a.x && b.y < a.y) {
+                // lines like / (3rd quadrant)
+                for (d in 0..(a.x - b.x)) {
+                    val key = Point(a.x - d, a.y - d)
+                    if (ventilationMap.containsKey(key)) {
+                        ventilationMap[key] = ventilationMap[key]!!.plus(1)
+                    } else {
+                        ventilationMap[key] = 1
+                    }
+                }
+
+            } else if (b.x < a.x && b.y > a.y) {
+                // lines like \ (4th quadrant)
+                for (d in 0..(b.y - a.y)) {
+                    val key = Point(a.x - d, a.y + d)
+                    if (ventilationMap.containsKey(key)) {
+                        ventilationMap[key] = ventilationMap[key]!!.plus(1)
+                    } else {
+                        ventilationMap[key] = 1
+                    }
+                }
+
+            } else if (b.x > a.x && b.y < a.y) {
+                // lines like \ (2nd quadrant)
+                for (d in 0..(b.x - a.x)) {
+                    val key = Point(a.x + d, a.y - d)
+                    if (ventilationMap.containsKey(key)) {
+                        ventilationMap[key] = ventilationMap[key]!!.plus(1)
+                    } else {
+                        ventilationMap[key] = 1
+                    }
+                }
+            }
         }
     }
 
