@@ -22,8 +22,14 @@ fun getOverlappingPoints(pointPairs: List<Pair<Point, Point>>, isPart2: Boolean 
     val ventilationMap = mutableMapOf<Point, Int>()
 
     for (pair: Pair<Point, Point> in pointPairs) {
+        var a: Point = pair.first
+        var b: Point = pair.second
+
         if (pair.first.x == pair.second.x) {
             val x = pair.first.x
+            if (b.y < a.y) {
+                a = b.also { b = a }
+            }
             val a: Point = if (pair.first.y < pair.second.y) pair.first else pair.second
             val b: Point = if (pair.first.y < pair.second.y) pair.second else pair.first
 
@@ -39,34 +45,39 @@ fun getOverlappingPoints(pointPairs: List<Pair<Point, Point>>, isPart2: Boolean 
                 updateIntersectionCount(ventilationMap, Point(x, y))
             }
         } else if (isPart2) {
-            val a: Point = pair.first
-            val b: Point = pair.second
             when {
                 // lines like / (1st quadrant)
-                b.x > a.x && b.y > a.y -> {
+                (b.x > a.x && b.y > a.y) || (b.x < a.x && b.y < a.y) -> {
+                    if (b.x < a.x) {
+                        a = b.also { b = a }
+                    }
                     for (delta in 0..(b.x - a.x)) {
                         val key = Point(a.x + delta, a.y + delta)
                         updateIntersectionCount(ventilationMap, key)
                     }
                 }
                 // lines like \ (2nd quadrant)
-                b.x > a.x && b.y < a.y ->
+                (b.x > a.x && b.y < a.y) || (b.x < a.x && b.y > a.y) -> {
+                    if (b.x < a.x) {
+                        a = b.also { b = a }
+                    }
                     for (delta in 0..(b.x - a.x)) {
                         val key = Point(a.x + delta, a.y - delta)
                         updateIntersectionCount(ventilationMap, key)
                     }
-                // lines like / (3rd quadrant)
-                b.x < a.x && b.y < a.y ->
-                    for (delta in 0..(a.x - b.x)) {
-                        val key = Point(a.x - delta, a.y - delta)
-                        updateIntersectionCount(ventilationMap, key)
-                    }
+                }
+//                // lines like / (3rd quadrant)
+//                b.x < a.x && b.y < a.y ->
+//                    for (delta in 0..(a.x - b.x)) {
+//                        val key = Point(a.x - delta, a.y - delta)
+//                        updateIntersectionCount(ventilationMap, key)
+//                    }
                 // lines like \ (4th quadrant)
-                b.x < a.x && b.y > a.y ->
-                    for (delta in 0..(b.y - a.y)) {
-                        val key = Point(a.x - delta, a.y + delta)
-                        updateIntersectionCount(ventilationMap, key)
-                    }
+//                b.x < a.x && b.y > a.y ->
+//                    for (delta in 0..(b.y - a.y)) {
+//                        val key = Point(a.x - delta, a.y + delta)
+//                        updateIntersectionCount(ventilationMap, key)
+//                    }
             }
         }
     }
