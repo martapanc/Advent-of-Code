@@ -18,31 +18,33 @@ fun getLanternfishGrowth(lanternfishList: List<Int>, days: Int = 1): Int {
 }
 
 fun getLanternfishGrowthPart2(lanternfishList: List<Int>, days: Int = 1): Long {
-    var lanternfishMap = mutableMapOf<Int, Long>()
-    (0..8).forEach{ lanternfishMap[it] = 0}
+    var lanternfishMap = getDefaultMap()
 
     for (lanternfish: Int in lanternfishList) {
         lanternfishMap[lanternfish] = lanternfishMap[lanternfish]!! + 1
     }
 
     for (day in 0 until days) {
-        val newFish = mutableMapOf<Int, Long>()
-        (0..8).forEach{ newFish[it] = 0}
-
+        val newFish = getDefaultMap()
         for (fishTimerToQuantity: Map.Entry<Int, Long> in lanternfishMap.entries) {
             val fishTimer = fishTimerToQuantity.key - 1
-            val quantity = fishTimerToQuantity.value
+            val fishQuantity = fishTimerToQuantity.value
 
             if (fishTimerToQuantity.key == 0) {
-                newFish[6] =  newFish[6]!! + quantity
-                newFish[8] = newFish[8]!! + quantity
+                newFish[6] = newFish[6]!! + fishQuantity
+                newFish[8] = newFish[8]!! + fishQuantity
             } else {
-                newFish[fishTimer] = newFish[fishTimer]!! + quantity
+                newFish[fishTimer] = newFish[fishTimer]!! + fishQuantity
             }
         }
-
         lanternfishMap = newFish
     }
 
     return lanternfishMap.values.sum()
+}
+
+private fun getDefaultMap(): MutableMap<Int, Long> {
+    val defaultMap = mutableMapOf<Int, Long>()
+    (0..8).forEach { defaultMap[it] = 0 }
+    return defaultMap
 }

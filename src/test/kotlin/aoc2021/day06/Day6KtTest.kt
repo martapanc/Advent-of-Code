@@ -1,10 +1,8 @@
 package aoc2021.day06
 
 import aoc2019.day02.readInput
-import aoc2020.day05.readInputToList
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class Day6KtTest {
 
