@@ -17,7 +17,7 @@ internal class Day7KtTest {
 
     @Test
     fun getMinimumFuelPart2() {
-        assertEquals(168, getMinimumFuel(input0, true))
-        assertEquals(95476244, getMinimumFuel(input, true))
+        assertEquals(168, getMinimumFuel(input0, isPart2 = true))
+        assertEquals(95476244, getMinimumFuel(input, isPart2 = true))
     }
 }

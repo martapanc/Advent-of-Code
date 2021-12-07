@@ -25,5 +25,5 @@ fun getMinimumFuel(crabList: List<Int>, isPart2: Boolean = false): Int {
 }
 
 // In part 2, the total fuel to move from A to B is the Gauss formula applied to the steps, abs(B - A)
-// E.g. to move from 1 to 5, that is 4 steps, is Gauss(5 - 1) = 10
+// E.g. to move from 1 to 5, that is 4 steps, fuel consumed is Gauss(5 - 1) = 10 units
 fun getSumOfFirstNNums(n: Int): Int = n * (n + 1) / 2
