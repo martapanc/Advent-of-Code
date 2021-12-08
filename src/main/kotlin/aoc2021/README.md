@@ -9,3 +9,4 @@
 | [Day 5](https://adventofcode.com/2021/day/5)  | Hydrothermal Venture    | [code](day05/Day5.kt) | [tests](../../../test/kotlin/aoc2021/day05/Day5KtTest.kt) | cartesian plane, intersections |  |
 | [Day 6](https://adventofcode.com/2021/day/6)  | Lanternfish             | [code](day06/Day6.kt) | [tests](../../../test/kotlin/aoc2021/day06/Day6KtTest.kt) | lanternfish, exponential growth |  |
 | [Day 7](https://adventofcode.com/2021/day/7)  | The Treachery of Whales | [code](day07/Day7.kt) | [tests](../../../test/kotlin/aoc2021/day07/Day7KtTest.kt) | moving crabs, minimum fuel, Gauss |  |
+| [Day 8](https://adventofcode.com/2021/day/8)  | Seven Segment Search    | [code](day08/Day8.kt) | [tests](../../../test/kotlin/aoc2021/day08/Day8KtTest.kt) |  |  |
