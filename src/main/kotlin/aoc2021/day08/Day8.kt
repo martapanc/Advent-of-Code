@@ -17,7 +17,6 @@ fun decodePatterns(inputList: List<String>): Int {
 
     inputList.forEach { line ->
         val split = line.split(" | ")
-
         val sortedPatternsToNum =
             getSegmentMap(split).entries.associateBy({ it.value.toSortedSet().joinToString("") }) { it.key }
 
@@ -30,7 +29,6 @@ fun decodePatterns(inputList: List<String>): Int {
         }
         sum += outputNumber.toInt()
     }
-
     return sum
 }
 
@@ -43,7 +41,6 @@ private fun getSegmentMap(split: List<String>): MutableMap<Int, String> {
     numberToPatternMap[4] = patterns.first { it.length == 4 }
     numberToPatternMap[7] = patterns.first { it.length == 3 }
     numberToPatternMap[8] = patterns.first { it.length == 7 }
-    patterns.removeIf { it.length != 5 && it.length != 6 }
 
     val one = numberToPatternMap[1]!!
     numberToPatternMap[6] = patterns.first { _6HasSixSegmentsAndLacksOneSegmentOf1(it, one) }
@@ -52,17 +49,16 @@ private fun getSegmentMap(split: List<String>): MutableMap<Int, String> {
     patterns.remove(numberToPatternMap[9])
     numberToPatternMap[0] = patterns.first { it.length == 6 }
 
-    numberToPatternMap[3] = patterns.first { _3HasFiveSegmentsAndBothSegmentsOf1(it, one) }
-    val topSegmentOf1 = _getTopSegmentOf1(numberToPatternMap[6]!!)
+    val topSegmentOf1 = getTopSegmentOf1(numberToPatternMap[6]!!)
     numberToPatternMap[5] = patterns.first { _5HasFiveSegmentsAndLacksTopSegmentOf1(it, topSegmentOf1) }
+    numberToPatternMap[3] = patterns.first { _3HasFiveSegmentsAndBothSegmentsOf1(it, one) }
     patterns.removeIf { it == numberToPatternMap[3] || it == numberToPatternMap[5] }
     numberToPatternMap[2] = patterns.first { it.length == 5 }
     return numberToPatternMap
 }
 
 private fun _6HasSixSegmentsAndLacksOneSegmentOf1(pattern: String, one: String): Boolean {
-    return pattern.length == 6
-            && one.contains(
+    return pattern.length == 6 && one.contains(
         toCharSet("abcdefg").subtract(toCharSet(pattern)).first()
     )
 }
@@ -80,7 +76,7 @@ private fun _5HasFiveSegmentsAndLacksTopSegmentOf1(pattern: String, topSegmentOf
     return pattern.length == 5 && !pattern.contains(topSegmentOf1)
 }
 
-private fun _getTopSegmentOf1(six: String): Char {
+private fun getTopSegmentOf1(six: String): Char {
     return toCharSet("abcdefg").subtract(toCharSet(six)).first()
 }
 
