@@ -12,10 +12,8 @@ internal class Day8KtTest {
 
     @Test
     fun countUniqueSegments() {
-        val (_, testOutputValues) = readToListsOfPatternsAndOutputs(input0)
-        assertEquals(26, countUniqueSegments(testOutputValues))
-        val (_, outputValues) = readToListsOfPatternsAndOutputs(input)
-        assertEquals(288, countUniqueSegments(outputValues))
+        assertEquals(26, countUniqueSegments(readToListsOfOutputs(input0)))
+        assertEquals(288, countUniqueSegments(readToListsOfOutputs(input)))
     }
 
     @Test
