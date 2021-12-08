@@ -1,0 +1,54 @@
+  0:       1:       2:       3:       4:       5:       6:       7:       8:       9:
+ aaaa     ....     aaaa     aaaa     ....     aaaa     aaaa     aaaa     aaaa     aaaa
+b    c   .    c   .    c   .    c   b    c   b    .   b    .   .    c   b    c   b    c
+b    c   .    c   .    c   .    c   b    c   b    .   b    .   .    c   b    c   b    c
+ ....     ....     dddd     dddd     dddd     dddd     dddd     ....     dddd     dddd
+e    f   .    f   e    .   .    f   .    f   .    f   e    f   .    f   e    f   .    f
+e    f   .    f   e    .   .    f   .    f   .    f   e    f   .    f   e    f   .    f
+ gggg     ....     gggg     gggg     ....     gggg     gggg     ....     gggg     gggg
+
+  6         2       5         5        4        5       6        3         7        6
+
+   | cdfeb fcadb cdfeb cdbaf
+
+0   cagedb
+1   ab
+2   gcdfa
+3   fbcad
+4   eafb
+5   cdfbe
+6   cdfgeb (missing A)
+7   dab
+8   acedgfb
+9   cefabd
+
+ dddd
+.    a
+.    a
+ ....
+.    b
+.    b
+ ....
+
+ 6 is the 6-char segment that doesn't have both segments of 1 (and the missing char is the top one)
+ 3 is the 5-char with both segments of 1
+ 5 is the 5-char missing the top segment of 1
+ 2 is the 5-char missing the bottom segment of 1
+ 9 is the 6-char with both 4 (eafb) - 1 (ab) = ef
+ 0 is the remaining 6-char
+
+
+Check:
+ cagedb: 0
+ ab: 1
+ gcdfa: 2
+ fbcad: 3
+ eafb: 4
+ cdfbe: 5
+ cdfgeb: 6
+ dab: 7
+ acedgfb: 8
+ cefabd: 9
+
+
+ edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec
