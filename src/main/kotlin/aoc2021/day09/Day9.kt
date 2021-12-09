@@ -52,8 +52,7 @@ fun findProductOfLargestBasins(inputMap: Map<Coord, Int>): Int {
     while (edge.isNotEmpty()) {
       val newEdge = mutableSetOf<Coord>()
       edge.forEach { point ->
-        val nonNullNeighbors = getNonNullNeighbors(point, inputMap)
-        nonNullNeighbors.forEach {
+          getNonNullNeighbors(point, inputMap).forEach {
           if (inputMap[it]!! != 9 && !visitedPoints.contains(it) && inputMap[it]!! > inputMap[point]!!) {
             newEdge.add(it)
             visitedPoints.add(it)
