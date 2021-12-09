@@ -10,3 +10,4 @@
 | [Day 6](https://adventofcode.com/2021/day/6)  | Lanternfish             | [code](day06/Day6.kt) | [tests](../../../test/kotlin/aoc2021/day06/Day6KtTest.kt) | lanternfish, exponential growth | <img src="day06/assets/day6.jpg" alt="Visualisation of Day 6" width="180"/> |
 | [Day 7](https://adventofcode.com/2021/day/7)  | The Treachery of Whales | [code](day07/Day7.kt) | [tests](../../../test/kotlin/aoc2021/day07/Day7KtTest.kt) | moving crabs, minimum fuel, Gauss | <img src="day07/assets/day7.jpg" alt="Visualisation of Day 7" width="200"/> |
 | [Day 8](https://adventofcode.com/2021/day/8)  | Seven Segment Search    | [code](day08/Day8.kt) | [tests](../../../test/kotlin/aoc2021/day08/Day8KtTest.kt) | seven segment display | <img src="day08/assets/day8.jpg" alt="Visualisation of Day 8" width="220"/> |
+| [Day 9](https://adventofcode.com/2021/day/9)   |  | [code](day09/Day9.kt) | [tests](../../../test/kotlin/aoc2021/day09/Day9KtTest.kt) |  |  |
