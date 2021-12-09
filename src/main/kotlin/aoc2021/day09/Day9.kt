@@ -7,10 +7,10 @@ fun readInputToMap(path: String): Map<Coord, Int> {
   val map = mutableMapOf<Coord, Int>()
   var x = 0
   readInputLineByLine(path).withIndex().forEach { (y, line) ->
-      for (char in line) {
-        map[Coord(x, y)] = Character.getNumericValue(char)
-        x++
-      }
+    for (char in line) {
+      map[Coord(x, y)] = Character.getNumericValue(char)
+      x++
+    }
     x = 0
   }
   return map
@@ -18,6 +18,14 @@ fun readInputToMap(path: String): Map<Coord, Int> {
 
 fun findSumOfRiskLevels(inputMap: Map<Coord, Int>): Int {
   var riskLevelSum = 0
+  getLowestPoints(inputMap).forEach {
+    riskLevelSum += inputMap[it]!! + 1
+  }
+  return riskLevelSum
+}
+
+fun getLowestPoints(inputMap: Map<Coord, Int>): List<Coord> {
+  val lowestPoints = mutableListOf<Coord>()
   inputMap.entries.forEach { heightPoint: Map.Entry<Coord, Int> ->
     val nonNullNeighbors = mutableListOf<Coord>()
     heightPoint.key.neighbors().forEach { n ->
@@ -26,8 +34,8 @@ fun findSumOfRiskLevels(inputMap: Map<Coord, Int>): Int {
       }
     }
     if (nonNullNeighbors.all { inputMap[it]!! > heightPoint.value }) {
-      riskLevelSum += heightPoint.value + 1
+      lowestPoints.add(heightPoint.key)
     }
   }
-  return riskLevelSum
+  return lowestPoints
 }
