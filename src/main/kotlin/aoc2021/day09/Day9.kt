@@ -39,3 +39,38 @@ fun getLowestPoints(inputMap: Map<Coord, Int>): List<Coord> {
   }
   return lowestPoints
 }
+
+fun findProductOfLargestBasins(inputMap: Map<Coord, Int>): Int {
+  val basinSizeList = mutableListOf<Int>()
+  val visitedPoints = mutableSetOf<Coord>()
+
+  getLowestPoints(inputMap).forEach { lowestPoint ->
+    var basinSize = 1
+    var edge = mutableSetOf<Coord>()
+    edge.add(lowestPoint)
+
+    while (edge.isNotEmpty()) {
+      val newEdge = mutableSetOf<Coord>()
+      edge.forEach { point ->
+        val nonNullNeighbors = getNonNullNeighbors(point, inputMap)
+        nonNullNeighbors.forEach {
+          if (inputMap[it]!! != 9 && !visitedPoints.contains(it) && inputMap[it]!! > inputMap[point]!!) {
+            newEdge.add(it)
+            visitedPoints.add(it)
+          }
+        }
+      }
+      basinSize += newEdge.size
+      edge = newEdge
+    }
+    basinSizeList.add(basinSize)
+  }
+  basinSizeList.sortDescending()
+  return basinSizeList[0] * basinSizeList[1] * basinSizeList[2]
+}
+
+private fun getNonNullNeighbors(lowestPoint: Coord, inputMap: Map<Coord, Int>): List<Coord> {
+  val nonNullNeighbors = mutableListOf<Coord>()
+  lowestPoint.neighbors().forEach { n -> if (inputMap[n] != null) nonNullNeighbors.add(n) }
+  return nonNullNeighbors
+}

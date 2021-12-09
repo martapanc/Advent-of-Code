@@ -14,4 +14,10 @@ internal class Day9KtTest {
     assertEquals(15, findSumOfRiskLevels(input0))
     assertEquals(577, findSumOfRiskLevels(input))
   }
+
+  @Test
+  fun findProductOfLargestBasins() {
+    assertEquals(1134, findProductOfLargestBasins(input0))
+    assertEquals(1069200, findProductOfLargestBasins(input))
+  }
 }
