@@ -15,4 +15,10 @@ internal class Day10KtTest {
     assertEquals(26397, findSyntaxErrorChecksum(input0))
     assertEquals(413733, findSyntaxErrorChecksum(input))
   }
+
+  @Test
+  fun findMiddleTotal() {
+    assertEquals(288957, findSyntaxErrorChecksum(input0, true))
+    assertEquals(3354640192, findSyntaxErrorChecksum(input, true))
+  }
 }
