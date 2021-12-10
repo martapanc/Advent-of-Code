@@ -11,3 +11,4 @@
 | [Day 7](https://adventofcode.com/2021/day/7)  | The Treachery of Whales | [code](day07/Day7.kt) | [tests](../../../test/kotlin/aoc2021/day07/Day7KtTest.kt) | moving crabs, minimum fuel, Gauss | <img src="day07/assets/day7.jpg" alt="Visualisation of Day 7" width="200"/> |
 | [Day 8](https://adventofcode.com/2021/day/8)  | Seven Segment Search    | [code](day08/Day8.kt) | [tests](../../../test/kotlin/aoc2021/day08/Day8KtTest.kt) | seven segment display | <img src="day08/assets/day8.jpg" alt="Visualisation of Day 8" width="220"/> |
 | [Day 9](https://adventofcode.com/2021/day/9)  | Smoke Basin             | [code](day09/Day9.kt) | [tests](../../../test/kotlin/aoc2021/day09/Day9KtTest.kt) | basin, flood, local min heights |  |
+| [Day 10](https://adventofcode.com/2021/day/10)   |  | [code](day10/Day10.kt) | [tests](../../../test/kotlin/aoc2021/day10/Day10KtTest.kt) |  |  |
