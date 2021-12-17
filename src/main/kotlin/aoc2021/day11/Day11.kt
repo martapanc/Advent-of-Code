@@ -1,48 +1,50 @@
 package aoc2021.day11
 
+import aoc2021.day09.readInputToMap
 import aoc2020.day20.Coord
 
-fun countFlashingOctopi(octopi: Map<Coord, Int>, steps: Int = 100): Int {
+fun readInputToOctopusMap(input: String): Map<Coord, Octopus> {
+  val octopusMap = mutableMapOf<Coord, Octopus>()
+  for (entry in readInputToMap(input)) {
+    octopusMap[entry.key] = Octopus(entry.value, false)
+  }
+  return octopusMap
+}
+
+fun countFlashingOctopi(input: String, steps: Int = 100): Int {
   var flashCount = 0
-  var octopiMap = octopi.toMutableMap()
+  var octopiMap = readInputToOctopusMap(input).toMutableMap()
   (1..steps).forEach { _ ->
     val newMap = octopiMap.toMutableMap()
 
     for (octopus in newMap) {
-      newMap[octopus.key] = newMap[octopus.key]!! + 1
+      newMap[octopus.key]!!.flashed = false
+      newMap[octopus.key]!!.energyValue = newMap[octopus.key]!!.energyValue + 1
     }
-    // Probs needs check that octopus flashes only once per round
 
-    while (newMap.values.find { it > 9 } != null) {
+    while (newMap.values.find { it.energyValue > 9 } != null) {
 
-      val octopiWithMaxEnergy = newMap.filter { it.value > 9 }
+      val octopiWithMaxEnergy = newMap.filter { it.value.energyValue > 9 }
       for (octopus in octopiWithMaxEnergy) {
-        val neighbors = getNeighborOctopi(octopi, currentOctopus = octopus.key)
-        newMap[octopus.key] = 0
+        val neighbors = getNeighborOctopi(octopiMap, currentOctopus = octopus.key)
+        newMap[octopus.key]!!.energyValue = 0
+        newMap[octopus.key]!!.flashed = true
+
         flashCount++
         for (neighbor: Coord in neighbors) {
-          newMap[neighbor] = newMap[neighbor]!! + 1
+          if (!newMap[neighbor]!!.flashed) {
+            newMap[neighbor]!!.energyValue = newMap[neighbor]!!.energyValue + 1
+          }
         }
       }
     }
-//
-//    for (octopus: Map.Entry<Coord, Int> in octopi) {
-//      val neighbors = getNeighborOctopi(octopi, currentOctopus = octopus.key)
-//      if (octopus.value == 9) {
-//        for (neighbor: Coord in neighbors) {
-//          newMap[neighbor] = newMap[neighbor]!! + 1
-//        }
-//      }
-
-//    }
-
     octopiMap = newMap
   }
 
   return flashCount
 }
 
-private fun getNeighborOctopi(octopi: Map<Coord, Int>, currentOctopus: Coord): Set<Coord> {
+private fun getNeighborOctopi(octopi: Map<Coord, Octopus>, currentOctopus: Coord): Set<Coord> {
   val neighborOctopi = mutableSetOf<Coord>()
   val (x, y) = Pair(currentOctopus.x, currentOctopus.y)
   val deltas = listOf(
@@ -56,4 +58,11 @@ private fun getNeighborOctopi(octopi: Map<Coord, Int>, currentOctopus: Coord): S
     if (neighbor != null) neighborOctopi.add(delta)
   }
   return neighborOctopi
+}
+
+
+class Octopus(var energyValue: Int, var flashed: Boolean = false) {
+  override fun toString(): String {
+    return "{$energyValue, $flashed}"
+  }
 }
