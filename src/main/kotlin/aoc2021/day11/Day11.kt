@@ -11,19 +11,17 @@ fun readInputToOctopusMap(input: String): Map<Coord, Octopus> {
   return octopusMap
 }
 
-fun countFlashingOctopi(input: String, steps: Int = 100): Int {
+fun countFlashingOctopi(input: String, steps: Int = 100, isPart2: Boolean = false): Int {
   var flashCount = 0
   var octopiMap = readInputToOctopusMap(input).toMutableMap()
-  (1..steps).forEach { _ ->
+  (1..steps).forEach { step ->
     val newMap = octopiMap.toMutableMap()
-
     for (octopus in newMap) {
       newMap[octopus.key]!!.flashed = false
       newMap[octopus.key]!!.energyValue = newMap[octopus.key]!!.energyValue + 1
     }
 
     while (newMap.values.find { it.energyValue > 9 } != null) {
-
       val octopiWithMaxEnergy = newMap.filter { it.value.energyValue > 9 }
       for (octopus in octopiWithMaxEnergy) {
         val neighbors = getNeighborOctopi(octopiMap, currentOctopus = octopus.key)
@@ -37,6 +35,9 @@ fun countFlashingOctopi(input: String, steps: Int = 100): Int {
           }
         }
       }
+    }
+    if (isPart2 && newMap.all { it.value.energyValue == 0 }) {
+      return step
     }
     octopiMap = newMap
   }

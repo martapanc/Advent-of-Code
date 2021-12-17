@@ -27,4 +27,10 @@ internal class Day11KtTest {
     assertEquals(1656, countFlashingOctopi(input0))
     assertEquals(1644, countFlashingOctopi(input))
   }
+
+  @Test
+  fun countFlashingOctopiPart2() {
+    assertEquals(195, countFlashingOctopi(input0, 200, isPart2 = true))
+    assertEquals(229, countFlashingOctopi(input, 250, isPart2 = true))
+  }
 }
