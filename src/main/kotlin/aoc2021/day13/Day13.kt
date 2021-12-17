@@ -20,7 +20,6 @@ fun readInputToCoordAndFoldList(input: String): Instructions {
       }
     }
   }
-
   return Instructions(coordList, foldList)
 }
 
@@ -29,13 +28,21 @@ fun foldAndCompute(coordList: List<Coord>, foldAlongX: Int? = null, foldAlongY: 
 
   if (foldAlongY != null) {
     for (coord in coordList) {
-      foldedList.add(Coord(coord.x, abs(foldAlongY - coord.y)))
+      if (foldAlongY > coord.y) {
+        foldedList.add(coord)
+      } else {
+        foldedList.add(Coord(coord.x, coord.y - 2 * abs(foldAlongY - coord.y)))
+      }
     }
   }
 
   if (foldAlongX != null) {
     for (coord in coordList) {
-      foldedList.add(Coord(abs(foldAlongX - coord.x), coord.y))
+      if (foldAlongX > coord.x) {
+        foldedList.add(coord)
+      } else {
+        foldedList.add(Coord(coord.x - 2 * abs(foldAlongX - coord.x), coord.y))
+      }
     }
   }
 
@@ -44,7 +51,6 @@ fun foldAndCompute(coordList: List<Coord>, foldAlongX: Int? = null, foldAlongY: 
 
 fun foldOrigami(coordList: List<Coord>, foldList: List<Fold>) {
   var mutableCoordList = coordList.toMutableList()
-//  printCoords(mutableCoordList)
   for (fold in foldList) {
     val foldedCoords =
       if (fold.direction == Direction.X) {
@@ -67,7 +73,7 @@ class Instructions(val coordinates: List<Coord>, val folds: List<Fold>)
 fun printCoords(coords: List<Coord>) {
   for (y in 0..coords.maxOf { it.y }) {
     for (x in 0..coords.maxOf { it.x })
-      if (coords.contains(Coord(x, y))) print("#") else print(".")
+      if (coords.contains(Coord(x, y))) print("#") else print(" ")
     println()
   }
   println()

@@ -18,6 +18,6 @@ internal class Day13KtTest {
   @Test
   fun foldOrigamiAndComputePart2() {
     foldOrigami(input0.coordinates, input0.folds)
-    foldOrigami(input.coordinates, input.folds)
+    foldOrigami(input.coordinates, input.folds) // HGAJBEHC
   }
 }
