@@ -64,23 +64,13 @@ fun computePolymerisationOptimised(
       if (newPolymer.containsKey(newPairs.first)) {
         newPolymer[newPairs.first] = newPolymer[newPairs.first]!! + pair.value
       } else {
-
-//        if (polymer.containsKey(newPairs.first)) {
-//          newPolymer[newPairs.first] = polymer[newPairs.first]!!
-//        } else {
-          newPolymer[newPairs.first] = pair.value
-//        }
+        newPolymer[newPairs.first] = pair.value
       }
 
       if (newPolymer.containsKey(newPairs.second)) {
         newPolymer[newPairs.second] = newPolymer[newPairs.second]!! + pair.value
       } else {
-
-//        if (polymer.containsKey(newPairs.second)) {
-//          newPolymer[newPairs.second] = polymer[newPairs.second]!!
-//        } else {
-          newPolymer[newPairs.second] = pair.value
-//        }
+        newPolymer[newPairs.second] = pair.value
       }
     }
 
@@ -90,7 +80,11 @@ fun computePolymerisationOptimised(
   return polymer
 }
 
-fun computeChecksumPart2(insertionRules: Map<String, Pair<String, String>>, initialPolymer: String, iterations: Int): Long {
+fun computeChecksumPart2(
+  insertionRules: Map<String, Pair<String, String>>,
+  initialPolymer: String,
+  iterations: Int
+): Long {
   val finalPolymer = computePolymerisationOptimised(insertionRules, initialPolymer, iterations)
   val frequencies = mutableMapOf<Char, Long>()
 

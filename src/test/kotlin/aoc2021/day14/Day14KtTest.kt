@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Assertions.*
 internal class Day14KtTest {
 
   private val input0 = readInputToInsertionRules("src/main/kotlin/aoc2021/day14/assets/input0")
-  private val input0_2 = readInputToInsertionRules2("src/main/kotlin/aoc2021/day14/assets/input0")
+  private val input0V2 = readInputToInsertionRules2("src/main/kotlin/aoc2021/day14/assets/input0")
   private val polymer0 = "NNCB"
 
   private val input = readInputToInsertionRules("src/main/kotlin/aoc2021/day14/assets/input")
-  private val input_2 = readInputToInsertionRules2("src/main/kotlin/aoc2021/day14/assets/input")
+  private val inputV2 = readInputToInsertionRules2("src/main/kotlin/aoc2021/day14/assets/input")
   private val polymer = "OFSVVSFOCBNONHKFHNPK"
 
   @Test
@@ -30,9 +30,9 @@ internal class Day14KtTest {
 
   @Test
   fun testComputeChecksumPart2() {
-    assertEquals(18, computeChecksumPart2(input0_2, polymer0, 4) + 1)
-    assertEquals(1588, computeChecksumPart2(input0_2, polymer0, 10) + 1)
-    assertEquals(2188189693529, computeChecksumPart2(input0_2, polymer0, 40) + 1)
-    assertEquals(4302675529690, computeChecksumPart2(input_2, polymer, 40))
+    assertEquals(18, computeChecksumPart2(input0V2, polymer0, 4) + 1)
+    assertEquals(1588, computeChecksumPart2(input0V2, polymer0, 10) + 1)
+    assertEquals(2188189693529, computeChecksumPart2(input0V2, polymer0, 40) + 1)
+    assertEquals(4302675529690, computeChecksumPart2(inputV2, polymer, 40))
   }
 }
