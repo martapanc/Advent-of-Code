@@ -9,13 +9,6 @@ fun parseInput(inputString: String): Range {
   return Range(splitX[0].toInt(), splitX[1].toInt(), splitY[0].toInt(), splitY[1].toInt())
 }
 
-fun findTrajectory(input: String): Int {
-  val range = parseInput(input)
-
-  val result = fireProbe(7, 2, range)
-  return -1
-}
-
 fun fireProbe(initHorizontalVelocity: Int, initVerticalVelocity: Int, range: Range): HitOrMiss {
   val position = Coord(0, 0)
   var maxYReached = position.y
@@ -23,7 +16,7 @@ fun fireProbe(initHorizontalVelocity: Int, initVerticalVelocity: Int, range: Ran
   var verticalVelocity = initVerticalVelocity
 
   while (!isPositionInRange(position, range)) {
-    if (targetMissed(position, range))
+    if (verticalVelocity < -10000)
       return HitOrMiss(false, maxYReached)
     position.x += horizontalVelocity
     position.y += verticalVelocity
@@ -43,28 +36,44 @@ fun fireProbe(initHorizontalVelocity: Int, initVerticalVelocity: Int, range: Ran
   return HitOrMiss(true, maxYReached)
 }
 
+fun findAllInitialVelocities(range: Range): Int {
+  val initialVelocities = mutableSetOf<Velocity>()
+
+  for (x in 1..152) {
+    for (y in -160..160) {
+      if (fireProbe(x, y, range).hitTarget) {
+        initialVelocities.add(Velocity(x, y))
+      }
+    }
+  }
+
+  return initialVelocities.size
+}
+
 fun isPositionInRange(probePosition: Coord, range: Range): Boolean {
-  return probePosition.x >= range.minX && probePosition.x <= range.maxX &&
-    probePosition.y >= range.minY && probePosition.y <= range.maxY
+  return isInHorizontalRange(probePosition, range) && isInVerticalRange(probePosition, range)
 }
 
-fun targetMissed(probePosition: Coord, range: Range): Boolean {
-  return probePosition.x > range.maxX && probePosition.y < range.maxY
-}
+private fun isInHorizontalRange(probePosition: Coord, range: Range) =
+  probePosition.x >= range.minX && probePosition.x <= range.maxX
 
+private fun isInVerticalRange(probePosition: Coord, range: Range) =
+  probePosition.y >= range.minY && probePosition.y <= range.maxY
 
 class Range(val minX: Int, val maxX: Int, val minY: Int, val maxY: Int)
 
 class HitOrMiss(val hitTarget: Boolean, val highestY: Int)
 
+class Velocity(private val horizontalVelocity: Int, private val verticalVelocity: Int) {
+  override fun toString(): String {
+    return "($horizontalVelocity, $verticalVelocity)"
+  }
+}
+
 fun printGrid(range: Range) {
-  for (y in 0 downTo range.minY ) {
-    for (x in 0 .. range.maxX) {
-      if (isPositionInRange(Coord(x, y), range)) {
-        print("T")
-      } else {
-        print(".")
-      }
+  for (y in 0 downTo range.minY) {
+    for (x in 0..range.maxX) {
+      if (isPositionInRange(Coord(x, y), range)) print("T") else print(".")
     }
     println()
   }

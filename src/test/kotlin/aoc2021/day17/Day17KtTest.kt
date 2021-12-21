@@ -13,17 +13,13 @@ internal class Day17KtTest {
   private val range = parseInput(input)
 
   @Test
-  fun testFindTrajectory() {
-    assertEquals(-1, findTrajectory(testInput))
-  }
-
-  @Test
   fun testFireProbe() {
     assertEquals(3, fireProbe(7, 2, testRange).highestY)
     assertEquals(6, fireProbe(6, 3, testRange).highestY)
     assertEquals(0, fireProbe(9, 0, testRange).highestY)
     assertEquals(45, fireProbe(6, 9, testRange).highestY)
     assertFalse(fireProbe(17,-4, testRange).hitTarget)
+    assertTrue(fireProbe(10,-2, testRange).hitTarget)
 
     assertEquals(45, fireProbe(15, 9, range).highestY)
     assertEquals(55, fireProbe(15, 10, range).highestY)
@@ -33,5 +29,11 @@ internal class Day17KtTest {
     assertEquals(10878, fireProbe(15, 147, range).highestY)
     assertEquals(12090, fireProbe(15, 155, range).highestY)
     assertTrue(fireProbe(15, 155, range).hitTarget)
+  }
+
+  @Test
+  fun testFindAllInitialVelocities() {
+    assertEquals(112, findAllInitialVelocities(testRange))
+    assertEquals(5059, findAllInitialVelocities(range))
   }
 }
