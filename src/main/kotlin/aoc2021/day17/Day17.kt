@@ -44,8 +44,8 @@ fun fireProbe(initHorizontalVelocity: Int, initVerticalVelocity: Int, range: Ran
 }
 
 fun isPositionInRange(probePosition: Coord, range: Range): Boolean {
-  return probePosition.x > range.minX && probePosition.x < range.maxX &&
-    probePosition.y > range.minY && probePosition.y < range.maxY
+  return probePosition.x >= range.minX && probePosition.x <= range.maxX &&
+    probePosition.y >= range.minY && probePosition.y <= range.maxY
 }
 
 fun targetMissed(probePosition: Coord, range: Range): Boolean {

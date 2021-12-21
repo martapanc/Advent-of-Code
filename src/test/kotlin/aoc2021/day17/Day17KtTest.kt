@@ -22,6 +22,16 @@ internal class Day17KtTest {
     assertEquals(3, fireProbe(7, 2, testRange).highestY)
     assertEquals(6, fireProbe(6, 3, testRange).highestY)
     assertEquals(0, fireProbe(9, 0, testRange).highestY)
+    assertEquals(45, fireProbe(6, 9, testRange).highestY)
     assertFalse(fireProbe(17,-4, testRange).hitTarget)
+
+    assertEquals(45, fireProbe(15, 9, range).highestY)
+    assertEquals(55, fireProbe(15, 10, range).highestY)
+    assertEquals(120, fireProbe(15, 15, range).highestY)
+    assertEquals(325, fireProbe(15, 25, range).highestY)
+    assertEquals(1128, fireProbe(15, 47, range).highestY)
+    assertEquals(10878, fireProbe(15, 147, range).highestY)
+    assertEquals(12090, fireProbe(15, 155, range).highestY)
+    assertTrue(fireProbe(15, 155, range).hitTarget)
   }
 }
