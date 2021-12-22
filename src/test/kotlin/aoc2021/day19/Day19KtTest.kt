@@ -21,6 +21,6 @@ internal class Day19KtTest {
   fun testFindBeacons() {
     assertEquals(3, findBeacons(input1))
     assertEquals(12, findBeacons(input0))
-    assertEquals(12, findBeacons(input))
+    assertEquals(16, findBeacons(input))
   }
 }

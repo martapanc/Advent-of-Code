@@ -21,10 +21,9 @@ fun readScannerObservations(inputString: String): List<Scanner> {
 
 fun findBeacons(scanners: List<Scanner>): Int {
   val relativeDistancesList = mutableListOf<Map<Coord3d, List<Coord3d>>>()
-
   val uniqueBeacons = mutableSetOf<Coord3d>()
-
   val distanceSet = mutableSetOf<Coord3d>()
+  val beaconMatches = mutableMapOf<Coord3d, MutableSet<Coord3d>>()
 
   scanners.forEach { scanner ->
     val distancesRelativeToBeacons = mutableMapOf<Coord3d, List<Coord3d>>()
@@ -43,6 +42,12 @@ fun findBeacons(scanners: List<Scanner>): Int {
           distances.add(d)
           if (distanceSet.contains(d)) {
             uniqueBeacons.add(beacon)
+            if (beaconMatches[beacon] == null) {
+              beaconMatches[beacon] = mutableSetOf()
+            }
+
+            val otherScannerBeacon = relativeDistancesList.find { it.values.any { v -> v.contains(d) } }!!.filter { it.value.contains(d) }.keys.toList()
+            beaconMatches[beacon]!!.addAll(otherScannerBeacon)
           } else {
             distanceSet.add(d)
           }
