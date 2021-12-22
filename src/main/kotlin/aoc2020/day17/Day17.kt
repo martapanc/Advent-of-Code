@@ -2,7 +2,11 @@ package aoc2020.day17
 
 import java.io.File
 
-data class Coord3d(var x: Int, var y: Int, var z: Int)
+data class Coord3d(var x: Int, var y: Int, var z: Int) {
+  override fun toString(): String {
+    return "{x: $x, y: $y, z: $z}"
+  }
+}
 
 fun readInputToMap(path: String): Map<Coord3d, Char> {
     val lineList = mutableListOf<String>()
