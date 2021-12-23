@@ -66,34 +66,51 @@ fun findBeacons(scanners: List<Scanner>): Int {
 // Translate every beacon in scanner1 with first combination
 // If the orientation is right, a linear translation should
 fun findBeacons3(scanners: List<Scanner>): Int {
-  val scanner0 = scanners[0]
-  val scanner1 = scanners[1]
+//  val scanner0 = scanners[2]
 
-  for (index: Int in 0 until 24) {
-    val translations = scanner1.observations.map { rotate(it, index) }
-    val differences = mutableListOf<Coord3d>()
-    for (b0 in scanner0.observations) {
-      for (b1 in translations) {
-        differences.add(Coord3d(b1.x + b0.x, b1.y + b0.y, b1.z + b0.z))
+//  val scanner1 = scanners[3]
+
+  val scannerMap = mutableMapOf<Pair<Int, Int>, BeaconData>()
+
+  for ((i0, scanner0) in scanners.withIndex()) {
+    second@ for ((i1, scanner1) in scanners.withIndex()) {
+
+      if (i0 == i1) {
+        continue@second
+      }
+
+      val commonBeacons = scanner0.observations.toMutableSet()
+
+      for (index: Int in 0 until 24) {
+        val translations = scanner1.observations.map { rotate(it, index) }
+        val differences = mutableListOf<Coord3d>()
+        for (b0 in scanner0.observations) {
+          for (b1 in translations) {
+            differences.add(Coord3d(b1.x + b0.x, b1.y + b0.y, b1.z + b0.z))
+          }
+        }
+        val res = differences.groupingBy { it }.eachCount().filter { it.value >= 12 }
+        if (res.isNotEmpty()) {
+          val scannerCoord = res.keys.toList()[0]
+          for (beacon in translations) {
+            commonBeacons.add(
+              Coord3d(
+                scannerCoord.x - beacon.x,
+                scannerCoord.y - beacon.y,
+                scannerCoord.z - beacon.z
+              )
+            )
+          }
+          scannerMap[Pair(i0, i1)] = BeaconData(index, commonBeacons)
+        }
+
       }
     }
-    val res = differences.groupingBy { it }.eachCount().filter { it.value >= 12 }
-    if (res.isNotEmpty()) {
-      val allBeacons = scanner0.observations.toMutableSet()
-      val scannerCoord = res.keys.toList()[0]
-      for (beacon in translations) {
-        allBeacons.add(Coord3d(
-            scannerCoord.x - beacon.x,
-            scannerCoord.y - beacon.y,
-            scannerCoord.z - beacon.z
-        ))
-      }
-      println()
-    }
-
   }
   return -1
 }
+
+class BeaconData (val translationIndex: Int, val commonBeacons: Set<Coord3d>)
 
 class Scanner(val observations: MutableList<Coord3d>)
 
