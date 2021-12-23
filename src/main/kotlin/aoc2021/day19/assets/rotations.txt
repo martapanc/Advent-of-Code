@@ -1,0 +1,35 @@
+A
+x, y, -z
+y, -x, -z
+-x, -y, -z
+-y, x, -z
+
+B
+-x, z, -y
+z, x, -y
+x, -z, -y
+-z, -x, -y
+
+C
+-y, -z, -x
+z, -y, -x
+y, z, -x
+-z, y, -x
+
+D
+-y, -x, z
+x, -y, z
+y, x, z
+-x, y, z
+
+E
+z, y, x
+-y, z, x
+-z, -y, x
+y, -z, x
+
+F
+x, z, y
+-z, x, y
+-x, -z, y
+z, -x, y

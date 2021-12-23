@@ -110,42 +110,45 @@ fun findBeacons3(scanners: List<Scanner>): Int {
   return -1
 }
 
-class BeaconData (val translationIndex: Int, val commonBeacons: Set<Coord3d>)
+class BeaconData(val translationIndex: Int, val commonBeacons: Set<Coord3d>)
 
 class Scanner(val observations: MutableList<Coord3d>)
 
-fun rotationList(initial: Coord3d): MutableList<Coord3d> {
+fun rotationList(initial: Coord3d): List<Coord3d> {
   val x = initial.x
   val y = initial.y
   val z = initial.z
-  val rotationList = mutableListOf<Coord3d>()
-  rotationList.add(Coord3d(x, y, z))
+  val rotationList = mutableSetOf<Coord3d>()
   rotationList.add(Coord3d(x, y, -z))
-  rotationList.add(Coord3d(x, -y, z))
-  rotationList.add(Coord3d(x, -y, -z))
-  rotationList.add(Coord3d(-x, y, z))
-  rotationList.add(Coord3d(-x, y, -z))
-  rotationList.add(Coord3d(-x, -y, z))
+  rotationList.add(Coord3d(y, -x, -z))
   rotationList.add(Coord3d(-x, -y, -z))
+  rotationList.add(Coord3d(-y, x, -z))
 
-  rotationList.add(Coord3d(y, z, x))
-  rotationList.add(Coord3d(y, z, -x))
-  rotationList.add(Coord3d(y, -z, x))
-  rotationList.add(Coord3d(y, -z, -x))
-  rotationList.add(Coord3d(-y, z, x))
-  rotationList.add(Coord3d(-y, z, -x))
-  rotationList.add(Coord3d(-y, -z, x))
-  rotationList.add(Coord3d(-y, -z, -x))
-
-  rotationList.add(Coord3d(z, x, y))
+  rotationList.add(Coord3d(-x, z, -y))
   rotationList.add(Coord3d(z, x, -y))
-  rotationList.add(Coord3d(z, -x, y))
-  rotationList.add(Coord3d(z, -x, -y))
-  rotationList.add(Coord3d(-z, x, y))
-  rotationList.add(Coord3d(-z, x, -y))
-  rotationList.add(Coord3d(-z, -x, y))
+  rotationList.add(Coord3d(x, -z, -y))
   rotationList.add(Coord3d(-z, -x, -y))
-  return rotationList
+
+  rotationList.add(Coord3d(-y, -z, -x))
+  rotationList.add(Coord3d(z, -y, -x))
+  rotationList.add(Coord3d(y, z, -x))
+  rotationList.add(Coord3d(-z, y, -x))
+
+  rotationList.add(Coord3d(-y, -x, z))
+  rotationList.add(Coord3d(x, -y, z))
+  rotationList.add(Coord3d(y, x, z))
+  rotationList.add(Coord3d(-x, y, z))
+
+  rotationList.add(Coord3d(z, y, x))
+  rotationList.add(Coord3d(-y, z, x))
+  rotationList.add(Coord3d(-z, -y, x))
+  rotationList.add(Coord3d(y, -z, x))
+
+  rotationList.add(Coord3d(x, z, y))
+  rotationList.add(Coord3d(-z, x, y))
+  rotationList.add(Coord3d(-x, -z, y))
+  rotationList.add(Coord3d(z, -x, y))
+  return rotationList.toList()
 }
 
 fun rotate(coord3d: Coord3d, rotationId: Int): Coord3d {
