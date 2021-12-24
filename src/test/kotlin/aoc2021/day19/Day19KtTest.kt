@@ -1,5 +1,6 @@
 package aoc2021.day19
 
+import aoc2021.day19.extra.Day19
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -20,7 +21,9 @@ internal class Day19KtTest {
   @Test
   fun testFindBeacons() {
 //    assertEquals(3, findBeacons(input1))
-    assertEquals(12, findBeacons3(input0))
-    assertEquals(16, findBeacons(input))
+    assertEquals(79, findBeacons3(input0, true))
+//    assertEquals(16, findBeacons3(input))
+
+//    assertEquals(79, Day19("src/main/kotlin/aoc2021/day19/assets/input0").solvePart1())
   }
 }
