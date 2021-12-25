@@ -78,7 +78,14 @@ fun getAllBeaconsFromScanner(beaconTree: BeaconTree, parentTranslationId: Int?):
     val s0s1BeaconsTranslated = s0toS1.commonBeacons.map { subtract(sc0, rotate(it, parentTranslationId!!)) }
     return s0s1BeaconsTranslated.toSet()
   } else {
-    beaconTree.children.forEach { allBeacons.addAll(getAllBeaconsFromScanner(it, beaconTree.beaconData?.translationIndex)) }
+    beaconTree.children.forEach {
+      allBeacons.addAll(
+        getAllBeaconsFromScanner(
+          it,
+          beaconTree.beaconData?.translationIndex
+        )
+      )
+    }
   }
 
   return allBeacons
