@@ -1,5 +1,17 @@
 package aoc2021.day21
 
+private val gameCache = mutableMapOf<GameState, WinCounts>()
+
+data class GameState(val p1Pos: Int, val p1Score: Int, val p2Pos: Int, val p2Score: Int)
+
+data class WinCounts(var p1Wins: Long, var p2Wins: Long) {
+  fun changeTurns() {
+    val temp = p1Wins
+    p1Wins = p2Wins
+    p2Wins = temp
+  }
+}
+
 fun playNormalDice(playerPos: Pair<Int, Int>): Int {
   var player1Pos = playerPos.first
   var player1Score = 0
@@ -36,13 +48,13 @@ fun playNormalDice(playerPos: Pair<Int, Int>): Int {
 }
 
 fun playDiracDice(playerPos: Pair<Int, Int>): Long {
-  val (p1Wins, p2Wins) = play(playerPos.first, 0, playerPos.second, 0, 21)
-  return if (p1Wins > p2Wins) p1Wins else p2Wins
+  val winCounts = play(playerPos.first, 0, playerPos.second, 0, 21)
+  return if (winCounts.p1Wins > winCounts.p2Wins) winCounts.p1Wins else winCounts.p2Wins
 }
 
-fun play(p1Pos: Int, p1Score: Int, p2Pos: Int, p2Score: Int, maxScore: Int): Pair<Long, Long> {
-  if (p1Score >= maxScore) return Pair(1, 0)
-  if (p2Score >= maxScore) return Pair(0, 1)
+fun play(p1Pos: Int, p1Score: Int, p2Pos: Int, p2Score: Int, maxScore: Int): WinCounts {
+  if (p1Score >= maxScore) return WinCounts(1, 0)
+  if (p2Score >= maxScore) return WinCounts(0, 1)
 
   var p1Wins = 0L
   var p2Wins = 0L
@@ -50,12 +62,20 @@ fun play(p1Pos: Int, p1Score: Int, p2Pos: Int, p2Score: Int, maxScore: Int): Pai
   for (rollScore in getQuantumRollScores()) {
     val newPos = (p1Pos + rollScore) % 10
     val newScore = p1Score + newPos + 1
-    val (p1WinAcc, p2WinAcc) = play(p2Pos, p2Score, newPos, newScore, maxScore)
-    p1Wins += p1WinAcc
-    p2Wins += p2WinAcc
+    val gameState = GameState(p1Pos, p1Score, p2Pos, p2Score)
+    val wins: WinCounts
+    if (gameCache.containsKey(gameState)) {
+      wins = gameCache[gameState]!!
+    } else {
+      wins = play(p2Pos, p2Score, newPos, newScore, maxScore)
+      wins.changeTurns()
+      gameCache[gameState] = wins
+    }
+    p1Wins += wins.p1Wins
+    p2Wins += wins.p2Wins
   }
 
-  return Pair(p1Wins, p2Wins)
+  return WinCounts(p1Wins, p2Wins)
 }
 
 fun getQuantumRollScores(): List<Int> {
