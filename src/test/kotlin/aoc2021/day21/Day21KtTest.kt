@@ -10,8 +10,14 @@ internal class Day21KtTest {
   private val input = Pair(1, 3)
 
   @Test
+  fun testPlayNormalDice() {
+    assertEquals(739785, playNormalDice(testInput))
+    assertEquals(897798, playNormalDice(input))
+  }
+
+  @Test
   fun testPlayDiracDice() {
-    assertEquals(739785, playDiracDice(testInput))
-    assertEquals(897798, playDiracDice(input))
+//    assertEquals(444356092776315, playDiracDice(testInput))
+//    assertEquals(48868319769358, playDiracDice(input))
   }
 }
