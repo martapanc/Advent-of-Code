@@ -38,7 +38,7 @@ class AoCStarsReader {
     private fun percentage(stars: Int, total: Int) = (stars.toDouble() / total * 100).toInt()
 
     private fun getResults(): Map<Int, Int> {
-        val url = URL("https://aoc-data-api.herokuapp.com/stars")
+        val url = URL("http://localhost:8080/stars")
         val map = mutableMapOf<Int, Int>()
         print("\nSending 'GET' request to URL : $url; ")
         with(url.openConnection() as HttpURLConnection) {
