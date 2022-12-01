@@ -10,18 +10,17 @@ fun part2(inputList: List<String>): Int {
     val sums: MutableList<Int> = computeSums(inputList)
 
     var total = 0
-    total += sums.max()
-    sums.remove(sums.max())
-    total += sums.max()
-    sums.remove(sums.max())
-    total += sums.max()
+    repeat(3) {
+        total += sums.max()
+        sums.remove(sums.max())
+    }
     return total
 }
 
 private fun computeSums(inputList: List<String>): MutableList<Int> {
     val sums: MutableList<Int> = mutableListOf()
     var agg = 0
-    for (line: String in inputList) {
+    inputList.forEach { line: String ->
         if (line != "") {
             agg += Integer.parseInt(line)
         } else {
