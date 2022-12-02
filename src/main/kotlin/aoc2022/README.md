@@ -1,10 +1,9 @@
 # 🌲🌲🌲 Advent of Code 2022 🌲🌲🌲
 
-| Day                                            | Title                   | Code                   | Tests                                                      | Tags                                 | Visual                                                                                                                                                        |
-|------------------------------------------------|-------------------------|------------------------|------------------------------------------------------------|--------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Day 1](https://adventofcode.com/2022/day/1)   | Calorie Counting        | [code](day01/Day1.kt)  | [tests](../../../test/kotlin/aoc2022/day01/Day1KtTest.kt)  | list of ints, 1st 2nd and 3rd max    |                                                                                                                                                               |
-
-[//]: # (| [Day 2]&#40;https://adventofcode.com/2022/day/2&#41;   | Dive!                   | [code]&#40;day02/Day2.kt&#41;  | [tests]&#40;../../../test/kotlin/aoc2022/day02/Day2KtTest.kt&#41;  | positions, movements                 | <img src="day02/assets/img.png" alt="Visualisation of Day 2" width="180"/>                                                                                    |)
+| Day                                          | Title               | Code                  | Tests                                                     | Tags                              | Visual |
+|----------------------------------------------|---------------------|-----------------------|-----------------------------------------------------------|-----------------------------------|--------|
+| [Day 1](https://adventofcode.com/2022/day/1) | Calorie Counting    | [code](day01/Day1.kt) | [tests](../../../test/kotlin/aoc2022/day01/Day1KtTest.kt) | list of ints, 1st 2nd and 3rd max |        |
+| [Day 2](https://adventofcode.com/2022/day/2) | Rock Paper Scissors | [code](day02/Day2.kt) | [tests](../../../test/kotlin/aoc2022/day02/Day2KtTest.kt) |                                   |        |
 
 [//]: # (| [Day 3]&#40;https://adventofcode.com/2022/day/3&#41;   | Binary Diagnostic       | [code]&#40;day03/Day3.kt&#41;  | [tests]&#40;../../../test/kotlin/aoc2022/day03/Day3KtTest.kt&#41;  | binary numbers, search, bit flip     |                                                                                                                                                               |)
 
