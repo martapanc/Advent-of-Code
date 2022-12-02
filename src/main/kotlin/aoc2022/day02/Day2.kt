@@ -14,6 +14,18 @@ fun readInputToPairOfPlays(path: String): List<Pair<Play, Play>> {
     return pairsOfPlays
 }
 
+fun readInputToPairOfPlayOutcome(path: String): List<Pair<Play, Outcome>> {
+    val pairsOfPlays: MutableList<Pair<Play, Outcome>> = mutableListOf()
+
+    readInputLineByLine(path).forEach { line ->
+        val split = line.split(" ")
+        val opponent = EncodedPlay.valueOf(split[0])
+        val player = EncodedPlay.valueOf(split[1])
+        pairsOfPlays.add(Pair(decodeOpponentPlay(opponent), decodePlayerPlay(player)))
+    }
+    return pairsOfPlays
+}
+
 fun scissorPaperRockPart1(plays: List<Pair<Play, Play>>): Int {
     var score = 0
     val opponentVsPlayerMap: Map<Pair<Play, Play>, Int> = mapOf(
@@ -33,6 +45,36 @@ fun scissorPaperRockPart1(plays: List<Pair<Play, Play>>): Int {
         Play.SCISSOR to 3,
     )
     plays.forEach { play -> score += opponentVsPlayerMap[play]!! + objectScore[play.second]!! }
+    return score
+}
+
+fun scissorPaperRockPart2(plays: List<Pair<Play, Outcome>>): Int {
+    var score = 0
+    val opponentVsPlayerMap: Map<Pair<Play, Outcome>, Play> = mapOf(
+        Pair(Play.SCISSOR, Outcome.WIN) to Play.ROCK,
+        Pair(Play.PAPER, Outcome.WIN) to Play.SCISSOR,
+        Pair(Play.ROCK, Outcome.WIN) to Play.PAPER,
+        Pair(Play.SCISSOR, Outcome.DRAW) to Play.SCISSOR,
+        Pair(Play.PAPER, Outcome.DRAW) to Play.PAPER,
+        Pair(Play.ROCK, Outcome.DRAW) to Play.ROCK,
+        Pair(Play.SCISSOR, Outcome.LOSE) to Play.PAPER,
+        Pair(Play.PAPER, Outcome.LOSE) to Play.ROCK,
+        Pair(Play.ROCK, Outcome.LOSE) to Play.SCISSOR,
+    )
+    val objectScore: Map<Play, Int> = mapOf(
+        Play.ROCK to 1,
+        Play.PAPER to 2,
+        Play.SCISSOR to 3,
+    )
+    val outcomeScore: Map<Outcome, Int> = mapOf(
+        Outcome.WIN to 6,
+        Outcome.DRAW to 3,
+        Outcome.LOSE to 0,
+    )
+    plays.forEach { play ->
+        val player = opponentVsPlayerMap[play]!!
+        score += objectScore[player]!! + outcomeScore[play.second]!!
+    }
     return score
 }
 
