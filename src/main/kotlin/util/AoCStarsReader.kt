@@ -14,10 +14,11 @@ fun main() {
 class AoCStarsReader {
 
     fun updateReadme() {
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
         var template = "" +
                 "# \uD83C\uDF84 Advent of Code ⛄️\n" +
                 "![Java & Kotlin CI with Gradle](https://github.com/martapanc/Advent-of-Code/workflows/Java%20&%20Kotlin%20CI%20with%20Gradle/badge.svg)\n\n" +
-                "Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2015-2021)\n\n\n" +
+                "Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2015-$currentYear)\n\n\n" +
                 "## Quick links\n\n"
         val results = getResults()
         for ((year, stars) in results.entries) {
@@ -30,7 +31,7 @@ class AoCStarsReader {
         template += "\n Total:  $sum / $total ⭐"
         val totalPerc = percentage(sum, total)
         template += "\n\n ![Progress](https://progress-bar.dev/$totalPerc/)"
-        template += "\n\n <img src=\"src/main/resources/300_stars.png\" width=\"920\"/>\n"
+        template += "\n\n <img src=\"src/main/resources/static/300_stars.png\" width=\"920\"/>\n"
 
         File("README.md").printWriter().use { out -> out.println(template) }
     }

@@ -1,7 +1,7 @@
 # 🎄 Advent of Code ⛄️
 ![Java & Kotlin CI with Gradle](https://github.com/martapanc/Advent-of-Code/workflows/Java%20&%20Kotlin%20CI%20with%20Gradle/badge.svg)
 
-Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2015-2021)
+Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2015-2022)
 
 
 ## Quick links
@@ -19,5 +19,5 @@ Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2
 
  ![Progress](https://progress-bar.dev/85/)
 
- <img src="src/main/resources/300_stars.png" width="920"/>
+ <img src="src/main/resources/static/300_stars.png" width="920"/>
 
