@@ -39,7 +39,7 @@ class AoCStarsReader {
     private fun percentage(stars: Int, total: Int) = (stars.toDouble() / total * 100).toInt()
 
     private fun getResults(): Map<Int, Int> {
-        val url = URL("http://localhost:8087/stars")
+        val url = URL("${getConfigMapper().aocApiDataUrl}/stars")
         val map = mutableMapOf<Int, Int>()
         print("\nSending 'GET' request to URL : $url; ")
         with(url.openConnection() as HttpURLConnection) {

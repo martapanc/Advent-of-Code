@@ -36,7 +36,8 @@ dependencies {
     implementation('org.magicwerk:brownies-collections:0.9.16')
     implementation('com.github.dpaukov:combinatoricslib3:3.3.3')
     implementation group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
-
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.1")
 
 //  Lombok
     implementation('org.projectlombok:lombok:1.18.24')

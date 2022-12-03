@@ -7,7 +7,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.Calendar
+import java.util.*
 
 fun main(args: Array<String>) {
     AoCDailySetup().run(args)
@@ -34,12 +34,10 @@ class AoCDailySetup {
         Files.createDirectories(Paths.get(testDir))
 
         val mainContent = "" +
-            "package ${dailyPackage}\n" +
-            "\n" +
+            "package ${dailyPackage}\n\n" +
             "fun part1(list: List<String>): Int {\n" +
             "    return 0\n" +
-            "}\n" +
-            "\n" +
+            "}\n\n" +
             "fun part2(list: List<String>): Int {\n" +
             "    return 0\n" +
             "}\n"
@@ -53,23 +51,18 @@ class AoCDailySetup {
         input.printWriter().use { it.println(getInput(day)) }
 
         val testContent = "" +
-            "package ${dailyPackage}\n" +
-            "\n" +
+            "package ${dailyPackage}\n\n" +
             "import org.junit.jupiter.api.Assertions.assertEquals\n" +
             "import org.junit.jupiter.api.Test\n" +
-            "import util.readInputLineByLine\n" +
-            "\n" +
-            "internal class Day${day}KtTest {\n" +
-            "\n" +
+            "import util.readInputLineByLine\n\n" +
+            "internal class Day${day}KtTest {\n\n" +
             "    private val testInput0 = readInputLineByLine(\"src/main/kotlin/${dailyDir}/assets/input0\")\n" +
-            "    private val testInput = readInputLineByLine(\"src/main/kotlin/${dailyDir}/assets/input\")\n" +
-            "\n" +
+            "    private val testInput = readInputLineByLine(\"src/main/kotlin/${dailyDir}/assets/input\")\n\n" +
             "    @Test\n" +
             "    fun testPart1() {\n" +
             "        assertEquals(157, part1(testInput0))\n" +
             "        assertEquals(8085, part1(testInput))\n" +
-            "    }\n" +
-            "\n" +
+            "    }\n\n" +
             "    @Test\n" +
             "    fun testPart2() {\n" +
             "        assertEquals(70, part2(testInput0))\n" +
@@ -79,10 +72,12 @@ class AoCDailySetup {
 
         val testClass = File("${testDir}/Day${day}KtTest.kt")
         testClass.printWriter().use { it.println(testContent) }
+
+        println("Set up dirs and classes for selected day: $year day $day")
     }
 
     private fun getInput(day: Int, test: Boolean = false): String {
-        val url = URL("http://localhost:8087/daily/${day}/${if (test) "test-" else ""}input")
+        val url = URL("${getConfigMapper().aocApiDataUrl}/daily/${day}/${if (test) "test-" else ""}input")
         val con: HttpURLConnection = url.openConnection() as HttpURLConnection
         con.requestMethod = "GET"
         con.setRequestProperty("Content-Type", "text/plain")
