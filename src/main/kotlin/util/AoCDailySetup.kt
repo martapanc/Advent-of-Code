@@ -45,10 +45,10 @@ class AoCDailySetup {
         mainClass.printWriter().use { it.println(mainContent) }
 
         val testInput = File("${mainDir}/assets/input0")
-        testInput.printWriter().use { it.println(getInput(day, true)) }
+        testInput.printWriter().use { it.println(getInput(year, day, true)) }
 
         val input = File("${mainDir}/assets/input")
-        input.printWriter().use { it.println(getInput(day)) }
+        input.printWriter().use { it.println(getInput(year, day)) }
 
         val testContent = "" +
             "package ${dailyPackage}\n\n" +
@@ -76,8 +76,8 @@ class AoCDailySetup {
         println("Set up dirs and classes for selected day: $year day $day")
     }
 
-    private fun getInput(day: Int, test: Boolean = false): String {
-        val url = URL("${getConfigMapper().aocApiDataUrl}/daily/${day}/${if (test) "test-" else ""}input")
+    private fun getInput(year: Int, day: Int, test: Boolean = false): String {
+        val url = URL("${getConfigMapper().aocApiDataUrl}/daily/${year}/${day}/${if (test) "test-" else ""}input")
         val con: HttpURLConnection = url.openConnection() as HttpURLConnection
         con.requestMethod = "GET"
         con.setRequestProperty("Content-Type", "text/plain")
