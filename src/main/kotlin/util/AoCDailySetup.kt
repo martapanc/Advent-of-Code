@@ -1,6 +1,10 @@
 package util
 
+import java.io.BufferedReader
 import java.io.File
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.Calendar
@@ -43,10 +47,10 @@ class AoCDailySetup {
         mainClass.printWriter().use { it.println(mainContent) }
 
         val testInput = File("${mainDir}/assets/input0")
-        testInput.printWriter()
+        testInput.printWriter().use { it.println(getInput(day, true)) }
 
         val input = File("${mainDir}/assets/input")
-        input.printWriter()
+        input.printWriter().use { it.println(getInput(day)) }
 
         val testContent = "" +
             "package ${dailyPackage}\n" +
@@ -75,5 +79,26 @@ class AoCDailySetup {
 
         val testClass = File("${testDir}/Day${day}KtTest.kt")
         testClass.printWriter().use { it.println(testContent) }
+    }
+
+    private fun getInput(day: Int, test: Boolean = false): String {
+        val url = URL("http://localhost:8087/daily/${day}/${if (test) "test-" else ""}input")
+        val con: HttpURLConnection = url.openConnection() as HttpURLConnection
+        con.requestMethod = "GET"
+        con.setRequestProperty("Content-Type", "text/plain")
+
+        if (con.responseCode > 200) {
+            return ""
+        }
+        val inputStream = BufferedReader(InputStreamReader(con.inputStream))
+        var inputLine: String?
+        val content = StringBuffer()
+        while (inputStream.readLine().also { inputLine = it } != null) {
+            content.append("$inputLine\n")
+        }
+        inputStream.close()
+        con.disconnect()
+
+        return content.toString()
     }
 }
