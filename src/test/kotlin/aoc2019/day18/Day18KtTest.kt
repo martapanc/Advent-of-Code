@@ -11,7 +11,6 @@ internal class Day18KtTest {
     private val testInput1 = readInputToMap("${basePath}testInput1")
     private val testInput2 = readInputToMap("${basePath}testInput2")
     private val testInput3 = readInputToMap("${basePath}testInput3")
-    private val testInput4 = readInputToMap("${basePath}testInput4")
     private val input = readInputToMap("${basePath}input")
 
     @Test
@@ -46,7 +45,7 @@ internal class Day18KtTest {
     @Test
     fun testFindReachableItems() {
         val keys = listOf('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
-        val doors = keys.map { it.toUpperCase() }
+        val doors = keys.map { it.uppercaseChar() }
         assertEquals(doors, findReachableItems(Coord(8, 4), testInput3).first.map { it.char })
         assertEquals(keys, findReachableItems(Coord(8, 4), testInput3).second.map { it.char })
 
