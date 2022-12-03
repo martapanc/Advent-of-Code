@@ -1,6 +1,5 @@
 package aoc2022.day01
 
-
 fun part1(inputList: List<String>): Int {
     val sums: MutableList<Int> = computeSums(inputList)
     return sums.max()
