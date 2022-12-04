@@ -7,18 +7,15 @@ import util.readInputLineByLine
 internal class Day24KtTest {
 
     private val testInput0 = readInputToInstructions("src/main/kotlin/aoc2021/day24/assets/input0")
-//    private val testInput = readInputToInstructions("src/main/kotlin/aoc2021/day24/assets/input")
+    private val testInput1 = readInputToInstructions("src/main/kotlin/aoc2021/day24/assets/input1")
+    private val testInput = readInputToInstructions("src/main/kotlin/aoc2021/day24/assets/input")
 
     @Test
     fun testPart1() {
-//        assertEquals(157, part1(testInput0))
-//        assertEquals(8085, part1(testInput))
-    }
+        assertEquals(8, part1(testInput0))
 
-    @Test
-    fun testPart2() {
-//        assertEquals(70, part2(testInput0))
-//        assertEquals(2515, part2(testInput))
+        assertEquals("99196997985942", solve(readInputLineByLine("src/main/kotlin/aoc2021/day24/assets/input")).first)
+        assertEquals("84191521311611", solve(readInputLineByLine("src/main/kotlin/aoc2021/day24/assets/input")).second)
     }
 
     @Test
@@ -32,6 +29,24 @@ internal class Day24KtTest {
         assertFalse(verifyModelNumber(testInput0, "7"))
         assertTrue(verifyModelNumber(testInput0, "8"))
         assertFalse(verifyModelNumber(testInput0, "9"))
+
+        assertTrue(verifyModelNumber(testInput1, "11"))
+        assertFalse(verifyModelNumber(testInput1, "13"))
+        assertFalse(verifyModelNumber(testInput1, "20"))
+
+        assertFalse(verifyModelNumber(testInput, "99987991848459"))
+        assertFalse(verifyModelNumber(testInput, "99987991848458"))
+        assertFalse(verifyModelNumber(testInput, "99987991848457"))
+        assertFalse(verifyModelNumber(testInput, "99987991848456"))
+        assertFalse(verifyModelNumber(testInput, "99987991848455"))
+        assertFalse(verifyModelNumber(testInput, "99987991848454"))
+        assertFalse(verifyModelNumber(testInput, "99987991848453"))
+        assertFalse(verifyModelNumber(testInput, "99987991848452"))
+        assertFalse(verifyModelNumber(testInput, "99986912383145"))
+        assertFalse(verifyModelNumber(testInput, "99986912383144"))
+        assertFalse(verifyModelNumber(testInput, "99986912381111"))
+        assertFalse(verifyModelNumber(testInput, "99986912381110"))
+        assertFalse(verifyModelNumber(testInput, "99196997985942"))
     }
 }
 

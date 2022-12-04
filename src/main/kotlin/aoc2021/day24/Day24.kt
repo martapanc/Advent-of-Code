@@ -1,19 +1,26 @@
 package aoc2021.day24
 
 import util.readInputLineByLine
-import kotlin.math.pow
 
-fun part1(list: List<Instruction>): Int {
+
+fun part1(list: List<Instruction>): Long {
     val inpCount = list.count { it.op == Operation.INP }
-    val min = 1 * 10.0.pow(inpCount).toLong()
-    val max = 9 * 10.0.pow(inpCount).toLong()
-    for (number in min .. max) {
-        verifyModelNumber(list, number.toString())
+    val min = "8".repeat(inpCount).toLong()
+    val max = "9".repeat(inpCount).toLong()
+    var largestModel: Long = 0
+    for (number in max downTo  min) {
+        if (verifyModelNumber(list, number.toString())) {
+            largestModel = number
+            break
+        }
     }
-    return 0
+    return largestModel
 }
 
 fun verifyModelNumber(instructions: List<Instruction>, input: String): Boolean {
+    if (input.any { it == '0' }) {
+        return false
+    }
     val inputList = input.toCharArray()
     val valueMap: MutableMap<Char, Int> = mutableMapOf('w' to 0, 'x' to 0, 'y' to 0, 'z' to 0)
     var currentInpIndex = 0
@@ -31,7 +38,38 @@ fun verifyModelNumber(instructions: List<Instruction>, input: String): Boolean {
             Operation.EQL -> if (a == b) 1 else 0
         }
     }
+    println(valueMap['z'])
     return valueMap['z'] == 0
+}
+
+fun solve(input: List<String>): Pair<String, String> {
+    val digits = mutableMapOf<Int, Pair<Int, Int>>()
+    val stack = mutableListOf<Pair<Int, Int>>()
+    var (push, sub, dig) = Triple(false, 0, 0)
+    input.forEachIndexed { i, line ->
+        val operand = line.substringAfterLast(" ")
+        if (i % 18 == 4) push = operand == "1"
+        if (i % 18 == 5) sub = operand.toInt()
+        if (i % 18 == 15) {
+            if (push) {
+                stack.add(dig to operand.toInt())
+            } else {
+                val (sibling, add) = stack.removeLast()
+                val diff = add + sub
+                if (diff < 0) {
+                    digits[sibling] = -diff + 1 to 9
+                    digits[dig] = 1 to 9 + diff
+                } else {
+                    digits[sibling] = 1 to 9 - diff
+                    digits[dig] = 1 + diff to 9
+                }
+            }
+            dig++
+        }
+    }
+    return digits.toSortedMap().values.unzip().let { (a, b) ->
+        b.joinToString("") to a.joinToString("")
+    }
 }
 
 fun digitOrChar(input: String?): Pair<Char, Int> {
@@ -42,10 +80,6 @@ fun digitOrChar(input: String?): Pair<Char, Int> {
         return Pair('-', Integer.parseInt(input))
     }
     return Pair(input.first(), 0)
-}
-
-fun part2(list: List<Instruction>): Int {
-    return 0
 }
 
 fun readInputToInstructions(input: String): List<Instruction> {
