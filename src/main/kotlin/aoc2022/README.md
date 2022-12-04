@@ -5,8 +5,7 @@
 | [Day 1](https://adventofcode.com/2022/day/1) | Calorie Counting        | [code](day01/Day1.kt) | [tests](../../../test/kotlin/aoc2022/day01/Day1KtTest.kt) | list of ints, 1st 2nd and 3rd max |                                                                              |
 | [Day 2](https://adventofcode.com/2022/day/2) | Rock Paper Scissors     | [code](day02/Day2.kt) | [tests](../../../test/kotlin/aoc2022/day02/Day2KtTest.kt) | win-draw-lose strategy            | <img src="day02/assets/day2.webp" alt="Visualisation of Day 2" width="280"/> |
 | [Day 3](https://adventofcode.com/2022/day/3) | Rucksack Reorganization | [code](day03/Day3.kt) | [tests](../../../test/kotlin/aoc2022/day03/Day3KtTest.kt) | find common chars                 |                                                                              |
-
-[//]: # (| [Day 4]&#40;https://adventofcode.com/2022/day/4&#41;   | Giant Squid             | [code]&#40;day04/Day4.kt&#41;  | [tests]&#40;../../../test/kotlin/aoc2022/day04/Day4KtTest.kt&#41;  | bingo, squid game                    | <img src="day04/assets/day4.jpg" alt="Visualisation of Day 4" width="220"/>                                                                                   |)
+| [Day 4](https://adventofcode.com/2022/day/4) | Camp Cleanup            | [code](day04/Day4.kt) | [tests](../../../test/kotlin/aoc2022/day04/Day4KtTest.kt) | overlapping range of ints         |                                                                              |
 
 [//]: # (| [Day 5]&#40;https://adventofcode.com/2022/day/5&#41;   | Hydrothermal Venture    | [code]&#40;day05/Day5.kt&#41;  | [tests]&#40;../../../test/kotlin/aoc2022/day05/Day5KtTest.kt&#41;  | cartesian plane, intersections       |                                                                                                                                                               |)
 
