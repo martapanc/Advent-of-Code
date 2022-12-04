@@ -31,7 +31,7 @@ class AoCStarsReader {
         template += "\n Total:  $sum / $total ⭐"
         val totalPerc = percentage(sum, total)
         template += "\n\n ![Progress](https://progress-bar.dev/$totalPerc/)"
-        template += "\n\n <img src=\"src/main/resources/static/300_stars.png\" width=\"920\" alt=\"AoC screenshot\"/>\n"
+        template += "\n\n <img src=\"src/main/resources/static/all_stars.png\" width=\"1023\" alt=\"AoC screenshot\"/>\n"
 
         File("README.md").printWriter().use { out -> out.println(template) }
     }

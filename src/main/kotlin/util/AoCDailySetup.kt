@@ -40,7 +40,7 @@ class AoCDailySetup {
             "}\n\n" +
             "fun part2(list: List<String>): Int {\n" +
             "    return 0\n" +
-            "}\n"
+            "}"
         val mainClass = File("${mainDir}/Day${day}.kt")
         mainClass.printWriter().use { it.println(mainContent) }
 
@@ -68,7 +68,7 @@ class AoCDailySetup {
             "        assertEquals(70, part2(testInput0))\n" +
             "        assertEquals(2515, part2(testInput))\n" +
             "    }\n" +
-            "}\n"
+            "}"
 
         val testClass = File("${testDir}/Day${day}KtTest.kt")
         testClass.printWriter().use { it.println(testContent) }
@@ -94,6 +94,6 @@ class AoCDailySetup {
         inputStream.close()
         con.disconnect()
 
-        return content.toString()
+        return content.toString().dropLast(1)
     }
 }
