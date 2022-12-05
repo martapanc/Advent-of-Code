@@ -21,18 +21,21 @@ fun part1(stacks: List<ArrayDeque<Char>>, movements: List<Movement>): String {
             stacks[movement.to].add(toMove)
         }
     }
-    var result = ""
-    stacks.forEach { result += it.last() }
-    return result
+    return buildResult(stacks)
 }
 
 fun part2(stacks: List<ArrayDeque<Char>>, movements: List<Movement>): String {
     movements.forEach { movement ->
+        val toMove: MutableList<Char> = mutableListOf()
         repeat(movement.quantity) {
-            val toMove = stacks[movement.from].removeLast()
-            stacks[movement.to].add(toMove)
+            toMove.add(stacks[movement.from].removeLast())
         }
+        stacks[movement.to].addAll(toMove.reversed())
     }
+    return buildResult(stacks)
+}
+
+private fun buildResult(stacks: List<ArrayDeque<Char>>): String {
     var result = ""
     stacks.forEach { result += it.last() }
     return result

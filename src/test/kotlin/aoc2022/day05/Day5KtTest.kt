@@ -35,5 +35,6 @@ internal class Day5KtTest {
     @Test
     fun testPart2() {
         assertEquals("MCD", part2(testInitialStacks, testInput0))
+        assertEquals("LVZPSTTCZ", part2(initialStacks, testInput))
     }
 }

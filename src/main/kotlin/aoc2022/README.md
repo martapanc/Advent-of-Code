@@ -6,8 +6,7 @@
 | [Day 2](https://adventofcode.com/2022/day/2) | Rock Paper Scissors     | [code](day02/Day2.kt) | [tests](../../../test/kotlin/aoc2022/day02/Day2KtTest.kt) | win-draw-lose strategy            | <img src="day02/assets/day2.webp" alt="Visualisation of Day 2" width="280"/> |
 | [Day 3](https://adventofcode.com/2022/day/3) | Rucksack Reorganization | [code](day03/Day3.kt) | [tests](../../../test/kotlin/aoc2022/day03/Day3KtTest.kt) | find common chars                 |                                                                              |
 | [Day 4](https://adventofcode.com/2022/day/4) | Camp Cleanup            | [code](day04/Day4.kt) | [tests](../../../test/kotlin/aoc2022/day04/Day4KtTest.kt) | overlapping range of ints         |                                                                              |
-
-[//]: # (| [Day 5]&#40;https://adventofcode.com/2022/day/5&#41;   | Hydrothermal Venture    | [code]&#40;day05/Day5.kt&#41;  | [tests]&#40;../../../test/kotlin/aoc2022/day05/Day5KtTest.kt&#41;  | cartesian plane, intersections       |                                                                                                                                                               |)
+| [Day 5](https://adventofcode.com/2022/day/5) | Supply Stacks           | [code](day05/Day5.kt) | [tests](../../../test/kotlin/aoc2022/day05/Day5KtTest.kt) | stacks, move w/ or w/o order      |                                                                              |
 
 [//]: # (| [Day 6]&#40;https://adventofcode.com/2022/day/6&#41;   | Lanternfish             | [code]&#40;day06/Day6.kt&#41;  | [tests]&#40;../../../test/kotlin/aoc2022/day06/Day6KtTest.kt&#41;  | lanternfish, exponential growth      | <img src="day06/assets/day6.jpg" alt="Visualisation of Day 6" width="180"/>                                                                                   |)
 
