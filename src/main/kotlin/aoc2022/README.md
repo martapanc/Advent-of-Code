@@ -7,8 +7,7 @@
 | [Day 3](https://adventofcode.com/2022/day/3) | Rucksack Reorganization | [code](day03/Day3.kt) | [tests](../../../test/kotlin/aoc2022/day03/Day3KtTest.kt) | find common chars                 | <img src="day03/assets/day3.png" alt="Visualisation of Day 3" width="280"/>  |
 | [Day 4](https://adventofcode.com/2022/day/4) | Camp Cleanup            | [code](day04/Day4.kt) | [tests](../../../test/kotlin/aoc2022/day04/Day4KtTest.kt) | overlapping range of ints         |                                                                              |
 | [Day 5](https://adventofcode.com/2022/day/5) | Supply Stacks           | [code](day05/Day5.kt) | [tests](../../../test/kotlin/aoc2022/day05/Day5KtTest.kt) | stacks, move w/ or w/o order      | <img src="day05/assets/day5.jpg" alt="Visualisation of Day 5" width="240"/>  |
-
-[//]: # (| [Day 6]&#40;https://adventofcode.com/2022/day/6&#41;   | Lanternfish             | [code]&#40;day06/Day6.kt&#41;  | [tests]&#40;../../../test/kotlin/aoc2022/day06/Day6KtTest.kt&#41;  | lanternfish, exponential growth      | <img src="day06/assets/day6.jpg" alt="Visualisation of Day 6" width="180"/>                                                                                   |)
+| [Day 6](https://adventofcode.com/2022/day/6) | Tuning Trouble          | [code](day06/Day6.kt) | [tests](../../../test/kotlin/aoc2022/day06/Day6KtTest.kt) | first n unique chars in string    |                                                                              |
 
 [//]: # (| [Day 7]&#40;https://adventofcode.com/2022/day/7&#41;   | The Treachery of Whales | [code]&#40;day07/Day7.kt&#41;  | [tests]&#40;../../../test/kotlin/aoc2022/day07/Day7KtTest.kt&#41;  | moving crabs, minimum fuel, Gauss    | <img src="day07/assets/day7.jpg" alt="Visualisation of Day 7" width="200"/>                                                                                   |)
 
