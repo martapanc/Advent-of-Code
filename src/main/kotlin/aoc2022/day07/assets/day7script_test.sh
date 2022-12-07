@@ -1,7 +1,7 @@
 #!/bin/bash
 
-mkdir test_root
-cd test_root
+mkdir root_test
+cd root_test
 mkdir a
 truncate -s 14848514 b.txt
 truncate -s 8504156 c.dat
