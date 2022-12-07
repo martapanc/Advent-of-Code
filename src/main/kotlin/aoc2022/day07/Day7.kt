@@ -48,7 +48,6 @@ fun part1(dirs: Map<String, Long>): Long {
 }
 
 fun part2(dirs: Map<String, Long>): Long {
-    val maxSize = dirs.values.max()
-    val spaceToFree = 30000000 - (70000000 - maxSize)
-    return dirs.values.sorted().first { it >= spaceToFree }
+    val spaceToFree = 30000000 - (70000000 - dirs.values.max())
+    return dirs.values.filter { it >= spaceToFree }.min()
 }
