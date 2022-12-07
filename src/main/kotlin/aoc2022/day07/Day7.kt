@@ -37,9 +37,7 @@ fun readTreeInputToList(path: String): Map<String, Long> {
         val split = entry.split("\\s+".toRegex())
         val dirname: String = split[1]
         val subdirCount: Int = subDirs[dirname]!!
-
         val size = split[0].toLong() - 4096 * subdirCount
-
         dirs[dirname] = size
     }
     return dirs
