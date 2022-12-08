@@ -4,30 +4,26 @@ import aoc2020.day20.Coord
 
 fun part1(grid: Map<Coord, Int>): Int {
     var visibleTreeCount = 0
-    val visibleTrees: MutableSet<Coord> = mutableSetOf()
     val gridSideLength = grid.maxBy { it.key.x }.key.x + 1
     for (depth: Int in 0..(gridSideLength / 2)) {
         if (depth == 0) {
             visibleTreeCount += gridSideLength * 4 - 4
         } else {
-            val borderCoords = getCurrentBorderCoords(depth, gridSideLength)
-            borderCoords.forEach { currentCoord ->
+            getCurrentBorderCoords(depth, gridSideLength).forEach { currentCoord ->
                 val neighborCoords = getHorizontalAndVerticalNeighborCoords(currentCoord, gridSideLength)
-                val map = getNESWNeighborCoords(currentCoord, neighborCoords)
-                orient@ for (orientation in map.entries) {
-                    val neighbors = orientation.value.map { grid[it]!! }
-                    if (neighbors.all { it < grid[currentCoord]!! }) {
-                        visibleTrees.add(currentCoord)
-                        break@orient
+                orientation@ for (orientation in getNESWNeighbors(currentCoord, neighborCoords).entries) {
+                    if (orientation.value.map { grid[it]!! }.all { it < grid[currentCoord]!! }) {
+                        visibleTreeCount++
+                        break@orientation
                     }
                 }
             }
         }
     }
-    return visibleTreeCount + visibleTrees.size
+    return visibleTreeCount
 }
 
-fun part2(list: List<String>): Int {
+fun part2(grid: Map<Coord, Int>): Int {
     return 0
 }
 
@@ -57,7 +53,7 @@ fun getHorizontalAndVerticalNeighborCoords(coord: Coord, gridSideLength: Int): S
     return neighborCoords
 }
 
-fun getNESWNeighborCoords(currentCoord: Coord, neighborCoords: Set<Coord>): Map<Cardinal, Set<Coord>> {
+fun getNESWNeighbors(currentCoord: Coord, neighborCoords: Set<Coord>): Map<Cardinal, Set<Coord>> {
     val map: MutableMap<Cardinal, Set<Coord>> = mutableMapOf(
         Cardinal.NORTH to mutableSetOf(),
         Cardinal.EAST to mutableSetOf(),

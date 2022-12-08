@@ -18,8 +18,8 @@ internal class Day8KtTest {
 
     @Test
     fun testPart2() {
-//        assertEquals(70, part2(testInput0))
-//        assertEquals(2515, part2(testInput))
+        assertEquals(8, part2(testInput0))
+        assertEquals(2515, part2(testInput))
     }
 
     @Test
@@ -66,6 +66,6 @@ internal class Day8KtTest {
             Cardinal.SOUTH to setOf(Coord(2, 2), Coord(2, 3), Coord(2, 4)),
             Cardinal.WEST to setOf(Coord(0, 1), Coord(1, 1)),
             Cardinal.EAST to setOf(Coord(3, 1), Coord(4, 1))
-        ), getNESWNeighborCoords(Coord(2, 1), neighborCoords))
+        ), getNESWNeighbors(Coord(2, 1), neighborCoords))
     }
 }
