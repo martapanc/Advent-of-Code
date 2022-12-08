@@ -24,20 +24,30 @@ fun part1(grid: Map<Coord, Int>): Int {
 }
 
 fun part2(grid: Map<Coord, Int>): Int {
-    return 0
+    var highestScenicScore = 0
+    val gridSideLength = grid.maxBy { it.key.x }.key.x + 1
+    for (depth: Int in 0..(gridSideLength / 2)) {
+        if (depth != 0)
+            getCurrentBorderCoords(depth, gridSideLength).forEach { currentCoord ->
+                val neighborCoords = getHorizontalAndVerticalNeighborCoords(currentCoord, gridSideLength)
+                var totalScore = 1
+                for (orientation in getNESWNeighbors(currentCoord, neighborCoords).entries)
+                    totalScore *= getLinearScenicScore(grid, currentCoord, orientation.value)
+                if (totalScore > highestScenicScore)
+                    highestScenicScore = totalScore
+            }
+    }
+    return highestScenicScore
 }
 
 
 fun getCurrentBorderCoords(depth: Int, gridSideLength: Int): Set<Coord> {
     val ringCoords: MutableSet<Coord> = mutableSetOf()
     val max = gridSideLength - 1 - depth
-    for (y: Int in depth..max) {
-        for (x: Int in depth..max) {
-            if (x == depth || x == max || y == depth || y == max) {
+    for (y: Int in depth..max)
+        for (x: Int in depth..max)
+            if (x == depth || x == max || y == depth || y == max)
                 ringCoords.add(Coord(x, y))
-            }
-        }
-    }
     return ringCoords
 }
 
@@ -61,7 +71,7 @@ fun getNESWNeighbors(currentCoord: Coord, neighborCoords: Set<Coord>): Map<Cardi
         Cardinal.WEST to mutableSetOf()
     )
     neighborCoords.forEach { coord ->
-        if (coord.x == currentCoord.x) {
+        if (coord.x == currentCoord.x)
             if (coord.y < currentCoord.y) {
                 val set = map[Cardinal.NORTH]!!.toMutableSet()
                 set.add(coord)
@@ -71,8 +81,7 @@ fun getNESWNeighbors(currentCoord: Coord, neighborCoords: Set<Coord>): Map<Cardi
                 set.add(coord)
                 map[Cardinal.SOUTH] = set
             }
-        }
-        if (coord.y == currentCoord.y) {
+        if (coord.y == currentCoord.y)
             if (coord.x < currentCoord.x) {
                 val set = map[Cardinal.WEST]!!.toMutableSet()
                 set.add(coord)
@@ -82,9 +91,23 @@ fun getNESWNeighbors(currentCoord: Coord, neighborCoords: Set<Coord>): Map<Cardi
                 set.add(coord)
                 map[Cardinal.EAST] = set
             }
-        }
     }
+    val nSet = map[Cardinal.NORTH]!!.toMutableSet()
+    map[Cardinal.NORTH] = nSet.sortedByDescending { it.y }.toSet()
+
+    val wSet = map[Cardinal.WEST]!!.toMutableSet()
+    map[Cardinal.WEST] = wSet.sortedByDescending { it.x }.toSet()
     return map
+}
+
+fun getLinearScenicScore(grid: Map<Coord, Int>, currentCoord: Coord, directionCoords: Set<Coord>): Int {
+    var scenicScore = 0
+    for (directionCoord in directionCoords) {
+        scenicScore++
+        if (grid[currentCoord]!! <= grid[directionCoord]!!)
+            break
+    }
+    return scenicScore
 }
 
 enum class Cardinal { NORTH, EAST, SOUTH, WEST }

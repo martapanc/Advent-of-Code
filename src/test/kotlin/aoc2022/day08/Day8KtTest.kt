@@ -19,7 +19,7 @@ internal class Day8KtTest {
     @Test
     fun testPart2() {
         assertEquals(8, part2(testInput0))
-        assertEquals(2515, part2(testInput))
+        assertEquals(268464, part2(testInput))
     }
 
     @Test
@@ -67,5 +67,14 @@ internal class Day8KtTest {
             Cardinal.WEST to setOf(Coord(0, 1), Coord(1, 1)),
             Cardinal.EAST to setOf(Coord(3, 1), Coord(4, 1))
         ), getNESWNeighbors(Coord(2, 1), neighborCoords))
+    }
+
+    @Test
+    fun testGetLinearScenicScore() {
+        assertEquals(0, getLinearScenicScore(testInput0, Coord(0, 0), setOf()))
+        assertEquals(3, getLinearScenicScore(testInput0, Coord(3, 0), setOf(
+            Coord(2, 0), Coord(1, 0), Coord(0, 0))))
+        assertEquals(2, getLinearScenicScore(testInput0, Coord(2, 0), setOf(Coord(1, 0), Coord(0, 0))))
+        assertEquals(1, getLinearScenicScore(testInput0, Coord(2, 0), setOf(Coord(3, 0), Coord(4, 0))))
     }
 }

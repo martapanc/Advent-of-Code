@@ -6,7 +6,7 @@ Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2
 
 ## Quick links
 
-- Advent of Code 2️⃣0️⃣2️⃣2️⃣ : [overview](src/main/kotlin/aoc2022/README.md) & [solutions](src/main/kotlin/aoc2022) - 14 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/28/) 
+- Advent of Code 2️⃣0️⃣2️⃣2️⃣ : [overview](src/main/kotlin/aoc2022/README.md) & [solutions](src/main/kotlin/aoc2022) - 16 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/32/) 
 - Advent of Code 2️⃣0️⃣2️⃣1️⃣ : [overview](src/main/kotlin/aoc2021/README.md) & [solutions](src/main/kotlin/aoc2021) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/100/) 
 - Advent of Code 2️⃣0️⃣2️⃣0️⃣ : [overview](src/main/kotlin/aoc2020/README.md) & [solutions](src/main/kotlin/aoc2020) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/100/) 
 - Advent of Code 2️⃣0️⃣1️⃣9️⃣ : [overview](src/main/kotlin/aoc2019/README.md) & [solutions](src/main/kotlin/aoc2019) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/100/) 
@@ -15,7 +15,7 @@ Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2
 - Advent of Code 2️⃣0️⃣1️⃣6️⃣ : [overview](src/main/kotlin/aoc2016/README.md) & [solutions](src/main/kotlin/aoc2016) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/100/) 
 - Advent of Code 2️⃣0️⃣1️⃣5️⃣ : [overview](src/main/kotlin/aoc2015/README.md) & [solutions](src/main/kotlin/aoc2015) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/100/) 
 
- Total:  364 / 400 ⭐
+ Total:  366 / 400 ⭐
 
  ![Progress](https://progress-bar.dev/91/)
 
