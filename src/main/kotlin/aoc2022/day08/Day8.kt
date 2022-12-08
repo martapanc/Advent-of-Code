@@ -5,18 +5,22 @@ import aoc2020.day20.Coord
 fun part1(grid: Map<Coord, Int>): Int {
     var visibleTreeCount = 0
     val gridSideLength = grid.maxBy { it.key.x }.key.x + 1
+    val visibilityMap = mutableMapOf<Coord, Char>()
+
     for (depth: Int in 0..(gridSideLength / 2)) {
         if (depth == 0) {
             visibleTreeCount += gridSideLength * 4 - 4
         } else {
             getCurrentBorderCoords(depth, gridSideLength).forEach { currentCoord ->
                 val neighborCoords = getHorizontalAndVerticalNeighborCoords(currentCoord, gridSideLength)
-                orientation@ for (orientation in getNESWNeighbors(currentCoord, neighborCoords).entries) {
+                orientation@ for (orientation in getNESWNeighbors(currentCoord, neighborCoords).entries)
                     if (orientation.value.map { grid[it]!! }.all { it < grid[currentCoord]!! }) {
+                        visibilityMap[currentCoord] = 'x'
                         visibleTreeCount++
                         break@orientation
+                    } else {
+                        visibilityMap[currentCoord] = grid[currentCoord]!!.digitToChar()
                     }
-                }
             }
         }
     }
