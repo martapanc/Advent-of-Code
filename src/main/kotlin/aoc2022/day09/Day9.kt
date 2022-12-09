@@ -35,6 +35,8 @@ fun solve(movements: List<Movement>, noOfSegments: Int): Int {
             explored.add(tailSegments[noOfSegments]!!)
         }
     }
+
+    printRopeTrace(explored)
     return explored.size
 }
 
@@ -95,4 +97,21 @@ enum class Direction(val input: String) {
 
         init { Direction.values().forEach { map[it.input] = it } }
     }
+}
+
+fun printRopeTrace(input: Set<Coord>) {
+    val set = input.map { Coord(it.x, -it.y) }.toSet()
+    (set.minBy { it.y }.y .. set.maxBy { it.y }.y).forEach { y ->
+        (set.minBy { it.x }.x .. set.maxBy { it.x }.x).forEach { x ->
+            if (x == 0 && y == 0) {
+                print("S")
+            } else if (set.contains(Coord(x, y))) {
+                print("#")
+            } else {
+                print(".")
+            }
+        }
+        println()
+    }
+    println()
 }
