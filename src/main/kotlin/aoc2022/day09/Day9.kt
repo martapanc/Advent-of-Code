@@ -14,44 +14,25 @@ fun readInputToMovementList(path: String): List<Movement> {
 }
 
 fun part1(movements: List<Movement>): Int {
-    var headPos = Coord(0, 0)
-    var tailPos = Coord(0, 0)
-    val explored = mutableSetOf(tailPos)
-    movements.forEach { movement ->
-        repeat(movement.value) {
-            headPos = moveByOne(headPos, movement.direction)
-            tailPos = tailFollowsHead(tailPos, headPos)
-            explored.add(tailPos)
-        }
-    }
-    return explored.size
+    return solve(movements, 1)
 }
 
 fun part2(movements: List<Movement>): Int {
-    var headPos = Coord(0, 0)
-    var t1Pos = Coord(0, 0)
-    var t2Pos = Coord(0, 0)
-    var t3Pos = Coord(0, 0)
-    var t4Pos = Coord(0, 0)
-    var t5Pos = Coord(0, 0)
-    var t6Pos = Coord(0, 0)
-    var t7Pos = Coord(0, 0)
-    var t8Pos = Coord(0, 0)
-    var t9Pos = Coord(0, 0)
-    val explored = mutableSetOf(t9Pos)
+    return solve(movements, 9)
+}
+
+fun solve(movements: List<Movement>, noOfSegments: Int): Int {
+    val tailSegments = mutableMapOf<Int, Coord>()
+    (0 .. noOfSegments).forEach { tailSegments[it] = Coord(0, 0) }
+    val explored = mutableSetOf(tailSegments[noOfSegments]!!)
+
     movements.forEach { movement ->
         repeat(movement.value) {
-            headPos = moveByOne(headPos, movement.direction)
-            t1Pos = tailFollowsHead(t1Pos, headPos)
-            t2Pos = tailFollowsHead(t2Pos, t1Pos)
-            t3Pos = tailFollowsHead(t3Pos, t2Pos)
-            t4Pos = tailFollowsHead(t4Pos, t3Pos)
-            t5Pos = tailFollowsHead(t5Pos, t4Pos)
-            t6Pos = tailFollowsHead(t6Pos, t5Pos)
-            t7Pos = tailFollowsHead(t7Pos, t6Pos)
-            t8Pos = tailFollowsHead(t8Pos, t7Pos)
-            t9Pos = tailFollowsHead(t9Pos, t8Pos)
-            explored.add(t9Pos)
+            tailSegments[0] = moveByOne(tailSegments[0]!!, movement.direction)
+            (1..noOfSegments).forEach { i ->
+                tailSegments[i] = tailFollowsHead(tailSegments[i]!!, tailSegments[i - 1]!!)
+            }
+            explored.add(tailSegments[noOfSegments]!!)
         }
     }
     return explored.size
@@ -110,12 +91,8 @@ enum class Direction(val input: String) {
     companion object {
         private val map: MutableMap<String, Direction> = HashMap()
 
-        fun parse(direction: String): Direction? {
-            return map[direction]
-        }
+        fun parse(direction: String): Direction? = map[direction]
 
-        init {
-            Direction.values().forEach { map[it.input] = it }
-        }
+        init { Direction.values().forEach { map[it.input] = it } }
     }
 }
