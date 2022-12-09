@@ -78,16 +78,14 @@ fun moveDiagonally(tailPos: Coord, headPos: Coord): Coord {
 
 fun tailFollowsHead(tailPos: Coord, headPos: Coord): Coord {
     // H covers T
-    if (tailPos == headPos) {
-        return tailPos
-    }
+    if (tailPos == headPos) return tailPos
+
     // HT distance is 1 (horizontally, vertically or diagonally)
     if ((abs(tailPos.x - headPos.x) == 1 && abs(tailPos.y - headPos.y) == 0) ||
         (abs(tailPos.x - headPos.x) == 0 && abs(tailPos.y - headPos.y) == 1) ||
         (abs(tailPos.x - headPos.x) == 1 && abs(tailPos.y - headPos.y) == 1)
-    ) {
-        return tailPos
-    }
+    ) return tailPos
+
     // H.T are aligned horizontally or vertically
     if (tailPos.x == headPos.x) {
         if (tailPos.y < headPos.y)
@@ -99,6 +97,7 @@ fun tailFollowsHead(tailPos: Coord, headPos: Coord): Coord {
             return moveByOne(tailPos, Direction.RIGHT)
         return moveByOne(tailPos, Direction.LEFT)
     }
+
     // H.T are not touching and positioned diagonally
     return moveDiagonally(tailPos, headPos)
 }

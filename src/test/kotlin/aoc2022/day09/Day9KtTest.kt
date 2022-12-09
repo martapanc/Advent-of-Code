@@ -18,9 +18,9 @@ internal class Day9KtTest {
 
     @Test
     fun testPart2() {
-//        assertEquals(1, part2(testInput0))
+        assertEquals(1, part2(testInput0))
         assertEquals(36, part2(testInput1))
-//        assertEquals(2515, part2(testInput))
+        assertEquals(2445, part2(testInput))
     }
 
     @Test
@@ -47,10 +47,10 @@ internal class Day9KtTest {
         assertEquals(Coord(0, 0), tailFollowsHead(Coord(0, 0), Coord(0, -1)))
         assertEquals(Coord(0, 0), tailFollowsHead(Coord(0, 0), Coord(1, 1)))
 
-        assertEquals(Coord(-1, 0), tailFollowsHead(Coord(0, 0), Coord(-2, 0)))
         assertEquals(Coord(0, 1), tailFollowsHead(Coord(0, 0), Coord(0, 2)))
+        assertEquals(Coord(0, -1), tailFollowsHead(Coord(0, 0), Coord(0, -2)))
+        assertEquals(Coord(1, 0), tailFollowsHead(Coord(0, 0), Coord(2, 0)))
         assertEquals(Coord(-1, 0), tailFollowsHead(Coord(0, 0), Coord(-2, 0)))
-        assertEquals(Coord(0, 1), tailFollowsHead(Coord(0, 0), Coord(0, 2)))
 
         assertEquals(Coord(1, 1), tailFollowsHead(Coord(0, 0), Coord(1, 2)))
         assertEquals(Coord(0, 0), tailFollowsHead(Coord(1, 1), Coord(0, -1)))
