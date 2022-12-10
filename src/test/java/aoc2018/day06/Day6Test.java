@@ -61,38 +61,38 @@ public class Day6Test {
 
     @Test
     public void test_read_input_file(){
-        Map map = Day6.readInputFile("src/main/java/aoc2018/day06/input/in2");
+        Map map = Day6.readInputFile("src/main/java/aoc2018/day06/assets/in2");
 //        System.out.println(map);
-        map = Day6.readInputFile("src/main/java/aoc2018/day06/input/in1");
+        map = Day6.readInputFile("src/main/java/aoc2018/day06/assets/in1");
 //        System.out.println(map);
     }
 
     @Test
     public void test_draw_matrix(){
-        Map map = Day6.readInputFile("src/main/java/aoc2018/day06/input/in1");
+        Map map = Day6.readInputFile("src/main/java/aoc2018/day06/assets/in1");
 //        Day6.drawMatrix(map);
     }
 
     @Test
     public void test_get_largest_area(){
-        Map map = Day6.readInputFile("src/main/java/aoc2018/day06/input/in1");
+        Map map = Day6.readInputFile("src/main/java/aoc2018/day06/assets/in1");
 //        assertEquals(4475, Day6.drawMatrix(map));
 
-        map = Day6.readInputFile("src/main/java/aoc2018/day06/input/in4");
+        map = Day6.readInputFile("src/main/java/aoc2018/day06/assets/in4");
 //        assertEquals(17, Day6.drawMatrix(map));
     }
 
     @Test
     public void test_get_manhattan_distance_sum() {
-        Map map = Day6.readInputFile("src/main/java/aoc2018/day06/input/in4");
+        Map map = Day6.readInputFile("src/main/java/aoc2018/day06/assets/in4");
         assertEquals(30, Day6.getManhattanDistanceSum(new Point(4,3), map));
     }
 
     @Test
     public void test_compute_area() {
-        Map map = Day6.readInputFile("src/main/java/aoc2018/day06/input/in4");
+        Map map = Day6.readInputFile("src/main/java/aoc2018/day06/assets/in4");
         assertEquals(16, Day6.computeArea(map, 32));
-        map = Day6.readInputFile("src/main/java/aoc2018/day06/input/in1");
+        map = Day6.readInputFile("src/main/java/aoc2018/day06/assets/in1");
         assertEquals(35237, Day6.computeArea(map, 10000));
     }
 

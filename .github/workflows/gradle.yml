@@ -26,6 +26,6 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew clean build -x test
 
-    - name: Run Unit tests
-      run: ./gradlew test
+#    - name: Run Unit tests
+#      run: ./gradlew test
 

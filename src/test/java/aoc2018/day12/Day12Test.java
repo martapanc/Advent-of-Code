@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Day12Test {
 
-    private final String INPUT1 = "src/main/java/aoc2018/day12/input/input1";
-    private final String INPUT1_RULES = "src/main/java/aoc2018/day12/input/input1_rules";
-    private final String INPUT2 = "src/main/java/aoc2018/day12/input/input2";
-    private final String INPUT2_RULES = "src/main/java/aoc2018/day12/input/input2_rules";
+    private final String INPUT1 = "src/main/java/aoc2018/day12/assets/input1";
+    private final String INPUT1_RULES = "src/main/java/aoc2018/day12/assets/input1_rules";
+    private final String INPUT2 = "src/main/java/aoc2018/day12/assets/input2";
+    private final String INPUT2_RULES = "src/main/java/aoc2018/day12/assets/input2_rules";
 
     @Test
     void read_input() {
