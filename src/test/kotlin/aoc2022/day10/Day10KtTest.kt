@@ -10,14 +10,8 @@ internal class Day10KtTest {
     private val testInput = readInputLineByLine("src/main/kotlin/aoc2022/day10/assets/input")
 
     @Test
-    fun testPart1() {
-        assertEquals(13140, part1(testInput0))
-        assertEquals(14860, part1(testInput))
-    }
-
-    @Test
-    fun testPart2() {
-        part2(testInput0)
-        part2(testInput) // RGZEHURK
+    fun testSolve() {
+        assertEquals(13140, solve(testInput0))
+        assertEquals(14860, solve(testInput)) // RGZEHURK
     }
 }
