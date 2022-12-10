@@ -332,3 +332,6 @@ gradle-app.setting
 .env
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,kotlin,gradle,java,python
+
+# Ignore real input files
+**/input
