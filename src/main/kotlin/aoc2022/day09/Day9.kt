@@ -13,13 +13,9 @@ fun readInputToMovementList(path: String): List<Movement> {
     return movements
 }
 
-fun part1(movements: List<Movement>): Int {
-    return solve(movements, 1)
-}
+fun part1(movements: List<Movement>): Int = solve(movements, 1)
 
-fun part2(movements: List<Movement>): Int {
-    return solve(movements, 9)
-}
+fun part2(movements: List<Movement>): Int = solve(movements, 9)
 
 fun solve(movements: List<Movement>, noOfSegments: Int): Int {
     val tailSegments = mutableMapOf<Int, Coord>()

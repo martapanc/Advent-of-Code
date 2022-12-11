@@ -1,11 +1,11 @@
 package aoc2022.day11
 
+import util.lcm
 import util.readInputLineByLine
-import kotlin.math.floor
 
 fun readInputToMonkeys(path: String): List<Monkey> {
-    val inputList = readInputLineByLine(path)
     val monkeys = mutableListOf<Monkey>()
+    val inputList = readInputLineByLine(path)
     (inputList.indices step 7).forEach { index ->
         val startingItems = inputList[index + 1].trim().replace("Starting items: ", "").split(", ").map { it.toLong() }
         val operation = inputList[index + 2].trim().replace("Operation: new = ", "")
@@ -17,28 +17,17 @@ fun readInputToMonkeys(path: String): List<Monkey> {
     return monkeys
 }
 
-fun part1(monkeys: List<Monkey>): Long {
-    repeat(20) {
-        monkeys.forEach { monkey ->
-            monkey.startingItems.forEach { item ->
-                val worryLevel = floor((parseOpAndExec(item, monkey.operation) / 3).toDouble()).toLong()
-                val targetMonkey = if ((worryLevel % monkey.testDivBy) == 0L) monkey.ifTrue else monkey.ifFalse
-                monkeys[targetMonkey].startingItems.add(worryLevel)
-                monkey.inspectedItemCount++
-            }
-            monkey.startingItems.clear()
-        }
-    }
-    val busiestMonkeys = monkeys.sortedByDescending { it.inspectedItemCount }
-    return busiestMonkeys[0].inspectedItemCount * busiestMonkeys[1].inspectedItemCount
-}
+fun part1(monkeys: List<Monkey>): Long = solve(monkeys, 20)
 
-fun part2(monkeys: List<Monkey>): Long {
+fun part2(monkeys: List<Monkey>): Long = solve(monkeys, 10000, true)
+
+fun solve(monkeys: List<Monkey>, times: Int, part2: Boolean = false): Long {
     val divisorsLCM = lcm(monkeys.map { it.testDivBy })
-    repeat(10000) {
+    repeat(times) {
         monkeys.forEach { monkey ->
             monkey.startingItems.forEach { item ->
-                val worryLevel = (parseOpAndExec(item, monkey.operation) % divisorsLCM)
+                val newWorryLevel = parseOpAndExec(item, monkey.operation)
+                val worryLevel = if (part2) newWorryLevel % divisorsLCM else newWorryLevel / 3
                 val targetMonkey = if ((worryLevel % monkey.testDivBy) == 0L) monkey.ifTrue else monkey.ifFalse
                 monkeys[targetMonkey].startingItems.add(worryLevel)
                 monkey.inspectedItemCount++
@@ -70,11 +59,3 @@ data class Monkey(
     val ifFalse: Int,
     var inspectedItemCount: Long = 0
 )
-
-fun lcm(values: List<Long>): Long {
-    var result = values[0]
-    values.indices.forEach { index ->
-        result = util.lcm(result, values[index])
-    }
-    return result
-}

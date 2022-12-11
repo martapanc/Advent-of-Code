@@ -70,3 +70,11 @@ fun gcd(a: Long, b: Long): Long {
     if (a == 0L) return b
     return gcd(b % a, a)
 }
+
+fun lcm(values: List<Long>): Long {
+    var result = values[0]
+    values.indices.forEach { index ->
+        result = lcm(result, values[index])
+    }
+    return result
+}
