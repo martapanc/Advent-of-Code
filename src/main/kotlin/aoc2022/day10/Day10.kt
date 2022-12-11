@@ -15,7 +15,7 @@ fun solve(commands: List<String>): Int {
             signalStrength += xRegister * cycle
         }
         // Part 2
-        crtRow += if (crtRowIndex++ in spriteIndices) "#" else "."
+        crtRow += if (crtRowIndex++ in spriteIndices) "#" else " "
 
         if (cycle in arrayOf(40, 80, 120, 160, 200, 240)) {
             println(crtRow)

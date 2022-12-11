@@ -1,5 +1,7 @@
 package aoc2020.day13
 
+import util.lcm
+
 
 fun readInputToList(input: String): List<Int> {
     val list = mutableListOf<Int>()
@@ -52,15 +54,6 @@ fun findEarliestTimestamp(inputList: List<Int>): Long {
         }
     }
     return index
-}
-
-private fun lcm(a: Long, b: Long): Long {
-    return a * b / gcd(a, b)
-}
-
-private fun gcd(a: Long, b: Long): Long {
-    if (a == 0L) return b
-    return gcd(b % a, a)
 }
 
 class Shuttle(var index: Long, var departureInterval: Long)
