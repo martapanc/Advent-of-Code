@@ -2,7 +2,7 @@ package aoc2022.day12
 
 import util.Coord
 import util.deltas
-
+import kotlin.Int.Companion.MAX_VALUE
 
 fun part1(grid: Map<Coord, Char>): Int {
     val startCoord = grid.entries.first { it.value == 'S' }.key
@@ -11,7 +11,15 @@ fun part1(grid: Map<Coord, Char>): Int {
 }
 
 fun part2(grid: Map<Coord, Char>): Int {
-    return 0
+    val startCoords = grid.entries.filter { it.value == 'a' }.map { it.key }
+    val endCoord = grid.entries.first { it.value == 'E' }.key
+    var minDistance = MAX_VALUE
+    startCoords.forEach { startCoord ->
+        val distance = bfs(grid, startCoord, endCoord)
+        if (distance < minDistance && distance != -1)
+            minDistance = distance
+    }
+    return minDistance
 }
 
 fun bfs(grid: Map<Coord, Char>, source: Coord, destination: Coord): Int {
