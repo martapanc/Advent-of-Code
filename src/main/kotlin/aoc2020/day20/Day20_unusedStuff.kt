@@ -1,5 +1,6 @@
 package aoc2020.day20
 
+import util.Coord
 import kotlin.math.sqrt
 
 fun drawFirstLine(tilesList: List<JigsawTile>) {

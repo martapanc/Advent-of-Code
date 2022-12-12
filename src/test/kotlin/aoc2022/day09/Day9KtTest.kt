@@ -1,6 +1,6 @@
 package aoc2022.day09
 
-import aoc2020.day20.Coord
+import util.Coord
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

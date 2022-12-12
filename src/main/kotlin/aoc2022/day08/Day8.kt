@@ -1,6 +1,6 @@
 package aoc2022.day08
 
-import aoc2020.day20.Coord
+import util.Coord
 
 fun part1(grid: Map<Coord, Int>): Int {
     var visibleTreeCount = 0

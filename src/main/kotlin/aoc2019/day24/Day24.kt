@@ -1,7 +1,7 @@
 package aoc2019.day24
 
 import aoc2020.day11.mapToString
-import aoc2020.day20.Coord
+import util.Coord
 import kotlin.math.pow
 
 fun playGameOfBugs(map: Map<Coord, Char>): Long {

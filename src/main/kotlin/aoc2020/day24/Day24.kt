@@ -1,6 +1,6 @@
 package aoc2020.day24
 
-import aoc2020.day20.Coord
+import util.Coord
 import java.io.File
 
 fun readInputToList(path: String): List<List<HexNeighbors>> {

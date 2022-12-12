@@ -1,5 +1,6 @@
 package aoc2020.day20
 
+import util.Coord
 import java.io.File
 import kotlin.math.sqrt
 
@@ -212,17 +213,3 @@ fun findSeaMonsters(
 
 data class JigsawTile(var tileId: Int, var array: Map<Coord, Char>, var borderList: List<String>)
 data class NeighborEdge(var tileId: Int, var edge: String)
-
-data class Coord(var x: Int, var y: Int) {
-
-    fun neighbors(allowNegative: Boolean = false): List<Coord> =
-        listOf(
-            Coord(x, y - 1),
-            Coord(x - 1, y),
-            Coord(x + 1, y),
-            Coord(x, y + 1)
-        ).filter { allowNegative || it.x >= 0 && it.y >= 0 }
-
-    operator fun plus(other: Coord) = Coord(x + other.x, y + other.y)
-    operator fun not() = Coord(-x, -y)
-}

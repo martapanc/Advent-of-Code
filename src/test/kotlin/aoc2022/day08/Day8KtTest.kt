@@ -1,6 +1,6 @@
 package aoc2022.day08
 
-import aoc2020.day20.Coord
+import util.Coord
 import aoc2021.day09.readInputToMap
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

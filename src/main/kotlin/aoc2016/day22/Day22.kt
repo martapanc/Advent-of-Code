@@ -1,6 +1,6 @@
 package aoc2016.day22
 
-import aoc2020.day20.Coord
+import util.Coord
 import util.readInputLineByLine
 import kotlin.math.abs
 

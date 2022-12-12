@@ -1,6 +1,6 @@
 package aoc2015.day03
 
-import aoc2020.day20.Coord
+import util.Coord
 
 fun processTrip(string: String): Int {
     var current = Coord(0, 0)

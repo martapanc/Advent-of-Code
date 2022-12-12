@@ -1,6 +1,6 @@
 package aoc2015.day06
 
-import aoc2020.day20.Coord
+import util.Coord
 import util.readInputLineByLine
 
 fun readInputToInstructionList(path: String): List<Instruction> {

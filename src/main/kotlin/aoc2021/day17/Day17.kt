@@ -1,6 +1,6 @@
 package aoc2021.day17
 
-import aoc2020.day20.Coord
+import util.Coord
 
 fun parseInput(inputString: String): Range {
   val split = inputString.split(", ")

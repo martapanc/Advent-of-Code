@@ -1,6 +1,6 @@
 package aoc2016.day08
 
-import aoc2020.day20.Coord
+import util.Coord
 import util.readInputLineByLine
 import java.util.*
 

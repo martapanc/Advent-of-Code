@@ -2,7 +2,7 @@ package aoc2017.day14
 
 import aoc2017.day10.convertListToASCII
 import aoc2017.day10.processListPart2
-import aoc2020.day20.Coord
+import util.Coord
 import java.math.BigInteger
 
 fun defragmentDisk(input: String): Int {

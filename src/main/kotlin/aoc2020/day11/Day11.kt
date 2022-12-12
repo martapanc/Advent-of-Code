@@ -1,6 +1,6 @@
 package aoc2020.day11
 
-import aoc2020.day20.Coord
+import util.Coord
 
 fun runRounds(map: Map<Coord, Char>, isPart1: Boolean): Int {
     var finalMap = computeRound(map, isPart1)

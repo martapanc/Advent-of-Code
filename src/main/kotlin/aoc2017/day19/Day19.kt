@@ -1,6 +1,6 @@
 package aoc2017.day19
 
-import aoc2020.day20.Coord
+import util.Coord
 import util.readInputLineByLine
 
 

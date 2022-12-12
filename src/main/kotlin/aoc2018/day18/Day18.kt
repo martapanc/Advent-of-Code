@@ -1,6 +1,6 @@
 package aoc2018.day18
 
-import aoc2020.day20.Coord
+import util.Coord
 
 fun playGameOfLumberyards(inputMap: Map<Coord, Char>, minutes: Int): Int {
     var fieldMap = inputMap.toMutableMap()

@@ -1,6 +1,6 @@
 package aoc2021.day25
 
-import aoc2020.day20.Coord
+import util.Coord
 
 
 fun computeSeaCucumberMovements(inputMap: Map<Coord, Char>): Int {

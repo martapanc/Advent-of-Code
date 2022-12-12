@@ -1,7 +1,7 @@
 package aoc2021.day11
 
 import aoc2021.day09.readInputToMap
-import aoc2020.day20.Coord
+import util.Coord
 
 fun readInputToOctopusMap(input: String): Map<Coord, Octopus> {
   val octopusMap = mutableMapOf<Coord, Octopus>()

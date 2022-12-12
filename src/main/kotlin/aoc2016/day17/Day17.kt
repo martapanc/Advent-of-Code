@@ -1,6 +1,6 @@
 package aoc2016.day17
 
-import aoc2020.day20.Coord
+import util.Coord
 import java.math.BigInteger
 import java.security.MessageDigest
 

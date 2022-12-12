@@ -1,6 +1,6 @@
 package aoc2017.day22
 
-import aoc2020.day20.Coord
+import util.Coord
 import util.readInputLineByLine
 
 private val deltas = listOf(Coord(0, -1), Coord(1, 0), Coord(0, 1), Coord(-1, 0))

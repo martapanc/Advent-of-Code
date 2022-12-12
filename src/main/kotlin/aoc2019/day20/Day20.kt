@@ -1,6 +1,6 @@
 package aoc2019.day20
 
-import aoc2020.day20.Coord
+import util.Coord
 import util.deltas
 
 val regex = Regex("[A-Z]")

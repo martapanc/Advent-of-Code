@@ -1,6 +1,6 @@
 package aoc2016.day24
 
-import aoc2020.day20.Coord
+import util.Coord
 import util.findDistanceInMap
 
 fun findMinDistanceBetweenPoints(start: Coord, end: Coord, map: Map<Coord, Char>): Int {

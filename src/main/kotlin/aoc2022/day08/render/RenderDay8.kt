@@ -1,6 +1,7 @@
 package aoc2022.day08.render
 
 import aoc2021.day09.readInputToMap
+import util.Coord
 import java.io.File
 
 fun main() {
@@ -12,7 +13,7 @@ class RenderDay8 {
     fun run() {
         val grid = readInputToMap("src/main/kotlin/aoc2022/day08/assets/input")
         var body1 = ""
-        grid.entries.forEach { entry ->
+        grid.entries.forEach { entry: Map.Entry<Coord, Int> ->
             body1 += "<span class=\"height-${entry.value}\">&nbsp;&nbsp;</span>"
             if (entry.key.x == 98) body1 += "<br>\n"
         }

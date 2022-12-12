@@ -1,7 +1,7 @@
 package aoc2019.day19
 
 import aoc2019.commons.IntCodeProgram
-import aoc2020.day20.Coord
+import util.Coord
 import util.readInputLineByLine
 
 fun countPointsInTractorBeam(path: String, areaSide: Int = 50): Int {

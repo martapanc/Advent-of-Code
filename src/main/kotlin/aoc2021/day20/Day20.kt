@@ -1,7 +1,7 @@
 package aoc2021.day20
 
 import aoc2020.day05.binaryToDecimal
-import aoc2020.day20.Coord
+import util.Coord
 import util.readInputLineByLine
 
 fun readInputToImages(inputString: String): ImageEnhancementData {

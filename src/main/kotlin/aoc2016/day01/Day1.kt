@@ -1,6 +1,6 @@
 package aoc2016.day01
 
-import aoc2020.day20.Coord
+import util.Coord
 import kotlin.math.abs
 
 fun computeDistance(input: String): Int {

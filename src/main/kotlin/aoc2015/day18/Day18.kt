@@ -1,6 +1,6 @@
 package aoc2015.day18
 
-import aoc2020.day20.Coord
+import util.Coord
 
 fun playGameOfLights(inputMap: Map<Coord, Char>, repeat: Int = 1, stuckCorners: Boolean = false): Int {
     var map = inputMap.toMutableMap()

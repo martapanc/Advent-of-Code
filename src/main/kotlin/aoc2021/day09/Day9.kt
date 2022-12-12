@@ -1,6 +1,6 @@
 package aoc2021.day09
 
-import aoc2020.day20.Coord
+import util.Coord
 import util.readInputLineByLine
 
 fun readInputToMap(path: String): Map<Coord, Int> {

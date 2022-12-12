@@ -1,6 +1,6 @@
 package aoc2016.day13
 
-import aoc2020.day20.Coord
+import util.Coord
 import util.findDistanceInMap
 import util.getUndiscoveredFreeNeighbors
 
