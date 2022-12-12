@@ -41,7 +41,7 @@ fun bfs(grid: Map<Coord, Char>, source: Coord, destination: Coord): Int {
             }
         }
     }
-    return -1
+    return -1 // Unreachable target
 }
 
 fun getValidNeighbors(grid: Map<Coord, Char>, currentCoord: Coord): Set<Coord> {
