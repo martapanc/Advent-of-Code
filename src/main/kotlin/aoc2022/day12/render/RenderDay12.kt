@@ -53,7 +53,6 @@ class RenderDay12 {
     .c-x { background: #492d00; }
     .c-y { background: #382300; }
     .c-z { background: #281900; }
-   
 </style>
 <body>
     <div>
