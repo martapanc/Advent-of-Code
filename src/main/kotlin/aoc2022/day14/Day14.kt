@@ -4,7 +4,7 @@ import aoc2018.day17.printTileMap
 import util.Coord
 import util.readInputLineByLine
 
-fun readInputToRockPaths(path: String): Map<Coord, Char> {
+fun readInputToRockPaths(path: String): MutableMap<Coord, Char> {
     val rockPathCoords = mutableSetOf<Coord>()
     readInputLineByLine(path).forEach { line ->
         val coords = line.split(" -> ").map { coord ->
@@ -32,7 +32,7 @@ fun readInputToRockPaths(path: String): Map<Coord, Char> {
     return rockPathsToMap(rockPathCoords)
 }
 
-fun rockPathsToMap(coords: Set<Coord>): Map<Coord, Char> {
+fun rockPathsToMap(coords: Set<Coord>): MutableMap<Coord, Char> {
     val minX = coords.minBy { it.x }.x
     val maxX = coords.maxBy { it.x }.x
     val minY = coords.minBy { it.y }.y
@@ -52,10 +52,46 @@ fun rockPathsToMap(coords: Set<Coord>): Map<Coord, Char> {
     return map
 }
 
-fun part1(map: Map<Coord, Char>): Int {
-    return 0
+fun part1(map: MutableMap<Coord, Char>): Int {
+    var sandCount = 0
+    val initialPos = Coord(500, 1)
+    sandLands@while (true) {
+        var source = Coord(initialPos.x, initialPos.y)
+        var next = sandUnitFalls(map, source)
+        while (source != next) {
+            source = next.copy()
+            next = sandUnitFalls(map, source)
+            if (next.y > map.keys.maxBy { it.y }.y) {
+                break@sandLands
+            }
+        }
+        sandCount++
+        map[next] = 'o'
+//        printTileMap(map)
+    }
+    return sandCount
 }
 
 fun part2(map: Map<Coord, Char>): Int {
     return 0
+}
+
+fun sandUnitFalls(map: Map<Coord, Char>, source: Coord): Coord {
+    val vertical = Coord(source.x, source.y + 1)
+    if (map[vertical] != '#' && map[vertical] != 'o') {
+        return vertical
+    }
+    val slideLeft = Coord(source.x - 1, source.y + 1)
+    if (map[slideLeft] != '#' && map[slideLeft] != 'o') {
+        return slideLeft
+    }
+    val slideRight = Coord(source.x + 1, source.y + 1)
+    if (map[slideRight] != '#' && map[slideRight] != 'o') {
+        return slideRight
+    }
+    return source
+}
+
+fun Coord.copy(): Coord {
+    return Coord(this.x, this.y)
 }
