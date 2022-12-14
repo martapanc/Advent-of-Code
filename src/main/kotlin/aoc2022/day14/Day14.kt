@@ -72,8 +72,30 @@ fun part1(map: MutableMap<Coord, Char>): Int {
     return sandCount
 }
 
-fun part2(map: Map<Coord, Char>): Int {
-    return 0
+fun part2(map: MutableMap<Coord, Char>): Int {
+    val floorY = map.keys.maxBy { it.y }.y + 2
+    val minX = map.keys.minBy { it.x }.x - 155
+    val maxX = map.keys.maxBy { it.x }.x + 105
+    (minX .. maxX).forEach { x ->
+        map[Coord(x, floorY)] = '#'
+    }
+    var sandCount = 0
+    val initialPos = Coord(500, 0)
+    sandLands@while (true) {
+        var source = initialPos.copy()
+        var next = sandUnitFalls(map, source)
+        while (source != next) {
+            source = next.copy()
+            next = sandUnitFalls(map, source)
+        }
+        sandCount++
+        map[next] = 'o'
+        if (next == initialPos) {
+            break@sandLands
+        }
+    }
+    printTileMap(map)
+    return sandCount
 }
 
 fun sandUnitFalls(map: Map<Coord, Char>, source: Coord): Coord {
