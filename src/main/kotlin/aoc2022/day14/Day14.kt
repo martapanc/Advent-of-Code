@@ -1,6 +1,5 @@
 package aoc2022.day14
 
-import aoc2018.day17.printTileMap
 import util.Coord
 import util.readInputLineByLine
 
@@ -48,54 +47,47 @@ fun rockPathsToMap(coords: Set<Coord>): MutableMap<Coord, Char> {
         }
     }
     map[Coord(500, 0)] = '+'
-    printTileMap(map)
     return map
 }
 
 fun part1(map: MutableMap<Coord, Char>): Int {
-    var sandCount = 0
-    val initialPos = Coord(500, 1)
-    sandLands@while (true) {
-        var source = Coord(initialPos.x, initialPos.y)
-        var next = sandUnitFalls(map, source)
-        while (source != next) {
-            source = next.copy()
-            next = sandUnitFalls(map, source)
-            if (next.y > map.keys.maxBy { it.y }.y) {
-                break@sandLands
-            }
-        }
-        sandCount++
-        map[next] = 'o'
-//        printTileMap(map)
-    }
-    return sandCount
+    return landingSandLoop(map, true)
 }
 
 fun part2(map: MutableMap<Coord, Char>): Int {
     val floorY = map.keys.maxBy { it.y }.y + 2
     val minX = map.keys.minBy { it.x }.x - 155
     val maxX = map.keys.maxBy { it.x }.x + 105
-    (minX .. maxX).forEach { x ->
+    (minX..maxX).forEach { x ->
         map[Coord(x, floorY)] = '#'
     }
-    var sandCount = 0
-    val initialPos = Coord(500, 0)
-    sandLands@while (true) {
+    return landingSandLoop(map)
+}
+
+private fun landingSandLoop(
+    map: MutableMap<Coord, Char>,
+    isPart1: Boolean = false,
+    initialPos: Coord = Coord(500, 0),
+    sandCount: Int = 0
+): Int {
+    var newSandCount = sandCount
+    sandLands@ while (true) {
         var source = initialPos.copy()
         var next = sandUnitFalls(map, source)
         while (source != next) {
             source = next.copy()
             next = sandUnitFalls(map, source)
+            if (isPart1 && next.y > map.keys.maxBy { it.y }.y) {
+                break@sandLands
+            }
         }
-        sandCount++
+        newSandCount++
         map[next] = 'o'
         if (next == initialPos) {
             break@sandLands
         }
     }
-    printTileMap(map)
-    return sandCount
+    return newSandCount
 }
 
 fun sandUnitFalls(map: Map<Coord, Char>, source: Coord): Coord {
