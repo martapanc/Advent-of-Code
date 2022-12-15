@@ -24,8 +24,22 @@ fun part1(sensors: List<Sensor>, row: Long): Int {
     return covered.count { it.y == row }
 }
 
-fun part2(sensors: List<Sensor>): Int {
-    return 0
+fun part2(sensors: List<Sensor>, max: Long): Long {
+    val covered = mutableSetOf<Coord>()
+    val sensorMap = mutableMapOf<Sensor, Set<Coord>>()
+    sensors.forEach { sensor ->
+        sensorMap[sensor] = getCellsCoveredBySensorInRange(sensor.coord, sensor.closestBeacon, max)
+    }
+
+    val all = mutableSetOf<Coord>()
+    (0L .. max).forEach { y ->
+        (0L .. max).forEach { x ->
+            all.add(Coord(x, y))
+        }
+    }
+
+    val beacon = all.first()
+    return beacon.x * 4000000 + beacon.y
 }
 
 fun getCellsCoveredBySensor(sensor: Coord, beacon: Coord): Set<Coord> {
@@ -46,6 +60,20 @@ fun getCellsCoveredBySensorAtRow(sensor: Coord, beacon: Coord, row: Long): Set<C
     if (row in minY..maxY) {
         val mhDiff = mhDistance - Coord(sensor.x, row).manhattanDistance(sensor)
         (sensor.x - mhDiff .. sensor.x + mhDiff).forEach { x -> coveredCoords.add(Coord(x, row)) }
+    }
+    return coveredCoords
+}
+
+fun getCellsCoveredBySensorInRange(sensor: Coord, beacon: Coord, max: Long, min: Long = 0): Set<Coord> {
+    val coveredCoords = mutableSetOf<Coord>()
+    val mhDistance = sensor.manhattanDistance(beacon)
+    val minY = if (sensor.y - mhDistance > min) sensor.y - mhDistance else min
+    val maxY = if (sensor.y + mhDistance < max) sensor.y + mhDistance else max
+    (minY .. maxY).forEach { y ->
+        val mhDiff = mhDistance - Coord(sensor.x, y).manhattanDistance(sensor)
+        val minX = if (sensor.x - mhDiff > min) sensor.x - mhDiff else min
+        val maxX = if (sensor.x + mhDiff < max) sensor.x + mhDiff else max
+        (minX .. maxX).forEach { x -> coveredCoords.add(Coord(x, y)) }
     }
     return coveredCoords
 }
