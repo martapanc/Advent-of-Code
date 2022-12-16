@@ -2,6 +2,7 @@ package util
 
 import aoc2020.day14.binaryToDecimal
 import java.io.File
+import kotlin.math.abs
 
 
 val deltas = listOf(Coord(0, 1), Coord(0, -1), Coord(1, 0), Coord(-1, 0))
@@ -90,4 +91,6 @@ data class Coord(var x: Int, var y: Int) {
 
     operator fun plus(other: Coord) = Coord(x + other.x, y + other.y)
     operator fun not() = Coord(-x, -y)
+
+    fun manhattanDistance(coord: Coord): Int = abs(this.x - coord.x) + abs(this.y - coord.y)
 }

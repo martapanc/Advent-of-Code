@@ -2,6 +2,7 @@ package aoc2022.day15
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import util.Coord
 
 internal class Day15KtTest {
 
@@ -16,10 +17,8 @@ internal class Day15KtTest {
 
     @Test
     fun testPart2() {
-//        assertEquals(56000011, part2(testInput0, 20))
-//        assertEquals(2515, part2Big(testInput, 2000))
         assertEquals(56000011, solve(testInput0, 20))
-        assertEquals(2515, solve(testInput, 4000000))
+        assertEquals(10457634860779, solve(testInput, 4000000))
     }
 
     @Test
