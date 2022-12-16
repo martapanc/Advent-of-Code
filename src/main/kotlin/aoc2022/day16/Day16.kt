@@ -1,30 +1,36 @@
 package aoc2022.day16
 
-//fun part1(list: List<String>): Int {
-//    return 0
-//}
-//
-//fun part2(list: List<String>): Int {
-//    return 0
-//}
+import util.readInputLineByLine
 
-data class ValveNode(
+fun readInputToValves(path: String): List<Valve> {
+    return readInputLineByLine(path).map { Valve.fromInputString(it) }
+}
+
+fun part1(valves: List<Valve>): Int {
+    valves.computeAllDistances()
+    val start = valves.find { it.name == "AA" }!!
+    return valves.maxPath(emptySet(), start, 30, 0, 0)
+}
+
+fun part2(valves: List<Valve>): Int = valves.maxPathWithElephantHelp(26)
+
+data class Valve(
     val name: String,
     val flowRate: Int,
     val neighbors: List<String>,
     val distanceMap: MutableMap<String, Int> = mutableMapOf()
 ) {
     companion object {
-        fun of(input: String): ValveNode = ValveNode(
+        fun fromInputString(input: String): Valve = Valve(
             input.drop(6).split(" has ")[0],
             input.split(";")[0].split("=")[1].toInt(),
             input.split("valves ", "valve ")[1].split(", ")
         )
     }
 
-    fun computeDistances(getNode: (String) -> ValveNode) = apply {
+    fun computeDistances(getNeighborValve: (String) -> Valve) = apply {
         distanceMap[name] = 0
-        ArrayDeque<ValveNode>().let { queue ->
+        ArrayDeque<Valve>().let { queue ->
             queue.add(this)
             val visited = mutableSetOf<String>()
             while (queue.isNotEmpty()) {
@@ -32,7 +38,7 @@ data class ValveNode(
                 val distance = current.distanceMap[name]!!
                 visited.add(current.name)
                 current.neighbors.filter { it !in visited }.forEach { n ->
-                    val neighbor = getNode(n)
+                    val neighbor = getNeighborValve(n)
                     neighbor.distanceMap[name] = distance + 1
                     queue.addLast(neighbor)
                 }
@@ -42,35 +48,34 @@ data class ValveNode(
     }
 }
 
-private fun List<ValveNode>.computeAllDistances() =
-    filter {
-        it.flowRate > 0
-    }.forEach { r ->
-        r.computeDistances { node ->
-            this.first { it.name == node }
+private fun List<Valve>.computeAllDistances() =
+    filter { it.flowRate > 0 }.forEach { valve ->
+        valve.computeDistances { neighborValve ->
+            this.first { it.name == neighborValve }
         }
     }
 
-private fun ValveNode.restOf(opened: Set<String>, timeLeft: Int) =
+private fun Valve.restOf(opened: Set<String>, timeLeft: Int) =
     distanceMap.filter { (key, timeNeeded) -> key !in opened && timeNeeded + 1 <= timeLeft }
 
-private fun List<ValveNode>.maxPath(opened: Set<String>, node: ValveNode, timeLeft: Int, sum: Int, open: Int): Int = when {
-    timeLeft < 0 -> 0
-    timeLeft == 0 -> sum
-    timeLeft == 1 -> sum + open
-    node.distanceMap.all { (key, _) -> key in opened } -> sum + timeLeft * open
-    else -> node.restOf(opened, timeLeft)
-        .map { (nNode, distance) ->
-            val nextNode = first { it.name == nNode }
-            maxPath(
-                opened + node.name,
-                nextNode,
-                timeLeft - (distance + 1),
-                sum + (distance + 1) * open,
-                open + nextNode.flowRate
-            )
-        }.plus(sum + timeLeft * open)
-        .max()
+private fun List<Valve>.maxPath(opened: Set<String>, valve: Valve, timeLeft: Int, sum: Int, open: Int): Int {
+    return when {
+        timeLeft < 0 -> 0
+        timeLeft == 0 -> sum
+        timeLeft == 1 -> sum + open
+        valve.distanceMap.all { (key, _) -> key in opened } -> sum + timeLeft * open
+        else -> valve.restOf(opened, timeLeft)
+            .map { (nValve, distance) ->
+                val nextValve = first { it.name == nValve }
+                maxPath(
+                    opened + valve.name,
+                    nextValve,
+                    timeLeft - (distance + 1),
+                    sum + (distance + 1) * open,
+                    open + nextValve.flowRate
+                )
+            }.plus(sum + timeLeft * open).max()
+    }
 }
 
 private fun allSelections(maximum: Int): Sequence<List<Int>> = sequence {
@@ -82,14 +87,25 @@ private fun allSelections(maximum: Int): Sequence<List<Int>> = sequence {
     }
 }
 
-private fun List<ValveNode>.makeAllNonFlow(these: List<ValveNode>) = map { v ->
-    if (v in these) {
-        v.copy(flowRate = 0, distanceMap = mutableMapOf())
-    } else
-        v.copy(distanceMap = mutableMapOf())
+private fun List<Valve>.makeAllNonFlow(valves: List<Valve>) = map { valve ->
+    if (valve in valves) {
+        valve.copy(flowRate = 0, distanceMap = mutableMapOf())
+    } else {
+        valve.copy(distanceMap = mutableMapOf())
+    }
 }
 
-private fun List<ValveNode>.partition(): Sequence<Pair<List<ValveNode>, List<ValveNode>>> {
+private fun List<Valve>.maxPathWithElephantHelp(timeLeft: Int): Int {
+    return partition().map { (a, b) ->
+        val myStartValve = a.first { it.name == "AA" }
+        val elephantStartValve = b.first { it.name == "AA" }
+        val me = a.maxPath(emptySet(), myStartValve, timeLeft, 0, 0)
+        val elephant = b.maxPath(emptySet(), elephantStartValve, timeLeft, 0, 0)
+        me + elephant
+    }.max()
+}
+
+private fun List<Valve>.partition(): Sequence<Pair<List<Valve>, List<Valve>>> {
     val relevant = filter { it.flowRate > 0 }
     return allSelections(relevant.size).map { ind ->
         val listLeft = relevant.filterIndexed { i, _ -> i + 1 in ind }
@@ -100,24 +116,4 @@ private fun List<ValveNode>.partition(): Sequence<Pair<List<ValveNode>, List<Val
         right.computeAllDistances()
         left to right
     }
-}
-
-private fun List<ValveNode>.maxPathWithElephantHelp(timeLeft: Int): Int = partition().map { (a, b) ->
-    val startNodeYou = a.first { it.name == "AA" }
-    val startNodeElephant = b.first { it.name == "AA" }
-    val you = a.maxPath(emptySet(), startNodeYou, timeLeft, 0, 0)
-    val elephant =  b.maxPath(emptySet(), startNodeElephant, timeLeft, 0, 0)
-    you + elephant
-}.max()
-
-fun part1(input: List<String>): Int {
-    val nodes = input.map { ValveNode.of(it) }
-    nodes.computeAllDistances()
-    val startNode = nodes.find { it.name == "AA" }!!
-    return nodes.maxPath(emptySet(), startNode, 30, 0, 0)
-}
-
-fun part2(input: List<String>): Int {
-    val nodes = input.map { ValveNode.of(it) }
-    return nodes.maxPathWithElephantHelp( 26)
 }
