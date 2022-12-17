@@ -12,6 +12,14 @@ fun readInputToJetStreams(path: String): List<JetStream> =
     readInputLineByLine(path)[0].toCharArray().map { JetStream.fromSymbol(it)!! }
 
 fun part1(jetStreams: List<JetStream>, rounds: Int = 2022): Int {
+    return solve(jetStreams, rounds)
+}
+
+fun part2(jetStreams: List<JetStream>, rounds: Int): Int {
+    return solve(jetStreams, rounds)
+}
+
+private fun solve(jetStreams: List<JetStream>, rounds: Int): Int {
     val map = mutableMapOf<Coord, Char>()
     var streamIndex = 0
     repeat(rounds) { index ->
@@ -19,7 +27,7 @@ fun part1(jetStreams: List<JetStream>, rounds: Int = 2022): Int {
             map.filter { it.value == '#' }.maxBy { it.key.y }.key.y else -1) + 4 // 3 units above bottom
         var currentRockPos = getRockType(index, Rock(highestRockCoord))
         var newPos = isPushedAndFalls(currentRockPos, jetStreams[streamIndex++ % jetStreams.size], map)
-        rockRound@while (currentRockPos != newPos) {
+        rockRound@ while (currentRockPos != newPos) {
             currentRockPos = newPos
             val pushedPos = currentRockPos.isPushed(jetStreams[streamIndex++ % jetStreams.size], map)
             newPos = pushedPos.falls(map)
@@ -28,13 +36,9 @@ fun part1(jetStreams: List<JetStream>, rounds: Int = 2022): Int {
             }
         }
         newPos.forEach { map[it] = '#' }
-//        printTetrisGrid(map)
     }
+//    printTetrisGrid(map)
     return map.filter { it.value == '#' }.maxBy { it.key.y }.key.y + 1
-}
-
-fun part2(jetStreams: List<JetStream>): Int {
-    return 0
 }
 
 fun List<Coord>.isPushed(direction: JetStream, map: Map<Coord, Char>): List<Coord> {
