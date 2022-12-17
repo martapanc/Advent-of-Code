@@ -3,15 +3,16 @@ package aoc2022.day17.renders
 import java.io.File
 
 fun main() {
-    RenderDay17().run()
+    RenderDay17().run(1)
+    RenderDay17().run(2)
 }
 
 class RenderDay17 {
 
-    fun run() {
-        val input = util.readInputToMap("src/main/kotlin/aoc2022/day17/renders/output")
+    fun run(id: Int) {
+        val input = util.readInputToMap("src/main/kotlin/aoc2022/day17/renders/output${id}")
         var body = ""
-        val maxX = 8
+        val maxX = input.keys.maxBy { it.x }.x
         input.entries.forEach { entry ->
             var tile = entry.value.toString()
             if (entry.value == '.') tile = "blank"
@@ -43,7 +44,7 @@ class RenderDay17 {
     </div>
 </body>
 """
-        val inputRender = File("src/main/kotlin/aoc2022/day17/renders/output.html")
+        val inputRender = File("src/main/kotlin/aoc2022/day17/renders/output${id}.html")
         inputRender.printWriter().use { it.println(content) }
     }
 }

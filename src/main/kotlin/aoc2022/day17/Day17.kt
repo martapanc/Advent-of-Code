@@ -7,6 +7,9 @@ import util.readInputLineByLine
 // |
 // |
 //-+-----> x
+const val BOARD_WIDTH = 7
+const val INIT_X = 2
+const val HEIGHT = 4
 
 fun readInputToJetStreams(path: String): List<JetStream> =
     readInputLineByLine(path)[0].toCharArray().map { JetStream.fromSymbol(it)!! }
@@ -28,7 +31,7 @@ fun solve(jetStreams: List<JetStream>, rounds: Int): Int {
     var streamIndex = 0
     repeat(rounds) { index ->
         val highestRockCoord = (if (map.filter { it.value == '#' }.isNotEmpty())
-            map.filter { it.value == '#' }.maxBy { it.key.y }.key.y else -1) + 4 // 3 units above bottom
+            map.filter { it.value == '#' }.maxBy { it.key.y }.key.y else -1) + HEIGHT // 3 units above bottom
         var currentRockPos = getRockType(index, Rock(highestRockCoord))
         var newPos = isPushedAndFalls(currentRockPos, jetStreams[streamIndex++ % jetStreams.size], map)
         rockRound@ while (currentRockPos != newPos) {
@@ -49,13 +52,13 @@ fun solve(jetStreams: List<JetStream>, rounds: Int): Int {
         }
         newPos.forEach { printMap[it] = char }
     }
-    printTetrisGrid(printMap)
+//    printTetrisGrid(printMap)
     return map.filter { it.value == '#' }.maxBy { it.key.y }.key.y + 1
 }
 
 fun List<Coord>.isPushed(direction: JetStream, map: Map<Coord, Char>): List<Coord> {
     if (direction == JetStream.LEFT && this.minBy { it.x }.x > 0 ||
-        direction == JetStream.RIGHT && this.maxBy { it.x }.x < 6) {
+        direction == JetStream.RIGHT && this.maxBy { it.x }.x < (BOARD_WIDTH - 1)) {
         val movedPos = this.move(direction)
         if (movedPos.none { map[it] == '#' }) {
             return movedPos
@@ -95,28 +98,28 @@ private fun getRockType(index: Int, rock: Rock) = when (index % 5) {
 data class Rock(val initY: Int) {
 
     fun bar(): List<Coord> {
-        return listOf(Coord(2, initY), Coord(3, initY), Coord(4, initY), Coord(5, initY))
+        return listOf(Coord(INIT_X, initY), Coord(INIT_X + 1, initY), Coord(INIT_X + 2, initY), Coord(INIT_X + 3, initY))
     }
 
-    fun plus(): List<Coord> = listOf(Coord(3, initY + 2),
-        Coord(2, initY + 1), Coord(3, initY + 1),  Coord(4, initY + 1),
-                                   Coord(3, initY))
+    fun plus(): List<Coord> = listOf(Coord(INIT_X + 1, initY + 2),
+        Coord(INIT_X, initY + 1), Coord(INIT_X + 1, initY + 1),  Coord(INIT_X + 2, initY + 1),
+                                   Coord(INIT_X + 1, initY))
 
-    fun l(): List<Coord> = listOf(Coord(4, initY + 2),
-                                  Coord(4, initY + 1),
-        Coord(2, initY), Coord(3, initY), Coord(4, initY),
+    fun l(): List<Coord> = listOf(Coord(INIT_X + 2, initY + 2),
+                                  Coord(INIT_X + 2, initY + 1),
+        Coord(INIT_X, initY), Coord(INIT_X + 1, initY), Coord(INIT_X + 2, initY),
     )
 
     fun i(): List<Coord> = listOf(
-        Coord(2, initY + 3),
-        Coord(2, initY + 2),
-        Coord(2, initY + 1),
-        Coord(2, initY),
+        Coord(INIT_X, initY + 3),
+        Coord(INIT_X, initY + 2),
+        Coord(INIT_X, initY + 1),
+        Coord(INIT_X, initY),
     )
 
    fun square(): List<Coord> = listOf(
-       Coord(2, initY + 1), Coord(3, initY + 1),
-       Coord(2, initY), Coord(3, initY),
+       Coord(INIT_X, initY + 1), Coord(INIT_X + 1, initY + 1),
+       Coord(INIT_X, initY), Coord(INIT_X + 1, initY),
    )
 }
 
@@ -131,18 +134,18 @@ enum class JetStream(val symbol: Char) {
 fun printTetrisGrid(map: Map<Coord, Char>) {
     val printMap = map.toMutableMap()
     val loX = -1
-    val hiX = 7
+    val hiX = BOARD_WIDTH
     val loY = map.keys.minByOrNull { it.y }!!.y - 1
     val hiY = map.keys.maxByOrNull { it.y }!!.y + 1
     (loY .. hiY).forEach { y ->
         printMap[Coord(-1, y)] = '|'
-        printMap[Coord(7, y)] = '|'
+        printMap[Coord(BOARD_WIDTH, y)] = '|'
     }
     (loX .. hiX).forEach { x ->
         printMap[Coord(x, -1)] = '-'
     }
     printMap[Coord(-1, -1)] = '+'
-    printMap[Coord(7, -1)] = '+'
+    printMap[Coord(BOARD_WIDTH, -1)] = '+'
     (hiY downTo loY).forEach { y ->
         (loX .. hiX).forEach { x ->
             print(printMap[Coord(x, y)] ?: '.')
