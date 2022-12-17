@@ -11,15 +11,18 @@ import util.readInputLineByLine
 fun readInputToJetStreams(path: String): List<JetStream> =
     readInputLineByLine(path)[0].toCharArray().map { JetStream.fromSymbol(it)!! }
 
-fun part1(jetStreams: List<JetStream>, rounds: Int = 2022): Int {
-    return solve(jetStreams, rounds)
+fun part1(jetStreams: List<JetStream>, rounds: Int = 2022): Int = solve(jetStreams, rounds)
+
+fun part2(jetStreams: List<JetStream>): Long {
+    val fullRounds = 1000000000000
+    val roundPeriod = 1705
+    val outputPeriod = 2597
+    val div = fullRounds / roundPeriod
+    val mod = (fullRounds % roundPeriod).toInt()
+    return solve(jetStreams, mod) + div * outputPeriod
 }
 
-fun part2(jetStreams: List<JetStream>, rounds: Int): Int {
-    return solve(jetStreams, rounds)
-}
-
-private fun solve(jetStreams: List<JetStream>, rounds: Int): Int {
+fun solve(jetStreams: List<JetStream>, rounds: Int): Int {
     val map = mutableMapOf<Coord, Char>()
     var streamIndex = 0
     repeat(rounds) { index ->
