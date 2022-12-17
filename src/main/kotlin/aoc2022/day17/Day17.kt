@@ -24,6 +24,7 @@ fun part2(jetStreams: List<JetStream>): Long {
 
 fun solve(jetStreams: List<JetStream>, rounds: Int): Int {
     val map = mutableMapOf<Coord, Char>()
+    val printMap = map.toMutableMap()
     var streamIndex = 0
     repeat(rounds) { index ->
         val highestRockCoord = (if (map.filter { it.value == '#' }.isNotEmpty())
@@ -39,8 +40,16 @@ fun solve(jetStreams: List<JetStream>, rounds: Int): Int {
             }
         }
         newPos.forEach { map[it] = '#' }
+        val char = when (index % 5) {
+            0 -> 'b'
+            1 -> 'p'
+            2 -> 'l'
+            3 -> 'r'
+            else -> 's'
+        }
+        newPos.forEach { printMap[it] = char }
     }
-//    printTetrisGrid(map)
+    printTetrisGrid(printMap)
     return map.filter { it.value == '#' }.maxBy { it.key.y }.key.y + 1
 }
 

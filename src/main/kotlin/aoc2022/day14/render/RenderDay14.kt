@@ -4,11 +4,11 @@ import java.io.File
 import kotlin.random.Random
 
 fun main() {
-    RenderDay12().run(1)
-    RenderDay12().run(2)
+    RenderDay14().run(1)
+    RenderDay14().run(2)
 }
 
-class RenderDay12 {
+class RenderDay14 {
 
     fun run(part: Int) {
         val input = util.readInputToMap("src/main/kotlin/aoc2022/day14/render/rendered_part${part}")
