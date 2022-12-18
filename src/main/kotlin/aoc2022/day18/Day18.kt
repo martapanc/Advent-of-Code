@@ -1,8 +1,6 @@
 package aoc2022.day18
 
 import util.readInputLineByLine
-import java.lang.Integer.max
-import java.lang.Integer.min
 
 fun readInputTo3dCoords(path: String): List<Coord3d> = readInputLineByLine(path).map { Coord3d.fromInputString(it) }
 
@@ -10,41 +8,27 @@ fun part1(cubes: List<Coord3d>): Int = findTotalSurface(cubes)
 
 fun part2(cubes: List<Coord3d>): Int {
     var totalSurface = findTotalSurface(cubes)
-
-    var loX = Int.MAX_VALUE; var loY = Int.MAX_VALUE; var loZ = Int.MAX_VALUE
-    var hiX = 0; var hiY = 0; var hiZ = 0
-    cubes.forEach { cube ->
-        loX = min(cube.x, loX); hiX = max(cube.x, hiX)
-        loY = min(cube.y, loY); hiY = max(cube.y, hiY)
-        loZ = min(cube.z, loZ); hiZ = max(cube.z, hiZ)
-    }
-
     val allSeen = mutableSetOf<Coord3d>()
-    val xRange = loX .. hiX
-    val yRange = loY .. hiY
-    val zRange = loZ .. hiZ
+    val xRange = cubes.minBy { it.x }.x .. cubes.maxBy { it.x }.x
+    val yRange = cubes.minBy { it.y }.y .. cubes.maxBy { it.y }.y
+    val zRange = cubes.minBy { it.z }.z .. cubes.maxBy { it.z }.z
+
     (zRange).forEach { z ->
         (yRange).forEach { y ->
             (xRange).forEach { x ->
                 val testCube = Coord3d(x, y, z)
-                if (testCube !in cubes) {
-                    if (testCube !in allSeen) {
-                        val touchedAndSeen = escapeBoundingCube(cubes, testCube, xRange, yRange, zRange)
-                        allSeen.addAll(touchedAndSeen.second)
-                        if (touchedAndSeen.first > 0) {
-                            totalSurface -= touchedAndSeen.first
-                        }
-                    }
+                if (testCube !in cubes && testCube !in allSeen) {
+                    val result = escapeBoundingBox(cubes, testCube, xRange, yRange, zRange)
+                    allSeen.addAll(result.cubesSeen)
+                    totalSurface -= result.facesTouched
                 }
             }
         }
     }
-
     return totalSurface
 }
 
-fun escapeBoundingCube(cubes: List<Coord3d>, source: Coord3d, xRange: IntRange, yRange: IntRange, zRange: IntRange):
-        Pair<Int, Set<Coord3d>> {
+fun escapeBoundingBox(cubes: List<Coord3d>, source: Coord3d, x: IntRange, y: IntRange, z: IntRange): EscapeResult {
     val seen = mutableSetOf<Coord3d>()
     val queue = ArrayDeque<Coord3d>()
     queue.add(source)
@@ -56,21 +40,18 @@ fun escapeBoundingCube(cubes: List<Coord3d>, source: Coord3d, xRange: IntRange, 
             continue
         }
         seen.add(cube)
-        if (cube.x !in xRange || cube.y !in yRange || cube.z !in zRange) {
-            return Pair(0, seen)
+        if (cube.x !in x || cube.y !in y || cube.z !in z) {
+            return EscapeResult(0, seen)
         }
         cube.getNeighbors().forEach { neighbor ->
             if (neighbor in cubes) {
                 facesTouched++
-            } else {
-                if (neighbor !in seen) {
-                    queue.add(neighbor)
-                }
+            } else if (neighbor !in seen) {
+                queue.add(neighbor)
             }
         }
     }
-
-    return Pair(facesTouched, seen)
+    return EscapeResult(facesTouched, seen)
 }
 
 private fun findTotalSurface(cubes: List<Coord3d>): Int {
@@ -105,3 +86,5 @@ data class Coord3d(val x: Int, val y: Int, val z: Int) {
         return "{x: $x, y: $y, z: $z}"
     }
 }
+
+data class EscapeResult(val facesTouched: Int, val cubesSeen: Set<Coord3d>)
