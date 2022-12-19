@@ -6,89 +6,120 @@ fun readInputToBlueprint(path: String): List<Blueprint> {
     return readInputLineByLine(path).map { Blueprint.fromInputString(it) }
 }
 
-fun part1(blueprints: List<Blueprint>): Int {
-    val blueprintResult = mutableMapOf<Int, Int>()
-    blueprints.forEach { blueprint ->
-        val ore = Quantity(Material.ORE, 0)
-        val clay = Quantity(Material.CLAY, 0)
-        val obsidian = Quantity(Material.OBSIDIAN, 0)
-        val geode = Quantity(Material.GEODE, 0)
+data class MiningWork(
+    val ore: Int = 0,
+    val clay: Int = 0,
+    val obsidian: Int = 0,
+    val geode: Int = 0,
 
-        val oreRobot = Quantity(Material.ORE, 1)
-        val clayRobot = Quantity(Material.CLAY, 0)
-        val obsidianRobot = Quantity(Material.OBSIDIAN, 0)
-        val geodeRobot = Quantity(Material.GEODE, 0)
+    val oreRobots: Int = 1,
+    val clayRobots: Int = 0,
+    val obsidianRobots: Int = 0,
+    val geodeRobots: Int = 0
+) {
+    private fun possibleNextStates(blueprint: Blueprint, canBuyNext: Int): List<Pair<MiningWork, Int>> {
+        val oreRobotCost = blueprint.oreRobotCost
+        val obsidianRobotCost = blueprint.obsidianRobotCost
+        val geodeRobotCost = blueprint.geodeRobotCost
+        val clayRobotCost = blueprint.clayRobotCost
 
-        repeat(24) {
-            var oreRobotBeingBuilt = false
-            var clayRobotBeingBuilt = false
-            var obsidianRobotBeingBuilt = false
-            var geodeRobotBeingBuilt = false
-            if (ore.qnt > 0 && obsidian.qnt > 0 &&
-                blueprint.geodeRobotCost.oreCost.costPerUnit <= ore.qnt &&
-                blueprint.geodeRobotCost.obsidianCost.costPerUnit <= obsidian.qnt) {
-                geodeRobot.qnt++
-                ore.qnt -= blueprint.geodeRobotCost.oreCost.costPerUnit
-                obsidian.qnt -= blueprint.geodeRobotCost.obsidianCost.costPerUnit
-                geodeRobotBeingBuilt = true
-            }
-            if (ore.qnt > 0 && clay.qnt > 0 &&
-                blueprint.obsidianRobotCost.oreCost.costPerUnit <= ore.qnt &&
-                blueprint.obsidianRobotCost.clayCost.costPerUnit <= clay.qnt) {
-                obsidianRobot.qnt++
-                ore.qnt -= blueprint.obsidianRobotCost.oreCost.costPerUnit
-                clay.qnt -= blueprint.obsidianRobotCost.clayCost.costPerUnit
-                obsidianRobotBeingBuilt = true
-            }
-            if (ore.qnt > 0 && blueprint.clayRobotCost.costPerUnit <= ore.qnt) {
-                clayRobot.qnt++
-                ore.qnt -= blueprint.clayRobotCost.costPerUnit
-                clayRobotBeingBuilt = true
-            }
-            if (ore.qnt > 0 && blueprint.oreRobotCost.costPerUnit <= ore.qnt) {
-                oreRobot.qnt++
-                ore.qnt -= blueprint.oreRobotCost.costPerUnit
-                oreRobotBeingBuilt = true
-            }
+        val maxOreCost = listOf(oreRobotCost, clayRobotCost, obsidianRobotCost.oreQnt, geodeRobotCost.oreQnt).max()
+        val maxClayCost = obsidianRobotCost.clayQnt
+        val maxObsidianCost = geodeRobotCost.obsidianQnt
 
-            ore.qnt += if (oreRobotBeingBuilt) oreRobot.qnt - 1 else oreRobot.qnt
-            clay.qnt += if (clayRobotBeingBuilt) clayRobot.qnt - 1 else clayRobot.qnt
-            obsidian.qnt += if (obsidianRobotBeingBuilt) obsidianRobot.qnt - 1 else obsidianRobot.qnt
-            geode.qnt += if (geodeRobotBeingBuilt) geodeRobot.qnt - 1 else geodeRobot.qnt
+        if (ore / geodeRobotCost.oreQnt > 0 && obsidian / geodeRobotCost.obsidianQnt > 0) {
+            return listOf(build(blueprint, Robot.GEODE) to 15)
         }
 
-        blueprintResult[blueprint.id] = geode.qnt
+        val possibleBuilds = mutableListOf<Robot>()
+        if (maxObsidianCost > obsidianRobots && canBuyNext and Robot.OBSIDIAN.bit != 0 &&
+            ore / obsidianRobotCost.oreQnt > 0 && clay / obsidianRobotCost.clayQnt > 0
+        ) {
+            possibleBuilds += Robot.OBSIDIAN
+        }
+        if (maxClayCost > clayRobots && ore / clayRobotCost > 0 && canBuyNext and Robot.CLAY.bit != 0) {
+            possibleBuilds += Robot.CLAY
+        }
+        if (maxOreCost > oreRobots && ore / oreRobotCost > 0 && canBuyNext and Robot.ORE.bit != 0) {
+            possibleBuilds += Robot.ORE
+        }
+
+        val stopBuying = possibleBuilds.fold(canBuyNext) { current, acc -> acc.bit xor current }
+
+        return listOf(build(blueprint) to stopBuying) + possibleBuilds.map { build(blueprint, it) to 15 }
     }
 
-    return blueprintResult.keys.sum() + blueprintResult.values.sum()
+    private fun build(blueprint: Blueprint, robot: Robot? = null): MiningWork = with(mine()) {
+        when (robot) {
+            null -> this
+            Robot.ORE -> copy(
+                oreRobots = oreRobots + 1,
+                ore = ore - blueprint.oreRobotCost
+            )
+
+            Robot.CLAY -> copy(
+                clayRobots = clayRobots + 1,
+                ore = ore - blueprint.clayRobotCost
+            )
+
+            Robot.OBSIDIAN -> copy(
+                obsidianRobots = obsidianRobots + 1,
+                ore = ore - blueprint.obsidianRobotCost.oreQnt,
+                clay = clay - blueprint.obsidianRobotCost.clayQnt
+            )
+
+            Robot.GEODE -> copy(
+                geodeRobots = geodeRobots + 1,
+                ore = ore - blueprint.geodeRobotCost.oreQnt,
+                obsidian = obsidian - blueprint.geodeRobotCost.obsidianQnt
+            )
+        }
+    }
+
+    private fun mine() = copy(
+        ore = ore + oreRobots,
+        clay = clay + clayRobots,
+        obsidian = obsidian + obsidianRobots,
+        geode = geode + geodeRobots
+    )
+
+    fun maxMinedGeodesIn(minutes: Int, blueprint: Blueprint, canBuyNext: Int = 15): Int {
+        if (minutes == 0) return geode
+        val nextStates = possibleNextStates(blueprint, canBuyNext)
+        return nextStates.maxOf { (it, canBuy) -> it.maxMinedGeodesIn(minutes - 1, blueprint, canBuy) }
+    }
 }
 
-fun part2(blueprints: List<Blueprint>): Int {
-    return 0
+fun part1(blueprints: List<Blueprint>): Int {
+    return blueprints.fold(0) { acc, blueprint ->
+        val currResult = MiningWork().maxMinedGeodesIn(24, blueprint)
+        blueprint.id * currResult + acc
+    }
+}
+
+fun part2(blueprints: List<Blueprint>): Long {
+    return blueprints.take(3).fold(1L) { acc, blueprint ->
+        acc * MiningWork().maxMinedGeodesIn(32, blueprint)
+    }
 }
 
 data class Blueprint(
-    val id: Int,
-    val oreRobotCost: Cost,
-    val clayRobotCost: Cost,
-    val obsidianRobotCost: ObsidianRobotCost,
-    val geodeRobotCost: GeodeRobotCost) {
+    val id: Int, val oreRobotCost: Int, val clayRobotCost: Int, val obsidianRobotCost: ObsidianRobotCost,
+    val geodeRobotCost: GeodeRobotCost
+) {
 
     companion object {
         fun fromInputString(input: String): Blueprint {
             val split = Regex("\\d+").findAll(input).map { it.value.toInt() }.toList()
-            return Blueprint(split[0], Cost(split[1], Material.ORE), Cost(split[2], Material.ORE),
-                ObsidianRobotCost(Cost(split[3], Material.ORE), Cost(split[4], Material.CLAY)),
-                GeodeRobotCost(Cost(split[5], Material.ORE), Cost(split[6], Material.OBSIDIAN))
+            return Blueprint(
+                split[0], split[1], split[2], ObsidianRobotCost(split[3], split[4]), GeodeRobotCost(split[5], split[6])
             )
         }
     }
 
 }
 
-data class Cost(val costPerUnit: Int, val material: Material)
-data class Quantity(val material: Material, var qnt: Int)
-data class ObsidianRobotCost(val oreCost: Cost, val clayCost: Cost)
-data class GeodeRobotCost(val oreCost: Cost, val obsidianCost: Cost)
+data class ObsidianRobotCost(val oreQnt: Int, val clayQnt: Int)
+data class GeodeRobotCost(val oreQnt: Int, val obsidianQnt: Int)
 
-enum class Material { ORE, CLAY, OBSIDIAN, GEODE }
+enum class Robot(val bit: Int) { ORE(1), CLAY(2), OBSIDIAN(4), GEODE(8) }
