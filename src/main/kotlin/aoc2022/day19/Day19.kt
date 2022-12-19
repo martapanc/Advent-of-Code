@@ -2,8 +2,20 @@ package aoc2022.day19
 
 import util.readInputLineByLine
 
-fun readInputToBlueprint(path: String): List<Blueprint> {
-    return readInputLineByLine(path).map { Blueprint.fromInputString(it) }
+fun readInputToBlueprint(path: String): List<Blueprint> =
+    readInputLineByLine(path).map { Blueprint.fromInputString(it) }
+
+fun part1(blueprints: List<Blueprint>): Int {
+    return blueprints.fold(0) { acc, blueprint ->
+        val currResult = MiningWork().maxMinedGeodesIn(24, blueprint)
+        blueprint.id * currResult + acc
+    }
+}
+
+fun part2(blueprints: List<Blueprint>): Long {
+    return blueprints.take(3).fold(1L) { acc, blueprint ->
+        acc * MiningWork().maxMinedGeodesIn(32, blueprint)
+    }
 }
 
 data class MiningWork(
@@ -90,19 +102,6 @@ data class MiningWork(
     }
 }
 
-fun part1(blueprints: List<Blueprint>): Int {
-    return blueprints.fold(0) { acc, blueprint ->
-        val currResult = MiningWork().maxMinedGeodesIn(24, blueprint)
-        blueprint.id * currResult + acc
-    }
-}
-
-fun part2(blueprints: List<Blueprint>): Long {
-    return blueprints.take(3).fold(1L) { acc, blueprint ->
-        acc * MiningWork().maxMinedGeodesIn(32, blueprint)
-    }
-}
-
 data class Blueprint(
     val id: Int, val oreRobotCost: Int, val clayRobotCost: Int, val obsidianRobotCost: ObsidianRobotCost,
     val geodeRobotCost: GeodeRobotCost
@@ -116,7 +115,6 @@ data class Blueprint(
             )
         }
     }
-
 }
 
 data class ObsidianRobotCost(val oreQnt: Int, val clayQnt: Int)

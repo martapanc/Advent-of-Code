@@ -17,7 +17,7 @@ internal class Day19KtTest {
 
     @Test
     fun testPart2() {
-        assertEquals(62, part2(testInput0))
-        assertEquals(3472, part2(testInput))
+        assertEquals(3472, part2(testInput0))
+        assertEquals(4864, part2(testInput))
     }
 }
