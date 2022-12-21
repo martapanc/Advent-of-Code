@@ -22,8 +22,23 @@ fun part1(monkeyJobs: Map<String, MonkeyJob>): Long {
     return monkeyJob.num
 }
 
-fun part2(monkeyJobs: Map<String, MonkeyJob>): Int {
-    return 0
+fun part2(monkeyJobs: MutableMap<String, MonkeyJob>, initialNum: Long = 1L): Long {
+    var myNumber = initialNum
+    var lookingForMatch = true
+    val rootSecondJob = (monkeyJobs["root"] as Operation).second // Moving this outside as it doesn't vary
+    val secondResult = expandMonkeyJob(monkeyJobs[rootSecondJob]!!, monkeyJobs) as Value
+
+    while (lookingForMatch) {
+        monkeyJobs["humn"] = Value(myNumber)
+        val rootFirstJob = (monkeyJobs["root"] as Operation).first
+        val firstResult = expandMonkeyJob(monkeyJobs[rootFirstJob]!!, monkeyJobs) as Value
+        if (firstResult.num == secondResult.num) {
+            lookingForMatch = false
+        } else {
+            myNumber++
+        }
+    }
+    return myNumber
 }
 
 fun expandMonkeyJob(job: MonkeyJob, map: Map<String, MonkeyJob>): MonkeyJob {

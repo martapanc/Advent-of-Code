@@ -17,7 +17,7 @@ internal class Day21KtTest {
 
     @Test
     fun testPart2() {
-        assertEquals(70, part2(testInput0))
-        assertEquals(2515, part2(testInput))
+        assertEquals(301, part2(testInput0.toMutableMap()))
+        assertEquals(3006709232464, part2(testInput.toMutableMap(), 3006709200000))
     }
 }
