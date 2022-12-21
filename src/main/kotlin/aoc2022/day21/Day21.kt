@@ -3,6 +3,9 @@ package aoc2022.day21
 import org.apache.commons.lang3.StringUtils.isNumeric
 import util.readInputLineByLine
 
+private const val ROOT = "root"
+private const val ME = "humn"
+
 fun readInputToMonkeyJobs(path: String): Map<String, MonkeyJob> {
     val map = mutableMapOf<String, MonkeyJob>()
     readInputLineByLine(path).map { line ->
@@ -17,20 +20,17 @@ fun readInputToMonkeyJobs(path: String): Map<String, MonkeyJob> {
     return map
 }
 
-fun part1(monkeyJobs: Map<String, MonkeyJob>): Long {
-    val monkeyJob = expandMonkeyJob(monkeyJobs["root"]!!, monkeyJobs) as Value
-    return monkeyJob.num
-}
+fun part1(monkeyJobs: Map<String, MonkeyJob>): Long = (expandMonkeyJob(monkeyJobs[ROOT]!!, monkeyJobs) as Value).num
 
 fun part2(monkeyJobs: MutableMap<String, MonkeyJob>, initialNum: Long = 1L): Long {
     var myNumber = initialNum
     var lookingForMatch = true
-    val rootSecondJob = (monkeyJobs["root"] as Operation).second // Moving this outside as it doesn't vary
+    val rootSecondJob = (monkeyJobs[ROOT] as Operation).second // Moving this outside as it doesn't vary
     val secondResult = expandMonkeyJob(monkeyJobs[rootSecondJob]!!, monkeyJobs) as Value
 
     while (lookingForMatch) {
-        monkeyJobs["humn"] = Value(myNumber)
-        val rootFirstJob = (monkeyJobs["root"] as Operation).first
+        monkeyJobs[ME] = Value(myNumber)
+        val rootFirstJob = (monkeyJobs[ROOT] as Operation).first
         val firstResult = expandMonkeyJob(monkeyJobs[rootFirstJob]!!, monkeyJobs) as Value
         if (firstResult.num == secondResult.num) {
             lookingForMatch = false
@@ -63,18 +63,13 @@ fun parseAndExec(first: Value, second: Value, op: Op): Value {
 }
 
 abstract class MonkeyJob {
-    abstract fun areBothNumbers(): Boolean
 }
 
 class Operation(val first: String, val second: String, val op: Op) : MonkeyJob() {
     override fun toString(): String = "$first ${op.sign} $second"
-
-    override fun areBothNumbers(): Boolean = isNumeric(first) && isNumeric(second)
 }
 
 class Value(val num: Long) : MonkeyJob() {
-    override fun areBothNumbers(): Boolean = false
-
     override fun toString(): String = "$num"
 }
 
