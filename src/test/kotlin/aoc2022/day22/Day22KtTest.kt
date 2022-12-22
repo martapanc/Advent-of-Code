@@ -9,16 +9,19 @@ internal class Day22KtTest {
     private val testInput0 = "src/main/kotlin/aoc2022/day22/assets/input0"
     private val testInput = "src/main/kotlin/aoc2022/day22/assets/input"
 
+    private val day20Sample = Day22(testInput0)
+    private val day20 = Day22(testInput)
+
     @Test
     fun testPart1() {
-        assertEquals(6032, part1(testInput0))
-        assertEquals(30552, part1(testInput))
+        assertEquals(6032, day20Sample.part1())
+        assertEquals(30552, day20.part1())
     }
 
     @Test
     fun testPart2() {
-        assertEquals(5031, part2(testInput0, true))
-        assertEquals(184106, part2(testInput))
+        assertEquals(5031, day20Sample.part2(true))
+        assertEquals(184106, day20.part2())
     }
 
     @Test

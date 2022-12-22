@@ -3,6 +3,62 @@ package aoc2022.day22
 import util.Coord
 import util.readInputLineByLine
 
+class Day22 (path: String) {
+    val map = readInputToMapWithBlanks(path)
+    val instructions = readInputToInstructions(path)
+    val deltas = mapOf(Facing.EAST to Coord(1, 0), Facing.WEST to Coord(-1, 0),
+        Facing.NORTH to Coord(0, -1), Facing.SOUTH to Coord(0, 1))
+
+    var position: Coord = map.toSortedMap(compareBy({ it.y }, { it.x })).firstKey()
+    var facing = Facing.EAST
+
+    fun part1(): Long {
+        instructions.forEach { instruction ->
+            run forward@ {
+                repeat(instruction.steps) {
+                    var newPos = Coord(position.x + deltas[facing]!!.x, position.y + deltas[facing]!!.y)
+                    if (map[newPos] == null) {
+                        newPos = facing.wrapAround(newPos, map)
+                    }
+                    if (map[newPos] != null && map[newPos] == '#') {
+                        return@forward
+                    }
+                    position = newPos
+                }
+            }
+            if (instruction.rotation != null) {
+                facing = facing.rotate(instruction.rotation)
+            }
+        }
+        return 4 * (position.x + 1) + 1000L * (position.y + 1) + facing.value
+    }
+
+    fun part2(isExample: Boolean = false): Long {
+        instructions.forEach { instruction ->
+            run moveForward@ {
+                repeat(instruction.steps) {
+                    var newPos = Coord(position.x + deltas[facing]!!.x, position.y + deltas[facing]!!.y)
+                    var newFacing = facing
+                    if (map[newPos] == null) {
+                        val aroundCube = if (isExample)
+                            position.wrapAroundCubeExample(facing) else position.wrapAroundCube(facing)
+                        newPos = aroundCube.pos
+                        newFacing = aroundCube.facing
+                    }
+                    if (map[newPos] != null && map[newPos] == '#') {
+                        return@moveForward
+                    }
+                    position = newPos
+                    facing = newFacing
+                }
+            }
+            if (instruction.rotation != null) {
+                facing = facing.rotate(instruction.rotation)
+            }
+        }
+        return 4 * (position.x + 1) + 1000L * (position.y + 1) + facing.value
+    }
+}
 fun readInputToMapWithBlanks(path: String): Map<Coord, Char> {
     val map = mutableMapOf<Coord, Char>()
     val lines = readInputLineByLine(path)
@@ -27,66 +83,6 @@ fun readInputToInstructions(path: String): List<Instruction> {
             Instruction(value.toInt(), Rotation.fromSign(rot)!!)
         }
     }
-}
-
-fun part1(path: String): Long {
-    val map = readInputToMapWithBlanks(path)
-    val instructions = readInputToInstructions(path)
-
-    val deltas = mapOf(Facing.EAST to Coord(1, 0), Facing.WEST to Coord(-1, 0),
-        Facing.NORTH to Coord(0, -1), Facing.SOUTH to Coord(0, 1))
-    var pos = map.toSortedMap(compareBy({ it.y }, { it.x })).firstKey()
-    var facing = Facing.EAST
-    instructions.forEach { instruction ->
-        run forward@ {
-            repeat(instruction.number) {
-                var newPos = Coord(pos.x + deltas[facing]!!.x, pos.y + deltas[facing]!!.y)
-                if (map[newPos] == null) {
-                    newPos = facing.wrapAround(newPos, map)
-                }
-                if (map[newPos] != null && map[newPos] == '#') { // bump into wall
-                    return@forward
-                }
-                pos = newPos
-            }
-        }
-        if (instruction.rotation != null) {
-            facing = facing.rotate(instruction.rotation)
-        }
-    }
-    return 4 * (pos.x + 1) + 1000L * (pos.y + 1) + facing.value
-}
-
-fun part2(path: String, sample: Boolean = false): Long {
-    val map = readInputToMapWithBlanks(path)
-    val instructions = readInputToInstructions(path)
-
-    val deltas = mapOf(Facing.EAST to Coord(1, 0), Facing.WEST to Coord(-1, 0),
-        Facing.NORTH to Coord(0, -1), Facing.SOUTH to Coord(0, 1))
-    var pos = map.toSortedMap(compareBy({ it.y }, { it.x })).firstKey()
-    var facing = Facing.EAST
-    instructions.forEach { instruction ->
-        run forward@ {
-            repeat(instruction.number) {
-                var newPos = Coord(pos.x + deltas[facing]!!.x, pos.y + deltas[facing]!!.y)
-                var newFacing = facing
-                if (map[newPos] == null) {
-                    val aroundCube = if (sample) pos.wrapAroundCubeExample(facing) else pos.wrapAroundCube(facing)
-                    newPos = aroundCube.pos
-                    newFacing = aroundCube.facing
-                }
-                if (map[newPos] != null && map[newPos] == '#') { // bump into wall
-                    return@forward
-                }
-                pos = newPos
-                facing = newFacing
-            }
-        }
-        if (instruction.rotation != null) {
-            facing = facing.rotate(instruction.rotation)
-        }
-    }
-    return 4 * (pos.x + 1) + 1000L * (pos.y + 1) + facing.value
 }
 
 fun Coord.wrapAroundCubeExample(facing: Facing): PosAndFacing {
@@ -164,8 +160,8 @@ fun Facing.rotate(rotation: Rotation): Facing {
     return Facing.values()[index]
 }
 
-class Instruction(val number: Int, val rotation: Rotation?) {
-    override fun toString(): String = "$number $rotation"
+class Instruction(val steps: Int, val rotation: Rotation?) {
+    override fun toString(): String = "$steps $rotation"
 }
 
 class PosAndFacing(val pos: Coord, val facing: Facing)
