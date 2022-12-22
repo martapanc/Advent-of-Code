@@ -69,15 +69,17 @@ fun part2(path: String): Long {
         run forward@ {
             repeat(instruction.number) {
                 var newPos = Coord(pos.x + deltas[facing]!!.x, pos.y + deltas[facing]!!.y)
+                var newFacing = facing
                 if (map[newPos] == null) {
                     val aroundCube = pos.wrapAroundCubeExample(facing)
                     newPos = aroundCube.pos
-                    facing = aroundCube.facing
+                    newFacing = aroundCube.facing
                 }
                 if (map[newPos] != null && map[newPos] == '#') { // bump into wall
                     return@forward
                 }
                 pos = newPos
+                facing = newFacing
             }
         }
         if (instruction.rotation != null) {
@@ -94,14 +96,14 @@ fun Coord.wrapAroundCubeExample(facing: Facing): PosAndFacing {
         facing == Facing.NORTH && y == 0 && x in 8 until 12 -> PosAndFacing(Coord(3 - (x - 8), 4), Facing.SOUTH) // Side 1 to 2
         facing == Facing.NORTH && y == 4 && x in 0 until 4 -> PosAndFacing(Coord((3 - x) + 8, 0), Facing.SOUTH) // Side 2 to 1
 
-        facing == Facing.SOUTH && y == 7 && x in 0 until 4 -> PosAndFacing(Coord((3 - x) + 8, 11), Facing.SOUTH) // Side 2 to 5
-        facing == Facing.SOUTH && y == 11 && x in 8 until 12 -> PosAndFacing(Coord(3 - (x - 8), 7), Facing.SOUTH) // Side 5 to 2
+        facing == Facing.SOUTH && y == 7 && x in 0 until 4 -> PosAndFacing(Coord((3 - x) + 8, 11), Facing.NORTH) // Side 2 to 5
+        facing == Facing.SOUTH && y == 11 && x in 8 until 12 -> PosAndFacing(Coord(3 - (x - 8), 7), Facing.NORTH) // Side 5 to 2
 
         facing == Facing.EAST && x == 11 && y in 0 until 4 -> PosAndFacing(Coord(15, (3 - y) + 8), Facing.WEST) // 1 to 6
         facing == Facing.EAST && x == 15 && y in 8 until 12 -> PosAndFacing(Coord(11, 3 - (y - 8)), Facing.WEST) // 6 to 1
 
-        facing == Facing.WEST && x == 0 && y in 4 until 8 -> PosAndFacing(Coord(3 - (y-4) + 12, 11), Facing.NORTH) // 2 to 5
-        facing == Facing.SOUTH && y == 11 && x in 12 until 16 -> PosAndFacing(Coord(0, (3 - (x-12)) + 4), Facing.EAST) // 5 to 2
+        facing == Facing.WEST && x == 0 && y in 4 until 8 -> PosAndFacing(Coord(3 - (y-4) + 12, 11), Facing.NORTH) // 2 to 6
+        facing == Facing.SOUTH && y == 11 && x in 12 until 16 -> PosAndFacing(Coord(0, (3 - (x-12)) + 4), Facing.EAST) // 6 to 2
 
         facing == Facing.WEST && x == 8 && y in 0 until 4 -> PosAndFacing(Coord(4 + y, 4), Facing.SOUTH) // 1 to 3
         facing == Facing.NORTH && y == 4 && x in 4 until 8 -> PosAndFacing(Coord(8, x - 4), Facing.EAST) // 3 to 1
