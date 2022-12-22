@@ -17,8 +17,8 @@ internal class Day22KtTest {
 
     @Test
     fun testPart2() {
-        assertEquals(5031, part2(testInput0))
-//        assertEquals(2515, part2(testInput))
+        assertEquals(5031, part2(testInput0, true))
+        assertEquals(184106, part2(testInput))
     }
 
     @Test
@@ -55,5 +55,30 @@ internal class Day22KtTest {
 
         assertEquals(Coord(8, 10), Coord(5, 7).wrapAroundCubeExample(Facing.SOUTH).pos)
         assertEquals(Coord(7, 7), Coord(8, 8).wrapAroundCubeExample(Facing.WEST).pos)
+    }
+
+    @Test
+    fun testWrapAroundCube() {
+        assertEquals(Coord(0, 147), Coord(50, 2).wrapAroundCube(Facing.WEST).pos)
+        assertEquals(Coord(50, 9), Coord(0, 140).wrapAroundCube(Facing.WEST).pos)
+        assertEquals(Coord(50, 0), Coord(0, 149).wrapAroundCube(Facing.WEST).pos)
+
+        assertEquals(Coord(99, 145), Coord(149, 4).wrapAroundCube(Facing.EAST).pos)
+        assertEquals(Coord(149, 49), Coord(99, 100).wrapAroundCube(Facing.EAST).pos)
+
+        assertEquals(Coord(17, 199), Coord(117, 0).wrapAroundCube(Facing.NORTH).pos)
+        assertEquals(Coord(142, 0), Coord(42, 199).wrapAroundCube(Facing.SOUTH).pos)
+
+        assertEquals(Coord(0, 198), Coord(98, 0).wrapAroundCube(Facing.NORTH).pos)
+        assertEquals(Coord(55, 0), Coord(0, 155).wrapAroundCube(Facing.WEST).pos)
+
+        assertEquals(Coord(99, 52), Coord(102, 49).wrapAroundCube(Facing.SOUTH).pos)
+        assertEquals(Coord(147, 49), Coord(99, 97).wrapAroundCube(Facing.EAST).pos)
+
+        assertEquals(Coord(49, 159), Coord(59, 149).wrapAroundCube(Facing.SOUTH).pos)
+        assertEquals(Coord(51, 149), Coord(49, 151).wrapAroundCube(Facing.EAST).pos)
+
+        assertEquals(Coord(25, 100), Coord(50, 75).wrapAroundCube(Facing.WEST).pos)
+        assertEquals(Coord(50, 62), Coord(12, 100).wrapAroundCube(Facing.NORTH).pos)
     }
 }
