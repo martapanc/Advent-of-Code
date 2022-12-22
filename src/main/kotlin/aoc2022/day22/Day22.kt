@@ -116,7 +116,35 @@ fun Coord.wrapAroundCubeExample(facing: Facing): PosAndFacing {
 
         else -> PosAndFacing(Coord(0, 0), Facing.NORTH)
     }
+}
 
+fun Coord.wrapAroundCube(facing: Facing): PosAndFacing {
+    val x = this.x
+    val y = this.y
+    return when {
+        facing == Facing.WEST && y == 0 && x in 8 until 12 -> PosAndFacing(Coord(3 - (x - 8), 4), Facing.EAST) // 1 to 4
+        facing == Facing.WEST && y == 4 && x in 0 until 4 -> PosAndFacing(Coord((3 - x) + 8, 0), Facing.EAST) // 4 to 1
+
+        facing == Facing.EAST && y == 7 && x in 0 until 4 -> PosAndFacing(Coord((3 - x) + 8, 11), Facing.WEST) // 2 to 5
+        facing == Facing.EAST && y == 11 && x in 8 until 12 -> PosAndFacing(Coord(3 - (x - 8), 7), Facing.WEST) // 5 to 2
+
+        facing == Facing.NORTH && x == 0 && y in 4 until 8 -> PosAndFacing(Coord(3 - (y-4) + 12, 11), Facing.NORTH) // 2 to 6
+        facing == Facing.SOUTH && y == 11 && x in 12 until 16 -> PosAndFacing(Coord(0, (3 - (x-12)) + 4), Facing.SOUTH) // 6 to 2
+
+        facing == Facing.NORTH && x == 11 && y in 0 until 4 -> PosAndFacing(Coord(15, (3 - y) + 8), Facing.EAST) // 1 to 6
+        facing == Facing.WEST && x == 15 && y in 8 until 12 -> PosAndFacing(Coord(11, 3 - (y - 8)), Facing.SOUTH) // 6 to 1
+
+        facing == Facing.SOUTH && x == 8 && y in 0 until 4 -> PosAndFacing(Coord(4 + y, 4), Facing.WEST) // 2 to 3
+        facing == Facing.EAST && y == 4 && x in 4 until 8 -> PosAndFacing(Coord(8, x - 4), Facing.NORTH) // 3 to 2
+
+        facing == Facing.WEST && x == 11 && y in 4 until 8 -> PosAndFacing(Coord(3 - (y-4) + 12, 8), Facing.SOUTH) // 3 to 4
+        facing == Facing.NORTH && y == 8 && x in 12 until 16 -> PosAndFacing(Coord(11, 3 - (x-12) + 4), Facing.EAST) // 4 to 3
+
+        facing == Facing.SOUTH && y == 7 && x in 4 until 8 -> PosAndFacing(Coord(8, 3 - (x-4) + 8), Facing.WEST) // 5 to 6
+        facing == Facing.EAST && x == 8 && y in 8 until 12 -> PosAndFacing(Coord(3 - (y-8) + 4, 7), Facing.NORTH) // 6 to 5
+
+        else -> PosAndFacing(Coord(0, 0), Facing.NORTH)
+    }
 }
 
 private fun Facing.wrapAround(newPos: Coord, map: Map<Coord, Char>) = when (this) {
