@@ -52,8 +52,43 @@ fun part1(map: MutableMap<Coord, Char>): Int {
     return computeMinRectangle(map)
 }
 
-fun part2(map: Map<Coord, Char>): Int {
-    return 0
+fun part2(map: MutableMap<Coord, Char>): Int {
+    var rounds = 0
+    loop@ while(true) {
+        rounds++
+        val currentElves = map.filter { it.value == '#' }
+        val neighborMap = mutableMapOf<Coord, List<Coord>>()
+        currentElves.keys.forEach { coord ->
+            neighborMap[coord] = coord.getNeighborElves(map, deltas8)
+        }
+        val elvesConsideringMoving = neighborMap.entries.filter { it.value.isNotEmpty() }
+        if (elvesConsideringMoving.isEmpty()) {
+            break@loop
+        }
+        val movementProposals = mutableMapOf<Coord, Coord>()
+        elvesConsideringMoving.forEach { elf ->
+            run assessDirections@ {
+                directions.forEach { dir ->
+                    val dirCoords = elf.key.getNeighborElves(map, dir.value)
+                    if (dirCoords.isEmpty()) {
+                        movementProposals[elf.key] = elf.key.move(dir.key)
+                        return@assessDirections
+                    }
+                }
+            }
+        }
+        movementProposals.entries.forEach { entry ->
+            if (movementProposals.count { entry.value == it.value } == 1) {
+                entry.key.moveOnMap(entry.value, map)
+            }
+        }
+
+        val rotateKey = directions.keys.first()
+        val rotateDir = directions.remove(rotateKey)!!
+        directions[rotateKey] = rotateDir
+//        printMap(map)
+    }
+    return rounds
 }
 
 fun Coord.getNeighborElves(map: Map<Coord, Char>, deltas: List<Coord>): List<Coord> {

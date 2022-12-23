@@ -15,12 +15,12 @@ internal class Day23KtTest {
     fun testPart1() {
         assertEquals(25, part1(testInput1))
         assertEquals(110, part1(testInput0))
-        assertEquals(3925, part1(testInput)) // 3925
+        assertEquals(3925, part1(testInput))
     }
 
     @Test
     fun testPart2() {
-        assertEquals(70, part2(testInput0))
+        assertEquals(20, part2(testInput0))
         assertEquals(2515, part2(testInput))
     }
 }
