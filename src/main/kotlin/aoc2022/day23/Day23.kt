@@ -15,7 +15,8 @@ val directions = mutableMapOf(Facing.NORTH to north, Facing.SOUTH to south, Faci
 
 fun part1(map: MutableMap<Coord, Char>): Int {
     printMap(map)
-    loop@ while(true) {
+    var i = 0
+    loop@ while(i++ < 10) {
         val currentElves = map.filter { it.value == '#' }
         val neighborMap = mutableMapOf<Coord, List<Coord>>()
         currentElves.keys.forEach { coord ->
@@ -81,8 +82,9 @@ fun Coord.moveOnMap(target: Coord, map: MutableMap<Coord, Char>): MutableMap<Coo
 
 fun computeMinRectangle(map: Map<Coord, Char>): Int {
     val elfCount = map.values.count { it == '#' }
-    val xSide = map.keys.maxOf { it.x } - map.keys.minOf { it.x } + 1
-    val ySide = map.keys.maxOf { it.y } - map.keys.minOf { it.y } + 1
+    val elfOnlyMap = map.filter { it.value == '#' }
+    val xSide = elfOnlyMap.keys.maxOf { it.x } - elfOnlyMap.keys.minOf { it.x } + 1
+    val ySide = elfOnlyMap.keys.maxOf { it.y } - elfOnlyMap.keys.minOf { it.y } + 1
     return xSide * ySide - elfCount
 }
 
