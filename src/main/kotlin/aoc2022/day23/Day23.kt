@@ -13,8 +13,9 @@ val west = listOf(Coord(-1, -1), Coord(-1, 0), Coord(-1, 1))
 val east = listOf(Coord(1, -1), Coord(1, 0), Coord(1, 1))
 val directions = mutableMapOf(Facing.NORTH to north, Facing.SOUTH to south, Facing.WEST to west, Facing.EAST to east)
 
-fun part1(map: MutableMap<Coord, Char>): Int {
-    printMap(map)
+fun part1(inputMap: Map<Coord, Char>): Int {
+    val map = inputMap.toMutableMap()
+//    printMap(map)
     var i = 0
     loop@ while(i++ < 10) {
         val currentElves = map.filter { it.value == '#' }
@@ -47,12 +48,13 @@ fun part1(map: MutableMap<Coord, Char>): Int {
         val rotateKey = directions.keys.first()
         val rotateDir = directions.remove(rotateKey)!!
         directions[rotateKey] = rotateDir
-        printMap(map)
+//        printMap(map)
     }
     return computeMinRectangle(map)
 }
 
-fun part2(map: MutableMap<Coord, Char>): Int {
+fun part2(inputMap: Map<Coord, Char>): Int {
+    val map = inputMap.toMutableMap()
     var rounds = 0
     loop@ while(true) {
         rounds++
@@ -86,8 +88,8 @@ fun part2(map: MutableMap<Coord, Char>): Int {
         val rotateKey = directions.keys.first()
         val rotateDir = directions.remove(rotateKey)!!
         directions[rotateKey] = rotateDir
-//        printMap(map)
     }
+//    printMap(map)
     return rounds
 }
 
