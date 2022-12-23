@@ -1,6 +1,5 @@
 package aoc2022.day23
 
-import aoc2021.day25.printMap
 import aoc2022.day22.Facing
 import util.Coord
 
@@ -10,11 +9,12 @@ val deltas8 = listOf(Coord(-1, -1), Coord(0, -1), Coord(1, -1),
 
 val north = listOf(Coord(-1, -1), Coord(0, -1), Coord(1, -1))
 val south = listOf(Coord(-1, 1), Coord(0, 1), Coord(1, 1))
-val east = listOf(Coord(1, -1), Coord(1, 0), Coord(1, 1))
 val west = listOf(Coord(-1, -1), Coord(-1, 0), Coord(-1, 1))
-val directions = mutableMapOf(Facing.NORTH to north, Facing.SOUTH to south, Facing.EAST to east, Facing.WEST to west)
+val east = listOf(Coord(1, -1), Coord(1, 0), Coord(1, 1))
+val directions = mutableMapOf(Facing.NORTH to north, Facing.SOUTH to south, Facing.WEST to west, Facing.EAST to east)
 
 fun part1(map: MutableMap<Coord, Char>): Int {
+    printMap(map)
     loop@ while(true) {
         val currentElves = map.filter { it.value == '#' }
         val neighborMap = mutableMapOf<Coord, List<Coord>>()
@@ -80,10 +80,26 @@ fun Coord.moveOnMap(target: Coord, map: MutableMap<Coord, Char>): MutableMap<Coo
 }
 
 fun computeMinRectangle(map: Map<Coord, Char>): Int {
-    val loX = map.keys.minBy { it.x }.x
-    val loY = map.keys.minBy { it.y }.y
-    val hiX = map.keys.maxBy { it.x }.x
-    val hiY = map.keys.maxBy { it.y }.y
     val elfCount = map.values.count { it == '#' }
-    return (hiX - loX + 1) * (hiY - loY + 1) - elfCount
+    val xSide = map.keys.maxOf { it.x } - map.keys.minOf { it.x } + 1
+    val ySide = map.keys.maxOf { it.y } - map.keys.minOf { it.y } + 1
+    return xSide * ySide - elfCount
+}
+
+fun printMap(map: Map<Coord, Char>) {
+    val xRange: IntRange = map.keys.minOf { it.x } .. map.keys.maxOf { it.x }
+    val yRange: IntRange = map.keys.minOf { it.y } .. map.keys.maxOf { it.y }
+
+    (yRange).forEach { y ->
+        (xRange).forEach { x ->
+            val coord = Coord(x, y)
+            if (map[coord] == null) {
+                print(".")
+            } else {
+                print(map[Coord(x, y)])
+            }
+        }
+        println()
+    }
+    println()
 }
