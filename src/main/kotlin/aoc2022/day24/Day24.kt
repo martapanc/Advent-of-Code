@@ -26,11 +26,11 @@ class Day24(val grid: Map<Coord, Char>) {
             val possibleMovements = pos.getEmptyNeighbors(moveRes.grid).sortedWith(compareBy ({ it.x }, { it.y }))
             if (possibleMovements.size == 1) {
                 pos = possibleMovements.first()
-            } else if (possibleMovements.size > 1) {
+            } else if (possibleMovements.size > 1){
                 pos = possibleMovements.last()
             }
             i++
-            printMap(moveRes.grid, pos)
+//            printMap(moveRes.grid, pos)
             moveRes = moveBlizzards(moveRes.grid, moveRes.blizzardMap)
         }
         return i

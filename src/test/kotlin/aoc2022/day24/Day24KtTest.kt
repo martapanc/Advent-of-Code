@@ -15,7 +15,7 @@ internal class Day24KtTest {
     fun testPart1() {
         assertEquals(10, Day24(testInput0).part1())
         assertEquals(18, Day24(testInput1).part1())
-        assertEquals(342, Day24(testInput).part1()) // Max 588
+        assertEquals(343, Day24(testInput).part1())
     }
 }
 
