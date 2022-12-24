@@ -1,22 +1,27 @@
 package aoc2022.day24
 
+import aoc2022.day23.printMap
 import util.Coord
 
 class Day24(val grid: Map<Coord, Char>) {
 
-    val blizzards = listOf('>', '<', 'v', '^')
+    private val blizzardTypes = listOf('>', '<', 'v', '^')
     val deltas = mapOf('>' to Coord(1, 0), '<' to Coord(-1, 0), 'v' to Coord(0, 1), '^' to Coord(0, -1))
-    val lo = 1
-    val hiX = grid.keys.maxOf { it.x } - 1
-    val hiY = grid.keys.maxOf { it.y } - 1
-    val blizzardMinAndMax = mapOf('>' to hiX, '<' to lo, 'v' to hiY, '^' to lo)
+    private val lo = 1
+    private val hiX = grid.keys.maxOf { it.x } - 1
+    private val hiY = grid.keys.maxOf { it.y } - 1
 
-    fun part1(): Int {
+    fun part1(rounds: Int): Int {
         val blizzardMap = mutableMapOf<Char, List<Coord>>()
-        blizzards.forEach { blizzard ->
+        blizzardTypes.forEach { blizzard ->
             blizzardMap[blizzard] = grid.entries.filter { it.value == blizzard }.map { it.key }
         }
-        moveBlizzards(grid, blizzardMap)
+        var moveRes = moveBlizzards(grid, blizzardMap)
+        printMap(moveRes.grid)
+        repeat(rounds) {
+            moveRes = moveBlizzards(moveRes.grid, moveRes.blizzardMap)
+            printMap(moveRes.grid)
+        }
         return 0
     }
 
@@ -24,11 +29,14 @@ class Day24(val grid: Map<Coord, Char>) {
         return 0
     }
 
-    fun moveBlizzards(inputGrid: Map<Coord, Char>, blizzardMap: Map<Char, List<Coord>>): Map<Coord, Char> {
+    private fun moveBlizzards(inputGrid: Map<Coord, Char>, blizzardMap: Map<Char, List<Coord>>): BlizzardMove {
         val grid = inputGrid.toMutableMap()
-        val newBlizzards = mutableListOf<Coord>()
+
+        val newBlizzardMap = mutableMapOf<Char, List<Coord>>()
         blizzardMap.forEach { blizzards ->
+            val newBlizzards = mutableListOf<Coord>()
             blizzards.value.forEach { blizzard ->
+                grid[blizzard] = '.'
                 val newCoordDelta = deltas[blizzards.key]!!
                 val newBlizzard = Coord(blizzard.x + newCoordDelta.x, blizzard.y + newCoordDelta.y)
                 when {
@@ -39,8 +47,26 @@ class Day24(val grid: Map<Coord, Char>) {
                 }
                 newBlizzards.add(newBlizzard)
             }
+            newBlizzardMap[blizzards.key] = newBlizzards
+
+            newBlizzardMap.forEach { newLists ->
+                newLists.value.forEach { newBlizzard ->
+                    grid[newBlizzard] = getBlizzardsInCell(newLists.key, newBlizzard, grid)
+                }
+            }
         }
-        return grid
+        return BlizzardMove(grid, newBlizzardMap)
     }
 
+    private fun getBlizzardsInCell(type: Char, curr: Coord, blizzards: Map<Coord, Char>): Char {
+        return type
+//        if (blizzards[curr] == '.')
+//            return type
+//        if (blizzardTypes.contains(blizzards[curr])) {
+//            return '2'
+//        }
+//        return (blizzards[curr]!!.digitToInt() + 1).digitToChar()
+    }
+
+    class BlizzardMove(val grid: Map<Coord, Char>, val blizzardMap: Map<Char, List<Coord>>)
 }

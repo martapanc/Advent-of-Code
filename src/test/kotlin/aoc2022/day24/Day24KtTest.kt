@@ -13,9 +13,9 @@ internal class Day24KtTest {
 
     @Test
     fun testPart1() {
-        assertEquals(3925, Day24(testInput0).part1())
-        assertEquals(25, Day24(testInput1).part1())
-        assertEquals(110, Day24(testInput0).part1())
+//        assertEquals(0, Day24(testInput0).part1(4))
+//        assertEquals(25, Day24(testInput1).part1(19))
+        assertEquals(110, Day24(testInput).part1(300))
     }
 }
 
