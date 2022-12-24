@@ -1,28 +1,39 @@
 package aoc2022.day24
 
-import aoc2022.day23.printMap
 import util.Coord
 
 class Day24(val grid: Map<Coord, Char>) {
 
     private val blizzardTypes = listOf('>', '<', 'v', '^')
-    val deltas = mapOf('>' to Coord(1, 0), '<' to Coord(-1, 0), 'v' to Coord(0, 1), '^' to Coord(0, -1))
     private val lo = 1
     private val hiX = grid.keys.maxOf { it.x } - 1
     private val hiY = grid.keys.maxOf { it.y } - 1
+    private val deltas = mapOf('>' to Coord(1, 0), '<' to Coord(-1, 0), 'v' to Coord(0, 1), '^' to Coord(0, -1))
+    private val neighborDeltas = deltas.values.toSet()
 
-    fun part1(rounds: Int): Int {
+    fun part1(): Int {
         val blizzardMap = mutableMapOf<Char, List<Coord>>()
+        val target = Coord(grid.keys.maxOf { it.x } - 1, grid.keys.maxOf { it.y })
+        var pos = Coord(1, 0)
+        var i = 0
         blizzardTypes.forEach { blizzard ->
             blizzardMap[blizzard] = grid.entries.filter { it.value == blizzard }.map { it.key }
         }
         var moveRes = moveBlizzards(grid, blizzardMap)
-        printMap(moveRes.grid)
-        repeat(rounds) {
+        printMap(moveRes.grid, pos)
+
+        while(pos != target) {
+            val possibleMovements = pos.getEmptyNeighbors(moveRes.grid).sortedWith(compareBy ({ it.x }, { it.y }))
+            if (possibleMovements.size == 1) {
+                pos = possibleMovements.first()
+            } else if (possibleMovements.size > 1) {
+                pos = possibleMovements.last()
+            }
+            i++
+            printMap(moveRes.grid, pos)
             moveRes = moveBlizzards(moveRes.grid, moveRes.blizzardMap)
-            printMap(moveRes.grid)
         }
-        return 0
+        return i
     }
 
     fun part2(map: Map<Coord, Char>): Int {
@@ -51,22 +62,34 @@ class Day24(val grid: Map<Coord, Char>) {
 
             newBlizzardMap.forEach { newLists ->
                 newLists.value.forEach { newBlizzard ->
-                    grid[newBlizzard] = getBlizzardsInCell(newLists.key, newBlizzard, grid)
+                    grid[newBlizzard] = newLists.key
                 }
             }
         }
         return BlizzardMove(grid, newBlizzardMap)
     }
 
-    private fun getBlizzardsInCell(type: Char, curr: Coord, blizzards: Map<Coord, Char>): Char {
-        return type
-//        if (blizzards[curr] == '.')
-//            return type
-//        if (blizzardTypes.contains(blizzards[curr])) {
-//            return '2'
-//        }
-//        return (blizzards[curr]!!.digitToInt() + 1).digitToChar()
+    private fun Coord.getEmptyNeighbors(grid: Map<Coord, Char>): List<Coord> {
+        val neighbors = neighborDeltas.map { Coord(this.x + it.x, this.y + it.y) }
+        return neighbors.filter { grid[it] == '.' }
     }
 
     class BlizzardMove(val grid: Map<Coord, Char>, val blizzardMap: Map<Char, List<Coord>>)
+
+    fun printMap(map: Map<Coord, Char>, curr: Coord) {
+        val xRange: IntRange = map.keys.minOf { it.x } .. map.keys.maxOf { it.x }
+        val yRange: IntRange = map.keys.minOf { it.y } .. map.keys.maxOf { it.y }
+        (yRange).forEach { y ->
+            (xRange).forEach { x ->
+                val coord = Coord(x, y)
+                if (coord == curr) {
+                    print("E")
+                } else {
+                    print(map[Coord(x, y)])
+                }
+            }
+            println()
+        }
+        println()
+    }
 }
