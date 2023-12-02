@@ -15,6 +15,18 @@ fun part1(list: List<String>): Int {
 fun part2(list: List<String>): Int {
     var sum = 0
 
+    list.forEach { line: String ->
+        val digits = replaceStringNumberWithDigits(line).filter { it.isDigit() }
+        val first = Integer.parseInt(digits[0].toString())
+        val last = Integer.parseInt(digits[digits.length - 1].toString())
+        sum += first * 10 + last
+    }
+
+    return sum
+}
+
+
+fun replaceStringNumberWithDigits(input: String): String {
     val numberMap = mapOf(
         "one" to 1,
         "two" to 2,
@@ -27,19 +39,33 @@ fun part2(list: List<String>): Int {
         "nine" to 9
     )
 
-    list.forEach { line: String ->
-        var editedLine = line
-        numberMap.entries.forEach { entry ->
-            if (line.contains(entry.key)) {
-                editedLine = editedLine.replace(entry.key, entry.value.toString(), true)
-            }
-        }
+    var inputString = input
+    var resultString = ""
+    var output = ""
 
-        val digits = editedLine.filter { it.isDigit() }
-        val first = Integer.parseInt(digits[0].toString())
-        val last = Integer.parseInt(digits[digits.length - 1].toString())
-        sum += first * 10 + last
+    while (inputString.isNotEmpty()) {
+        resultString = rec(inputString, numberMap)
+        output += resultString.substring(0, 1)
+        inputString = resultString.substring(1)
     }
 
-    return sum
+    return output
+}
+
+fun rec(input: String, numberMap: Map<String, Int>): String {
+    var result = input
+
+    for ((word, digit) in numberMap) {
+        val index = result.indexOf(word)
+        if (index == 0) {
+            result = result.replaceFirst(word, digit.toString())
+            break
+        }
+    }
+
+    return if (result != input) {
+        rec(result, numberMap)
+    } else {
+        result
+    }
 }
