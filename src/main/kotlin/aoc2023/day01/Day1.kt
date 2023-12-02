@@ -39,33 +39,22 @@ fun replaceStringNumberWithDigits(input: String): String {
         "nine" to 9
     )
 
-    var inputString = input
-    var resultString = ""
+    var result = input
     var output = ""
 
-    while (inputString.isNotEmpty()) {
-        resultString = rec(inputString, numberMap)
-        output += resultString.substring(0, 1)
-        inputString = resultString.substring(1)
+    while (result.isNotEmpty()) {
+        for ((word, digit) in numberMap) {
+            if (result[0].isDigit()) {
+                output += result[0]
+                break
+            } else if (result.startsWith(word)) {
+                output += digit.toString()
+                break
+            }
+        }
+        result = result.substring(1)
     }
 
     return output
 }
 
-fun rec(input: String, numberMap: Map<String, Int>): String {
-    var result = input
-
-    for ((word, digit) in numberMap) {
-        val index = result.indexOf(word)
-        if (index == 0) {
-            result = result.replaceFirst(word, digit.toString())
-            break
-        }
-    }
-
-    return if (result != input) {
-        rec(result, numberMap)
-    } else {
-        result
-    }
-}

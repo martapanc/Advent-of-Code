@@ -20,13 +20,13 @@ internal class Day1KtTest {
     @Test
     fun testPart2() {
         assertEquals(281, part2(testInputList1))
-        assertEquals(55445, part2(inputList))
+        assertEquals(55413, part2(inputList))
     }
 
     @Test
     fun testReplaceStringNumbersWithDigits() {
-        assertEquals("8wo3", replaceStringNumberWithDigits("eightwothree"))
-        assertEquals("49ight72", replaceStringNumberWithDigits("4nineightseven2"))
+        assertEquals("823", replaceStringNumberWithDigits("eightwothree"))
+        assertEquals("49872", replaceStringNumberWithDigits("4nineightseven2"))
         assertEquals("4259", replaceStringNumberWithDigits("425nine"))
     }
 }
