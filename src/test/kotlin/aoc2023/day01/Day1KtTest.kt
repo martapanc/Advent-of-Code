@@ -7,18 +7,19 @@ import util.readInputLineByLine
 
 internal class Day1KtTest {
 
-    private val testInputList = readInputLineByLine("src/main/kotlin/aoc2023/day01/assets/input0")
+    private val testInputList0 = readInputLineByLine("src/main/kotlin/aoc2023/day01/assets/input0")
+    private val testInputList1 = readInputLineByLine("src/main/kotlin/aoc2023/day01/assets/input1")
     private val inputList = readInputLineByLine("src/main/kotlin/aoc2023/day01/assets/input")
 
     @Test
     fun testPart1() {
-        assertEquals(142, part1(testInputList))
+        assertEquals(142, part1(testInputList0))
         assertEquals(55712, part1(inputList))
     }
 
     @Test
     fun testPart2() {
-//        assertEquals(45000, part2(testInputList))
-//        assertEquals(204639, part2(inputList))
+        assertEquals(281, part2(testInputList1))
+        assertEquals(204639, part2(inputList))
     }
 }
