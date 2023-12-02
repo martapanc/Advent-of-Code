@@ -19,7 +19,7 @@ internal class Day2KtTest {
 
     @Test
     fun testPart2() {
-//        assertEquals(70, part2(games0))
-//        assertEquals(2515, part2(games))
+        assertEquals(2286, part2(games0))
+        assertEquals(63981, part2(games))
     }
 }

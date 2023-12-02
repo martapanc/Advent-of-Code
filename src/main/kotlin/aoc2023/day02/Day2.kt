@@ -39,8 +39,13 @@ fun part1(games: List<Game>): Int {
     return sum
 }
 
-fun part2(list: List<Game>): Int {
-    return 0
+fun part2(games: List<Game>): Int {
+    var sum = 0
+    games.forEach { game ->
+        val highestVals = game.findHighestValues()
+        sum += highestVals["power"]!!
+    }
+    return sum
 }
 
 data class Game(val id: Int?, val rounds: List<Round>) {
@@ -52,7 +57,8 @@ data class Game(val id: Int?, val rounds: List<Round>) {
         return mapOf(
             "maxBlue" to maxBlue,
             "maxGreen" to maxGreen,
-            "maxRed" to maxRed
+            "maxRed" to maxRed,
+            "power" to maxBlue * maxGreen * maxRed
         )
     }
 }
