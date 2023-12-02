@@ -1,6 +1,6 @@
 #!/bin/bash
 
-srcDir="src/main/kotlin/aoc2021"
+srcDir="src/main/kotlin/aoc2023"
 day=$1
 current_year=$(date +'%Y')
 
