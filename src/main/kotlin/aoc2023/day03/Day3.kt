@@ -25,7 +25,7 @@ fun part1(schematic: Map<GameCoord, Char>): Int {
 
     for (y in 0..schematic.keys.maxBy { it.y }.y) {
         var currentNumber = ""
-        var currentNumNeighbors = mutableListOf<Char>()
+        var currentNumNeighbors = mutableSetOf<Char>()
         for (x in 0..schematic.keys.maxBy { it.x }.x) {
             val currentCoord = GameCoord(x, y)
             val currChar = schematic[currentCoord]!!
@@ -46,7 +46,7 @@ fun part1(schematic: Map<GameCoord, Char>): Int {
                     }
 
                     currentNumber = ""
-                    currentNumNeighbors = mutableListOf()
+                    currentNumNeighbors = mutableSetOf()
                 }
             }
         }
@@ -54,6 +54,6 @@ fun part1(schematic: Map<GameCoord, Char>): Int {
     return sum
 }
 
-fun part2(list: List<String>): Int {
+fun part2(schematic: Map<GameCoord, Char>): Int {
     return 0
 }
