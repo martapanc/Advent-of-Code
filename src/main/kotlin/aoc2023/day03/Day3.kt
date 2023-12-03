@@ -25,7 +25,7 @@ fun part1(schematic: Map<GameCoord, Char>): Int {
 
     for (y in 0..schematic.keys.maxBy { it.y }.y) {
         var currentNumber = ""
-        var currentNumNeighbors = mutableSetOf<Char>()
+        var currentNumNeighbors = mutableListOf<Char>()
         for (x in 0..schematic.keys.maxBy { it.x }.x) {
             val currentCoord = GameCoord(x, y)
             val currChar = schematic[currentCoord]!!
@@ -38,13 +38,15 @@ fun part1(schematic: Map<GameCoord, Char>): Int {
                     schematic[it]?.let { it1 -> currentNumNeighbors.add(it1) }
                 }
                 val eastCoord = GameCoord(x + 1, y)
-                if (schematic[eastCoord] != null && !schematic[eastCoord]!!.isDigit()) {
+                if (schematic[eastCoord] == null ||
+                    (schematic[eastCoord] != null && !schematic[eastCoord]!!.isDigit())
+                ) {
                     if (currentNumNeighbors.any { symbols.contains(it) }) {
                         sum += Integer.parseInt(currentNumber)
                     }
 
                     currentNumber = ""
-                    currentNumNeighbors = mutableSetOf()
+                    currentNumNeighbors = mutableListOf()
                 }
             }
         }

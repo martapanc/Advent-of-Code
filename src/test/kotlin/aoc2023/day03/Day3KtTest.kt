@@ -7,14 +7,19 @@ import util.readInputLineByLine
 internal class Day3KtTest {
 
     private val testInput0 = readInputLineByLine("src/main/kotlin/aoc2023/day03/assets/input0")
-    private val testEngineSchematic = parse(testInput0)
+    private val testEngineSchematic0 = parse(testInput0)
+
+    private val testInput1 = readInputLineByLine("src/main/kotlin/aoc2023/day03/assets/input1")
+    private val testEngineSchematic1 = parse(testInput1)
+
     private val testInput = readInputLineByLine("src/main/kotlin/aoc2023/day03/assets/input")
     private val engineSchematic = parse(testInput)
 
     @Test
     fun testPart1() {
-        assertEquals(4361, part1(testEngineSchematic))
-        assertEquals(528369, part1(engineSchematic))
+        assertEquals(4361, part1(testEngineSchematic0))
+        assertEquals(4361, part1(testEngineSchematic1))
+        assertEquals(530849, part1(engineSchematic))
     }
 
     @Test
