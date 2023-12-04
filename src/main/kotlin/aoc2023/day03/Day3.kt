@@ -56,11 +56,11 @@ fun part1(schematic: Map<GameCoord, Char>): Int {
 
 fun part2(schematic: Map<GameCoord, Char>): Long {
     var sum: Long = 0
-    var gearCandidates = mutableListOf<GearCandidate>()
+    val gearCandidates = mutableListOf<GearCandidate>()
 
     for (y in 0..schematic.keys.maxBy { it.y }.y) {
         var currentNumber = ""
-        var currentNumNeighbors = mutableMapOf<GameCoord, Char?>()
+        var currentNumNeighbors = mutableMapOf<Char?, GameCoord>()
         for (x in 0..schematic.keys.maxBy { it.x }.x) {
             val currentCoord = GameCoord(x, y)
             val currChar = schematic[currentCoord]!!
@@ -70,15 +70,24 @@ fun part2(schematic: Map<GameCoord, Char>): Long {
                 currentNumber += currChar
                 val neighborCoords = currentCoord.neighbors(false)
                 neighborCoords.forEach {
-                    currentNumNeighbors[it] = schematic[it]
+                    if (schematic[it] != null) {
+                        currentNumNeighbors[schematic[it]] = it
+                    }
                 }
 
                 val eastCoord = GameCoord(x + 1, y)
                 if (schematic[eastCoord] == null ||
                     (schematic[eastCoord] != null && !schematic[eastCoord]!!.isDigit())
                 ) {
-                    if (currentNumNeighbors.count { it.value == '*' } == 1) {
-//                        if (gearCandidates.any { })
+                    if (currentNumNeighbors.count { it.key == '*' } == 1) {
+                        if (gearCandidates.any { it.coord == currentNumNeighbors['*'] }) {
+                            val gearCandidate = gearCandidates.first { it.coord == currentNumNeighbors['*']}
+                            sum += Integer.parseInt(currentNumber) * gearCandidate.number
+
+                            gearCandidates.remove(gearCandidate)
+                        } else {
+                            gearCandidates.add(GearCandidate(Integer.parseInt(currentNumber), currentNumNeighbors['*']!!))
+                        }
                     }
 
                     currentNumber = ""
