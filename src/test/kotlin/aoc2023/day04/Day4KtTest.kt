@@ -20,7 +20,7 @@ internal class Day4KtTest {
 
     @Test
     fun testPart2() {
-//        assertEquals(70, part2(testGame))
-//        assertEquals(2515, part2(game))
+        assertEquals(30, part2(testGame))
+        assertEquals(18846301, part2(game))
     }
 }

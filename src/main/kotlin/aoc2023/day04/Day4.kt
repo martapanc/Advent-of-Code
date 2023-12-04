@@ -1,5 +1,7 @@
 package aoc2023.day04
 
+import kotlin.math.pow
+
 fun parse(list: List<String>): List<Game> {
     val games = mutableListOf<Game>()
     list.forEach {
@@ -22,19 +24,29 @@ fun parse(list: List<String>): List<Game> {
 fun part1(games: List<Game>): Int {
     var sum = 0
     games.forEach { game ->
-        val wins = game.winning.numbers.intersect(game.myNumbers.numbers.toSet())
+        val wins = countWins(game)
         if (wins.isNotEmpty()) {
-            sum += (Math.pow(2.0, (wins.size - 1).toDouble())).toInt()
+            sum += (2.0.pow((wins.size - 1).toDouble())).toInt()
         }
     }
     return sum
 }
 
-fun part2(list: List<Game>): Int {
-    return 0
+fun part2(games: List<Game>): Long {
+    games.forEachIndexed { index, game ->
+        val wins = countWins(game).size
+        (0 until wins).forEach { i ->
+            games[index + i + 1].quantity += game.quantity
+        }
+    }
+    return games.sumOf { it.quantity }
 }
 
-data class Game (val id: Int, val winning: Winning, val myNumbers: MyNumbers)
+private fun countWins(game: Game): Set<Int> {
+    return game.winning.numbers.intersect(game.myNumbers.numbers.toSet())
+}
+
+data class Game(val id: Int, val winning: Winning, val myNumbers: MyNumbers, var quantity: Long = 1)
 
 data class Winning(val numbers: List<Int>)
 data class MyNumbers(val numbers: List<Int>)
