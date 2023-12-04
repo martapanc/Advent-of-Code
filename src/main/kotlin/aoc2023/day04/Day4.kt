@@ -6,7 +6,7 @@ fun parse(list: List<String>): List<Game> {
     val games = mutableListOf<Game>()
     list.forEach {
         val split = it.split(" | ")
-        val card: List<Int> = split[0]
+        val card = split[0]
             .replace("Card", "")
             .replace(":", "")
             .trim()
@@ -22,21 +22,22 @@ fun parse(list: List<String>): List<Game> {
 }
 
 fun part1(games: List<Game>): Int {
-    var sum = 0
-    games.forEach { game ->
+    return games.sumBy { game ->
         val wins = countWins(game)
         if (wins.isNotEmpty()) {
-            sum += (2.0.pow((wins.size - 1).toDouble())).toInt()
+            (2.0.pow((wins.size - 1).toDouble())).toInt()
+        } else {
+            0
         }
     }
-    return sum
 }
 
 fun part2(games: List<Game>): Long {
     games.forEachIndexed { index, game ->
         val wins = countWins(game).size
         (0 until wins).forEach { i ->
-            games[index + i + 1].quantity += game.quantity
+            val nextIndex = index + i + 1
+            games[nextIndex].quantity += game.quantity
         }
     }
     return games.sumOf { it.quantity }
