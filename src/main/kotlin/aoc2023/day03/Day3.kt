@@ -54,6 +54,40 @@ fun part1(schematic: Map<GameCoord, Char>): Int {
     return sum
 }
 
-fun part2(schematic: Map<GameCoord, Char>): Int {
-    return 0
+fun part2(schematic: Map<GameCoord, Char>): Long {
+    var sum: Long = 0
+    var gearCandidates = mutableListOf<GearCandidate>()
+
+    for (y in 0..schematic.keys.maxBy { it.y }.y) {
+        var currentNumber = ""
+        var currentNumNeighbors = mutableMapOf<GameCoord, Char?>()
+        for (x in 0..schematic.keys.maxBy { it.x }.x) {
+            val currentCoord = GameCoord(x, y)
+            val currChar = schematic[currentCoord]!!
+            if (!currChar.isDigit()) {
+                continue
+            } else {
+                currentNumber += currChar
+                val neighborCoords = currentCoord.neighbors(false)
+                neighborCoords.forEach {
+                    currentNumNeighbors[it] = schematic[it]
+                }
+
+                val eastCoord = GameCoord(x + 1, y)
+                if (schematic[eastCoord] == null ||
+                    (schematic[eastCoord] != null && !schematic[eastCoord]!!.isDigit())
+                ) {
+                    if (currentNumNeighbors.count { it.value == '*' } == 1) {
+//                        if (gearCandidates.any { })
+                    }
+
+                    currentNumber = ""
+                    currentNumNeighbors = mutableMapOf()
+                }
+            }
+        }
+    }
+    return sum
 }
+
+data class GearCandidate(val number: Int, val coord: GameCoord)
