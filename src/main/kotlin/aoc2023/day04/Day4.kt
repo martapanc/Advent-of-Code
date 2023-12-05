@@ -22,7 +22,7 @@ fun parse(list: List<String>): List<Game> {
 }
 
 fun part1(games: List<Game>): Int {
-    return games.sumBy { game ->
+    return games.sumOf { game ->
         val wins = countWins(game)
         if (wins.isNotEmpty()) {
             (2.0.pow((wins.size - 1).toDouble())).toInt()
