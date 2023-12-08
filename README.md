@@ -1,11 +1,12 @@
 # 🎄 Advent of Code ⛄️
 ![Java & Kotlin CI with Gradle](https://github.com/martapanc/Advent-of-Code/workflows/Java%20&%20Kotlin%20CI%20with%20Gradle/badge.svg)
 
-Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2015-2022)
+Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2015-2023)
 
 
 ## Quick links
 
+- Advent of Code 2️⃣0️⃣2️⃣3️⃣ : [overview](src/main/kotlin/aoc2023/README.md) & [solutions](src/main/kotlin/aoc2023) - 8 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/16/) 
 - Advent of Code 2️⃣0️⃣2️⃣2️⃣ : [overview](src/main/kotlin/aoc2022/README.md) & [solutions](src/main/kotlin/aoc2022) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/100/) 
 - Advent of Code 2️⃣0️⃣2️⃣1️⃣ : [overview](src/main/kotlin/aoc2021/README.md) & [solutions](src/main/kotlin/aoc2021) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/100/) 
 - Advent of Code 2️⃣0️⃣2️⃣0️⃣ : [overview](src/main/kotlin/aoc2020/README.md) & [solutions](src/main/kotlin/aoc2020) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/100/) 
@@ -15,9 +16,9 @@ Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2
 - Advent of Code 2️⃣0️⃣1️⃣6️⃣ : [overview](src/main/kotlin/aoc2016/README.md) & [solutions](src/main/kotlin/aoc2016) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/100/) 
 - Advent of Code 2️⃣0️⃣1️⃣5️⃣ : [overview](src/main/kotlin/aoc2015/README.md) & [solutions](src/main/kotlin/aoc2015) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.dev/100/) 
 
- Total:  400 / 400 ⭐
+ Total:  408 / 450 ⭐
 
- ![Progress](https://progress-bar.dev/100/)
+ ![Progress](https://progress-bar.dev/90/)
 
- <img src="src/main/resources/static/400_stars.png" width="1023" alt="AoC screenshot"/>
+ <img src="src/main/resources/static/all_stars.png" width="1023" alt="AoC screenshot"/>
 
