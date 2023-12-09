@@ -14,12 +14,21 @@ internal class Day5KtTest {
     @Test
     fun testPart1() {
         assertEquals(35, part1(testMapping))
-        assertEquals(8085, part1(mapping))
+        assertEquals(196167384, part1(mapping))
     }
 
     @Test
     fun testPart2() {
 //        assertEquals(70, part2(testMapping))
 //        assertEquals(2515, part2(mapping))
+    }
+
+    @Test
+    fun testFindMapping() {
+        assertEquals(50, findMapping(98, listOf(Range(50, 98, 2))))
+        assertEquals(51, findMapping(99, listOf(Range(50, 98, 2))))
+        assertEquals(10, findMapping(10, listOf(Range(50, 98, 2))))
+        assertEquals(52, findMapping(50, listOf(Range(50, 98, 2), Range(52, 50, 48))))
+        assertEquals(99, findMapping(97, listOf(Range(50, 98, 2), Range(52, 50, 48))))
     }
 }

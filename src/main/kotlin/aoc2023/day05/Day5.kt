@@ -49,12 +49,36 @@ fun parse(lines: List<String>): Input {
     return Input(seeds, mappings)
 }
 
-fun part1(mappings: Input): Int {
+fun part1(input: Input): Long {
+    val seedToLocation = mutableMapOf<Long, Long>()
+    input.seeds.forEach { seed ->
+        val soil = findMapping(seed, input.mappings[MapType.SEED_TO_SOIL]!!)
+        val fertilizer = findMapping(soil, input.mappings[MapType.SOIL_TO_FERTILIZER]!!)
+        val water = findMapping(fertilizer, input.mappings[MapType.FERTILIZER_TO_WATER]!!)
+        val light = findMapping(water, input.mappings[MapType.WATER_TO_LIGHT]!!)
+        val temperature = findMapping(light, input.mappings[MapType.LIGHT_TO_TEMPERATURE]!!)
+        val humidity = findMapping(temperature, input.mappings[MapType.TEMPERATURE_TO_HUMIDITY]!!)
+        val location  = findMapping(humidity, input.mappings[MapType.HUMIDITY_TO_LOCATION]!!)
+        seedToLocation[seed] = location
+    }
+    return seedToLocation.minOf { it.value }
+}
+
+fun part2(mappings: Input): Long {
     return 0
 }
 
-fun part2(mappings: Input): Int {
-    return 0
+fun findMapping(input: Long, ranges: List<Range>): Long {
+    for (range in ranges) {
+        if (range.sourceRangeStart <= input && input < range.sourceRangeStart + range.rangeLength) {
+            val step = input - range.sourceRangeStart
+            return range.destRangeStart + step
+        } else {
+            continue
+        }
+    }
+
+    return input
 }
 
 data class Range(val destRangeStart: Long, val sourceRangeStart: Long, val rangeLength: Long)
