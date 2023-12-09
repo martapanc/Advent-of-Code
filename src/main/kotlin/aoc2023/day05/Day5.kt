@@ -64,8 +64,15 @@ fun part1(input: Input): Long {
     return seedToLocation.minOf { it.value }
 }
 
-fun part2(mappings: Input): Long {
-    return 0
+fun part2(input: Input): Long {
+    val seeds = input.seeds.toList()
+    val expandedSeeds = mutableSetOf<Long>()
+    (seeds.indices step 2).forEach {i ->
+        (seeds[i] until seeds[i] + seeds[i + 1]).forEach { seed ->
+            expandedSeeds.add(seed)
+        }
+    }
+    return part1(Input(expandedSeeds, input.mappings))
 }
 
 fun findMapping(input: Long, ranges: List<Range>): Long {
