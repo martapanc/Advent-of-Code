@@ -19,8 +19,8 @@ internal class Day5KtTest {
 
     @Test
     fun testPart2() {
-//        assertEquals(46, part2(testMapping))
-        assertEquals(2515, part2(mapping))
+        assertEquals(46, part2(testMapping))
+        assertEquals(125742456, part2(mapping))
     }
 
     @Test
