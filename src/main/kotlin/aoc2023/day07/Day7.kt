@@ -1,18 +1,25 @@
 package aoc2023.day07
 
-fun parse(lines: List<String>): List<String> {
-    val output = mutableListOf<String>()
+fun parse(lines: List<String>): List<Game> {
+    val games = mutableListOf<Game>()
     lines.forEach { line ->
-
+        val split = line.split(" ")
+        games.add(Game(split[0], determineType(split[0]), split[1].toInt()))
     }
-    return output
+
+    val sortedGames = games.sortedWith(::compareHands).reversed()
+    return sortedGames
 }
 
-fun part1(input: List<String>): Long {
-    return 0
+fun part1(games: List<Game>): Long {
+    var total = 0L
+    games.forEachIndexed { index, game ->
+        total += (index + 1) * game.bid
+    }
+    return total
 }
 
-fun part2(input: List<String>): Long {
+fun part2(games: List<Game>): Long {
     return 0
 }
 
@@ -37,6 +44,26 @@ fun determineType(hand: String): HandType {
         pairCount == 1 -> HandType.ONE_PAIR
         else -> HandType.HIGH_CARD
     }
+}
+
+private fun compareHands(game1: Game, game2: Game): Int {
+    val typeComparison = game2.handType.rank.compareTo(game1.handType.rank)
+
+    if (typeComparison != 0) {
+        return typeComparison
+    }
+
+    val cardValues = "AKQJT98765432"
+    for (i in game1.hand.indices) {
+        val card1 = game1.hand[i]
+        val card2 = game2.hand[i]
+        val valueComparison = cardValues.indexOf(card1).compareTo(cardValues.indexOf(card2))
+        if (valueComparison != 0) {
+            return valueComparison
+        }
+    }
+    // Cards are equal
+    return 0
 }
 
 fun compareHands(hand1: String, hand2: String): Int {
@@ -70,3 +97,5 @@ enum class HandType(val rank: Int = 0) {
     ONE_PAIR(2),
     HIGH_CARD(1)
 }
+
+data class Game(val hand: String, val handType: HandType, val bid: Int)

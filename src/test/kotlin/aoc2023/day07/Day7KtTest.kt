@@ -14,14 +14,14 @@ internal class Day7KtTest {
 
     @Test
     fun testPart1() {
-        assertEquals(157, part1(testInput))
-        assertEquals(8085, part1(input))
+        assertEquals(6440, part1(testInput))
+        assertEquals(249390788, part1(input))
     }
 
     @Test
     fun testPart2() {
-        assertEquals(70, part2(testInput))
-        assertEquals(2515, part2(input))
+//        assertEquals(70, part2(testInput))
+//        assertEquals(2515, part2(input))
     }
 
     @Test
