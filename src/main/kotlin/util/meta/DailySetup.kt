@@ -63,9 +63,9 @@ class AoCDailySetup {
             "import org.junit.jupiter.api.Test\n" +
             "import util.readInputLineByLine\n\n" +
             "internal class Day${day}KtTest {\n\n" +
-            "    private val testInputLines = readInputLineByLine(\"src/main/kotlin/aoc2023/day06/assets/input0\")\n" +
+            "    private val testInputLines = readInputLineByLine(\"src/main/kotlin/${dailyDir}/assets/input0\")\n" +
             "    private val testInput = parse(testInputLines)\n\n" +
-            "    private val inputLines = readInputLineByLine(\"src/main/kotlin/aoc2023/day06/assets/input\")\n" +
+            "    private val inputLines = readInputLineByLine(\"src/main/kotlin/${dailyDir}/assets/input\")\n" +
             "    private val input = parse(inputLines)\n\n" +
             "    @Test\n" +
             "    fun testPart1() {\n" +
