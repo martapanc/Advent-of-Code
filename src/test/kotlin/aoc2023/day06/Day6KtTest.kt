@@ -14,13 +14,25 @@ internal class Day6KtTest {
 
     @Test
     fun testPart1() {
-        assertEquals(157, part1(testInput))
-        assertEquals(8085, part1(input))
+        assertEquals(288, part1(testInput))
+        assertEquals(1108800, part1(input))
     }
 
     @Test
     fun testPart2() {
-        assertEquals(70, part2(testInput))
-        assertEquals(2515, part2(input))
+//        assertEquals(70, part2(testInput))
+//        assertEquals(2515, part2(input))
+    }
+
+    @Test
+    fun testComputeDistance() {
+        assertEquals(0, computeDistance(7, 0))
+        assertEquals(6, computeDistance(7, 1))
+        assertEquals(10, computeDistance(7, 2))
+        assertEquals(12, computeDistance(7, 3))
+        assertEquals(12, computeDistance(7, 4))
+        assertEquals(10, computeDistance(7, 5))
+        assertEquals(6, computeDistance(7, 6))
+        assertEquals(0, computeDistance(7, 7))
     }
 }

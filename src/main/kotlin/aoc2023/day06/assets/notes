@@ -1,0 +1,13 @@
+Don't hold the button at all (that is, hold it for 0 ms) at the start of the race. The boat won't move; it will have traveled 0 mm by the end of the race.
+Hold the button for 1 ms at the start of the race.
+    Then, the boat will travel at a speed of 1 mm per ms for 6 ms, reaching a total distance traveled of 6 mm.
+Hold the button for 2 ms, giving the boat a speed of 2 mm per ms.
+    It will then get 5 ms to move, reaching a total distance of 10 mm.
+Hold the button for 3 ms.
+    After its remaining 4 ms of travel time, the boat will have gone 12 mm.
+Hold the button for 4 ms.
+    After its remaining 3 ms of travel time, the boat will have gone 12 mm.
+Hold the button for 5 ms, causing the boat to travel a total of 10 mm.
+Hold the button for 6 ms, causing the boat to travel a total of 6 mm.
+Hold the button for 7 ms.
+    That's the entire duration of the race. You never let go of the button. The boat can't move until you let go of the button. Please make sure you let go of the button so the boat gets to move. 0 mm.
