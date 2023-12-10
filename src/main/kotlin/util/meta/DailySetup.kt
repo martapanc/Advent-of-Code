@@ -35,10 +35,17 @@ class AoCDailySetup {
 
         val mainContent = "" +
             "package ${dailyPackage}\n\n" +
-            "fun part1(list: List<String>): Int {\n" +
+            "fun parse(lines: List<String>): List<String> {\n" +
+            "    val output = mutableListOf<String>()\n" +
+            "    lines.forEach { line ->\n" +
+            "        \n" +
+            "    }\n" +
+            "    return output\n" +
+            "}\n\n" +
+            "fun part1(input: List<String>): Long {\n" +
             "    return 0\n" +
             "}\n\n" +
-            "fun part2(list: List<String>): Int {\n" +
+            "fun part2(input: List<String>): Long {\n" +
             "    return 0\n" +
             "}"
         val mainClass = File("${mainDir}/Day${day}.kt")
@@ -56,17 +63,19 @@ class AoCDailySetup {
             "import org.junit.jupiter.api.Test\n" +
             "import util.readInputLineByLine\n\n" +
             "internal class Day${day}KtTest {\n\n" +
-            "    private val testInput0 = readInputLineByLine(\"src/main/kotlin/${dailyDir}/assets/input0\")\n" +
-            "    private val testInput = readInputLineByLine(\"src/main/kotlin/${dailyDir}/assets/input\")\n\n" +
+            "    private val testInputLines = readInputLineByLine(\"src/main/kotlin/aoc2023/day06/assets/input0\")\n" +
+            "    private val testInput = parse(testInputLines)\n\n" +
+            "    private val inputLines = readInputLineByLine(\"src/main/kotlin/aoc2023/day06/assets/input\")\n" +
+            "    private val input = parse(inputLines)\n\n" +
             "    @Test\n" +
             "    fun testPart1() {\n" +
-            "        assertEquals(157, part1(testInput0))\n" +
-            "        assertEquals(8085, part1(testInput))\n" +
+            "        assertEquals(157, part1(testInput))\n" +
+            "        assertEquals(8085, part1(input))\n" +
             "    }\n\n" +
             "    @Test\n" +
             "    fun testPart2() {\n" +
-            "        assertEquals(70, part2(testInput0))\n" +
-            "        assertEquals(2515, part2(testInput))\n" +
+            "        assertEquals(70, part2(testInput))\n" +
+            "        assertEquals(2515, part2(input))\n" +
             "    }\n" +
             "}"
 

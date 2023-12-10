@@ -1,10 +1,10 @@
-package aoc2023.day06
+package aoc2023.day10
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import util.readInputLineByLine
 
-internal class Day6KtTest {
+internal class Day10KtTest {
 
     private val testInputLines = readInputLineByLine("src/main/kotlin/aoc2023/day06/assets/input0")
     private val testInput = parse(testInputLines)
