@@ -60,7 +60,7 @@ private fun compareHands(game1: Game, game2: Game, withJolly: Boolean = false): 
         return typeComparison
     }
 
-    val cardValues = "AKQJT98765432"
+    val cardValues = if (withJolly) "AKQT98765432J" else "AKQJT98765432"
     for (i in game1.hand.indices) {
         val card1 = game1.hand[i]
         val card2 = game2.hand[i]
@@ -71,6 +71,42 @@ private fun compareHands(game1: Game, game2: Game, withJolly: Boolean = false): 
     }
     // Cards are equal
     return 0
+}
+
+enum class HandType(val rank: Int = 0) {
+    FIVE_OF_A_KIND(7),
+    FOUR_OF_A_KIND(6),
+    FULL_HOUSE(5),
+    THREE_OF_A_KIND(4),
+    TWO_PAIR(3),
+    ONE_PAIR(2),
+    HIGH_CARD(1)
+}
+
+data class Game(val hand: String, val handType: HandType, val bid: Int) {
+    val jollyHandType: HandType by lazy { calculateJollyHandType() }
+    private fun calculateJollyHandType(): HandType {
+        val jollyCount = hand.count { it == 'J' }
+        if (jollyCount == 1) {
+            when {
+                handType == HandType.HIGH_CARD -> return HandType.ONE_PAIR
+                handType == HandType.ONE_PAIR -> return HandType.THREE_OF_A_KIND
+                handType == HandType.TWO_PAIR -> return HandType.FULL_HOUSE
+                handType == HandType.THREE_OF_A_KIND -> return HandType.FOUR_OF_A_KIND
+                handType == HandType.FOUR_OF_A_KIND -> return HandType.FIVE_OF_A_KIND
+            }
+        }
+        if (jollyCount >= 2) {
+            when {
+                handType == HandType.ONE_PAIR -> return HandType.THREE_OF_A_KIND
+                handType == HandType.TWO_PAIR -> return HandType.FOUR_OF_A_KIND
+                handType == HandType.THREE_OF_A_KIND -> return HandType.FOUR_OF_A_KIND
+                handType == HandType.FULL_HOUSE -> return HandType.FIVE_OF_A_KIND
+                handType == HandType.FOUR_OF_A_KIND -> return HandType.FIVE_OF_A_KIND
+            }
+        }
+        return handType
+    }
 }
 
 fun compareHands(hand1: String, hand2: String): Int {
@@ -91,60 +127,5 @@ fun compareHands(hand1: String, hand2: String): Int {
             return valueComparison
         }
     }
-    // Cards are equal
     return 0
-}
-
-enum class HandType(val rank: Int = 0) {
-    FIVE_OF_A_KIND(7),
-    FOUR_OF_A_KIND(6),
-    FULL_HOUSE(5),
-    THREE_OF_A_KIND(4),
-    TWO_PAIR(3),
-    ONE_PAIR(2),
-    HIGH_CARD(1);
-
-    companion object {
-        fun byRank(rank: Int): HandType? = entries.firstOrNull { rank == it.rank }
-
-        fun getHigherType(initialType: HandType, rankOffset: Int): HandType {
-            val newRank = if (initialType.rank + rankOffset >= 7) 7 else initialType.rank + rankOffset
-            return byRank(newRank)!!
-        }
-    }
-}
-
-data class Game(val hand: String, val handType: HandType, val bid: Int) {
-    val jollyHandType: HandType by lazy { calculateJollyHandType() }
-
-    private fun calculateJollyHandType(): HandType {
-        val jollyCount = hand.count { it == 'J' }
-        if (jollyCount == 0) {
-            return handType
-        }
-        if (jollyCount == 1) {
-            when {
-                handType == HandType.HIGH_CARD -> return HandType.ONE_PAIR
-                handType == HandType.ONE_PAIR -> return HandType.THREE_OF_A_KIND
-                handType == HandType.TWO_PAIR -> return HandType.FULL_HOUSE
-                handType == HandType.THREE_OF_A_KIND -> return HandType.FOUR_OF_A_KIND
-                handType == HandType.FOUR_OF_A_KIND -> return HandType.FIVE_OF_A_KIND
-            }
-        }
-        if (jollyCount == 2) {
-            when {
-                handType == HandType.ONE_PAIR -> return HandType.THREE_OF_A_KIND
-                handType == HandType.TWO_PAIR -> return HandType.FOUR_OF_A_KIND
-                handType == HandType.FULL_HOUSE -> return HandType.FIVE_OF_A_KIND
-            }
-        }
-        if (jollyCount >= 3) {
-            when {
-                handType == HandType.THREE_OF_A_KIND -> return HandType.FOUR_OF_A_KIND
-                handType == HandType.FULL_HOUSE -> return HandType.FIVE_OF_A_KIND
-                handType == HandType.FOUR_OF_A_KIND -> return HandType.FIVE_OF_A_KIND
-            }
-        }
-        return handType
-    }
 }
