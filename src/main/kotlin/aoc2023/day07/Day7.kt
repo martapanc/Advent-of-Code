@@ -6,21 +6,25 @@ fun parse(lines: List<String>): List<Game> {
         val split = line.split(" ")
         games.add(Game(split[0], determineType(split[0]), split[1].toInt()))
     }
-
-    val sortedGames = games.sortedWith(::compareHands).reversed()
-    return sortedGames
+    return games
 }
 
 fun part1(games: List<Game>): Long {
     var total = 0L
-    games.forEachIndexed { index, game ->
-        total += (index + 1) * game.bid
-    }
+    games.sortedWith(::compareHands).reversed()
+        .forEachIndexed { index, game ->
+            total += (index + 1) * game.bid
+        }
     return total
 }
 
 fun part2(games: List<Game>): Long {
-    return 0
+    var total = 0L
+    games.sortedWith{ g1, g2 -> compareHands(g1, g2, true) }.reversed()
+        .forEachIndexed { index, game ->
+            total += (index + 1) * game.bid
+        }
+    return total
 }
 
 fun determineType(hand: String): HandType {
@@ -46,8 +50,11 @@ fun determineType(hand: String): HandType {
     }
 }
 
-private fun compareHands(game1: Game, game2: Game): Int {
-    val typeComparison = game2.handType.rank.compareTo(game1.handType.rank)
+private fun compareHands(game1: Game, game2: Game, withJolly: Boolean = false): Int {
+    val typeComparison = if (withJolly)
+        game2.jollyHandType.rank.compareTo(game1.jollyHandType.rank)
+    else
+        game2.handType.rank.compareTo(game1.handType.rank)
 
     if (typeComparison != 0) {
         return typeComparison
@@ -95,7 +102,49 @@ enum class HandType(val rank: Int = 0) {
     THREE_OF_A_KIND(4),
     TWO_PAIR(3),
     ONE_PAIR(2),
-    HIGH_CARD(1)
+    HIGH_CARD(1);
+
+    companion object {
+        fun byRank(rank: Int): HandType? = entries.firstOrNull { rank == it.rank }
+
+        fun getHigherType(initialType: HandType, rankOffset: Int): HandType {
+            val newRank = if (initialType.rank + rankOffset >= 7) 7 else initialType.rank + rankOffset
+            return byRank(newRank)!!
+        }
+    }
 }
 
-data class Game(val hand: String, val handType: HandType, val bid: Int)
+data class Game(val hand: String, val handType: HandType, val bid: Int) {
+    val jollyHandType: HandType by lazy { calculateJollyHandType() }
+
+    private fun calculateJollyHandType(): HandType {
+        val jollyCount = hand.count { it == 'J' }
+        if (jollyCount == 0) {
+            return handType
+        }
+        if (jollyCount == 1) {
+            when {
+                handType == HandType.HIGH_CARD -> return HandType.ONE_PAIR
+                handType == HandType.ONE_PAIR -> return HandType.THREE_OF_A_KIND
+                handType == HandType.TWO_PAIR -> return HandType.FULL_HOUSE
+                handType == HandType.THREE_OF_A_KIND -> return HandType.FOUR_OF_A_KIND
+                handType == HandType.FOUR_OF_A_KIND -> return HandType.FIVE_OF_A_KIND
+            }
+        }
+        if (jollyCount == 2) {
+            when {
+                handType == HandType.ONE_PAIR -> return HandType.THREE_OF_A_KIND
+                handType == HandType.TWO_PAIR -> return HandType.FOUR_OF_A_KIND
+                handType == HandType.FULL_HOUSE -> return HandType.FIVE_OF_A_KIND
+            }
+        }
+        if (jollyCount >= 3) {
+            when {
+                handType == HandType.THREE_OF_A_KIND -> return HandType.FOUR_OF_A_KIND
+                handType == HandType.FULL_HOUSE -> return HandType.FIVE_OF_A_KIND
+                handType == HandType.FOUR_OF_A_KIND -> return HandType.FIVE_OF_A_KIND
+            }
+        }
+        return handType
+    }
+}
