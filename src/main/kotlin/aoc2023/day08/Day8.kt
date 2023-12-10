@@ -1,5 +1,7 @@
 package aoc2023.day08
 
+import util.lcm
+
 fun parse(lines: List<String>): Network {
     val input = lines[0]
     val nodes = mutableMapOf<String, Node>()
@@ -41,8 +43,34 @@ fun part1(network: Network): Int {
     return count
 }
 
-fun part2(network: Network): Int {
-    return 0
+fun part2(network: Network): Long {
+    val nodesEndingWithA = network.nodes.keys.filter { it.endsWith("A") }
+    val map = mutableMapOf<String, Long>()
+
+    nodesEndingWithA.forEach {
+        var zWasReached = false
+        var count = 0L
+        var i = 0
+        var current = it
+        while (!zWasReached) {
+            if (i == network.input.length) {
+                i = 0
+            }
+            val direction = network.input[i]
+            current = if (direction == 'L') {
+                network.nodes[current]!!.left
+            } else {
+                network.nodes[current]!!.right
+            }
+            count++
+            i++
+            if (current[2] == 'Z') {
+                zWasReached = true
+            }
+        }
+        map[it] = count
+    }
+    return map.values.reduce { acc, num -> lcm(acc, num) }
 }
 
 data class Network(val input: String, val nodes: Map<String, Node>)

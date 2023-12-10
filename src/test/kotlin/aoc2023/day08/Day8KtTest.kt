@@ -12,6 +12,9 @@ internal class Day8KtTest {
     private val testInputLines1 = readInputLineByLine("src/main/kotlin/aoc2023/day08/assets/input1")
     private val testInput1 = parse(testInputLines1)
 
+    private val testInputLines2 = readInputLineByLine("src/main/kotlin/aoc2023/day08/assets/input2")
+    private val testInput2 = parse(testInputLines2)
+
     private val inputLines = readInputLineByLine("src/main/kotlin/aoc2023/day08/assets/input")
     private val input = parse(inputLines)
 
@@ -24,7 +27,7 @@ internal class Day8KtTest {
 
     @Test
     fun testPart2() {
-//        assertEquals(70, part2(testInput0))
-//        assertEquals(2515, part2(input))
+        assertEquals(6, part2(testInput2))
+        assertEquals(19185263738117, part2(input))
     }
 }
