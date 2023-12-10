@@ -23,8 +23,8 @@ fun part1(races: List<RaceData>): Int {
     val results = mutableListOf<Int>()
     races.forEach { race ->
         var winningPossibilities = 0
-        (0 .. race.time).forEach{t ->
-            val distance = computeDistance(race.time, t)
+        (0..race.time).forEach { t ->
+            val distance = computeDistance(race.time.toLong(), t.toLong())
             if (distance > race.distance) {
                 winningPossibilities++
             }
@@ -37,12 +37,22 @@ fun part1(races: List<RaceData>): Int {
 }
 
 fun part2(races: List<RaceData>): Long {
-    return 0
+    val time = races.joinToString("") { it.time.toString() }.toLongOrNull() ?: -1L
+    val distance = races.joinToString("") { it.distance.toString() }.toLongOrNull() ?: -1L
+
+    var winningPossibilities = 0L
+    (0..time).forEach { t ->
+        val currentDistance = computeDistance(time, t)
+        if (currentDistance > distance) {
+            winningPossibilities++
+        }
+    }
+    return winningPossibilities
 }
 
-fun computeDistance(time: Int, initSpeed: Int): Int {
+fun computeDistance(time: Long, initSpeed: Long): Long {
     val availTime = time - initSpeed
     return availTime * initSpeed
 }
 
-data class RaceData (val time: Int, val distance: Int)
+data class RaceData(val time: Int, val distance: Int)
