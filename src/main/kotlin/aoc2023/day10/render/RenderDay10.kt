@@ -5,7 +5,7 @@ import util.readInputToMap
 import java.io.File
 
 fun main() {
-    val inputFileName = "input"
+    val inputFileName = "input1"
     RenderDay10().run(inputFileName)
 }
 class RenderDay10 {

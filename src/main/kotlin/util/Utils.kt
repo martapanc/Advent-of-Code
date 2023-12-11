@@ -89,6 +89,24 @@ data class Coord(var x: Int, var y: Int) {
             Coord(x, y + 1)
         ).filter { allowNegative || it.x >= 0 && it.y >= 0 }
 
+
+    fun xNeighbors(allowNegative: Boolean = false): List<Coord> =
+        listOf(
+            Coord(x - 1, y),
+            Coord(x + 1, y),
+        ).filter { allowNegative || it.x >= 0 && it.y >= 0 }
+
+    fun yNeighbors(allowNegative: Boolean = false): List<Coord> =
+        listOf(
+            Coord(x, y - 1),
+            Coord(x, y + 1)
+        ).filter { allowNegative || it.x >= 0 && it.y >= 0 }
+
+    fun east(): Coord = Coord(x + 1, y)
+    fun west(): Coord = Coord(x - 1, y)
+    fun north(): Coord = Coord(x, y - 1)
+    fun south(): Coord = Coord(x, y + 1)
+
     operator fun plus(other: Coord) = Coord(x + other.x, y + other.y)
     operator fun not() = Coord(-x, -y)
 
