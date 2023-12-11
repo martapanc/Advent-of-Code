@@ -14,16 +14,16 @@ fun part1(map: Map<Coord, Char>): Long {
     val edge = mutableSetOf(start)
     val newlyVisited = mutableSetOf<Coord>()
 
-    if (checkEast(map, start, edge)) {
+    if (eastSections.contains(map[start.east()])) {
         newlyVisited.add(start.east())
     }
-    if (checkWest(map, start, edge)) {
+    if (westSections.contains(map[start.west()])) {
         newlyVisited.add(start.west())
     }
-    if (checkNorth(map, start, edge)) {
+    if (northSections.contains(map[start.north()])) {
         newlyVisited.add(start.north())
     }
-    if (checkSouth(map, start, edge)) {
+    if (southSections.contains(map[start.south()])) {
         newlyVisited.add(start.south())
     }
 
@@ -32,44 +32,31 @@ fun part1(map: Map<Coord, Char>): Long {
         val newEdge = newlyVisited.toList()
         newlyVisited.clear()
 
-        newEdge.forEach{
-            if (checkEast(map, it, edge)) {
-                newlyVisited.add(it.east())
+        newEdge.forEach{ coord ->
+            val current = map[coord]
+            if (current == '|') {
+                newlyVisited.addAll(listOf(coord.north(), coord.south()).filter { !edge.contains(it) })
             }
-            if (checkWest(map, it, edge)) {
-                newlyVisited.add(it.west())
+            if (current == '-') {
+                newlyVisited.addAll(listOf(coord.east(), coord.west()).filter { !edge.contains(it) })
             }
-            if (checkNorth(map, it, edge)) {
-                newlyVisited.add(it.north())
+            if (current == 'F') {
+                newlyVisited.addAll(listOf(coord.east(), coord.south()).filter { !edge.contains(it) })
             }
-            if (checkSouth(map, it, edge)) {
-                newlyVisited.add(it.south())
+            if (current == '7') {
+                newlyVisited.addAll(listOf(coord.west(), coord.south()).filter { !edge.contains(it) })
+            }
+            if (current == 'L') {
+                newlyVisited.addAll(listOf(coord.east(), coord.north()).filter { !edge.contains(it) })
+            }
+            if (current == 'J') {
+                newlyVisited.addAll(listOf(coord.west(), coord.north()).filter { !edge.contains(it) })
             }
         }
         distance++
     }
 
     return distance
-}
-
-private fun checkSouth(
-    map: Map<Coord, Char>,
-    start: Coord,
-    edge: MutableSet<Coord>
-) = southSections.contains(map[start.south()]) && !edge.contains(start.south())
-
-private fun checkNorth(
-    map: Map<Coord, Char>,
-    start: Coord,
-    edge: MutableSet<Coord>
-) = northSections.contains(map[start.north()]) && !edge.contains(start.north())
-
-private fun checkWest(map: Map<Coord, Char>, curr: Coord, edge: MutableSet<Coord>): Boolean {
-    return westSections.contains(map[curr.west()]) && !edge.contains(curr.west())
-}
-
-private fun checkEast(map: Map<Coord, Char>, curr: Coord, edge: MutableSet<Coord>): Boolean {
-    return eastSections.contains(map[curr.east()]) && !edge.contains(curr.east())
 }
 
 fun part2(map: Map<Coord, Char>): Long {
