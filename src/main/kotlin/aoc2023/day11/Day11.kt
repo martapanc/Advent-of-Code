@@ -1,20 +1,17 @@
 package aoc2023.day11
 
-import aoc2021.day25.printMap
 import util.Coord
 
 fun part1(map: Map<Coord, Char>): Long {
     val expanded = expand(map)
     var sum = 0L
-    val galaxies = expanded.filter { it.value == '#' }
-    galaxies.forEach { g1 ->
-        galaxies.forEach {g2 ->
-            if (g1.key != g2.key) {
-                sum += g1.key.manhattanDistance(g2.key)
-            }
+    val galaxiesCoords = expanded.filter { it.value == '#' }.map { it.key }
+    for ((i1, g1) in galaxiesCoords.withIndex()) {
+        (i1 until galaxiesCoords.size).forEach {i2 ->
+            sum += g1.manhattanDistance(galaxiesCoords[i2])
         }
     }
-    return sum / 2
+    return sum
 }
 
 fun part2(galaxies: Map<Coord, Char>): Long {
