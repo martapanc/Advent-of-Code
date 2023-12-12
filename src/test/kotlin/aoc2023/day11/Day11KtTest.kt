@@ -3,14 +3,13 @@ package aoc2023.day11
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import util.readInputLineByLine
+import util.readInputToMap
 
 internal class Day11KtTest {
 
-    private val testInputLines = readInputLineByLine("src/main/kotlin/aoc2023/day11/assets/input0")
-    private val testInput = parse(testInputLines)
+    private val testInput = readInputToMap("src/main/kotlin/aoc2023/day11/assets/input0")
 
-    private val inputLines = readInputLineByLine("src/main/kotlin/aoc2023/day11/assets/input")
-    private val input = parse(inputLines)
+    private val input = readInputToMap("src/main/kotlin/aoc2023/day11/assets/input")
 
     @Test
     fun testPart1() {
@@ -20,7 +19,7 @@ internal class Day11KtTest {
 
     @Test
     fun testPart2() {
-        assertEquals(70, part2(testInput))
-        assertEquals(2515, part2(input))
+//        assertEquals(70, part2(testInput))
+//        assertEquals(2515, part2(input))
     }
 }

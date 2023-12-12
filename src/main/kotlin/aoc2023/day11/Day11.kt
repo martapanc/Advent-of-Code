@@ -1,17 +1,19 @@
 package aoc2023.day11
 
-fun parse(lines: List<String>): List<String> {
-    val output = mutableListOf<String>()
-    lines.forEach { line ->
-        
+import util.Coord
+
+fun part1(galaxies: Map<Coord, Char>): Long {
+    return 0
+}
+
+fun part2(galaxies: Map<Coord, Char>): Long {
+    return 0
+}
+
+fun expand(galaxies: Map<Coord, Char>): Map<Coord, Char> {
+    val expandedGalaxies = galaxies.toMap()
+    (0 until galaxies.keys.maxBy { it.x }.x).forEach { x ->
+
     }
-    return output
-}
-
-fun part1(input: List<String>): Long {
-    return 0
-}
-
-fun part2(input: List<String>): Long {
-    return 0
+    return expandedGalaxies
 }
