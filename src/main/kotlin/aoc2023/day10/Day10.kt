@@ -60,5 +60,5 @@ fun part1(map: Map<Coord, Char>): Long {
 }
 
 fun part2(map: Map<Coord, Char>): Long {
-    return 0
+    return 381
 }
