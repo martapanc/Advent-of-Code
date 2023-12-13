@@ -32,16 +32,18 @@ fun countEmptyRowsAndColsBetween(c1: Coord, c2: Coord, emptyCols: List<Int>, emp
     val x2 = c2.x
     val (minX, maxX) = if (x1 < x2) x1 to x2 else x2 to x1
 
-    emptyCols
-        .filter { minX < it && it < maxX }
-        .forEach { count++ }
+    repeat(emptyCols
+        .filter { it in (minX + 1)..<maxX }.size
+    ) { count++ }
 
     val y1 = c1.y
     val y2 = c2.y
     val (minY, maxY) = if (y1 < y2) y1 to y2 else y2 to y1
-    emptyRows
-        .filter { minY < it && it < maxY }
-        .forEach { count++ }
+
+    repeat(emptyRows
+        .filter { it in (minY + 1)..<maxY }.size
+    ) { count++ }
+
     return count
 }
 
@@ -65,25 +67,4 @@ fun findEmptyRows(map: Map<Coord, Char>): List<Int> {
         }
     }
     return emptyRows
-}
-
-fun expand(map: Map<Coord, Char>): Map<Coord, Char> {
-    val maxX = map.keys.maxBy { it.x }.x
-    val columns = MutableList(0) { listOf<Map.Entry<Coord, Char>>() }
-    (0 .. maxX).forEach { x ->
-        val currentCol = map.entries.filter { it.key.x == x }
-        columns.add(currentCol)
-        if (currentCol.all { it.value == '.' }) {
-            columns.add(currentCol)
-        }
-    }
-
-    val expandedMap = mutableMapOf<Coord, Char>()
-    columns.forEachIndexed { colId, col ->
-        col.forEach {
-            expandedMap[Coord(colId, it.key.y)] = it.value
-        }
-    }
-//    printMap(expandedMap)
-    return expandedMap
 }
