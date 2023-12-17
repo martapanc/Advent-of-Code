@@ -25,9 +25,14 @@ internal class Day12KtTest {
     }
 
     @Test
-    fun testCompute() {
-
-        assertEquals("", compute(".??..??...?##.", listOf(1, 1, 3)))
+    fun testSolveRecord() {
+        assertEquals(1, solveRecord("???.###", intArrayOf(1, 1, 3)))
+        assertEquals(4, solveRecord(".??..??...?##.", intArrayOf(1, 1, 3)))
+        assertEquals(1, solveRecord("?#?#?#?#?#?#?#?", intArrayOf(1, 3, 1, 6)))
+        assertEquals(1, solveRecord("????.#...#...", intArrayOf(4, 1, 1)))
+        assertEquals(4, solveRecord("????.######..#####.", intArrayOf(1, 6, 5)))
+        assertEquals(10, solveRecord("?###????????", intArrayOf(3, 2, 1)))
+        assertEquals(1, solveRecord("?##?##??#?", intArrayOf(7, 1)))
     }
 
     @Test

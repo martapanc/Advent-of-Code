@@ -16,12 +16,6 @@ fun part2(input: List<String>): Long {
     return 0
 }
 
-fun compute(springs: String, conditions: List<Int>): String {
-
-    val result = splitOnChange(springs);
-
-    return ""
-}
 fun splitOnChange(s: String): List<String> {
     var t = s.take(1)
     for (i in 1 until s.length)
@@ -30,7 +24,34 @@ fun splitOnChange(s: String): List<String> {
     return t.split("|")
 }
 
-fun buildRegex(delimiters: Set<Char>): Regex {
-    val escapedDelimiters = delimiters.joinToString("|") { Regex.escape(it.toString()) }
-    return Regex("[$escapedDelimiters]+")
+fun solveRecord(record: String, groups: IntArray, currentLength: Int = 0): Int {
+    if (record.isEmpty()) {
+        if (groups.isEmpty() && currentLength == 0) {
+            return 1
+        }
+        if (groups.size == 1 && currentLength == groups[0]) {
+            return 1
+        }
+        return 0
+    }
+
+    if ((groups.isNotEmpty() && currentLength > groups[0]) || (groups.isEmpty() && currentLength > 0)) {
+        return 0
+    }
+
+    val char = record[0]
+    var total = 0
+
+    if (char == '#' || char == '?') {
+        total += solveRecord(record.substring(1), groups, currentLength + 1)
+    }
+    if (char == '.' || char == '?') {
+        if (currentLength == 0) {
+            total += solveRecord(record.substring(1), groups, 0)
+        } else if (groups.isNotEmpty() && currentLength == groups[0]) {
+            total += solveRecord(record.substring(1), groups.copyOfRange(1, groups.size), 0)
+        }
+    }
+
+    return total
 }
