@@ -23,4 +23,17 @@ internal class Day12KtTest {
         assertEquals(70, part2(testInput))
         assertEquals(2515, part2(input))
     }
+
+    @Test
+    fun testCompute() {
+
+        assertEquals("", compute(".??..??...?##.", listOf(1, 1, 3)))
+    }
+
+    @Test
+    fun testSplitOnChange() {
+        assertEquals(listOf(".", "?", "#"), splitOnChange(".?#"))
+        assertEquals(listOf(".", "??", "..", "??", "...", "?", "##", "."), splitOnChange(".??..??...?##."))
+        assertEquals(listOf("...."), splitOnChange("...."))
+    }
 }
