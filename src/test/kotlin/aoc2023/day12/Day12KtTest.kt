@@ -14,14 +14,14 @@ internal class Day12KtTest {
 
     @Test
     fun testPart1() {
-        assertEquals(157, part1(testInput))
-        assertEquals(8085, part1(input))
+        assertEquals(21, part1(testInput))
+        assertEquals(7169, part1(input))
     }
 
     @Test
     fun testPart2() {
-        assertEquals(70, part2(testInput))
-        assertEquals(2515, part2(input))
+//        assertEquals(70, part2(testInput))
+//        assertEquals(2515, part2(input))
     }
 
     @Test
@@ -33,12 +33,5 @@ internal class Day12KtTest {
         assertEquals(4, solveRecord("????.######..#####.", intArrayOf(1, 6, 5)))
         assertEquals(10, solveRecord("?###????????", intArrayOf(3, 2, 1)))
         assertEquals(1, solveRecord("?##?##??#?", intArrayOf(7, 1)))
-    }
-
-    @Test
-    fun testSplitOnChange() {
-        assertEquals(listOf(".", "?", "#"), splitOnChange(".?#"))
-        assertEquals(listOf(".", "??", "..", "??", "...", "?", "##", "."), splitOnChange(".??..??...?##."))
-        assertEquals(listOf("...."), splitOnChange("...."))
     }
 }

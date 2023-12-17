@@ -1,31 +1,29 @@
 package aoc2023.day12
 
-fun parse(lines: List<String>): List<String> {
-    val output = mutableListOf<String>()
+fun parse(lines: List<String>): List<Record> {
+    val records = mutableListOf<Record>()
     lines.forEach { line ->
-
+        val split = line.split(" ")
+        val groups = split[1].split(",").map { it.toInt() }.toIntArray()
+        records.add(Record(split[0], groups))
     }
-    return output
+    return records
 }
 
-fun part1(input: List<String>): Long {
+fun part1(records: List<Record>): Long {
+    var sum = 0L
+    records.forEach {
+        sum += solveRecord(it.springs, it.groups)
+    }
+    return sum
+}
+
+fun part2(input: List<Record>): Long {
     return 0
 }
 
-fun part2(input: List<String>): Long {
-    return 0
-}
-
-fun splitOnChange(s: String): List<String> {
-    var t = s.take(1)
-    for (i in 1 until s.length)
-        if (t.last() == s[i]) t += s[i]
-        else t += "|" + s[i]
-    return t.split("|")
-}
-
-fun solveRecord(record: String, groups: IntArray, currentLength: Int = 0): Int {
-    if (record.isEmpty()) {
+fun solveRecord(springs: String, groups: IntArray, currentLength: Int = 0): Int {
+    if (springs.isEmpty()) {
         if (groups.isEmpty() && currentLength == 0) {
             return 1
         }
@@ -39,19 +37,21 @@ fun solveRecord(record: String, groups: IntArray, currentLength: Int = 0): Int {
         return 0
     }
 
-    val char = record[0]
+    val char = springs[0]
     var total = 0
 
     if (char == '#' || char == '?') {
-        total += solveRecord(record.substring(1), groups, currentLength + 1)
+        total += solveRecord(springs.substring(1), groups, currentLength + 1)
     }
     if (char == '.' || char == '?') {
         if (currentLength == 0) {
-            total += solveRecord(record.substring(1), groups, 0)
+            total += solveRecord(springs.substring(1), groups, 0)
         } else if (groups.isNotEmpty() && currentLength == groups[0]) {
-            total += solveRecord(record.substring(1), groups.copyOfRange(1, groups.size), 0)
+            total += solveRecord(springs.substring(1), groups.copyOfRange(1, groups.size), 0)
         }
     }
 
     return total
 }
+
+data class Record(val springs: String, val groups: IntArray)
