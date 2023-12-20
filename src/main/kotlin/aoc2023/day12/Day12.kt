@@ -1,6 +1,7 @@
 package aoc2023.day12
 
 import util.readInputLineByLine
+import java.util.*
 
 fun parse(lines: List<String>): List<Record> {
     val records = mutableListOf<Record>()
@@ -28,11 +29,18 @@ fun part2(records: List<Record>): Long {
     }
     return sum
 }
+enum class CacheKey {
+    SPRINGS, GROUPS, CURRENT_LENGTH
+}
 
-val cache: MutableMap<Triple<String, IntArray, Int>, Int> = mutableMapOf()
+val cache: MutableMap<EnumMap<CacheKey, Any>, Int> = mutableMapOf()
 
 fun solveRecord(springs: String, groups: IntArray, currentLength: Int = 0): Int {
-    val key = Triple(springs, groups.toList().toIntArray(), currentLength)
+    val key = EnumMap<CacheKey, Any>(CacheKey::class.java)
+    key[CacheKey.SPRINGS] = springs
+    key[CacheKey.GROUPS] = groups.toList().toIntArray()
+    key[CacheKey.CURRENT_LENGTH] = currentLength
+
     if (cache.containsKey(key)) {
         return cache[key]!!
     }
@@ -91,6 +99,6 @@ fun main() {
     val inputLines = readInputLineByLine("src/main/kotlin/aoc2023/day12/assets/input")
     val input = parse(inputLines)
 
-//    println(part2(testInput))
+    println(part2(testInput))
     println(part2(input))
 }
