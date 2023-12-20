@@ -1,5 +1,7 @@
 package aoc2023.day12
 
+import util.readInputLineByLine
+
 fun parse(lines: List<String>): List<Record> {
     val records = mutableListOf<Record>()
     lines.forEach { line ->
@@ -18,11 +20,23 @@ fun part1(records: List<Record>): Long {
     return sum
 }
 
-fun part2(input: List<Record>): Long {
-    return 0
+fun part2(records: List<Record>): Long {
+    var sum = 0L
+    records.forEach {
+        val unfoldedRecord = unfoldRecord(it)
+        sum += solveRecord(unfoldedRecord.springs, unfoldedRecord.groups)
+    }
+    return sum
 }
 
+val cache: MutableMap<Triple<String, IntArray, Int>, Int> = mutableMapOf()
+
 fun solveRecord(springs: String, groups: IntArray, currentLength: Int = 0): Int {
+    val key = Triple(springs, groups.toList().toIntArray(), currentLength)
+    if (cache.containsKey(key)) {
+        return cache[key]!!
+    }
+
     if (springs.isEmpty()) {
         if (groups.isEmpty() && currentLength == 0) {
             return 1
@@ -51,7 +65,32 @@ fun solveRecord(springs: String, groups: IntArray, currentLength: Int = 0): Int 
         }
     }
 
+    cache[key] = total
     return total
 }
 
+fun unfoldRecord(record: Record): Record {
+    val unfoldedRecord = buildString {
+        repeat(5) {
+            append(record.springs)
+            if (it < 4) {
+                append('?')
+            }
+        }
+    }
+    val unfoldedGroups = List(5) { record.groups.toList() }.flatten().toIntArray()
+    return Record(unfoldedRecord, unfoldedGroups)
+}
+
 data class Record(val springs: String, val groups: IntArray)
+
+fun main() {
+    val testInputLines = readInputLineByLine("src/main/kotlin/aoc2023/day12/assets/input0")
+    val testInput = parse(testInputLines)
+
+    val inputLines = readInputLineByLine("src/main/kotlin/aoc2023/day12/assets/input")
+    val input = parse(inputLines)
+
+//    println(part2(testInput))
+    println(part2(input))
+}
