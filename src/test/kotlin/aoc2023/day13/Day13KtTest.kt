@@ -14,7 +14,7 @@ internal class Day13KtTest {
 
     @Test
     fun testPart1() {
-        assertEquals(157, part1(testInput))
+        assertEquals(405, part1(testInput))
         assertEquals(8085, part1(input))
     }
 
@@ -22,5 +22,10 @@ internal class Day13KtTest {
     fun testPart2() {
         assertEquals(70, part2(testInput))
         assertEquals(2515, part2(input))
+    }
+
+    @Test
+    fun testFindMirror() {
+        findMirror(testInput[0])
     }
 }
