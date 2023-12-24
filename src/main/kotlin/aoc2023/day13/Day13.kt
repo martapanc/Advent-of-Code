@@ -1,7 +1,6 @@
 package aoc2023.day13
 
 import util.Coord
-import kotlin.math.abs
 
 fun parse(lines: List<String>): List<Map<Coord, Char>> {
     val output = mutableListOf<Map<Coord, Char>>()
@@ -49,25 +48,23 @@ fun findMirror(map: Map<Coord, Char>): Int {
     }
 
     val consecutiveRowIndices = findConsecutiveIdenticalIndices(rows)
-
-    if (consecutiveRowIndices != null) {
+    consecutiveRowIndices.forEach { pair ->
         var isMirror = true
-        var a = consecutiveRowIndices.first - 1
-        var b = consecutiveRowIndices.second + 1
-        while (a >= 0 && b <= maxY) {
+        var a = pair.first - 1
+        var b = pair.second + 1
+        mirror@while (a >= 0 && b <= maxY) {
             if (rows[a] != rows[b]) {
                 isMirror = false
-                break
+                break@mirror
             }
             a--
             b++
         }
 
         if (isMirror) {
-            return 100 * consecutiveRowIndices.second
+            return 100 * pair.second
         }
     }
-
 
     // Vertical
     val groupedByX = map.keys.groupBy { it.x }
@@ -77,47 +74,37 @@ fun findMirror(map: Map<Coord, Char>): Int {
     }
 
     val consecutiveColIndices = findConsecutiveIdenticalIndices(columns)
-    if (consecutiveColIndices != null) {
+    consecutiveColIndices.forEach { pair ->
         var isMirror = true
-        var a = consecutiveColIndices.first - 1
-        var b = consecutiveColIndices.second + 1
-        while (a >= 0 && b <= maxX) {
+        var a = pair.first - 1
+        var b = pair.second + 1
+        mirror@while (a >= 0 && b <= maxX) {
             if (columns[a] != columns[b]) {
                 isMirror = false
-                break
+                break@mirror
             }
             a--
             b++
         }
 
         if (isMirror) {
-            return consecutiveColIndices.second
+            return pair.second
         }
     }
 
-
     return -1
-}
-
-fun List<Int>.combinations(size: Int): List<Pair<Int, Int>> {
-    return flatMapIndexed { i, first ->
-        subList(i + 1, size).map { second -> first to second }
-    }
 }
 
 fun equals(list1: List<Pair<Int, Int>>, list2: List<Pair<Int, Int>>): Boolean {
     return list1.size == list2.size && list1.containsAll(list2)
 }
 
-fun findConsecutiveIdenticalIndices(strings: List<String>): Pair<Int, Int>? {
+fun findConsecutiveIdenticalIndices(strings: List<String>): List<Pair<Int, Int>> {
+    val consecutiveIdenticalIndices = mutableListOf<Pair<Int, Int>>()
     for (i in 0 until strings.size - 1) {
         if (strings[i] == strings[i + 1]) {
-            if (i + 2 < strings.size && strings[i] == strings[i + 2]) {
-                // If there are more than two consecutive identical strings, skip
-                continue
-            }
-            return Pair(i, i + 1)
+            consecutiveIdenticalIndices.add(Pair(i, i + 1))
         }
     }
-    return null
+    return consecutiveIdenticalIndices
 }
