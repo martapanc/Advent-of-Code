@@ -41,57 +41,30 @@ fun part2(maps: List<Map<Coord, Char>>): Long {
 }
 
 fun findMirror(map: Map<Coord, Char>): Int {
-    val maxX = map.keys.maxBy { it.x }.x
-    val maxY = map.keys.maxBy { it.y }.y
+    val (maxX, maxY) = findMaxCoords(map)
 
     // Horizontal
     val groupedByY = map.keys.groupBy { it.y }
-    val sortedYKeys = groupedByY.keys.sorted()
-    val rows = sortedYKeys.map { y ->
+    val rows = groupedByY.keys.sorted().map { y ->
         groupedByY[y]?.sortedBy { it.x }?.map { map[it] }?.joinToString("") ?: ""
     }
 
     val consecutiveRowIndices = findConsecutiveIdenticalIndices(rows)
     consecutiveRowIndices.forEach { pair ->
-        var isMirror = true
-        var a = pair.first - 1
-        var b = pair.second + 1
-        mirror@while (a >= 0 && b <= maxY) {
-            if (rows[a] != rows[b]) {
-                isMirror = false
-                break@mirror
-            }
-            a--
-            b++
-        }
-
-        if (isMirror) {
+        if (isMirror(pair, maxY, rows)) {
             return 100 * pair.second
         }
     }
 
     // Vertical
     val groupedByX = map.keys.groupBy { it.x }
-    val sortedKeys = groupedByX.keys.sorted()
-    val columns = sortedKeys.map { x ->
+    val columns = groupedByX.keys.sorted().map { x ->
         groupedByX[x]?.sortedBy { it.y }?.map { map[it] }?.joinToString("") ?: ""
     }
 
     val consecutiveColIndices = findConsecutiveIdenticalIndices(columns)
     consecutiveColIndices.forEach { pair ->
-        var isMirror = true
-        var a = pair.first - 1
-        var b = pair.second + 1
-        mirror@while (a >= 0 && b <= maxX) {
-            if (columns[a] != columns[b]) {
-                isMirror = false
-                break@mirror
-            }
-            a--
-            b++
-        }
-
-        if (isMirror) {
+        if (isMirror(pair, maxX, columns)) {
             return pair.second
         }
     }
@@ -99,78 +72,46 @@ fun findMirror(map: Map<Coord, Char>): Int {
     throw Exception()
 }
 
+private fun isMirror(pair: Pair<Int, Int>, max: Int, strings: List<String>): Boolean {
+    var isMirror = true
+    var a = pair.first - 1
+    var b = pair.second + 1
+    mirror@ while (a >= 0 && b <= max) {
+        if (strings[a] != strings[b]) {
+            isMirror = false
+            break@mirror
+        }
+        a--
+        b++
+    }
+    return isMirror
+}
+
 fun findImperfectMirror(map: Map<Coord, Char>): Int {
-    val maxX = map.keys.maxBy { it.x }.x
-    val maxY = map.keys.maxBy { it.y }.y
+    val (maxX, maxY) = findMaxCoords(map)
 
     // Horizontal
     val groupedByY = map.keys.groupBy { it.y }
-    val sortedYKeys = groupedByY.keys.sorted()
-    val rows = sortedYKeys.map { y ->
+    val rows = groupedByY.keys.sorted().map { y ->
         groupedByY[y]?.sortedBy { it.x }?.map { map[it] }?.joinToString("") ?: ""
     }
 
-    val consecutiveRowIndices = findConsecutiveAlmostIdenticalIndices(rows)
-    consecutiveRowIndices.forEach { pair ->
-        var isMirror = true
-        var hasSmudgeBeenFound = pair.almostIdentical
-        var a = pair.first - 1
-        var b = pair.second + 1
-        mirror@while (a >= 0 && b <= maxY) {
-            if (rows[a] == rows[b] || isAlmostIdentical(rows[a], rows[b])) {
-                if (isAlmostIdentical(rows[a], rows[b])) {
-                    if (hasSmudgeBeenFound) {
-                        isMirror = false
-                        break@mirror
-                    } else {
-                        hasSmudgeBeenFound = true
-                    }
-                }
-            } else {
-                isMirror = false
-                break@mirror
-            }
-            a--
-            b++
-        }
-
-        if (hasSmudgeBeenFound && isMirror) {
+    findConsecutiveAlmostIdenticalIndices(rows).forEach { pair ->
+        val (isMirror, hasSmudgeBeenFound) = isImperfectMirror(pair, maxY, rows)
+        if (isMirror && hasSmudgeBeenFound) {
             return 100 * pair.second
         }
     }
 
     // Vertical
     val groupedByX = map.keys.groupBy { it.x }
-    val sortedKeys = groupedByX.keys.sorted()
-    val columns = sortedKeys.map { x ->
+    val columns = groupedByX.keys.sorted().map { x ->
         groupedByX[x]?.sortedBy { it.y }?.map { map[it] }?.joinToString("") ?: ""
     }
 
-    val consecutiveColIndices = findConsecutiveAlmostIdenticalIndices(columns)
-    consecutiveColIndices.forEach { pair ->
-        var isMirror = true
-        var hasSmudgeBeenFound = pair.almostIdentical
-        var a = pair.first - 1
-        var b = pair.second + 1
-        mirror@while (a >= 0 && b <= maxX) {
-            if (columns[a] == columns[b] || isAlmostIdentical(columns[a], columns[b])) {
-                if (isAlmostIdentical(columns[a], columns[b])) {
-                    if (hasSmudgeBeenFound) {
-                        isMirror = false
-                        break@mirror
-                    } else {
-                        hasSmudgeBeenFound = true
-                    }
-                }
-            } else {
-                isMirror = false
-                break@mirror
-            }
-            a--
-            b++
-        }
-
-        if (hasSmudgeBeenFound && isMirror) {
+    findConsecutiveAlmostIdenticalIndices(columns).forEach { pair ->
+        val (isMirror, hasSmudgeBeenFound) = isImperfectMirror(pair, maxX, columns)
+        if (isMirror && hasSmudgeBeenFound) {
             return pair.second
         }
     }
@@ -178,8 +119,33 @@ fun findImperfectMirror(map: Map<Coord, Char>): Int {
     throw Exception()
 }
 
-fun equals(list1: List<Pair<Int, Int>>, list2: List<Pair<Int, Int>>): Boolean {
-    return list1.size == list2.size && list1.containsAll(list2)
+private fun isImperfectMirror(pair: StrPair, max: Int, strings: List<String>): Pair<Boolean, Boolean> {
+    var isMirror = true
+    var hasSmudgeBeenFound = pair.almostIdentical
+    var a = pair.first - 1
+    var b = pair.second + 1
+    mirror@ while (a >= 0 && b <= max) {
+        if (strings[a] == strings[b] || isAlmostIdentical(strings[a], strings[b])) {
+            if (isAlmostIdentical(strings[a], strings[b])) {
+                if (hasSmudgeBeenFound) {
+                    isMirror = false
+                    break@mirror
+                } else {
+                    hasSmudgeBeenFound = true
+                }
+            }
+        } else {
+            isMirror = false
+            break@mirror
+        }
+        a--
+        b++
+    }
+    return Pair(isMirror, hasSmudgeBeenFound)
+}
+
+private fun findMaxCoords(map: Map<Coord, Char>): Pair<Int, Int> {
+    return Pair(map.keys.maxBy { it.x }.x, map.keys.maxBy { it.y }.y)
 }
 
 fun isAlmostIdentical(a: String, b: String): Boolean {
@@ -209,8 +175,7 @@ fun findConsecutiveIdenticalIndices(strings: List<String>): List<Pair<Int, Int>>
     return consecutiveIdenticalIndices
 }
 
-fun findConsecutiveAlmostIdenticalIndices(strings: List<String>):
-        List<StrPair> {
+fun findConsecutiveAlmostIdenticalIndices(strings: List<String>): List<StrPair> {
     val consecutiveIdenticalIndices = mutableListOf<StrPair>()
     for (i in 0 until strings.size - 1) {
         if (strings[i] == strings[i + 1]) {
