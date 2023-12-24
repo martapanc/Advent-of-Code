@@ -48,27 +48,23 @@ fun findMirror(map: Map<Coord, Char>): Int {
         groupedByY[y]?.sortedBy { it.x }?.map { map[it] }?.joinToString("") ?: ""
     }
 
-    val rowIndices = rows
-        .withIndex()
-        .groupBy { it.value }
-        .filter { it.value.size > 1 }
-        .flatMap { entry ->
-            entry.value.map { it.index }.combinations(2)
-        }
+    val consecutiveRowIndices = findConsecutiveIdenticalIndices(rows)
 
-    val fullMirrorH = mutableListOf<Pair<Int, Int>>()
-    val consecutiveRows = rowIndices.filter { abs(it.first - it.second) == 1 }
-    if (consecutiveRows.isNotEmpty()) {
-        var a = consecutiveRows[0].first
-        var b = consecutiveRows[0].second
+    if (consecutiveRowIndices != null) {
+        var isMirror = true
+        var a = consecutiveRowIndices.first - 1
+        var b = consecutiveRowIndices.second + 1
         while (a >= 0 && b <= maxY) {
-            fullMirrorH.add(Pair(a, b))
+            if (rows[a] != rows[b]) {
+                isMirror = false
+                break
+            }
             a--
             b++
         }
 
-        if (equals(fullMirrorH, rowIndices)) {
-            return 100 * consecutiveRows[0].second
+        if (isMirror) {
+            return 100 * consecutiveRowIndices.second
         }
     }
 
@@ -79,27 +75,23 @@ fun findMirror(map: Map<Coord, Char>): Int {
     val columns = sortedKeys.map { x ->
         groupedByX[x]?.sortedBy { it.y }?.map { map[it] }?.joinToString("") ?: ""
     }
-    val colIndices = columns
-        .withIndex()
-        .groupBy { it.value }
-        .filter { it.value.size > 1 }
-        .flatMap { entry ->
-            entry.value.map { it.index }.combinations(2)
-        }
 
-    val fullMirrorV = mutableListOf<Pair<Int, Int>>()
-    val consecutiveCols = colIndices.filter { abs(it.first - it.second) == 1}
-    if (consecutiveCols.isNotEmpty()) {
-        var a = consecutiveCols[0].first
-        var b = consecutiveCols[0].second
+    val consecutiveColIndices = findConsecutiveIdenticalIndices(columns)
+    if (consecutiveColIndices != null) {
+        var isMirror = true
+        var a = consecutiveColIndices.first - 1
+        var b = consecutiveColIndices.second + 1
         while (a >= 0 && b <= maxX) {
-            fullMirrorV.add(Pair(a, b))
+            if (columns[a] != columns[b]) {
+                isMirror = false
+                break
+            }
             a--
             b++
         }
 
-        if (equals(fullMirrorV, colIndices)) {
-            return consecutiveCols[0].second
+        if (isMirror) {
+            return consecutiveColIndices.second
         }
     }
 
@@ -115,4 +107,17 @@ fun List<Int>.combinations(size: Int): List<Pair<Int, Int>> {
 
 fun equals(list1: List<Pair<Int, Int>>, list2: List<Pair<Int, Int>>): Boolean {
     return list1.size == list2.size && list1.containsAll(list2)
+}
+
+fun findConsecutiveIdenticalIndices(strings: List<String>): Pair<Int, Int>? {
+    for (i in 0 until strings.size - 1) {
+        if (strings[i] == strings[i + 1]) {
+            if (i + 2 < strings.size && strings[i] == strings[i + 2]) {
+                // If there are more than two consecutive identical strings, skip
+                continue
+            }
+            return Pair(i, i + 1)
+        }
+    }
+    return null
 }
