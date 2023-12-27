@@ -8,12 +8,43 @@ import aoc2022.day08.Cardinal.WEST
 import util.Coord
 
 fun part1(map: Map<Coord, Char>): Int {
+    return energize(map)
+}
+
+fun part2(map: Map<Coord, Char>): Int {
+    val maxX = map.keys.maxBy { it.x }.x
+    val maxY = map.keys.maxBy { it.y }.y
+    val startingCoords = map.filter { it.key.x == 0 || it.key.y == 0 || it.key.x == maxX || it.key.y == maxY}.keys
+    val startingPositions = mutableListOf<Pos>()
+    startingCoords.filter { it.x == 0 }.forEach {
+        startingPositions.add(Pos(it, EAST))
+    }
+    startingCoords.filter { it.y == 0 }.forEach {
+        startingPositions.add(Pos(it, SOUTH))
+    }
+    startingCoords.filter { it.x == maxX }.forEach {
+        startingPositions.add(Pos(it, WEST))
+    }
+    startingCoords.filter { it.y == maxY }.forEach {
+        startingPositions.add(Pos(it, NORTH))
+    }
+    var maxEnergizedCells = 0
+    startingPositions.forEach { pos ->
+        val energisedCells = energize(map, initialPos = pos)
+        if (energisedCells > maxEnergizedCells) {
+            maxEnergizedCells = energisedCells
+        }
+    }
+    return maxEnergizedCells
+}
+
+private fun energize(map: Map<Coord, Char>, initialPos: Pos = Pos(Coord(0, 0), EAST)): Int {
     val energizedCells = mutableSetOf<Pos>()
-    var edge = listOf(Pos(Coord(0, 0), EAST))
+    var edge = listOf(initialPos)
 
     while (edge.isNotEmpty()) {
         val newEdge = mutableListOf<Pos>()
-        loop@for (currPos in edge) {
+        loop@ for (currPos in edge) {
             if (energizedCells.contains(currPos)) {
                 continue@loop
             }
@@ -29,6 +60,7 @@ fun part1(map: Map<Coord, Char>): Int {
                             newEdge.add(currPos.moveSouth())
                         }
                     }
+
                     '-' -> {
                         if (currPos.direction == EAST || currPos.direction == WEST) {
                             newEdge.add(currPos.moveSameDirection())
@@ -37,6 +69,7 @@ fun part1(map: Map<Coord, Char>): Int {
                             newEdge.add(currPos.moveWest())
                         }
                     }
+
                     '/' -> {
                         when (currPos.direction) {
                             NORTH -> newEdge.add(currPos.moveEast())
@@ -45,6 +78,7 @@ fun part1(map: Map<Coord, Char>): Int {
                             WEST -> newEdge.add(currPos.moveSouth())
                         }
                     }
+
                     '\\' -> {
                         when (currPos.direction) {
                             NORTH -> newEdge.add(currPos.moveWest())
@@ -53,6 +87,7 @@ fun part1(map: Map<Coord, Char>): Int {
                             WEST -> newEdge.add(currPos.moveNorth())
                         }
                     }
+
                     '.' -> newEdge.add(currPos.moveSameDirection())
                 }
             }
@@ -61,10 +96,6 @@ fun part1(map: Map<Coord, Char>): Int {
     }
 
     return energizedCells.map { it.coord }.toSet().size
-}
-
-fun part2(map: Map<Coord, Char>): Long {
-    return 0
 }
 
 data class Pos(val coord: Coord, val direction: Cardinal) {

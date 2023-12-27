@@ -19,6 +19,6 @@ internal class Day16KtTest {
     @Test
     fun testPart2() {
         assertEquals(51, part2(testInput))
-        assertEquals(2515, part2(input))
+        assertEquals(8489, part2(input))
     }
 }
