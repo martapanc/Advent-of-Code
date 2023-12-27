@@ -14,20 +14,19 @@ fun part1(map: Map<Coord, Char>): Int {
 fun part2(map: Map<Coord, Char>): Int {
     val maxX = map.keys.maxBy { it.x }.x
     val maxY = map.keys.maxBy { it.y }.y
-    val startingCoords = map.filter { it.key.x == 0 || it.key.y == 0 || it.key.x == maxX || it.key.y == maxY}.keys
-    val startingPositions = mutableListOf<Pos>()
-    startingCoords.filter { it.x == 0 }.forEach {
-        startingPositions.add(Pos(it, EAST))
-    }
-    startingCoords.filter { it.y == 0 }.forEach {
-        startingPositions.add(Pos(it, SOUTH))
-    }
-    startingCoords.filter { it.x == maxX }.forEach {
-        startingPositions.add(Pos(it, WEST))
-    }
-    startingCoords.filter { it.y == maxY }.forEach {
-        startingPositions.add(Pos(it, NORTH))
-    }
+    val startingPositions = map
+        .filter { it.key.x == 0 || it.key.y == 0 || it.key.x == maxX || it.key.y == maxY }
+        .map { (coord, _) ->
+            when {
+                coord.x == 0 -> Pos(coord, EAST)
+                coord.y == 0 -> Pos(coord, SOUTH)
+                coord.x == maxX -> Pos(coord, WEST)
+                coord.y == maxY -> Pos(coord, NORTH)
+                else -> throw IllegalStateException()
+            }
+        }
+        .toMutableList()
+
     var maxEnergizedCells = 0
     startingPositions.forEach { pos ->
         val energisedCells = energize(map, initialPos = pos)
