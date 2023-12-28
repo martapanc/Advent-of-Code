@@ -2,6 +2,7 @@ package aoc2023.day18
 
 import aoc2022.day09.Direction
 import aoc2022.day23.completeMap
+import aoc2022.day23.printMap
 import util.Coord
 
 fun parse(lines: List<String>): List<Segment> {
@@ -20,6 +21,8 @@ fun part1(segments: List<Segment>, start: Coord = Coord(3, 5)): Long {
 
 fun part2(segments: List<Segment>, start: Coord = Coord(3, 5)): Long {
     val map = drawRing(segments, part2 = true)
+
+    printMap(map)
 
     return map.size + floodFill(completeMap(map), start, mutableSetOf())
 }
