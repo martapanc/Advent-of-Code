@@ -110,3 +110,20 @@ fun printMap(map: Map<Coord, Char>) {
     }
     println()
 }
+
+fun fillMap(map: Map<Coord, Char>): Map<Coord, Char> {
+    val filledMap = map.toMutableMap()
+
+    val xRange: IntRange = map.keys.minOf { it.x } .. map.keys.maxOf { it.x }
+    val yRange: IntRange = map.keys.minOf { it.y } .. map.keys.maxOf { it.y }
+    (yRange).forEach { y ->
+        (xRange).forEach { x ->
+            val coord = Coord(x, y)
+            if (map[coord] == null) {
+                filledMap[coord] = '.'
+            }
+        }
+    }
+
+    return filledMap
+}

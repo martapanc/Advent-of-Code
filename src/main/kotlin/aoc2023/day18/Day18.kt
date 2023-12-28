@@ -1,6 +1,7 @@
 package aoc2023.day18
 
 import aoc2022.day09.Direction
+import aoc2022.day23.fillMap
 import aoc2022.day23.move
 import aoc2022.day23.printMap
 import aoc2023.day15.hash
@@ -32,21 +33,51 @@ fun part1(segments: List<Segment>): Int {
 
     printMap(map)
 
-    val filledMap = map.toMutableMap()
+    return countCoordinatesInsideRing(fillMap(map))
+}
 
-    val minY = map.keys.minBy { it.y }.y
-    val maxY = map.keys.maxBy { it.y }.y
-    (minY .. maxY).forEach { y ->
-        val row = map.keys.filter { it.y == y}.sortedBy { it.x }
-        for (block in findBlocks(row)) {
-            (block[0] .. block[block.lastIndex]).forEach { x ->
-                filledMap[Coord(x, y)] = '#'
+fun countCoordinatesInsideRing(ringMap: Map<Coord, Char>): Int {
+    val visited = mutableSetOf<Coord>()
+    var count = 0
+
+    for (coord in ringMap.keys) {
+        if (coord !in visited && ringMap[coord] == '.') {
+            count += floodFill(ringMap, coord, visited)
+        }
+    }
+
+    return count
+}
+
+fun floodFill(ringMap: Map<Coord, Char>, start: Coord, visited: MutableSet<Coord>): Int {
+    val queue = mutableListOf(start)
+    visited.add(start)
+    var count = 0
+
+    while (queue.isNotEmpty()) {
+        val current = queue.removeAt(0)
+        count++
+
+        val neighbors = listOf(
+            Coord(current.x + 1, current.y),
+            Coord(current.x - 1, current.y),
+            Coord(current.x, current.y + 1),
+            Coord(current.x, current.y - 1)
+        )
+
+        for (neighbor in neighbors) {
+            if (neighbor !in visited && ringMap[neighbor] == '.') {
+                queue.add(neighbor)
+                visited.add(neighbor)
             }
         }
     }
-    printMap(filledMap)
 
-    return filledMap.count { it.value == '#' }
+    return count
+}
+
+fun part2(input: List<Segment>): Long {
+    return 0
 }
 
 fun findBlocks(row: List<Coord>): List<List<Int>> {
@@ -70,10 +101,6 @@ fun findBlocks(row: List<Coord>): List<List<Int>> {
         return blocks
     }
     return listOf(row.map { it.x }.sorted())
-}
-
-fun part2(input: List<Segment>): Long {
-    return 0
 }
 
 fun areXCoordsContinuous(coords: List<Coord>): Boolean {
