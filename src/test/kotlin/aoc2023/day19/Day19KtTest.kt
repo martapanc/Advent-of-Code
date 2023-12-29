@@ -1,6 +1,6 @@
 package aoc2023.day19
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import util.readInputLineByLine
 
@@ -14,13 +14,21 @@ internal class Day19KtTest {
 
     @Test
     fun testPart1() {
-        assertEquals(157, part1(testInput))
-        assertEquals(8085, part1(input))
+        assertEquals(19114, part1(testInput))
+        assertEquals(397061, part1(input))
     }
 
     @Test
     fun testPart2() {
         assertEquals(70, part2(testInput))
         assertEquals(2515, part2(input))
+    }
+
+    @Test
+    fun testCheckToFunct() {
+        assertTrue(checkToFunct("x<800", testInput.ratings[0]))
+        assertTrue(checkToFunct("m>2654", testInput.ratings[0]))
+        assertFalse(checkToFunct("a>1222", testInput.ratings[0]))
+        assertFalse(checkToFunct("s<2800", testInput.ratings[0]))
     }
 }
