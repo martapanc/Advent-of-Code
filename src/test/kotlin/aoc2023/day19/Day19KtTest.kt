@@ -20,15 +20,17 @@ internal class Day19KtTest {
 
     @Test
     fun testPart2() {
-        assertEquals(70, part2(testInput))
-        assertEquals(2515, part2(input))
+//        assertEquals(10000, part2(testInput, 10))
+//        assertEquals(6250000, part2(testInput, 50))
+        assertEquals(167409079868000, part2(testInput))
+//        assertEquals(2515, part2(input))
     }
 
     @Test
     fun testCheckToFunct() {
-        assertTrue(checkToFunct("x<800", testInput.ratings[0]))
-        assertTrue(checkToFunct("m>2654", testInput.ratings[0]))
-        assertFalse(checkToFunct("a>1222", testInput.ratings[0]))
-        assertFalse(checkToFunct("s<2800", testInput.ratings[0]))
+        assertTrue(evalCheck("x<800", testInput.ratings[0]))
+        assertTrue(evalCheck("m>2654", testInput.ratings[0]))
+        assertFalse(evalCheck("a>1222", testInput.ratings[0]))
+        assertFalse(evalCheck("s<2800", testInput.ratings[0]))
     }
 }
