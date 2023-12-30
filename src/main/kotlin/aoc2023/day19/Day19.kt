@@ -5,13 +5,13 @@ fun parse(lines: List<String>): Day19Input {
     val ratings = mutableListOf<Rating>()
     var ratingsReached = false
     lines.forEach { line ->
-        if (line.isEmpty()) {
-            ratingsReached = true
-        } else if (ratingsReached) {
-            ratings.add(Rating(line))
-        } else {
-            val workflow = Workflow(line)
-            workflows[workflow.name] = workflow.instructions
+        when {
+            line.isEmpty() -> ratingsReached = true
+            ratingsReached -> ratings.add(Rating(line))
+            else -> {
+                val workflow = Workflow(line)
+                workflows[workflow.name] = workflow.instructions
+            }
         }
     }
     return Day19Input(workflows, ratings)
@@ -48,7 +48,7 @@ fun countAccepted(
 ): Long {
     if (current.condition == null) {
         when (current.dest) {
-            "A" -> return ranges0.values.fold(1L) { acc, range -> acc * range.size() }
+            "A" -> return combos(ranges0)
             "R" -> return 0L
         }
     }
@@ -60,6 +60,7 @@ fun countAccepted(
         val condition = instruction.condition
         if (condition == null) {
             combinations += countAccepted(workflows, ranges, Instruction(instruction.dest))
+//            println(String.format("%s [%s] %s", current.dest, combos(ranges), instruction.dest))
             break
         } else {
             val variable = condition[0]
@@ -77,7 +78,9 @@ fun countAccepted(
             if (!rangeTrue.isEmpty()) {
                 val ranges1 = ranges.toMutableMap()
                 ranges1[variable] = Range(rangeTrue.first, rangeTrue.last)
-                combinations += countAccepted(workflows, ranges1, Instruction(instruction.dest))
+                val countAccepted = countAccepted(workflows, ranges1, Instruction(instruction.dest))
+//                println(String.format("%s [%s] %s", current.dest, combos(ranges1), instruction.dest))
+                combinations += countAccepted
             }
             if (rangeFalse.isEmpty()) {
                 break
@@ -87,6 +90,8 @@ fun countAccepted(
     }
     return combinations
 }
+
+private fun combos(ranges0: Map<Char, Range>) = ranges0.values.fold(1L) { acc, range -> acc * range.size() }
 
 data class Range(val low: Int, val high: Int) {
     fun size(): Int = high - low + 1
@@ -122,7 +127,6 @@ data class Instruction(val input: String) {
         }
         return null
     }
-
 }
 
 fun evalCheck(check: String?, rating: Rating): Boolean {
