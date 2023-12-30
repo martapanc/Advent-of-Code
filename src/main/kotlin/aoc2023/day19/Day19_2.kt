@@ -57,6 +57,7 @@ fun main() {
         }
         return result
     }
+
     val rm = HashMap<Char, IntRange>()
     for (v in "xmas") rm[v] = 1..4000
     println(compute("in", rm))

@@ -20,10 +20,8 @@ internal class Day19KtTest {
 
     @Test
     fun testPart2() {
-//        assertEquals(10000, part2(testInput, 10))
-//        assertEquals(6250000, part2(testInput, 50))
         assertEquals(167409079868000, part2(testInput))
-//        assertEquals(2515, part2(input))
+        assertEquals(125657431183201, part2(input))
     }
 
     @Test

@@ -26,7 +26,7 @@ private fun workFlow(input: Day19Input, rating: Rating): Int {
     var ii = 0
     main@ while (ii < currentWorkflow.size) {
         if (evalCheck(currentWorkflow[ii].condition, rating)) {
-            val result = currentWorkflow[ii].result
+            val result = currentWorkflow[ii].dest
             if (result == "A" || result == "R") {
                 if (result == "A") {
                     return rating.sum()
@@ -43,45 +43,57 @@ private fun workFlow(input: Day19Input, rating: Rating): Int {
 }
 
 fun part2(input: Day19Input, max: Int = 4000): Long {
-    val ranges: MutableMap<Char, Range> = mapOf(
+    val ranges: Map<Char, Range> = mapOf(
         'x' to Range(1, 4000),
         'm' to Range(1, 4000),
         'a' to Range(1, 4000),
         's' to Range(1, 4000)
-    ).toMutableMap()
-    var totalAccepted = countAccepted(input.workflows, ranges)
-
-    return totalAccepted
+    )
+    return countAccepted(input.workflows, ranges)
 }
 
-fun countAccepted(workflows: Map<String, List<Instruction>>, ranges: MutableMap<Char, Range>, current: Instruction = Instruction("in")): Long {
-    if (current.condition == null && current.result == "A") {
+fun countAccepted(workflows: Map<String, List<Instruction>>, ranges0: Map<Char, Range>, current: Instruction = Instruction("in")): Long {
+    if (current.condition == null && current.dest == "A") {
         var prod = 1L
-        ranges.values.forEach {
+        ranges0.values.forEach {
             prod *= it.size()
         }
         return prod
     }
-    if (current.condition == null && current.result == "R") {
+    if (current.condition == null && current.dest == "R") {
         return 0L
     }
 
+    val workflow = workflows[current.dest]!!
+    val ranges = ranges0.toMutableMap()
     var combinations = 0L
 
-    if (current.condition == null) { // Map Key
-        for (currentCheck in workflows[current.result]!!) {
-            combinations += countAccepted(workflows, ranges, currentCheck)
-        }
-    } else {
-        val variable = current.condition!![0]
-        val number = current.condition!!.substring(2).toInt()
-        val range = ranges[variable]!!
-        if (current.condition!!.contains(">")) {
-            ranges[variable] = Range(range.high - number + 1, range.high)
+    for (instruction in workflow) {
+        val condition = instruction.condition
+        if (condition == null)  {
+            combinations += countAccepted(workflows, ranges, Instruction(instruction.dest))
+            break
         } else {
-            ranges[variable] = Range(range.low, number - 1)
+            val variable = condition[0]
+            val op = condition[1]
+            val comparator = condition.substring(2).toInt()
+            val currentRange = ranges[variable]!!
+            val (rangeTrue, rangeFalse) = when (op) {
+                '<' -> currentRange.low .. minOf(currentRange.high, comparator - 1) to maxOf(currentRange.low, comparator) .. currentRange.high
+                '>' -> maxOf(currentRange.low, comparator + 1) .. currentRange.high to currentRange.low .. minOf(currentRange.high, comparator)
+                else -> throw IllegalArgumentException()
+            }
+
+            if (!rangeTrue.isEmpty()) {
+                val ranges1 = ranges.toMutableMap()
+                ranges1[variable] = Range(rangeTrue.first, rangeTrue.last)
+                combinations += countAccepted(workflows, ranges1, Instruction(instruction.dest))
+            }
+            if (rangeFalse.isEmpty()) {
+                break
+            }
+            ranges[variable] = Range(rangeFalse.first, rangeFalse.last)
         }
-        combinations += countAccepted(workflows, ranges, Instruction(current.result))
     }
 
     return combinations
@@ -108,7 +120,7 @@ data class Workflow(val input: String) {
 
 data class Instruction(val input: String) {
     val condition: String? by lazy { parseCheck() }
-    val result: String by lazy { parseResult() }
+    val dest: String by lazy { parseResult() }
 
     private fun parseResult(): String {
         if (input.contains(":")) {
