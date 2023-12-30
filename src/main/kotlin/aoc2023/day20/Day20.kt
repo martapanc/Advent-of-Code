@@ -25,8 +25,10 @@ fun parse(lines: List<String>): Map<String, Module> {
 }
 
 fun part1(modules: Map<String, Module>): Long {
-    val nameToIndex = modules.keys.mapIndexed { index, value -> value to index }.toMap()
-    val moduleList = modules.values.toList()
+    val moduleNames = listOf("broadcaster") + modules.values.flatMap { it.destinations }.distinct()
+
+    val nameToIndex = moduleNames.withIndex().associateBy ( {it.value}, {it.index})
+    val moduleList = moduleNames.map { modules[it]!! }
     var flipFlopState = 0L
 
     val conjState = LongArray(modules.size)
@@ -107,7 +109,6 @@ fun part1(modules: Map<String, Module>): Long {
 fun part2(map: Map<String, Module>): Long {
     return 0
 }
-
 
 data class Module(val name: String, val type: ModuleType, val destinations: List<String>)
 
