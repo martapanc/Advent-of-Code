@@ -43,27 +43,26 @@ fun part1(modules: Map<String, Module>): Long {
 
     var lowPulses = 0L
     var highPulses = 0L
-    val qSource = IntArray(1024)
-    val qDest = IntArray(1024)
-    val qPulse = IntArray(1024)
+    val queueSource = IntArray(1024)
+    val queueDest = IntArray(1024)
+    val queuePulse = IntArray(1024)
 
     repeat(1000) {
-        println("%s %s".format(lowPulses, highPulses))
         lowPulses++
-        var qh = 0
-        var qt = 0
+        var queueHead = 0
+        var queueTail = 0
 
-        fun enq(source: Int, dest: Int, pls: Int) {
-            qSource[qt] = source
-            qDest[qt] = dest
-            qPulse[qt] = pls
-            qt++
+        fun enqueue(source: Int, dest: Int, pulse: Int) {
+            queueSource[queueTail] = source
+            queueDest[queueTail] = dest
+            queuePulse[queueTail] = pulse
+            queueTail++
         }
 
-        fun enqAll(source: Int, pulse: Int) {
+        fun enqueueAll(source: Int, pulse: Int) {
             val names = moduleList[source].destinations
             for (name in names) {
-                enq(source, nameToIndex[name]!!, pulse)
+                enqueue(source, nameToIndex[name]!!, pulse)
             }
             when (pulse) {
                 0 -> lowPulses += names.size
@@ -72,13 +71,13 @@ fun part1(modules: Map<String, Module>): Long {
             }
         }
 
-        enqAll(0, 0)
+        enqueueAll(0, 0)
 
-        while (qh < qt) {
-            val source = qSource[qh]
-            val dest = qDest[qh]
-            val pulse = qPulse[qh]
-            qh++
+        while (queueHead < queueTail) {
+            val source = queueSource[queueHead]
+            val dest = queueDest[queueHead]
+            val pulse = queuePulse[queueHead]
+            queueHead++
             val module = moduleList[dest]
             val outPulse = when (module.type) {
                 ModuleType.FLIP_FLOP -> {
@@ -99,7 +98,7 @@ fun part1(modules: Map<String, Module>): Long {
                 else -> throw IllegalArgumentException()
             }
             if (outPulse >= 0) {
-                enqAll(dest, outPulse)
+                enqueueAll(dest, outPulse)
             }
         }
     }
