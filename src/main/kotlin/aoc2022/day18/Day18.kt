@@ -64,7 +64,7 @@ private fun findTotalSurface(cubes: List<Coord3d>): Int {
     return freeSideMap.values.sum()
 }
 
-data class Coord3d(val x: Int, val y: Int, val z: Int) {
+data class Coord3d(val x: Int, val y: Int, var z: Int) {
 
     companion object {
         fun fromInputString(input: String): Coord3d {

@@ -28,12 +28,21 @@ internal class Day22KtTest {
 
     @Test
     fun testBrickCanFall() {
-        val brickOnBottom = Brick(Coord3d(1, 1, 1), Coord3d(1, 2, 1))
+        val bricks = listOf(Brick(Coord3d(1, 1, 1), Coord3d(1, 2, 1)))
 
-        assertFalse(brickCanFall(Brick(Coord3d(0, 0, 1), Coord3d(0, 3, 1)), listOf(brickOnBottom)))
-        assertTrue(brickCanFall(Brick(Coord3d(0, 0, 3), Coord3d(0, 3, 3)), listOf(brickOnBottom)))
-        assertTrue(brickCanFall(Brick(Coord3d(0, 0, 2), Coord3d(1, 0, 2)), listOf(brickOnBottom)))
-        assertFalse(brickCanFall(Brick(Coord3d(0, 1, 2), Coord3d(1, 1, 2)), listOf(brickOnBottom)))
+        assertFalse(Brick(Coord3d(0, 0, 1), Coord3d(0, 3, 1)).canFall(bricks))
+        assertTrue(Brick(Coord3d(0, 0, 3), Coord3d(0, 3, 3)).canFall(bricks))
+        assertTrue(Brick(Coord3d(0, 0, 2), Coord3d(1, 0, 2)).canFall(bricks))
+        assertFalse(Brick(Coord3d(0, 1, 2), Coord3d(1, 1, 2)).canFall(bricks))
+    }
+
+    @Test
+    fun testMakeBrickFall() {
+        val brickOnBottom = Brick(Coord3d(1, 1, 1), Coord3d(1, 2, 1))
+        val brick = Brick(Coord3d(0, 0, 3), Coord3d(0, 3, 3))
+        val fallenBrick = Brick(Coord3d(0, 0, 1), Coord3d(0, 3, 1))
+
+        assertEquals(listOf(brickOnBottom, fallenBrick), makeBrickFall(brick, listOf(brickOnBottom, brick)))
     }
 
     @Test
@@ -45,7 +54,6 @@ internal class Day22KtTest {
         assertTrue(testBrick.occupiesLayerZ(3))
         assertFalse(testBrick.occupiesLayerZ(4))
     }
-
     @Test
     fun testCellsOccupiedOnLayer() {
         val bricks = listOf(
@@ -63,4 +71,5 @@ internal class Day22KtTest {
         )
         assertEquals(result, cellsOccupiedOnLayer(bricks))
     }
+
 }

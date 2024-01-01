@@ -20,8 +20,10 @@ fun parse(lines: List<String>): List<Brick> {
 }
 
 fun part1(bricks: List<Brick>): Long {
-    val maxX = (bricks.map { it.a.x } + bricks.map { it.b.x }).maxBy { it }
-    val maxY = (bricks.map { it.a.y } + bricks.map { it.b.y }).maxBy { it }
+    var settledBricks = bricks.toList()
+    for (brick in bricks) {
+        settledBricks = makeBrickFall(brick, settledBricks)
+    }
     return 0
 }
 
@@ -29,8 +31,22 @@ fun part2(bricks: List<Brick>): Long {
     return 0
 }
 
-fun brickCanFall(brick: Brick, bricks: List<Brick>): Boolean {
-    val bricksBottom = brick.bottomZ()
+fun makeBrickFall(brick: Brick, bricks: List<Brick>): List<Brick> {
+    var inputBricks = bricks.toList()
+    val updatedBricks = bricks.toMutableList()
+    val fallenBrick = brick.copy()
+    while (fallenBrick.canFall(inputBricks)) {
+        updatedBricks.remove(fallenBrick)
+        fallenBrick.a.z -= 1
+        fallenBrick.b.z -= 1
+        updatedBricks.add(fallenBrick)
+        inputBricks = updatedBricks.sortedBy { it.a.z }.toList()
+    }
+    return updatedBricks
+}
+
+fun Brick.canFall(bricks: List<Brick>): Boolean {
+    val bricksBottom = this.bottomZ()
     // Brick's already on bottom
     if (bricksBottom == 1) {
         return false
@@ -43,7 +59,7 @@ fun brickCanFall(brick: Brick, bricks: List<Brick>): Boolean {
     val bricksInLowerLayer = bricks.filter { it.occupiesLayerZ(bricksBottom - 1) }
 
     val cellsOccupiedInLowerLayer = cellsOccupiedOnLayer(bricksInLowerLayer)
-    val brickCoordsInLayer = brick.getCoordinatesOnLayer()
+    val brickCoordsInLayer = this.getCoordinatesOnLayer()
 
     val intersect = cellsOccupiedInLowerLayer.intersect(brickCoordsInLayer)
     return intersect.isEmpty()
