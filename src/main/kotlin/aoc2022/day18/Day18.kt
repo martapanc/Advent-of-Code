@@ -68,7 +68,7 @@ data class Coord3d(val x: Int, val y: Int, var z: Int) {
 
     companion object {
         fun fromInputString(input: String): Coord3d {
-            val split = input.split(",").map { it.toInt() }
+            val split = input.split(",").map { it.trim().toInt() }
             return Coord3d(split[0], split[1], split[2])
         }
     }
