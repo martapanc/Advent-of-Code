@@ -16,15 +16,38 @@ fun parse(lines: List<String>): List<Brick> {
             )
         )
     }
-    return bricks.sortedBy { it.a.z }
+    val sorted = bricks.sortedBy { it.a.z }
+    sorted.forEach { brick ->
+        println("%d,%d,%d~%d,%d,%d".format(brick.a.x, brick.a.y, brick.a.z, brick.b.x, brick.b.y, brick.b.z))
+    }
+    return sorted
 }
 
-fun part1(bricks: List<Brick>): Long {
+fun part1(bricks: List<Brick>): Int {
     var settledBricks = bricks.toList()
     for (brick in bricks) {
         settledBricks = makeBrickFall(brick, settledBricks)
     }
-    return 0
+
+    settledBricks.sortedBy { it.a.z }
+    val canBeDisintegrated = mutableSetOf<Brick>()
+    for (settledBrick in settledBricks) {
+        val supportingBricks = settledBrick.getSupportingBricks(settledBricks)
+        if (supportingBricks.size >= 2) {
+            canBeDisintegrated.addAll(supportingBricks)
+        }
+
+        val supportedBricks = settledBrick.getSupportedBricks(settledBricks)
+        if (supportedBricks.isEmpty()) {
+            canBeDisintegrated.add(settledBrick)
+        }
+    }
+
+//    val hiZ = maxOf(settledBricks.maxBy { it.a.z }.a.z, settledBricks.maxBy { it.b.z }.b.z)
+//    val bricksAtTheTop = bricks.filter { it.occupiesLayerZ(hiZ) }
+//
+//    canBeDisintegrated.addAll(bricksAtTheTop)
+    return canBeDisintegrated.size
 }
 
 fun part2(bricks: List<Brick>): Long {
@@ -85,8 +108,42 @@ fun cellsOccupiedOnLayer(bricksOccupyingLayer: List<Brick>): Set<Coord> {
     return cellsOccupied
 }
 
+fun Brick.getSupportingBricks(bricks: List<Brick>): Set<Brick> {
+    val supportingBricks = mutableSetOf<Brick>()
+
+    val bricksBottom = this.bottomZ()
+    val bricksCoordinatesOnLayer = this.getCoordinatesOnLayer()
+    val bricksInLowerLayer = bricks.filter { it.occupiesLayerZ(bricksBottom - 1) }
+
+    for (candidateSupport in bricksInLowerLayer) {
+        if (candidateSupport.getCoordinatesOnLayer().intersect(bricksCoordinatesOnLayer).isNotEmpty()) {
+            supportingBricks.add(candidateSupport)
+        }
+    }
+
+    return supportingBricks
+}
+
+fun Brick.getSupportedBricks(bricks: List<Brick>): Set<Brick> {
+    val supportedBricks = mutableSetOf<Brick>()
+
+    val bricksTop = this.topZ()
+    val bricksCoordinatesOnLayer = this.getCoordinatesOnLayer()
+    val bricksInUpperLayer = bricks.filter { it.occupiesLayerZ(bricksTop + 1) }
+
+    for (candidateSupported in bricksInUpperLayer) {
+        if (candidateSupported.getCoordinatesOnLayer().intersect(bricksCoordinatesOnLayer).isNotEmpty()) {
+            supportedBricks.add(candidateSupported)
+        }
+    }
+
+    return supportedBricks
+}
+
 data class Brick(val a: Coord3d, val b: Coord3d) {
-    fun bottomZ(): Int = minOf(a.z, minOf(b.z))
+    fun bottomZ(): Int = minOf(a.z, b.z)
+
+    fun topZ(): Int = maxOf(a.z, b.z)
 
     fun occupiesLayerZ(z: Int): Boolean = z in IntRange(a.z, b.z) || z in IntRange(b.z, a.z)
 
