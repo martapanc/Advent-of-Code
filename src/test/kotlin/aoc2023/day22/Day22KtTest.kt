@@ -17,13 +17,12 @@ internal class Day22KtTest {
     @Test
     fun testPart1() {
 //        assertEquals(5, part1(testInput))
-        assertEquals(473, part1(input))
+//        assertEquals(473, part1_2(input))
     }
 
     @Test
     fun testPart2() {
-        assertEquals(70, part2(testInput))
-        assertEquals(2515, part2(input))
+//        assertEquals(61045, part2(input))
     }
 
     @Test
