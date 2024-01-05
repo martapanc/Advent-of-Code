@@ -1,12 +1,7 @@
 package aoc2023.day24
 
 import aoc2022.day18.Coord3d
-import org.apache.commons.math3.fitting.leastsquares.LeastSquaresBuilder
-import org.apache.commons.math3.linear.*
-import org.apache.commons.math3.linear.Array2DRowRealMatrix
 import kotlin.math.pow
-import kotlin.math.round
-
 import kotlin.math.sign
 
 fun parse(lines: List<String>): List<HailStone> {
@@ -48,20 +43,7 @@ fun part1(hailStones: List<HailStone>, range: LongRange = (200000000000000..4000
 }
 
 fun part2(hailStones: List<HailStone>): Long {
-    val equationMap = hailStones.associateWith { hailStone -> equation3d(hailStone.coord, hailStone.velocity) }
-
-    // Calculate linear equations
-    val equation1 = calculateLinearEquation(hailStones[0], hailStones[1])
-    val equation2 = calculateLinearEquation(hailStones[2], hailStones[3])
-    val equation3 = calculateLinearEquation(hailStones[1], hailStones[4])
-    val equation4 = calculateLinearEquation(hailStones[1], hailStones[2])
-    val equation5 = calculateLinearEquation(hailStones[0], hailStones[2])
-    val equation6 = calculateLinearEquation(hailStones[3], hailStones[4])
-
-//    val solution = solveLinearSystem(arrayOf(equation1, equation2, equation3, equation4, equation5, equation6))
-
-    val solve = solve(hailStones)
-    return solve
+    return solve(hailStones)
 }
 
 fun lineInterceptedInThePast(intercept: DoubleCoord3d, hailStone: HailStone): Boolean {
@@ -86,8 +68,6 @@ data class DoubleCoord3d(val coord: String) {
 
 data class Line(val slope: Double, val intercept: Double)
 
-data class Line3d(val a: Int, val b: Int, val c: Int, val d: Double)
-
 fun equation2d(coord: DoubleCoord3d, velocity: Coord3d): Line {
     val coord2 = DoubleCoord3d(coord.x + velocity.x, coord.y + velocity.y, coord.z + velocity.z)
 
@@ -99,12 +79,6 @@ fun equation2d(coord: DoubleCoord3d, velocity: Coord3d): Line {
     return Line(slope, intercept)
 }
 
-fun equation3d(point1: DoubleCoord3d, velocity: Coord3d): Line3d {
-    val d = -(velocity.x * point1.x + velocity.y * point1.y + velocity.z * point1.z)
-
-    return Line3d(velocity.x, velocity.y, velocity.z, d)
-}
-
 fun Line.intersects(secondLine: Line): Boolean = (this.slope != secondLine.slope)
 
 fun findIntersection2d(a: Line, b: Line): DoubleCoord3d? {
@@ -114,40 +88,6 @@ fun findIntersection2d(a: Line, b: Line): DoubleCoord3d? {
         return DoubleCoord3d(xIntercept, yIntercept, 0.0)
     }
     return null
-}
-
-data class LinearEquation(val coefficients: DoubleArray, val constant: Double)
-
-fun calculateLinearEquation(h1: HailStone, h2: HailStone): LinearEquation {
-    val coefficients = doubleArrayOf(
-        h2.coord.x - h1.coord.x,
-        h2.coord.y - h1.coord.y,
-        h2.coord.z - h1.coord.z,
-        h2.velocity.x.toDouble() - h1.velocity.x.toDouble(),
-        h2.velocity.y.toDouble() - h1.velocity.y.toDouble(),
-        h2.velocity.z.toDouble() - h1.velocity.z.toDouble()
-    )
-
-    val constant = h1.coord.x * (h2.velocity.x.toDouble() - h1.velocity.x.toDouble()) +
-            h1.coord.y * (h2.velocity.y.toDouble() - h1.velocity.y.toDouble()) +
-            h1.coord.z * (h2.velocity.z.toDouble() - h1.velocity.z.toDouble()) -
-            h1.velocity.x.toDouble() * (h2.coord.x - h1.coord.x) -
-            h1.velocity.y.toDouble() * (h2.coord.y - h1.coord.y) -
-            h1.velocity.z.toDouble() * (h2.coord.z - h1.coord.z)
-
-    return LinearEquation(coefficients, constant)
-}
-
-fun solveLinearSystem(matrix: Array<LinearEquation>): RealVector {
-    val coefficients = Array2DRowRealMatrix(matrix.map { it.coefficients }.toTypedArray(), false)
-    val constants = matrix.map { it.constant }.toDoubleArray()
-    val solver: DecompositionSolver = SingularValueDecomposition(coefficients).solver
-    return solver.solve(ArrayRealVector(constants, false))
-}
-
-
-fun matrixTranspose(m: List<List<Double>>): List<List<Double>> {
-    return m[0].indices.map { col -> m.map { it[col] } }
 }
 
 fun matrixMinor(m: List<List<Double>>, i: Int, j: Int): List<List<Double>> {
@@ -219,11 +159,11 @@ fun solve(hailstones: List<HailStone>): Long {
     val (b, vb) = Pair(hailstones[1].coord, hailstones[1].velocity)
     val (c, vc) = Pair(hailstones[2].coord, hailstones[2].velocity)
 
-    val (A1, B1) = getEquations(a, va, b, vb)
-    val (A2, B2) = getEquations(a, va, c, vc)
-    val A = A1 + A2
-    val B = B1 + B2
+    val (a1, b1) = getEquations(a, va, b, vb)
+    val (a2, b2) = getEquations(a, va, c, vc)
+    val aSum = a1 + a2
+    val bSum = b1 + b2
 
-    val x = matrixMul(matrixInverse(A), B)
+    val x = matrixMul(matrixInverse(aSum), bSum)
     return x.take(3).sumOf { it.toLong() }
 }
