@@ -336,3 +336,5 @@ gradle-app.setting
 # Ignore real input files
 **/input
 **/input.txt
+
+**/node_modules
