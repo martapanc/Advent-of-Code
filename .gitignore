@@ -338,3 +338,4 @@ gradle-app.setting
 **/input.txt
 
 **/node_modules
+**/coverage
