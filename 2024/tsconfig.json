@@ -9,5 +9,10 @@
     "paths": {
       "@utils/*": ["src/utils/*"]
     }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "esm": true
   }
 }
