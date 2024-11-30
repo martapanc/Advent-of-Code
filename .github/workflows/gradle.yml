@@ -20,14 +20,13 @@ jobs:
       with:
         java-version: 17
 
-    - name: Go to folder
-      run: cd 2015-2023
-
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+      working-directory: 2015-2023
 
     - name: Build with Gradle
       run: ./gradlew clean build -x test
+      working-directory: 2015-2023
 
 #    - name: Run Unit tests
 #      run: ./gradlew test
