@@ -4,7 +4,7 @@ import path from "node:path";
 
 export async function readInputLineByLine(path: string): Promise<string[]> {
     const content = fs.readFileSync(path, 'utf-8');
-    return content.split('\n');
+    return content.split('\n').filter(line => line.trim() !== '');
 }
 
 function inputPath(inputFile: string, metaUrl: string): string {

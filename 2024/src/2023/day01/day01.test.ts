@@ -9,7 +9,7 @@ describe('2023 Day 1', () => {
 
     test('Part 2', async () => {
         expect(await part2('testInput2')).toEqual(281);
-        // expect(await part2('input')).toEqual(55413);
+        expect(await part2('input')).toEqual(55413);
     });
 });
 
