@@ -12,4 +12,3 @@ describe('2024 Day 1', () => {
         expect(await part2('input')).toEqual(29379307);
     });
 });
-
