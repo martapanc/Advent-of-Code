@@ -46,10 +46,42 @@ const fetchInput = async () => {
 
         const solutionPath = path.join(`${dirName}/${formattedDay}.ts`);
         let ws = await fs.createWriteStream(solutionPath);
+        let content = `import path from "node:path";
+import {readInputLineByLine} from "@utils/io";
+
+export async function part1(inputFile: string) {
+    return await day${day}(inputFile);
+}
+
+export async function part2(inputFile: string) {
+    return await day${day}(inputFile);
+}
+
+async function day${day}(inputFile: string, calcFn?: () => {}) {
+    const inputPath = path.join(__dirname, inputFile);
+    const lines = await readInputLineByLine(inputPath);
+
+    return calcFn();
+}`;
+        ws.write(content);
         ws.end();
 
         const testPath = path.join(`${dirName}/${formattedDay}.spec.ts`);
         ws = await fs.createWriteStream(testPath);
+        content = `import {part1, part2} from "./${formattedDay}";
+
+describe('${year} Day ${day}', () => {
+    test('Part 1', async () => {
+        expect(await part1('testInput1')).toEqual(11);
+        expect(await part1('input')).toEqual(3246517);
+    });
+
+    test('Part 2', async () => {
+        expect(await part2('testInput1')).toEqual(31);
+        expect(await part2('input')).toEqual(29379307);
+    });
+});`;
+        ws.write(content);
         ws.end();
 
         const inputPath = path.join(`${dirName}/input`);
