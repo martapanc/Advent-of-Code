@@ -57,11 +57,11 @@ export async function part2(inputFile: string) {
     return await day${day}(inputFile);
 }
 
-async function day${day}(inputFile: string, calcFn?: () => {}) {
+async function day${day}(inputFile: string, calcFn?: (lines: string[]) => number) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
 
-    return calcFn();
+    return calcFn?.();
 }`;
         ws.write(content);
         ws.end();
