@@ -6,34 +6,26 @@ export async function part1(inputFile: string) {
 }
 
 export async function part2(inputFile: string) {
-    return await day2(inputFile);
+    return await day2(inputFile, countSafeLevels, true);
 }
 
-async function day2(inputFile: string, calcFn?: (lines: string[]) => number) {
+async function day2(
+    inputFile: string,
+    calcFn?: (lines: string[], applyTolerance: boolean
+) => number, applyTolerance: boolean = false) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
 
-    return calcFn?.(lines);
+    return calcFn?.(lines, applyTolerance);
 }
 
-function countSafeLevels(lines: string[]): number {
+function countSafeLevels(lines: string[], applyTolerance: boolean = false): number {
     let safeLevelCount = 0;
 
     lines.forEach(line => {
-        const numbers = line.split(" ").map(str => Number.parseInt(str));
-        let isSafe = true;
-        const deltas = getLevelDeltas(numbers);
-        if (deltas.every(delta => delta >= 0) || deltas.every(delta => delta <= 0)) {
-            const absDelta = deltas.map(delta => Math.abs(delta));
+        const level = line.split(" ").map(str => Number.parseInt(str));
 
-            if (absDelta.some(delta => delta < 1 || delta > 3)) {
-                isSafe = false;
-            }
-        } else {
-            isSafe = false;
-        }
-
-        if (isSafe) {
+        if (isLevelSafe(level)) {
             safeLevelCount++;
         }
     })
@@ -49,4 +41,20 @@ export function getLevelDeltas(level: number[]) {
     }
 
     return delta;
+}
+
+function isLevelSafe(level: number[]): boolean {
+    let isSafe = true;
+    const deltas = getLevelDeltas(level);
+    if (deltas.every(delta => delta >= 0) || deltas.every(delta => delta <= 0)) {
+        const absDelta = deltas.map(delta => Math.abs(delta));
+
+        if (absDelta.some(delta => delta < 1 || delta > 3)) {
+            isSafe = false;
+        }
+    } else {
+        isSafe = false;
+    }
+
+    return isSafe;
 }
