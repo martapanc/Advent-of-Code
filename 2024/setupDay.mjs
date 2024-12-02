@@ -66,7 +66,7 @@ async function day${day}(inputFile: string, calcFn?: (lines: string[]) => number
         ws.write(content);
         ws.end();
 
-        const testPath = path.join(`${dirName}/${formattedDay}.spec.ts`);
+        const testPath = path.join(`${dirName}/${formattedDay}.test.ts`);
         ws = await fs.createWriteStream(testPath);
         content = `import {part1, part2} from "./${formattedDay}";
 
