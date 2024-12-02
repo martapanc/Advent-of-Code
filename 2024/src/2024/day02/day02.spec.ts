@@ -3,7 +3,7 @@ import {getLevelDeltas, part1, part2} from "./day02";
 describe('2024 Day 2', () => {
     test('Part 1', async () => {
         expect(await part1('testInput1')).toEqual(2);
-        expect(await part1('input')).toEqual(3246517);
+        expect(await part1('input')).toEqual(341);
     });
 
     test('Part 2', async () => {
