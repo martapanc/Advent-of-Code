@@ -43,7 +43,6 @@ function countSafeLevels(lines: string[], applyTolerance: boolean = false): numb
         }
     })
 
-
     return safeLevelCount;
 }
 

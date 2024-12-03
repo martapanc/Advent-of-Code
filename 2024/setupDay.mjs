@@ -61,7 +61,7 @@ async function day${day}(inputFile: string, calcFn?: (lines: string[]) => number
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
 
-    return calcFn?.();
+    return calcFn?.(lines);
 }`;
         ws.write(content);
         ws.end();
