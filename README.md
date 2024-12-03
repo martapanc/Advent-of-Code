@@ -1,5 +1,7 @@
 # 🎄 Advent of Code ⛄️
 ![Java & Kotlin CI with Gradle](https://github.com/martapanc/Advent-of-Code/workflows/Java%20&%20Kotlin%20CI%20with%20Gradle/badge.svg)
+![Node.js CI](https://github.com/martapanc/Advent-of-Code/workflows/Node.js%20CI/badge.svg)
+
 
 Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2015-2024)
 
