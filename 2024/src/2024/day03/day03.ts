@@ -28,13 +28,14 @@ function computeMultiplicationResult(lines: string[], calcFn?: (input: string) =
         })
     });
 
-    return result
+    return result;
 }
 
 export function getMulExpressions(input: string) {
     return input.match(/mul\([0-9]{1,3},[0-9]{1,3}\)/g);
 }
 
+// Process input as a single line so that any "don't()" carry over automatically
 export function getEnabledMulExpressions(input: string) {
     const matches = input.match(/don't\(\)|do\(\)|mul\([0-9]{1,3},[0-9]{1,3}\)/g);
 
