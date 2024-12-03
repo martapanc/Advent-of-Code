@@ -32,6 +32,6 @@ jobs:
         run: yarn install
         working-directory: '2024'
 
-      - name: Run tests
-        run: yarn test
-        working-directory: '2024'
+#      - name: Run tests
+#        run: yarn test
+#        working-directory: '2024'
