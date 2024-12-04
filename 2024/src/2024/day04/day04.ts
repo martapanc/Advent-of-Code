@@ -79,8 +79,8 @@ function solve_X_MAS_Crosswords(grid: Grid): number {
     grid.forEach((value, cell) => {
         if (value === 'A') {
             const neighbors = getDiagonalNeighbors(Coord.deserialize(cell), grid);
-            const str = neighbors.sort().join('');
-            if (str === "MMSS") {
+            const str = neighbors.join('');
+            if (str === "MMSS" || str === "SSMM" || str === 'SMMS' || str === 'MSSM') {
                 xmasCount++;
             }
         }

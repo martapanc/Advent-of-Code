@@ -53,11 +53,11 @@ export function getNeighborCoords(source: Coord, includeDiagonals: boolean = fal
 }
 
 function getDiagonalCoords(source: Coord) {
-    const coords = [];
+    const coords = []; // Clockwise
     coords.push(new Coord(source.x + 1, source.y - 1)); // NE
     coords.push(new Coord(source.x + 1, source.y + 1)); // SE
-    coords.push(new Coord(source.x - 1, source.y - 1)); // NW
     coords.push(new Coord(source.x - 1, source.y + 1)); // SW
+    coords.push(new Coord(source.x - 1, source.y - 1)); // NW
 
     return coords;
 }

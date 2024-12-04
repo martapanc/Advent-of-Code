@@ -8,6 +8,6 @@ describe('2024 Day 4', () => {
 
     test('Part 2', async () => {
         expect(await part2('testInput1')).toEqual(9);
-        expect(await part2('input')).toEqual(1898); // Too high
+        expect(await part2('input')).toEqual(1873);
     });
 });
