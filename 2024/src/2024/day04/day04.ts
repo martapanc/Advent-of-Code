@@ -1,13 +1,13 @@
 import path from "node:path";
 import {readInputLineByLine} from "@utils/io";
-import {Coord, getNeighbors, Grid} from "@utils/grid";
+import {Coord, getDiagonalNeighbors, getNeighbors, Grid} from "@utils/grid";
 
 export async function part1(inputFile: string) {
-    return await day4(inputFile, solveCrosswords);
+    return await day4(inputFile, solve_XMAS_Crosswords);
 }
 
 export async function part2(inputFile: string) {
-    return await day4(inputFile);
+    return await day4(inputFile, solve_X_MAS_Crosswords);
 }
 
 async function day4(inputFile: string, calcFn?: (grid: Grid) => number) {
@@ -24,14 +24,13 @@ async function day4(inputFile: string, calcFn?: (grid: Grid) => number) {
     return calcFn?.(grid);
 }
 
-function solveCrosswords(grid: Grid): number {
+function solve_XMAS_Crosswords(grid: Grid): number {
     let xmasCount = 0;
 
     grid.forEach((value, cell) => {
         if (value === 'X') {
             const neighbors = getNeighbors(Coord.deserialize(cell), grid, true);
             if (neighbors.some(n => n === 'M')) {
-
                 const all = getAllCandidates(Coord.deserialize(cell), grid);
 
                 const localXmasCount: number = all.filter(s => s === 'XMAS').length;
@@ -39,7 +38,6 @@ function solveCrosswords(grid: Grid): number {
             }
         }
     });
-
 
     return xmasCount;
 }
@@ -73,4 +71,20 @@ function getAllCandidates(cell: Coord, grid: Grid) {
     });
 
     return candidates;
+}
+
+function solve_X_MAS_Crosswords(grid: Grid): number {
+    let xmasCount = 0;
+
+    grid.forEach((value, cell) => {
+        if (value === 'A') {
+            const neighbors = getDiagonalNeighbors(Coord.deserialize(cell), grid);
+            const str = neighbors.sort().join('');
+            if (str === "MMSS") {
+                xmasCount++;
+            }
+        }
+    });
+
+    return xmasCount;
 }

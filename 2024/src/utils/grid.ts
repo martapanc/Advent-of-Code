@@ -46,11 +46,30 @@ export function getNeighborCoords(source: Coord, includeDiagonals: boolean = fal
         new Coord(source.x - 1, source.y), // W
     ];
     if (includeDiagonals) {
-        neighbors.push(new Coord(source.x + 1, source.y - 1)); // NE
-        neighbors.push(new Coord(source.x + 1, source.y + 1)); // SE
-        neighbors.push(new Coord(source.x - 1, source.y - 1)); // NW
-        neighbors.push(new Coord(source.x - 1, source.y + 1)); // SW
+        neighbors.push(...getDiagonalCoords(source));
     }
 
     return neighbors;
+}
+
+function getDiagonalCoords(source: Coord) {
+    const coords = [];
+    coords.push(new Coord(source.x + 1, source.y - 1)); // NE
+    coords.push(new Coord(source.x + 1, source.y + 1)); // SE
+    coords.push(new Coord(source.x - 1, source.y - 1)); // NW
+    coords.push(new Coord(source.x - 1, source.y + 1)); // SW
+
+    return coords;
+}
+
+export function getDiagonalNeighbors(source: Coord, grid: Grid) {
+    const diagonalCoords: Coord[] = getDiagonalCoords(source);
+    const diagonalNeighbors: string[] = [];
+    diagonalCoords.forEach(coord => {
+        const coordKey = coord.serialize();
+        if (grid.has(coordKey)) {
+            diagonalNeighbors.push(grid.get(coordKey)!);
+        }
+    });
+    return diagonalNeighbors
 }
