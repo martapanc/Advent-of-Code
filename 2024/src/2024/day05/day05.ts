@@ -2,11 +2,11 @@ import path from "node:path";
 import {readInputLineByLine} from "@utils/io";
 
 export async function part1(inputFile: string) {
-    return await day5(inputFile, calcCorrectUpdateChecksum);
+    return await day5(inputFile, calcChecksum);
 }
 
 export async function part2(inputFile: string) {
-    return await day5(inputFile, sortIncorrectUpdatesAndCalcChecksum);
+    return await day5(inputFile, calcChecksum, true);
 }
 
 type QueueRule = {
@@ -16,7 +16,11 @@ type QueueRule = {
 
 type Queue = number[];
 
-async function day5(inputFile: string, calcFn?: (rules: QueueRule[], queues: Queue[]) => number) {
+async function day5(
+    inputFile: string,
+    calcFn?: (rules: QueueRule[], queues: Queue[], isPart2: boolean) => number,
+    isPart2: boolean = false
+) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
 
@@ -38,10 +42,10 @@ async function day5(inputFile: string, calcFn?: (rules: QueueRule[], queues: Que
         }
     }
 
-    return calcFn?.(queueRules, queues);
+    return calcFn?.(queueRules, queues, isPart2);
 }
 
-function calcCorrectUpdateChecksum(rules: QueueRule[], queues: Queue[]) {
+function calcChecksum(rules: QueueRule[], queues: Queue[], isPart2: boolean) {
     let checksum = 0;
 
     queues.forEach(queue => {
@@ -57,31 +61,13 @@ function calcCorrectUpdateChecksum(rules: QueueRule[], queues: Queue[]) {
             }
         }
 
-        if (isQueueValid) {
+        // Part 1: only consider sorted queues
+        if (isQueueValid && !isPart2) {
             checksum += queue[Math.floor(queue.length / 2)];
         }
-    });
 
-    return checksum;
-}
-
-function sortIncorrectUpdatesAndCalcChecksum(rules: QueueRule[], queues: Queue[]) {
-    let checksum = 0;
-
-    queues.forEach(queue => {
-        let isQueueValid = true;
-        const rulesToCheck = rules.filter(rule => queue.includes(rule.a) && queue.includes(rule.b));
-
-        for (const ruleToCheck of rulesToCheck) {
-            const aIndex = queue.indexOf(ruleToCheck.a);
-            const bIndex = queue.indexOf(ruleToCheck.b);
-            if (aIndex > bIndex) {
-                isQueueValid = false;
-                break;
-            }
-        }
-
-        if (!isQueueValid) {
+        // Part 2: only consider unsorted queues
+        if (!isQueueValid && isPart2) {
             const sortedQueue = topologicalSort(queue, rulesToCheck);
             checksum += sortedQueue[Math.floor(sortedQueue.length / 2)];
         }
