@@ -6,3 +6,4 @@
 | [Day 2](https://adventofcode.com/2024/day/2) | Red-Nosed Reports  | [code](day02/day02.ts) | [tests](day02/day02.test.ts) | increasing/decreasing num list, deltas | 🧊         |        |
 | [Day 3](https://adventofcode.com/2024/day/3) | Mull It Over       | [code](day03/day03.ts) | [tests](day03/day03.test.ts) | regex, compiler                        | 🧊         |        |
 | [Day 4](https://adventofcode.com/2024/day/4) | Ceres Search       | [code](day04/day04.ts) | [tests](day04/day04.test.ts) | grid, crosswords                       | 🧊🧊       |        |
+| [Day 5](https://adventofcode.com/2024/day/5) | Print Queue        | [code](day05/day05.ts) | [tests](day05/day05.test.ts) | graph, topological sort, Kahn's        | 🧊🧊       |        |
