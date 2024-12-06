@@ -3,14 +3,15 @@ import {readInputLineByLine} from "@utils/io";
 import {Cardinal, Coord, Direction, Grid, move, rotate} from "@utils/grid";
 
 export async function part1(inputFile: string) {
-    return await day6(inputFile, calcDistinctPositions);
+    const { distinctPositions } = await day6(inputFile, calcDistinctPositions);
+    return distinctPositions.size;
 }
 
 export async function part2(inputFile: string) {
-    return await day6(inputFile);
+    return await day6(inputFile, findLoops);
 }
 
-async function day6(inputFile: string, calcFn?: (grid: Grid, init: Coord) => number) {
+async function day6(inputFile: string, calcFn?: (grid: Grid, init: Coord) => any) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
 
@@ -32,23 +33,49 @@ async function day6(inputFile: string, calcFn?: (grid: Grid, init: Coord) => num
 }
 
 function calcDistinctPositions(grid: Grid, initialPos: Coord) {
-    let distinctPositions = new Set<string>();
+    let distinctPositions = new Map<string, Cardinal>();
 
     let currentPos = new Coord(initialPos.x, initialPos.y);
-    distinctPositions.add(currentPos.serialize());
-
     let direction = Cardinal.NORTH;
+    distinctPositions.set(currentPos.serialize(), direction);
+
     let newPosCoord = move(currentPos, direction);
 
-    while (grid.get(newPosCoord.serialize())) {
+    let foundLoop = false;
+
+    while (grid.get(newPosCoord.serialize()) && !foundLoop) {
+        if (distinctPositions.has(newPosCoord.serialize()) && distinctPositions.get(newPosCoord.serialize()) === direction) {
+            foundLoop = true;
+            break;
+        }
         if (grid.get(newPosCoord.serialize()) === '#') {
             direction = rotate(direction, Direction.RIGHT);
         } else if (grid.get(newPosCoord.serialize()) === '.') {
-            distinctPositions.add(newPosCoord.serialize());
+            distinctPositions.set(newPosCoord.serialize(), direction);
             currentPos = newPosCoord;
         }
         newPosCoord = move(currentPos, direction);
     }
 
-    return distinctPositions.size;
+    return { distinctPositions, foundLoop };
+}
+
+function findLoops(grid: Grid, initialPos: Coord) {
+    let loopCount = 0;
+
+    const { distinctPositions } = calcDistinctPositions(grid, initialPos);
+    distinctPositions.delete(initialPos.serialize());
+
+    Array.from(distinctPositions.keys()).forEach(coord => {
+         const newGrid = new Map(grid);
+         newGrid.set(coord, "#");
+
+         const { foundLoop } = calcDistinctPositions(newGrid, initialPos);
+
+         if (foundLoop) {
+             loopCount++;
+         }
+    });
+
+    return loopCount;
 }
