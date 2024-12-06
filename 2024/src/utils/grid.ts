@@ -73,3 +73,39 @@ export function getDiagonalNeighbors(source: Coord, grid: Grid) {
     });
     return diagonalNeighbors
 }
+
+export enum Cardinal {
+    NORTH = 0,
+    EAST = 1,
+    SOUTH = 2,
+    WEST = 3
+}
+
+export enum Direction {
+    LEFT,
+    RIGHT
+}
+
+export function move(source: Coord, direction: Cardinal | string) {
+    switch (direction) {
+        case Cardinal.NORTH:
+            return new Coord(source.x, source.y - 1);
+        case Cardinal.EAST:
+            return new Coord(source.x + 1, source.y);
+        case Cardinal.SOUTH:
+            return new Coord(source.x, source.y + 1);
+        case Cardinal.WEST:
+            return new Coord(source.x - 1, source.y);
+        default:
+            throw new Error('No such cardinal');
+    }
+}
+
+export function rotate(source: Cardinal, rotationSense: Direction): Cardinal {
+    switch (rotationSense) {
+        case Direction.RIGHT:
+            return (source + 1) % 4 as Cardinal;
+        case Direction.LEFT:
+            return (source - 1 + 4) % 4 as Cardinal;
+    }
+}
