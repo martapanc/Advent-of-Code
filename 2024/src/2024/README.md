@@ -7,3 +7,4 @@
 | [Day 3](https://adventofcode.com/2024/day/3) | Mull It Over       | [code](day03/day03.ts) | [tests](day03/day03.test.ts) | regex, compiler                        | 🧊         |        |
 | [Day 4](https://adventofcode.com/2024/day/4) | Ceres Search       | [code](day04/day04.ts) | [tests](day04/day04.test.ts) | grid, crosswords                       | 🧊🧊       |        |
 | [Day 5](https://adventofcode.com/2024/day/5) | Print Queue        | [code](day05/day05.ts) | [tests](day05/day05.test.ts) | graph, topological sort, Kahn's        | 🧊🧊       |        |
+| [Day 6](https://adventofcode.com/2024/day/6) | Guard Gallivant    | [code](day06/day06.ts) | [tests](day06/day06.test.ts) | grid, move & turn, detect loops        | 🧊🧊       |        |
