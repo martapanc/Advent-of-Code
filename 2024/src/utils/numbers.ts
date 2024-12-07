@@ -16,3 +16,16 @@ export function generateBinaryStrings(length: number): string[] {
         "1" + combo
     ]);
 }
+
+export function generateTernaryStrings(length: number): string[] {
+    if (length === 0) {
+        return [""];
+    }
+
+    const smallerCombos = generateTernaryStrings(length - 1);
+    return smallerCombos.flatMap((combo) => [
+        "0" + combo,
+        "1" + combo,
+        "2" + combo
+    ]);
+}

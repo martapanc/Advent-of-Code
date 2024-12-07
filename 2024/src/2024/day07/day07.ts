@@ -1,16 +1,16 @@
 import path from "node:path";
 import {readInputLineByLine} from "@utils/io";
-import {generateBinaryStrings} from "@utils/numbers";
+import {generateBinaryStrings, generateTernaryStrings} from "@utils/numbers";
 
 export async function part1(inputFile: string) {
-    return await day7(inputFile, calcValidEquations);
+    return await day7(inputFile, generateBinaryStrings);
 }
 
 export async function part2(inputFile: string) {
-    return await day7(inputFile);
+    return await day7(inputFile, generateTernaryStrings);
 }
 
-async function day7(inputFile: string, calcFn?: (equations: Map<number, number[]>) => number) {
+async function day7(inputFile: string, calcFn: (length: number) => string[]) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
 
@@ -20,21 +20,38 @@ async function day7(inputFile: string, calcFn?: (equations: Map<number, number[]
         equations.set(Number.parseInt(row[0]), row[1].split(" ").map(str => Number.parseInt(str)));
     })
 
-    return calcFn?.(equations);
+    return calcValidEquations(equations, calcFn);
 }
 
-function calcValidEquations(equations: Map<number, number[]>): number {
+function calcValidEquations(
+    equations: Map<number, number[]>,
+    generationFn: (length: number) => string[]
+): number {
     let validEquationChecksum = 0;
 
     eqLoop: for (let [res, ops] of equations) {
-        const combos = generateBinaryStrings(ops.length - 1);
+        const combos = generationFn(ops.length - 1);
         for (const combo of combos) {
              let partialRes = 0;
              combo.split("").forEach((opId, index) => {
                  if (index === 0) {
-                     partialRes = opId === '0' ? (ops[index] + ops[index + 1]) : (ops[index] * ops[index + 1]);
+                     switch (opId) {
+                         case '0':
+                             partialRes = ops[index] + ops[index + 1];
+                             break;
+                         case '1':
+                             partialRes = ops[index] * ops[index + 1];
+                             break;
+                     }
                  } else {
-                     partialRes = opId === '0' ? (partialRes + ops[index + 1]) : (partialRes * ops[index + 1]);
+                     switch (opId) {
+                         case '0':
+                             partialRes = partialRes + ops[index + 1];
+                             break;
+                         case '1':
+                             partialRes = partialRes * ops[index + 1];
+                             break;
+                     }
                  }
              });
 
