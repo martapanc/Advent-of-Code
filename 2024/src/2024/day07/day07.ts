@@ -42,6 +42,9 @@ function calcValidEquations(
                          case '1':
                              partialRes = ops[index] * ops[index + 1];
                              break;
+                         case '2':
+                             partialRes = Number.parseInt(`${ops[index]}${ops[index + 1]}`);
+                             break;
                      }
                  } else {
                      switch (opId) {
@@ -51,6 +54,8 @@ function calcValidEquations(
                          case '1':
                              partialRes = partialRes * ops[index + 1];
                              break;
+                         case '2':
+                             partialRes = Number.parseInt(`${partialRes}${ops[index + 1]}`);
                      }
                  }
              });
