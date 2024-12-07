@@ -12,13 +12,13 @@ test('get neighbor coords including diagonals', () => {
 });
 
 test('rotate', () => {
-    expect(rotate(Cardinal.NORTH, Direction.RIGHT)).toEqual("EAST");
-    expect(rotate(Cardinal.EAST, Direction.RIGHT)).toEqual("SOUTH");
-    expect(rotate(Cardinal.SOUTH, Direction.RIGHT)).toEqual("WEST");
-    expect(rotate(Cardinal.WEST, Direction.RIGHT)).toEqual("NORTH");
+    expect(rotate(Cardinal.NORTH, Direction.RIGHT)).toEqual(Cardinal.EAST);
+    expect(rotate(Cardinal.EAST, Direction.RIGHT)).toEqual(Cardinal.SOUTH);
+    expect(rotate(Cardinal.SOUTH, Direction.RIGHT)).toEqual(Cardinal.WEST);
+    expect(rotate(Cardinal.WEST, Direction.RIGHT)).toEqual(Cardinal.NORTH);
 
-    expect(rotate(Cardinal.NORTH, Direction.LEFT)).toEqual("WEST");
-    expect(rotate(Cardinal.EAST, Direction.LEFT)).toEqual("NORTH");
-    expect(rotate(Cardinal.SOUTH, Direction.LEFT)).toEqual("EAST");
-    expect(rotate(Cardinal.WEST, Direction.LEFT)).toEqual("SOUTH");
+    expect(rotate(Cardinal.NORTH, Direction.LEFT)).toEqual(Cardinal.WEST);
+    expect(rotate(Cardinal.EAST, Direction.LEFT)).toEqual(Cardinal.NORTH);
+    expect(rotate(Cardinal.SOUTH, Direction.LEFT)).toEqual(Cardinal.EAST);
+    expect(rotate(Cardinal.WEST, Direction.LEFT)).toEqual(Cardinal.SOUTH);
 });
