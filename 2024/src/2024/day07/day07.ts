@@ -10,7 +10,7 @@ export async function part2(inputFile: string) {
     return await day7(inputFile, generateTernaryStrings);
 }
 
-async function day7(inputFile: string, calcFn: (length: number) => string[]) {
+async function day7(inputFile: string, comboGenFn: (length: number) => string[]) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
 
@@ -20,43 +20,28 @@ async function day7(inputFile: string, calcFn: (length: number) => string[]) {
         equations.set(Number.parseInt(row[0]), row[1].split(" ").map(str => Number.parseInt(str)));
     })
 
-    return calcValidEquations(equations, calcFn);
+    return calcValidEquations(equations, comboGenFn);
 }
 
 function calcValidEquations(
     equations: Map<number, number[]>,
-    generationFn: (length: number) => string[]
+    comboGenFn: (length: number) => string[]
 ): number {
     let validEquationChecksum = 0;
 
     eqLoop: for (let [res, ops] of equations) {
-        const combos = generationFn(ops.length - 1);
-        for (const combo of combos) {
-             let partialRes = 0;
+        for (const combo of comboGenFn(ops.length - 1)) {
+             let partialRes = ops[0];
              combo.split("").forEach((opId, index) => {
-                 if (index === 0) {
-                     switch (opId) {
-                         case '0':
-                             partialRes = ops[index] + ops[index + 1];
-                             break;
-                         case '1':
-                             partialRes = ops[index] * ops[index + 1];
-                             break;
-                         case '2':
-                             partialRes = Number.parseInt(`${ops[index]}${ops[index + 1]}`);
-                             break;
-                     }
-                 } else {
-                     switch (opId) {
-                         case '0':
-                             partialRes = partialRes + ops[index + 1];
-                             break;
-                         case '1':
-                             partialRes = partialRes * ops[index + 1];
-                             break;
-                         case '2':
-                             partialRes = Number.parseInt(`${partialRes}${ops[index + 1]}`);
-                     }
+                 switch (opId) {
+                     case '0':
+                         partialRes = partialRes + ops[index + 1];
+                         break;
+                     case '1':
+                         partialRes = partialRes * ops[index + 1];
+                         break;
+                     case '2':
+                         partialRes = Number.parseInt(`${partialRes}${ops[index + 1]}`);
                  }
              });
 
