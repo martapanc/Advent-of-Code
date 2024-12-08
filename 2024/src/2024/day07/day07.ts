@@ -35,10 +35,10 @@ function calcValidEquations(
              combo.split("").forEach((opId, index) => {
                  switch (opId) {
                      case '0':
-                         partialRes = partialRes + ops[index + 1];
+                         partialRes += ops[index + 1];
                          break;
                      case '1':
-                         partialRes = partialRes * ops[index + 1];
+                         partialRes *= ops[index + 1];
                          break;
                      case '2':
                          partialRes = Number.parseInt(`${partialRes}${ops[index + 1]}`);

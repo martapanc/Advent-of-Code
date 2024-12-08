@@ -26,6 +26,18 @@ export interface Coord {
 
 export type Grid = Map<string, string>;
 
+export function readLinesToGrid(lines: string[]) {
+    const grid: Grid = new Map();
+    for (let y = 0; y < lines.length; y++) {
+        const line = lines[y].split('');
+        for (let x = 0; x < line.length; x++) {
+            grid.set(new Coord(x, y).serialize(), line[x]);
+        }
+    }
+
+    return grid;
+}
+
 export function getNeighbors(source: Coord, grid: Grid, includeDiagonals: boolean = false) {
     const neighborCoords = getNeighborCoords(source, includeDiagonals);
     const neighbors: string[] = [];

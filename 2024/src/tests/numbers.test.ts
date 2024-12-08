@@ -1,4 +1,4 @@
-import {generateBinaryStrings, generateTernaryStrings, isNumeric} from "@utils/numbers";
+import {generateBinaryStrings, generatePairs, generateTernaryStrings, isNumeric} from "@utils/numbers";
 
 test('isNumeric', () => {
     expect(isNumeric('1')).toBe(true);
@@ -32,3 +32,11 @@ test("generate binary strings", () => {
         "002", "102", "202", "012", "112", "212", "022", "122", "222"
     ]);
 });
+
+test('generate pairs', () => {
+    expect(generatePairs(['a', 'b'])).toEqual([['a', 'b']]);
+    expect(generatePairs(['a', 'b', 'c'])).toEqual([['a', 'b'], ['a', 'c'], ['b', 'c']]);
+    expect(generatePairs(['a', 'b', 'c', 'd'])).toEqual([
+        ['a', 'b'], ['a', 'c'], ['a', 'd'], ['b', 'c'], ['b', 'd'], ['c', 'd']
+    ]);
+})
