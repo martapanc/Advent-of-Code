@@ -19,15 +19,13 @@ async function day8(inputFile: string, isPart2 = false) {
 
 function findUniqueAntinodes(grid: Map<string, string>, max?: number) {
     let uniqueAntinodes = new Set<string>();
-
     const antennasMap = new Map<string, string[]>;
+
     for (let [coord, cell] of grid) {
         if (cell !== '.') {
-            if (antennasMap.has(cell)) {
-                antennasMap.get(cell)?.push(coord);
-            } else {
-                antennasMap.set(cell, [coord]);
-            }
+            const antennaCoords = antennasMap.get(cell) ?? [];
+            antennaCoords.push(coord);
+            antennasMap.set(cell, antennaCoords);
 
             if (max) { // Part 2: add antennas as antinodes
                 uniqueAntinodes.add(coord);
@@ -58,41 +56,35 @@ export function findAntinodes(antennaA: Coord, antennaB: Coord, max?: number) {
     let sourceA = antennaA;
     let sourceB = antennaB;
 
-    let antinodeA = new Coord(sourceA.x + xDelta, sourceA.y + yDelta);
-    let antinodeB = new Coord(sourceB.x - xDelta, sourceB.y - yDelta);
+    while (true) {
+        const antinodeA = new Coord(sourceA.x + xDelta, sourceA.y + yDelta);
+        const antinodeB = new Coord(sourceB.x - xDelta, sourceB.y - yDelta);
 
-    let antinodeAWithinGrid = true;
-    let antinodeBWithinGrid = true;
-
-    if (max) {
-        while (antinodeAWithinGrid || antinodeBWithinGrid) {
-            antinodes.push(antinodeA);
-            antinodes.push(antinodeB);
-
-            sourceA = new Coord(antinodeA.x, antinodeA.y);
-            sourceB = new Coord(antinodeB.x, antinodeB.y);
-
-            antinodeA = new Coord(sourceA.x + xDelta, sourceA.y + yDelta);
-            antinodeB = new Coord(sourceB.x - xDelta, sourceB.y - yDelta);
-
-            if (!isWithinRange(antinodeA, max)) {
-                antinodeAWithinGrid = false;
-            }
-            if (!isWithinRange(antinodeB, max)) {
-                antinodeBWithinGrid = false;
-            }
+        if (max && !isWithinRange(antinodeA, max) && !isWithinRange(antinodeB, max)) {
+            break; // Stop if both antinodes are out of range
         }
-    } else {
-        antinodes.push(antinodeA);
-        antinodes.push(antinodeB);
+
+        if (isWithinRange(antinodeA, max)) {
+            antinodes.push(antinodeA);
+            sourceA = antinodeA;
+        }
+        if (isWithinRange(antinodeB, max)) {
+            antinodes.push(antinodeB);
+            sourceB = antinodeB;
+        }
+
+        if (!max) break; // Part 1: no max range specified; exit after the first iteration
     }
 
     return antinodes;
 }
 
-function isWithinRange(coord: Coord, max: number) {
-    const { x, y } = coord;
+function isWithinRange(coord: Coord, max?: number) {
+    if (!max)
+        return true;
 
+    const { x, y } = coord;
     const min = 0;
+
     return x >= min && x < max && y >= min && y < max;
 }
