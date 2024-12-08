@@ -17,7 +17,7 @@ async function day8(inputFile: string, isPart2 = false) {
     return findUniqueAntinodes(readLinesToGrid(lines), isPart2 ? lines.length : undefined);
 }
 
-function findUniqueAntinodes(grid: Map<string, string>, max?: number) {
+function findUniqueAntinodes(grid: Grid, max?: number) {
     let uniqueAntinodes = new Set<string>();
     const antennasMap = new Map<string, string[]>;
 
