@@ -29,13 +29,10 @@ function solve_XMAS_Crosswords(grid: Grid): number {
 
     grid.forEach((value, cell) => {
         if (value === 'X') {
-            const neighbors = getNeighbors(Coord.deserialize(cell), grid, true);
-            if (neighbors.some(n => n === 'M')) {
-                const all = getAllCandidates(Coord.deserialize(cell), grid);
+            const all = getAllCandidates(Coord.deserialize(cell), grid);
 
-                const localXmasCount: number = all.filter(s => s === 'XMAS').length;
-                xmasCount += localXmasCount;
-            }
+            const localXmasCount: number = all.filter(s => s === 'XMAS').length;
+            xmasCount += localXmasCount;
         }
     });
 
@@ -65,9 +62,7 @@ function getAllCandidates(cell: Coord, grid: Grid) {
             .filter(c => grid.has(c.serialize()))
             .map(c => grid.get(c.serialize()));
 
-        if (values.length === 4) {
-            candidates.push(values.join(''));
-        }
+        candidates.push(values.join(''));
     });
 
     return candidates;
