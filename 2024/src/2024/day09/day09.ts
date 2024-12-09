@@ -28,14 +28,15 @@ function fragmentAndCalcChecksum(line: string) {
         let lastBlock = expandedDisk[lastBlockIndex];
         const [blockId, blockLength] = Object.entries(lastBlock)[0];
 
-        if (firstEmptyIndex === lastBlockIndex) {
-            break;
-        }
-
         if (blockId === dot) {
             expandedDisk.pop();
             continue;
         }
+
+        if (firstEmptyIndex === lastBlockIndex) {
+            break;
+        }
+
 
         if (blockLength > emptyLength) {
             firstEmptyBlock = { [blockId]: emptyLength };
@@ -59,9 +60,7 @@ function fragmentAndCalcChecksum(line: string) {
         }
     }
 
-    const checksum = collapseAndCalcChecksum(expandedDisk);
-
-    return checksum;
+    return collapseAndCalcChecksum(expandedDisk);
 }
 
 export function expandDiskMap(line: string) {
@@ -84,21 +83,20 @@ export function expandDiskMap(line: string) {
 }
 
 export function collapseAndCalcChecksum(list: object[]) {
-    let collapsed = "";
-
-    list.forEach((block) => {
-        const [blockId, blockLength] = Object.entries(block)[0];
-
-        Array(blockLength).fill(0).forEach(i => {
-            collapsed += blockId;
-        })
-    });
-
     let checksum = 0;
+    let currentPosition = 0;
 
-    collapsed.replace(".", "").split("").forEach((blockId, index) => {
-        checksum += Number.parseInt(blockId) * index;
-    });
+    for (const block of list) {
+        const [blockId, length] = Object.entries(block)[0];
+        const id = parseInt(blockId, 10);
+        const len = length;
+
+        for (let i = 0; i < len; i++) {
+            checksum += id * (currentPosition + i);
+        }
+
+        currentPosition += len;
+    }
 
     return checksum;
 }
