@@ -10,3 +10,4 @@
 | [Day 6](https://adventofcode.com/2024/day/6) | Guard Gallivant       | [code](day06/day06.ts) | [tests](day06/day06.test.ts) | grid, move & turn, detect loops                   | 🧊🧊       |        |
 | [Day 7](https://adventofcode.com/2024/day/7) | Bridge Repair         | [code](day07/day07.ts) | [tests](day07/day07.test.ts) | equations, combos of + * \|\|, binary and ternary | 🧊🧊       |        |
 | [Day 8](https://adventofcode.com/2024/day/8) | Resonant Collinearity | [code](day08/day08.ts) | [tests](day08/day08.test.ts) | grid, Manhattan distance                          | 🧊🧊       |        |
+| [Day 9](https://adventofcode.com/2024/day/9) | Disk Fragmented       | [code](day09/day09.ts) | [tests](day09/day09.test.ts) | disk fragmenting                                  | 🧊🧊🧊     |        |
