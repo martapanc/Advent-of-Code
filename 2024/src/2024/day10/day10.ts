@@ -32,7 +32,7 @@ function calcTrailheadScores(grid: Grid) {
 
         while (queue.length > 0) {
             const current = queue.shift()!;
-            const currHeight = parseInt(grid.get(current.serialize())!, 10);
+            const currHeight = Number.parseInt(grid.get(current.serialize())!);
 
             for (const neighbor of getNeighborCoords(current)) {
                 const neighborKey = neighbor.serialize();
@@ -40,7 +40,7 @@ function calcTrailheadScores(grid: Grid) {
                     continue;
                 }
 
-                const neighborHeight = parseInt(grid.get(neighborKey)!, 10);
+                const neighborHeight = Number.parseInt(grid.get(neighborKey)!);
                 if (neighborHeight === currHeight + 1) {
                     visited.add(neighborKey);
                     queue.push(neighbor);
@@ -81,7 +81,7 @@ function calcTrailheadRatings(grid: Grid) {
                 continue;
             }
 
-            const neighborHeight = parseInt(grid.get(neighborKey)!, 10);
+            const neighborHeight = Number.parseInt(grid.get(neighborKey)!);
             if (neighborHeight === currentHeight + 1) {
                 paths += dfsTrailhead(neighbor, neighborHeight);
             }
