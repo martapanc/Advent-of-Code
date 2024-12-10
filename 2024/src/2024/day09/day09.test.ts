@@ -7,9 +7,14 @@ describe('2024 Day 9', () => {
         expect(await part1('input')).toEqual(6435922584968);
     });
 
+    // 00...111...2...333.44.5555.6666.777.888899
+    // 0099.111...2...333.44.5555.6666.777.8888..
+    // 0099.1117772...333.44.5555.6666.....8888..
+    // 0099.111777244.333....5555.6666.....8888..
+    // 00992111777.44.333....5555.6666.....8888..
     test('Part 2', async () => {
-        // expect(await part2('testInput1')).toEqual(31);
-        // expect(await part2('input')).toEqual(29379307);
+        expect(await part2('testInput1')).toEqual(2858);
+        expect(await part2('input')).toEqual(6469636832766);
     });
 });
 
