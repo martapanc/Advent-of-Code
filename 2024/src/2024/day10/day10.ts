@@ -4,11 +4,11 @@ import {Coord, getNeighborCoords, getNeighbors, Grid, readLinesToGrid} from "@ut
 import * as module from "node:module";
 
 export async function part1(inputFile: string) {
-    return await day10(inputFile, calcTrailheadScore);
+    return await day10(inputFile, calcTrailheadScores);
 }
 
 export async function part2(inputFile: string) {
-    return await day10(inputFile);
+    return await day10(inputFile, calcTrailheadRatings);
 }
 
 async function day10(inputFile: string, calcFn?: (grid: Grid) => number) {
@@ -20,7 +20,7 @@ async function day10(inputFile: string, calcFn?: (grid: Grid) => number) {
     return calcFn?.(grid);
 }
 
-function calcTrailheadScore(grid: Grid) {
+function calcTrailheadScores(grid: Grid) {
     let totalScore = 0;
 
     function bfsTrailhead(startCoord: Coord): number {
@@ -64,4 +64,39 @@ function calcTrailheadScore(grid: Grid) {
     }
 
     return totalScore;
+}
+
+function calcTrailheadRatings(grid: Grid) {
+    let totalRatings = 0;
+
+    function dfsTrailhead(coord: Coord, currentHeight: number): number {
+        if (currentHeight === 9) {
+            return 1;
+        }
+
+        let paths = 0;
+        for (const neighbor of getNeighborCoords(coord)) {
+            const neighborKey = neighbor.serialize()!;
+            if (!grid.has(neighborKey)) {
+                continue;
+            }
+
+            const neighborHeight = parseInt(grid.get(neighborKey)!, 10);
+            if (neighborHeight === currentHeight + 1) {
+                paths += dfsTrailhead(neighbor, neighborHeight);
+            }
+        }
+
+        return paths;
+    }
+
+
+    for (const [key, value] of grid) {
+        if (value === '0') {
+            const startCoord = Coord.deserialize(key);
+            totalRatings += dfsTrailhead(startCoord, 0);
+        }
+    }
+
+    return totalRatings;
 }
