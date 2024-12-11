@@ -1,5 +1,3 @@
-import path from "node:path";
-import {readInputLineByLine} from "@utils/io";
 
 export async function part1(inputString: string) {
     return await day11(inputString, 25);
@@ -14,12 +12,20 @@ async function day11(inputString: string, times: number) {
 }
 
 function calcBlinkOutput(stones: string[], times: number) {
-    let expandedStones = [...stones];
+    let expandedStonesCount= 0;
 
+    stones.forEach(stone => {
+        expandedStonesCount += blinkNtimes([stone], times);
+    })
+
+    return expandedStonesCount;
+}
+
+function blinkNtimes(stones: string[], times: number) {
+    let expandedStones = [...stones];
     for (let i = 0; i < times; i++) {
         expandedStones = blink(expandedStones);
     }
-
     return expandedStones.length;
 }
 
