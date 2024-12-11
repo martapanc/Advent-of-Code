@@ -12,3 +12,4 @@
 | [Day 8](https://adventofcode.com/2024/day/8)   | Resonant Collinearity | [code](day08/day08.ts) | [tests](day08/day08.test.ts) | grid, Manhattan distance                          | 🧊🧊       |        |
 | [Day 9](https://adventofcode.com/2024/day/9)   | Disk Fragmented       | [code](day09/day09.ts) | [tests](day09/day09.test.ts) | disk fragmenting                                  | 🧊🧊🧊     |        |
 | [Day 10](https://adventofcode.com/2024/day/10) | Hoof It               | [code](day10/day10.ts) | [tests](day10/day10.test.ts) | topographic map, bfs, dfs                         | 🧊🧊       |        |
+| [Day 11](https://adventofcode.com/2024/day/11) | Plutonian Pebbles     | [code](day11/day11.ts) | [tests](day11/day11.test.ts) | list growing exponentially                        | 🧊🧊🧊     |        |
