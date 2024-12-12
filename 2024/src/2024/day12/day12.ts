@@ -1,7 +1,6 @@
 import path from "node:path";
 import {readInputLineByLine} from "@utils/io";
-import {Coord, getNeighborCoords, getNeighbors, Grid, readLinesToGrid} from "@utils/grid";
-import * as module from "node:module";
+import {Coord, getNeighborCoords, Grid, readLinesToGrid} from "@utils/grid";
 
 export async function part1(inputFile: string) {
     return await day12(inputFile, calcAreaAndPerimeter);
@@ -19,20 +18,44 @@ async function day12(inputFile: string, calcFn?: (grid: Grid) => number) {
 }
 
 function calcAreaAndPerimeter(grid: Grid) {
-    let sum = 0;
-    const perimeterMap: Map<string, number> = new Map();
-    const areaMap: Map<string, number> = new Map();
+    const visited = new Set<string>();
 
-    for (const [coord, cell] of grid) {
-        const neighbors = getNeighbors(Coord.deserialize(coord), grid);
-        const perimeter = 4 - neighbors.filter(n => n === cell).length;
-        perimeterMap.set(cell, (perimeterMap.get(cell) || 0) + perimeter);
-        areaMap.set(cell, (areaMap.get(cell) || 0) + 1);
+    function floodFill(start: Coord) {
+        const stack: Coord[] = [start];
+        const fieldId = grid.get(start.serialize());
+        let area = 0;
+        let perimeter = 0;
+
+        while (stack.length > 0) {
+            const current = stack.pop()!;
+            const currentStr = current.serialize();
+            if (visited.has(currentStr))
+                continue;
+
+            visited.add(currentStr);
+            area++;
+
+            for (const neighbor of getNeighborCoords(current)) {
+                if (grid.get(neighbor.serialize()) === fieldId) {
+                    if (!visited.has(neighbor.serialize())) {
+                        stack.push(neighbor);
+                    }
+                } else {
+                    perimeter++;
+                }
+            }
+        }
+        return { area, perimeter }
     }
 
-    for (let [key, value] of perimeterMap) {
-        sum += value * areaMap.get(key)!;
+    let totalCost = 0;
+
+    for (const key of grid.keys()) {
+        if (!visited.has(key)) {
+            const { area, perimeter } = floodFill(Coord.deserialize(key))!;
+            totalCost += area * perimeter;
+        }
     }
 
-    return sum;
+    return totalCost;
 }
