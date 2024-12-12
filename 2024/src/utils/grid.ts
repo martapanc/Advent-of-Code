@@ -64,6 +64,15 @@ export function getNeighborCoords(source: Coord, includeDiagonals: boolean = fal
     return neighbors;
 }
 
+export function getNeighborCoordsWithDirections(coord: Coord): [Cardinal, Coord][] {
+    return [
+        [Cardinal.NORTH, new Coord(coord.x, coord.y - 1)],
+        [Cardinal.EAST, new Coord(coord.x + 1, coord.y)],
+        [Cardinal.SOUTH, new Coord(coord.x, coord.y + 1)],
+        [Cardinal.WEST, new Coord(coord.x - 1, coord.y)],
+    ];
+}
+
 function getDiagonalCoords(source: Coord) {
     const coords = []; // Clockwise
     coords.push(new Coord(source.x + 1, source.y - 1)); // NE
