@@ -8,7 +8,7 @@ export async function part1(inputFile: string) {
 }
 
 export async function part2(inputFile: string) {
-    return await day13(inputFile);
+    return await day13(inputFile, playAllMachines2);
 }
 
 type ClawMachine = {
@@ -54,7 +54,6 @@ function playAllMachines(clawMachines: ClawMachine[]): number {
         const resultsVector = Matrix.columnVector([prize.x, prize.y]);
 
         const x = solve(coeffMatrix, resultsVector);
-        // const error = Matrix.sub(resultsVector, coeffMatrix.mmul(x));
 
         const solution = x.to1DArray().map(v => roundCloseToInteger(v));
         if (solution[0] && solution[1]) {
@@ -65,7 +64,33 @@ function playAllMachines(clawMachines: ClawMachine[]): number {
     return totalTokens;
 }
 
-function roundCloseToInteger(num: number, tolerance = 1e-9) {
+function playAllMachines2(clawMachines: ClawMachine[]): number {
+    let totalTokens = 0;
+
+    clawMachines.forEach(clawMachine => {
+        const { buttonA, buttonB, prize } = clawMachine;
+
+        const newPrize = new Coord(prize.x + 10000000000000, prize.y + 10000000000000);
+
+        const coeffMatrix = new Matrix([
+            [buttonA.x, buttonB.x],
+            [buttonA.y, buttonB.y]
+        ]);
+
+        const resultsVector = Matrix.columnVector([newPrize.x, newPrize.y]);
+
+        const x = solve(coeffMatrix, resultsVector);
+
+        const solution = x.to1DArray().map(v => roundCloseToInteger(v));
+        if (solution[0] && solution[1]) {
+            totalTokens += solution[0] * 3 + solution[1] * 1
+        }
+    });
+
+    return totalTokens;
+}
+
+function roundCloseToInteger(num: number, tolerance = 1e-4) {
     const nearestInt = Math.round(num);
     if (Math.abs(num - nearestInt) <= tolerance) {
         return nearestInt;
