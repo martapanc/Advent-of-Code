@@ -4,11 +4,11 @@ import {Coord} from "@utils/grid";
 import {Matrix, solve} from 'ml-matrix';
 
 export async function part1(inputFile: string) {
-    return await day13(inputFile, playAllMachines);
+    return await day13(inputFile);
 }
 
 export async function part2(inputFile: string) {
-    return await day13(inputFile, playAllMachines2);
+    return await day13(inputFile, true);
 }
 
 type ClawMachine = {
@@ -17,7 +17,9 @@ type ClawMachine = {
     prize: Coord;
 }
 
-async function day13(inputFile: string, calcFn?: (clawMachines: ClawMachine[]) => number) {
+const bigNum = 10000000000000;
+
+async function day13(inputFile: string, isPart2: boolean = false) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
 
@@ -31,13 +33,16 @@ async function day13(inputFile: string, calcFn?: (clawMachines: ClawMachine[]) =
             const buttonA = new Coord(a[0], a[1]);
             const b = parseNums(lines[index + 1]);
             const buttonB = new Coord(b[0], b[1]);
+
             const p = parseNums(lines[index + 2]);
             const prize = new Coord(p[0], p[1]);
-            clawMachines.push({ buttonA, buttonB, prize })
+            const prize2 = new Coord(p[0] + bigNum, p[1] + bigNum);
+
+            clawMachines.push({ buttonA, buttonB, prize: isPart2 ? prize2 : prize })
         }
     });
 
-    return calcFn?.(clawMachines);
+    return playAllMachines(clawMachines);
 }
 
 function playAllMachines(clawMachines: ClawMachine[]): number {
@@ -53,35 +58,7 @@ function playAllMachines(clawMachines: ClawMachine[]): number {
 
         const resultsVector = Matrix.columnVector([prize.x, prize.y]);
 
-        const x = solve(coeffMatrix, resultsVector);
-
-        const solution = x.to1DArray().map(v => roundCloseToInteger(v));
-        if (solution[0] && solution[1]) {
-            totalTokens += solution[0] * 3 + solution[1] * 1
-        }
-    });
-
-    return totalTokens;
-}
-
-function playAllMachines2(clawMachines: ClawMachine[]): number {
-    let totalTokens = 0;
-
-    clawMachines.forEach(clawMachine => {
-        const { buttonA, buttonB, prize } = clawMachine;
-
-        const newPrize = new Coord(prize.x + 10000000000000, prize.y + 10000000000000);
-
-        const coeffMatrix = new Matrix([
-            [buttonA.x, buttonB.x],
-            [buttonA.y, buttonB.y]
-        ]);
-
-        const resultsVector = Matrix.columnVector([newPrize.x, newPrize.y]);
-
-        const x = solve(coeffMatrix, resultsVector);
-
-        const solution = x.to1DArray().map(v => roundCloseToInteger(v));
+        const solution = solve(coeffMatrix, resultsVector).to1DArray().map(v => roundCloseToInteger(v));
         if (solution[0] && solution[1]) {
             totalTokens += solution[0] * 3 + solution[1] * 1
         }
