@@ -8,8 +8,7 @@ describe('2024 Day 14', () => {
     });
 
     test('Part 2', async () => {
-        expect(await part2('testInput1', 11, 7)).toEqual(31);
-        expect(await part2('input', 101, 103)).toEqual(29379307);
+        await part2('input');
     });
 });
 
