@@ -37,7 +37,6 @@ function fragmentAndCalcChecksum(line: string) {
             break;
         }
 
-
         if (blockLength > emptyLength) {
             firstEmptyBlock = { [blockId]: emptyLength };
             expandedDisk[firstEmptyIndex] = firstEmptyBlock;
@@ -87,7 +86,6 @@ function fragmentAndCalcChecksum2(line: string) {
         let newCurrentBlockIndex = blockIndex;
 
         if (blockLength < emptyLength || blockLength === emptyLength) {
-
             if (blockLength < emptyLength) {
                 firstLargeEnoughEmptyBlock = { [blockId]: blockLength };
                 expandedDisk[firstLargeEnoughEmptyIndex] = firstLargeEnoughEmptyBlock;
