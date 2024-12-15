@@ -8,7 +8,7 @@ export const part2 = async (inputFile: string) => await day12(inputFile, true);
 async function day12(inputFile: string, isPart2 = false) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
-    return calcAreaPerimeterAndSides(readLinesToGrid(lines), isPart2);
+    return calcAreaPerimeterAndSides(readLinesToGrid(lines).grid, isPart2);
 }
 
 function calcAreaPerimeterAndSides(grid: Grid, isPart2: boolean) {

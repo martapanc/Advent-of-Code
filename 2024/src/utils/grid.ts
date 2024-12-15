@@ -26,16 +26,26 @@ export interface Coord {
 
 export type Grid = Map<string, string>;
 
-export function readLinesToGrid(lines: string[]) {
+export function readLinesToGrid(lines: string[], initialPosId?: string) {
     const grid: Grid = new Map();
+    let initialPos: Coord | undefined = undefined;
+
     for (let y = 0; y < lines.length; y++) {
         const line = lines[y].split('');
         for (let x = 0; x < line.length; x++) {
-            grid.set(new Coord(x, y).serialize(), line[x]);
+            if (initialPosId && line[x] === initialPosId) {
+                initialPos = new Coord(x, y);
+                grid.set(new Coord(x, y).serialize(), '.');
+            } else {
+                grid.set(new Coord(x, y).serialize(), line[x]);
+            }
         }
     }
 
-    return grid;
+    if (initialPos) {
+        return { grid, initialPos }
+    }
+    return { grid };
 }
 
 export function getNeighbors(source: Coord, grid: Grid, includeDiagonals: boolean = false) {

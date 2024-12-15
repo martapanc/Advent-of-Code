@@ -14,7 +14,7 @@ export async function part2(inputFile: string) {
 async function day8(inputFile: string, isPart2 = false) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
-    return findUniqueAntinodes(readLinesToGrid(lines), isPart2 ? lines.length : undefined);
+    return findUniqueAntinodes(readLinesToGrid(lines).grid, isPart2 ? lines.length : undefined);
 }
 
 function findUniqueAntinodes(grid: Grid, max?: number) {

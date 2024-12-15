@@ -15,7 +15,7 @@ async function day10(inputFile: string, calcFn?: (grid: Grid) => number) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
 
-    const grid = readLinesToGrid(lines);
+    const grid = readLinesToGrid(lines).grid;
 
     return calcFn?.(grid);
 }
