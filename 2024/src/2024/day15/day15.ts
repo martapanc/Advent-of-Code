@@ -1,6 +1,6 @@
 import path from "node:path";
 import {readInputLineByLine} from "@utils/io";
-import {Cardinal, Coord, Grid, move, readLinesToGrid} from "@utils/grid";
+import {Cardinal, Coord, Grid, move, printGrid, readLinesToGrid} from "@utils/grid";
 
 export async function part1(inputFile: string) {
     return await day15(inputFile, moveRobot);
@@ -99,16 +99,20 @@ function moveRobot2(inputGrid: Grid, initialPos: Coord, directions: Cardinal[]) 
     const grid = new Map(inputGrid);
     let sourcePos = new Coord(initialPos.x, initialPos.y);
 
+    printGrid(grid, sourcePos, 14, 7);
+
     for (const dir of directions) {
         const newPos = move(sourcePos, dir);
         if (grid.get(newPos.serialize()) === '.') {
             sourcePos = new Coord(newPos.x, newPos.y);
         } else if (grid.get(newPos.serialize()) === '[' || grid.get(newPos.serialize()) === ']') {
-            const res = shiftBox2(grid, sourcePos, dir)!;
-            if (res.serialize() === newPos.serialize()) {
+            const moved = shiftBox2(grid, newPos, dir)!;
+            if (moved) {
                 sourcePos = new Coord(newPos.x, newPos.y);
             }
         }
+        console.log(Cardinal[dir]);
+        printGrid(grid, sourcePos, 14, 7);
     }
 
     let result = 0;
@@ -130,19 +134,47 @@ function findBoxCoords(pos: Coord, grid: Grid) {
 }
 
 export function shiftBox2(grid: Grid, box: Coord, dir: Cardinal) {
-    const boxCoords = findBoxCoords(box, grid);
-    const newLeft = move(boxCoords.l, dir);
-    const newRight = move(boxCoords.r, dir);
+    const candidatePos = move(box, dir);
 
-    // Can wide box be moved?
-    if (grid.get(newLeft.serialize()) === '.' && grid.get(newRight.serialize()) === '.') {
+    if (grid.get(candidatePos.serialize()) === '#') {
+        return false;
+    }
+
+    if (grid.get(candidatePos.serialize()) === '.') {
+        const boxCoords = findBoxCoords(box, grid);
+        const newLeft = move(boxCoords.l, dir);
+        const newRight = move(boxCoords.r, dir);
+
         grid.set(boxCoords.l.serialize(), '.');
         grid.set(boxCoords.r.serialize(), '.');
         grid.set(newLeft.serialize(), '[');
         grid.set(newRight.serialize(), ']');
+
+        return true;
     }
 
-    return newRight;
+    if (grid.get(candidatePos.serialize()) === '[' || grid.get(candidatePos.serialize()) === ']') {
+        const nextBoxCoord = findBoxCoords(candidatePos, grid);
+
+        const moved = shiftBox2(grid, nextBoxCoord.l, dir);
+        if (moved) {
+            const boxCoords = findBoxCoords(box, grid);
+            const newLeft = move(boxCoords.l, dir);
+            const newRight = move(boxCoords.r, dir);
+
+            // Can wide box be moved?
+            grid.set(boxCoords.l.serialize(), '.');
+            grid.set(boxCoords.r.serialize(), '.');
+            grid.set(newLeft.serialize(), '[');
+            grid.set(newRight.serialize(), ']');
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    return false;
 }
 
 function readLinesToGridAndExpand(lines: string[], initialPosId?: string) {

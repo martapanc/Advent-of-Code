@@ -2,6 +2,10 @@ import {part1, part2, shiftBox} from "./day15";
 import {readLinesToGrid} from "@utils/grid";
 
 describe('2024 Day 15', () => {
+    beforeEach(() => {
+        global.console = require('console');
+    });
+
     test('Part 1', async () => {
         expect(await part1('testInput1')).toEqual(2028);
         expect(await part1('testInput2')).toEqual(10092);

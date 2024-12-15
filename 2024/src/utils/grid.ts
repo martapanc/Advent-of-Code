@@ -140,3 +140,15 @@ export function rotate(source: Cardinal, rotationSense: Direction): Cardinal {
             return (source - 1 + 4) % 4 as Cardinal;
     }
 }
+
+export function printGrid(grid: Map<string, string>, pos: Coord, width: number, height: number) {
+    for (let y = 0; y < height; y++) {
+        let row = '';
+        for (let x = 0; x < width; x++) {
+            const cell = new Coord(x, y).serialize() === pos.serialize() ? '@' : grid.get(`{${x},${y}}`) || ' ';
+            row += cell;
+        }
+        console.log(row);
+    }
+    console.log('\n');
+}
