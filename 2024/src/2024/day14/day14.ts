@@ -1,8 +1,6 @@
 import path from "node:path";
 import {readInputLineByLine} from "@utils/io";
 import {Coord} from "@utils/grid";
-import * as process from "node:process";
-import * as fs from "node:fs";
 
 export async function part1(inputFile: string, hiX: number, hiY: number) {
     return await day14(inputFile, hiX, hiY, calcSafetyFactor);
@@ -31,42 +29,37 @@ async function day14(inputFile: string, hiX?: number, hiY?: number, calcFn?: (ro
 }
 
 function calcSafetyFactor(robots: Robot[], hiX?: number, hiY?: number) {
-    let q1Count = 0;
-    let q2Count = 0;
-    let q3Count = 0;
-    let q4Count = 0;
     const midX = Math.round(hiX! / 2) - 1;
     const midY = Math.round(hiY! / 2) - 1;
 
+    const quadrantCounts = { q1: 0, q2: 0, q3: 0, q4: 0 };
+
     moveAllRobots(robots, hiX, hiY).forEach(robot => {
         const { x, y } = robot.position;
+
         if (x < midX && y < midY) {
-            q1Count++;
+            quadrantCounts.q1++;
         } else if (x > midX && y < midY) {
-            q2Count++;
+            quadrantCounts.q2++;
         } else if (x < midX && y > midY) {
-            q3Count++;
+            quadrantCounts.q3++;
         } else if (x > midX && y > midY) {
-            q4Count++;
+            quadrantCounts.q4++;
         }
     });
-    return q1Count * q2Count * q3Count * q4Count;
+
+    return Object.values(quadrantCounts)
+        .reduce((product, count) => product * count, 1);
 }
 
 function keepMovingUntilChristmasTreeIsFound(robots: Robot[]) {
     const hiX = 101;
     const hiY = 103;
 
-    const logStream = fs.createWriteStream('log.txt', { flags: 'w' });
-    const log = (msg: string) => logStream!.write(`${msg}\n`);
-
     let seconds = 1;
     let movedRobots = moveAllRobots(robots, hiX, hiY, 1);
 
-    while (true) {
-        // logStream!.write('\n');
-        // log(seconds.toString());
-
+    main: while (true) {
         const robotPositions = new Set(
             movedRobots.map(robot => `${robot.position.x},${robot.position.y}`)
         );
@@ -78,21 +71,18 @@ function keepMovingUntilChristmasTreeIsFound(robots: Robot[]) {
             }
 
             if (line.includes("##############################")) {
-                console.log("Christmas tree found!");
-                console.log(`after ${seconds} seconds`);
-                break;
+                console.log(`Christmas tree found after ${seconds} seconds!`);
+                break main;
             }
         }
-
         if (seconds >= hiX * hiY) {
             break;
         }
-
         movedRobots = moveAllRobots(movedRobots, hiX, hiY, 1);
         seconds++;
     }
 
-    logStream!.end();
+    return seconds;
 }
 
 export function moveRobot(robot: Robot, seconds: number, hiX: number, hiY: number) {
