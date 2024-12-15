@@ -106,7 +106,7 @@ function moveRobot2(inputGrid: Grid, initialPos: Coord, directions: Cardinal[]) 
         if (grid.get(newPos.serialize()) === '.') {
             sourcePos = new Coord(newPos.x, newPos.y);
         } else if (grid.get(newPos.serialize()) === '[' || grid.get(newPos.serialize()) === ']') {
-            const moved = shiftBox2(grid, newPos, dir)!;
+            const moved = shiftBoxes(grid, newPos, dir)!;
             if (moved) {
                 sourcePos = new Coord(newPos.x, newPos.y);
             }
@@ -133,48 +133,108 @@ function findBoxCoords(pos: Coord, grid: Grid) {
     }
 }
 
-export function shiftBox2(grid: Grid, box: Coord, dir: Cardinal) {
+export function shiftBoxes(grid: Grid, box: Coord, dir: Cardinal) {
     const candidatePos = move(box, dir);
 
-    if (grid.get(candidatePos.serialize()) === '#') {
-        return false;
-    }
+    if (dir === Cardinal.WEST || dir === Cardinal.EAST) {
+        const { canMove, chain } = findHorizontalChain(box, grid, dir);
 
-    if (grid.get(candidatePos.serialize()) === '.') {
-        const boxCoords = findBoxCoords(box, grid);
-        const newLeft = move(boxCoords.l, dir);
-        const newRight = move(boxCoords.r, dir);
-
-        grid.set(boxCoords.l.serialize(), '.');
-        grid.set(boxCoords.r.serialize(), '.');
-        grid.set(newLeft.serialize(), '[');
-        grid.set(newRight.serialize(), ']');
-
-        return true;
-    }
-
-    if (grid.get(candidatePos.serialize()) === '[' || grid.get(candidatePos.serialize()) === ']') {
-        const nextBoxCoord = findBoxCoords(candidatePos, grid);
-
-        const moved = shiftBox2(grid, nextBoxCoord.l, dir);
-        if (moved) {
-            const boxCoords = findBoxCoords(box, grid);
-            const newLeft = move(boxCoords.l, dir);
-            const newRight = move(boxCoords.r, dir);
-
-            // Can wide box be moved?
-            grid.set(boxCoords.l.serialize(), '.');
-            grid.set(boxCoords.r.serialize(), '.');
-            grid.set(newLeft.serialize(), '[');
-            grid.set(newRight.serialize(), ']');
-
-            return true;
-        } else {
+        if (!canMove) {
             return false;
         }
+
+        if (dir === Cardinal.WEST) {
+            for (let i = 0; i < chain.length; i++) {
+                const newLeft = move(chain[i].l, dir);
+                const newRight = move(chain[i].r, dir);
+
+                grid.set(newLeft.serialize(), '[');
+                grid.set(newRight.serialize(), ']');
+                grid.set(chain[i].r.serialize(), '.');
+            }
+        } else {
+            for (let i = chain.length - 1; i >= 0; i--) {
+                const newRight = move(chain[i].r, dir);
+                const newLeft = move(chain[i].l, dir);
+
+                grid.set(newRight.serialize(), ']');
+                grid.set(newLeft.serialize(), '[');
+                grid.set(chain[i].l.serialize(), '.');
+            }
+        }
+
+        console.log()
+    } else {
+
     }
 
-    return false;
+    // if (grid.get(candidatePos.serialize()) === '#') {
+    //     return false;
+    // }
+    //
+    // if (grid.get(candidatePos.serialize()) === '.') {
+    //     const boxCoords = findBoxCoords(box, grid);
+    //     const newLeft = move(boxCoords.l, dir);
+    //     const newRight = move(boxCoords.r, dir);
+    //
+    //     grid.set(boxCoords.l.serialize(), '.');
+    //     grid.set(boxCoords.r.serialize(), '.');
+    //     grid.set(newLeft.serialize(), '[');
+    //     grid.set(newRight.serialize(), ']');
+    //
+    //     return true;
+    // }
+    //
+    // if (grid.get(candidatePos.serialize()) === '[' || grid.get(candidatePos.serialize()) === ']') {
+    //     const nextBoxCoord = findBoxCoords(candidatePos, grid);
+    //
+    //     const moved = shiftBox2(grid, nextBoxCoord.l, dir);
+    //     if (moved) {
+    //         const boxCoords = findBoxCoords(box, grid);
+    //         const newLeft = move(boxCoords.l, dir);
+    //         const newRight = move(boxCoords.r, dir);
+    //
+    //         // Can wide box be moved?
+    //         grid.set(boxCoords.l.serialize(), '.');
+    //         grid.set(boxCoords.r.serialize(), '.');
+    //         grid.set(newLeft.serialize(), '[');
+    //         grid.set(newRight.serialize(), ']');
+    //
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    return true;
+}
+
+type Box = { l: Coord, r: Coord };
+
+function findHorizontalChain(pos: Coord, grid: Grid, dir: Cardinal.EAST | Cardinal.WEST): { canMove?: boolean, candidatePos?: Coord, chain: Box[]} {
+    let box = findBoxCoords(pos, grid);
+    let chain: Box[] = [box];
+    while (true) {
+        let candidatePos;
+        if (dir === Cardinal.EAST) {
+            candidatePos = new Coord(box.l.x + 2, pos.y);
+        } else {
+            candidatePos = new Coord(box.r.x - 2, pos.y);
+        }
+        if (grid.get(candidatePos.serialize()) === '#') {
+            return { chain, canMove: false }
+        }
+        if (grid.get(candidatePos.serialize()) === '.') {
+            return { chain, canMove: true };
+        } else {
+            box = findBoxCoords(candidatePos, grid);
+            if (dir === Cardinal.WEST) {
+                chain.splice(0, 0, box); // Place at the start
+            } else {
+                chain.push(box);
+            }
+        }
+    }
 }
 
 function readLinesToGridAndExpand(lines: string[], initialPosId?: string) {
