@@ -1,6 +1,7 @@
 import path from "node:path";
 import {readInputLineByLine} from "@utils/io";
 import {Cardinal, Coord, Grid, move, printGrid, readLinesToGrid} from "@utils/grid";
+import * as fs from "node:fs";
 
 export async function part1(inputFile: string) {
     return await day15(inputFile, moveRobot);
@@ -95,13 +96,19 @@ export function shiftBox(grid: Grid, box: Coord, dir: Cardinal) {
     }
 }
 
+function saveFrame(grid: string, step: number) {
+    const outputPath = `src/2024/day15/frames/frame_${String(step).padStart(5, '0')}.txt`;
+    fs.writeFileSync(outputPath, grid);
+}
+
 function moveRobot2(inputGrid: Grid, initialPos: Coord, directions: Cardinal[]) {
     const grid = new Map(inputGrid);
     let sourcePos = new Coord(initialPos.x, initialPos.y);
 
-    printGrid(grid, sourcePos, 14, 7);
+    printGrid(grid, sourcePos, 100, 50);
 
-    for (const dir of directions) {
+    for (let i = 0; i < directions.length; i++){
+        const dir = directions[i];
         const newPos = move(sourcePos, dir);
         if (grid.get(newPos.serialize()) === '.') {
             sourcePos = new Coord(newPos.x, newPos.y);
@@ -111,8 +118,9 @@ function moveRobot2(inputGrid: Grid, initialPos: Coord, directions: Cardinal[]) 
                 sourcePos = new Coord(newPos.x, newPos.y);
             }
         }
-        console.log(Cardinal[dir]);
-        printGrid(grid, sourcePos, 14, 7);
+        // console.log(Cardinal[dir]);
+        // printGrid(grid, sourcePos, 100, 50);
+        // saveFrame(printGrid(grid, sourcePos, 100, 50), i)
     }
 
     let result = 0;
@@ -134,8 +142,6 @@ function findBoxCoords(pos: Coord, grid: Grid) {
 }
 
 export function shiftBoxes(grid: Grid, box: Coord, dir: Cardinal) {
-    const candidatePos = move(box, dir);
-
     if (dir === Cardinal.WEST || dir === Cardinal.EAST) {
         const { canMove, chain } = findHorizontalChain(box, grid, dir);
 
@@ -197,6 +203,8 @@ export function shiftBoxes(grid: Grid, box: Coord, dir: Cardinal) {
 
 type Box = { l: Coord, r: Coord };
 
+const serializeBox = (box: Box): string => `{${box.l.x},${box.l.y}}-{${box.r.x},${box.r.y}}`;
+
 function findHorizontalChain(pos: Coord, grid: Grid, dir: Cardinal.EAST | Cardinal.WEST): { canMove: boolean, chain: Box[]} {
     let box = findBoxCoords(pos, grid);
     let chain: Box[] = [box];
@@ -214,11 +222,12 @@ function findHorizontalChain(pos: Coord, grid: Grid, dir: Cardinal.EAST | Cardin
             return { chain, canMove: true };
         } else {
             box = findBoxCoords(candidatePos, grid);
-            if (dir === Cardinal.WEST) {
-                chain.splice(0, 0, box); // Place at the start
-            } else {
-                chain.push(box);
-            }
+            if (!chain.includes(box))
+                if (dir === Cardinal.WEST) {
+                    chain.splice(0, 0, box); // Place at the start
+                } else {
+                    chain.push(box);
+                }
         }
     }
 }
@@ -248,16 +257,30 @@ function findVerticalChain(pos: Coord, grid: Grid, dir: Cardinal.NORTH | Cardina
             const cell = grid.get(p.serialize());
             if (cell === '[' || cell === ']') {
                 const newBoxCoords = findBoxCoords(p, grid);
-                if (dir === Cardinal.NORTH) {
-                    chain.splice(0, 0, newBoxCoords);
-                    stack.splice(0, 0, newBoxCoords);
-                } else {
-                    chain.push(newBoxCoords);
-                    stack.push(newBoxCoords);
+                if (!chain.some(box => serializeBox(box) === serializeBox(newBoxCoords)) &&
+                    !stack.some(box => serializeBox(box) === serializeBox(newBoxCoords))
+                ) {
+                    if (dir === Cardinal.NORTH) {
+                        chain.splice(0, 0, newBoxCoords);
+                        stack.splice(0, 0, newBoxCoords);
+                    } else {
+                        chain.push(newBoxCoords);
+                        stack.push(newBoxCoords);
+                    }
                 }
             }
         }
     }
+
+    function sortBoxesByY(chain: Box[]): void {
+        chain.sort((boxA, boxB) => {
+            const yA = Math.min(boxA.l.y, boxA.r.y);
+            const yB = Math.min(boxB.l.y, boxB.r.y);
+            return yA - yB; // Sort by increasing y values
+        });
+    }
+
+    sortBoxesByY(chain);
 
     return { chain, canMove: true }
 }

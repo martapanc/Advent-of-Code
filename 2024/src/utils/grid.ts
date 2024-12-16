@@ -142,13 +142,16 @@ export function rotate(source: Cardinal, rotationSense: Direction): Cardinal {
 }
 
 export function printGrid(grid: Map<string, string>, pos: Coord, width: number, height: number) {
+    let str = '';
     for (let y = 0; y < height; y++) {
         let row = '';
         for (let x = 0; x < width; x++) {
             const cell = new Coord(x, y).serialize() === pos.serialize() ? '@' : grid.get(`{${x},${y}}`) || ' ';
             row += cell;
         }
+        str += row + '\n';
         console.log(row);
     }
     console.log('\n');
+    return str;
 }

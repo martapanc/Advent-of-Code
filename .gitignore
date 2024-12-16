@@ -337,6 +337,7 @@ gradle-app.setting
 **/input
 **/input*
 **/input.txt
+**/frames/frame*
 
 **/node_modules
 **/coverage

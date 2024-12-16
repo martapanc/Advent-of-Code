@@ -1,5 +1,4 @@
-import {part1, part2, shiftBox} from "./day15";
-import {readLinesToGrid} from "@utils/grid";
+import { part1, part2 } from "./day15";
 
 describe('2024 Day 15', () => {
     beforeEach(() => {
@@ -15,6 +14,6 @@ describe('2024 Day 15', () => {
     test('Part 2', async () => {
         expect(await part2('testInput3')).toEqual(105 + 207 + 306);
         expect(await part2('testInput2')).toEqual(9021);
-        expect(await part2('input')).toEqual(1533813); // Too High
+        expect(await part2('input')).toEqual(1522215);
     });
 });
