@@ -162,56 +162,42 @@ export function shiftBoxes(grid: Grid, box: Coord, dir: Cardinal) {
                 grid.set(chain[i].l.serialize(), '.');
             }
         }
-
-        console.log()
     } else {
+        const { canMove, chain } = findVerticalChain(box, grid, dir);
 
+        if (!canMove) {
+            return false;
+        }
+
+        if (dir === Cardinal.NORTH) {
+            for (let i = 0; i < chain.length; i++) {
+                const newLeft = move(chain[i].l, dir);
+                const newRight = move(chain[i].r, dir);
+
+                grid.set(newLeft.serialize(), '[');
+                grid.set(newRight.serialize(), ']');
+                grid.set(chain[i].l.serialize(), '.');
+                grid.set(chain[i].r.serialize(), '.');
+            }
+        } else {
+            for (let i = chain.length - 1; i >= 0; i--) {
+                const newRight = move(chain[i].r, dir);
+                const newLeft = move(chain[i].l, dir);
+
+                grid.set(newRight.serialize(), ']');
+                grid.set(newLeft.serialize(), '[');
+                grid.set(chain[i].l.serialize(), '.');
+                grid.set(chain[i].r.serialize(), '.');
+            }
+        }
     }
-
-    // if (grid.get(candidatePos.serialize()) === '#') {
-    //     return false;
-    // }
-    //
-    // if (grid.get(candidatePos.serialize()) === '.') {
-    //     const boxCoords = findBoxCoords(box, grid);
-    //     const newLeft = move(boxCoords.l, dir);
-    //     const newRight = move(boxCoords.r, dir);
-    //
-    //     grid.set(boxCoords.l.serialize(), '.');
-    //     grid.set(boxCoords.r.serialize(), '.');
-    //     grid.set(newLeft.serialize(), '[');
-    //     grid.set(newRight.serialize(), ']');
-    //
-    //     return true;
-    // }
-    //
-    // if (grid.get(candidatePos.serialize()) === '[' || grid.get(candidatePos.serialize()) === ']') {
-    //     const nextBoxCoord = findBoxCoords(candidatePos, grid);
-    //
-    //     const moved = shiftBox2(grid, nextBoxCoord.l, dir);
-    //     if (moved) {
-    //         const boxCoords = findBoxCoords(box, grid);
-    //         const newLeft = move(boxCoords.l, dir);
-    //         const newRight = move(boxCoords.r, dir);
-    //
-    //         // Can wide box be moved?
-    //         grid.set(boxCoords.l.serialize(), '.');
-    //         grid.set(boxCoords.r.serialize(), '.');
-    //         grid.set(newLeft.serialize(), '[');
-    //         grid.set(newRight.serialize(), ']');
-    //
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
 
     return true;
 }
 
 type Box = { l: Coord, r: Coord };
 
-function findHorizontalChain(pos: Coord, grid: Grid, dir: Cardinal.EAST | Cardinal.WEST): { canMove?: boolean, candidatePos?: Coord, chain: Box[]} {
+function findHorizontalChain(pos: Coord, grid: Grid, dir: Cardinal.EAST | Cardinal.WEST): { canMove: boolean, chain: Box[]} {
     let box = findBoxCoords(pos, grid);
     let chain: Box[] = [box];
     while (true) {
@@ -235,6 +221,45 @@ function findHorizontalChain(pos: Coord, grid: Grid, dir: Cardinal.EAST | Cardin
             }
         }
     }
+}
+
+function findVerticalChain(pos: Coord, grid: Grid, dir: Cardinal.NORTH | Cardinal.SOUTH) {
+    let box = findBoxCoords(pos, grid);
+    let chain: Box[] = [box];
+    let stack: Box[] = [box];
+
+    while (stack.length > 0) {
+        const curr = stack.pop()!;
+        const candidatePos: Coord[] = [];
+
+        if (dir === Cardinal.NORTH) {
+            candidatePos.splice(0, 0, new Coord(curr.l.x, curr.l.y - 1));
+            candidatePos.push(new Coord(curr.r.x, curr.r.y - 1));
+        } else {
+            candidatePos.splice(0, 0, new Coord(curr.l.x, curr.l.y + 1));
+            candidatePos.push(new Coord(curr.r.x, curr.r.y + 1));
+        }
+
+        if (candidatePos.some(p => grid.get(p.serialize()) === '#')) {
+            return { chain, canMove: false }
+        }
+
+        for (const p of candidatePos) {
+            const cell = grid.get(p.serialize());
+            if (cell === '[' || cell === ']') {
+                const newBoxCoords = findBoxCoords(p, grid);
+                if (dir === Cardinal.NORTH) {
+                    chain.splice(0, 0, newBoxCoords);
+                    stack.splice(0, 0, newBoxCoords);
+                } else {
+                    chain.push(newBoxCoords);
+                    stack.push(newBoxCoords);
+                }
+            }
+        }
+    }
+
+    return { chain, canMove: true }
 }
 
 function readLinesToGridAndExpand(lines: string[], initialPosId?: string) {
