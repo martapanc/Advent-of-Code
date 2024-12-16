@@ -16,4 +16,4 @@
 | [Day 12](https://adventofcode.com/2024/day/12) | Garden Groups         | [code](day12/day12.ts) | [tests](day12/day12.test.ts) | flood fill; area, perimeter and sides             | 🧊🧊🧊     |        |
 | [Day 13](https://adventofcode.com/2024/day/13) | Claw Contraption      | [code](day13/day13.ts) | [tests](day13/day13.test.ts) | system of equations, matrices, THE CLAAAAWW!      | 🧊🧊       |        |
 | [Day 14](https://adventofcode.com/2024/day/14) | Restroom Redoubt      | [code](day14/day14.ts) | [tests](day14/day14.test.ts) | grid, x y velocity, visual ID                     | 🧊🧊🧊     |        |
-| [Day 15](https://adventofcode.com/2025/day/15) | Warehouse Woes        | [code](day15/day15.ts) | [tests](day15/day15.test.ts) | grid                                              |            |        |
+| [Day 15](https://adventofcode.com/2025/day/15) | Warehouse Woes        | [code](day15/day15.ts) | [tests](day15/day15.test.ts) | grid, chains of boxes                             | 🧊🧊🧊🧊   |        |
