@@ -26,9 +26,10 @@ export interface Coord {
 
 export type Grid = Map<string, string>;
 
-export function readLinesToGrid(lines: string[], initialPosId?: string) {
+export function readLinesToGrid(lines: string[], initialPosId?: string, endPosId?: string) {
     const grid: Grid = new Map();
     let initialPos: Coord | undefined = undefined;
+    let endPos: Coord | undefined = undefined;
 
     for (let y = 0; y < lines.length; y++) {
         const line = lines[y].split('');
@@ -36,12 +37,18 @@ export function readLinesToGrid(lines: string[], initialPosId?: string) {
             if (initialPosId && line[x] === initialPosId) {
                 initialPos = new Coord(x, y);
                 grid.set(new Coord(x, y).serialize(), '.');
+            } else if (endPosId && line[x] === endPosId) {
+                endPos = new Coord(x, y);
+                grid.set(new Coord(x, y).serialize(), '.');
             } else {
                 grid.set(new Coord(x, y).serialize(), line[x]);
             }
         }
     }
 
+    if (initialPos && endPos) {
+        return { grid, initialPos, endPos }
+    }
     if (initialPos) {
         return { grid, initialPos }
     }

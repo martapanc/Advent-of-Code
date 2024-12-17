@@ -105,7 +105,7 @@ function moveRobot2(inputGrid: Grid, initialPos: Coord, directions: Cardinal[]) 
     const grid = new Map(inputGrid);
     let sourcePos = new Coord(initialPos.x, initialPos.y);
 
-    printGrid(grid, sourcePos, 100, 50);
+    // printGrid(grid, sourcePos, 100, 50);
 
     for (let i = 0; i < directions.length; i++){
         const dir = directions[i];
