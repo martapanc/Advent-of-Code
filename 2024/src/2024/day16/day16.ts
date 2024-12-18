@@ -19,7 +19,7 @@ async function day16(inputFile: string, isPart2 = false) {
     if (!isPart2) {
         return findBestPath(grid, initialPos!, endPos!);
     } else {
-        return countTilesOnBestPaths(grid, initialPos!, endPos!);
+        return findPaths(grid, initialPos!, endPos!);
     }
 }
 
@@ -61,6 +61,60 @@ function findBestPath(grid: Grid, start: Coord, end: Coord, isPart2: boolean = f
     }
 
     return { cost: 0, pathTiles: new Set() };
+}
+
+function findPaths(grid: Grid, start: Coord, end: Coord) {
+    const bestPathLength = findBestPath(grid, start, end) as number;
+
+    const paths: Coord[][] = [];
+    function dfs(curr: Coord, dir: Cardinal, cost: number, path: Coord[], visited: Set<string>) {
+        if (cost > bestPathLength) {
+            return;
+        }
+        if (curr.equals(end)) {
+            if (cost === bestPathLength) {
+                path.push(curr);
+                paths.push([...path]); // Add the new best path
+            }
+            return;
+        }
+
+
+        if (visited.has(curr.serialize())) {
+            return;
+        }
+
+        visited.add(curr.serialize());
+        path.push(curr);
+
+        const nextCoord = move(curr, dir);
+        if (grid.get(nextCoord.serialize()) !== '#' && !visited.has(nextCoord.serialize())) {
+            dfs(nextCoord, dir, cost + 1, path, visited);
+        }
+
+        const nextDirLeft = rotate(dir, Direction.LEFT);
+        const nextDirRight = rotate(dir, Direction.RIGHT);
+        [nextDirLeft, nextDirRight].forEach(nextDir => {
+            const next = move(curr, nextDir);
+
+            if (grid.get(next.serialize()) !== '#' && !visited.has(next.serialize())) {
+                dfs(next, nextDir, cost + 1001, path, visited);
+            }
+        });
+
+        path.pop();
+        visited.delete(curr.serialize());
+    }
+
+    dfs(start, Cardinal.EAST, 0, [], new Set());
+
+    const uniqueTiles = new Set<string>();
+    for (const path of paths) {
+        for (const coord of path) {
+            uniqueTiles.add(coord.serialize())
+        }
+    }
+    return uniqueTiles.size;
 }
 
 
