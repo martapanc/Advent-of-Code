@@ -8,10 +8,10 @@ export async function part1(computer: Computer) {
 }
 
 export async function part2(computer: Computer) {
-    return await day17(computer);
+    return await day17(computer, calcMinValue);
 }
 
-async function day17(computer: Computer, calcFn?: (computer: Computer) => string) {
+async function day17(computer: Computer, calcFn?: (computer: Computer) => string | number | undefined) {
     return calcFn?.(computer);
 }
 
@@ -68,6 +68,32 @@ function calcOutput(computer: Computer) {
         i += 2;
     }
     return output.substring(0, output.length - 1);
+}
+
+function calcMinValue(computer: Computer) {
+    let i = BigInt(246291410000000);
+
+    while (i < 1000000000000000) {
+        const output = calcOutput({ regA: i, regB: 0, regC: 0, program: computer.program });
+        const outputSplit = output.split(",");
+        const programSplit = computer.program.split(",");
+        if (outputSplit.length === programSplit.length) {
+            if (outputSplit[15] == programSplit[15])
+                if (outputSplit[14] == programSplit[14])
+                    if (outputSplit[13] == programSplit[13])
+                        if (outputSplit[12] == programSplit[12])
+                            if (outputSplit[11] == programSplit[11])
+                                if (outputSplit[10] == programSplit[10])
+                                    if (outputSplit[9] == programSplit[9])
+                                        // if (outputSplit[8] == programSplit[8])
+                                            // if (outputSplit[7] == programSplit[7])
+                            console.log(i)
+        }
+        if (output === computer.program) {
+            return i;
+        }
+        i += 1000000000;
+    }
 }
 
 const adv = (first: number, second: number) => Math.trunc(first / second);

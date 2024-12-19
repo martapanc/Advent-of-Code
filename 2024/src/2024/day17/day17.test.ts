@@ -9,7 +9,9 @@ describe('2024 Day 17', () => {
     });
 
     test('Part 2', async () => {
-        // expect(await part2('testInput1')).toEqual(31);
-        // expect(await part2('input')).toEqual(29379307);
+        // expect(await part1({ regA: 117440, regB: 0, regC: 0, program: "0,3,5,4,3,0"})).toEqual("0,3,5,4,3,0");
+
+        // expect(await part2({ regA: 0, regB: 0, regC: 0, program: "0,3,5,4,3,0"})).toEqual(117440);
+        expect(await part2({ regA: 64012472, regB: 0, regC: 0, program: "2,4,1,7,7,5,0,3,1,7,4,1,5,5,3,0"})).toEqual(117440);
     });
 });

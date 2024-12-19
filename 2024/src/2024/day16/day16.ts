@@ -1,6 +1,7 @@
 import path from "node:path";
 import {readInputLineByLine} from "@utils/io";
 import {Cardinal, Coord, Direction, Grid, move, readLinesToGrid, rotate} from "@utils/grid";
+import {PriorityQueue} from "@utils/queue";
 
 export async function part1(inputFile: string) {
     return await day16(inputFile);
@@ -19,7 +20,7 @@ async function day16(inputFile: string, isPart2 = false) {
     if (!isPart2) {
         return findBestPath(grid, initialPos!, endPos!);
     } else {
-        return findPaths(grid, initialPos!, endPos!);
+        return traverse(grid, initialPos!, endPos!).seats;
     }
 }
 
@@ -63,123 +64,59 @@ function findBestPath(grid: Grid, start: Coord, end: Coord, isPart2: boolean = f
     return { cost: 0, pathTiles: new Set() };
 }
 
-function findPaths(grid: Grid, start: Coord, end: Coord) {
-    const bestPathLength = findBestPath(grid, start, end) as number;
-
-    const paths: Coord[][] = [];
-    function dfs(curr: Coord, dir: Cardinal, cost: number, path: Coord[], visited: Set<string>) {
-        if (cost > bestPathLength) {
-            return;
-        }
-        if (curr.equals(end)) {
-            if (cost === bestPathLength) {
-                path.push(curr);
-                paths.push([...path]); // Add the new best path
-            }
-            return;
-        }
-
-
-        if (visited.has(curr.serialize())) {
-            return;
-        }
-
-        visited.add(curr.serialize());
-        path.push(curr);
-
-        const nextCoord = move(curr, dir);
-        if (grid.get(nextCoord.serialize()) !== '#' && !visited.has(nextCoord.serialize())) {
-            dfs(nextCoord, dir, cost + 1, path, visited);
-        }
-
-        const nextDirLeft = rotate(dir, Direction.LEFT);
-        const nextDirRight = rotate(dir, Direction.RIGHT);
-        [nextDirLeft, nextDirRight].forEach(nextDir => {
-            const next = move(curr, nextDir);
-
-            if (grid.get(next.serialize()) !== '#' && !visited.has(next.serialize())) {
-                dfs(next, nextDir, cost + 1001, path, visited);
-            }
-        });
-
-        path.pop();
-        visited.delete(curr.serialize());
-    }
-
-    dfs(start, Cardinal.EAST, 0, [], new Set());
-
-    const uniqueTiles = new Set<string>();
-    for (const path of paths) {
-        for (const coord of path) {
-            uniqueTiles.add(coord.serialize())
-        }
-    }
-    return uniqueTiles.size;
+type State2 = {
+    position: Coord,
+    direction: Cardinal,
+    cost: number,
+    path: Coord[]
 }
 
+type TileState = {
+    pos: Coord,
+    dir: Cardinal,
+}
 
-function findAllPaths(grid: Grid, start: Coord, end: Coord) {
-    const visited = new Map<string, Set<Cardinal>>();  // Track visited positions with incoming directions
-    const allPaths: Array<{ path: Coord[], cost: number }> = [];
-    const queue: { pos: Coord, dir: Cardinal, path: Coord[], cost: number }[] = [];
+function traverse(grid: Grid, start: Coord, end: Coord) {
+    const paths = new Set<string>();
+    let lowest = Infinity;
+    const scores = new Map<string, number>(); // Key: serialized (position + direction)
+    const toVisit = new PriorityQueue<State2>((a, b) => a.cost - b.cost);
 
-    // Start BFS to compute all possible paths
-    queue.push({ pos: start, dir: Cardinal.EAST, path: [start], cost: 0 });
+    toVisit.enqueue({ position: start, direction: Cardinal.EAST, cost: 0, path: [] });
 
-    while (queue.length > 0) {
-        const { pos, dir, path, cost } = queue.shift()!;
+    while (toVisit.size() > 0) {
+        const { position, direction, cost, path } = toVisit.dequeue()!;
 
-        // Check if we've already visited this position with the same incoming direction
-        const stateKey = `${pos.serialize()},${dir}`;
-        if (visited.has(stateKey)) {
-            continue;  // Skip this state if we've already explored it with the same direction
+        const stateKey = `${position.serialize()}:${direction}`;
+        if (cost > (scores.get(stateKey) ?? Infinity)) continue;
+
+        scores.set(stateKey, cost);
+
+        if (position.equals(end)) {
+            if (cost > lowest) break;
+
+            path.forEach(coord => paths.add(coord.serialize()));
+            lowest = cost;
         }
 
-        // Mark this position and direction as visited
-        visited.set(stateKey, new Set([dir]));
+        const moves: { dir: Cardinal; moveCost: number }[] = [
+            { dir: direction, moveCost: 1 },
+            { dir: rotate(direction, Direction.RIGHT), moveCost: 1001 },
+            { dir: rotate(direction, Direction.LEFT), moveCost: 1001 },
+        ];
 
-        // If we reach the end, record the path and cost
-        if (pos.equals(end)) {
-            allPaths.push({ path, cost });
-            continue;
-        }
-
-        // Move forward in the current direction
-        const nextPos = move(pos, dir);
-        if (grid.has(nextPos.serialize()) && grid.get(nextPos.serialize()) !== '#') {
-            const nextStateKey = `${nextPos.serialize()},${dir}`;
-            if (!visited.has(nextStateKey)) {
-                queue.push({ pos: nextPos, dir, path: [...path, nextPos], cost: cost + 1 });
-            }
-        }
-
-        // Explore rotations: left and right
-        for (const rotation of [Direction.LEFT, Direction.RIGHT]) {
-            const newDir = rotate(dir, rotation);
-            const rotateStateKey = `${pos.serialize()},${newDir}`;
-            if (!visited.has(rotateStateKey)) {
-                queue.push({ pos, dir: newDir, path: [...path], cost: cost + 1000 });
+        for (const { dir, moveCost } of moves) {
+            const nextPosition = move(position, dir);
+            if (grid.get(nextPosition.serialize()) !== "#") {
+                toVisit.enqueue({
+                    position: nextPosition,
+                    direction: dir,
+                    cost: moveCost + cost,
+                    path: [...path, position],
+                });
             }
         }
     }
 
-    return allPaths;
-}
-
-function countTilesOnBestPaths(grid: Grid, start: Coord, end: Coord) {
-    const allPaths = findAllPaths(grid, start, end);
-
-    // Step 1: Get the minimum cost from all paths
-    const minCost = Math.min(...allPaths.map(p => p.cost));
-
-    // Step 2: Collect all tiles in the best paths (paths with minCost)
-    const bestPathTiles = new Set<string>();
-    allPaths.forEach(({ path, cost }) => {
-        if (cost === minCost) {
-            path.forEach(pos => bestPathTiles.add(pos.serialize()));
-        }
-    });
-
-    // Step 3: Return the count of unique tiles in the best paths
-    return bestPathTiles.size;
+    return { lowestScore: lowest, seats: paths.size + 1 };
 }
