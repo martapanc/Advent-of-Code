@@ -52,12 +52,17 @@ function findPath(grid: Grid, end: Coord) {
             return length;
         }
 
+        if (visited.has(position))
+            continue;
         visited.add(position);
 
         for (let n of getNeighborCoords(curr)) {
             const neighbor = n.serialize();
-            if (!visited.has(neighbor)  && grid.get(neighbor) === '.') {
-                queue.enqueue({ position: neighbor, length: length + 1 })
+            if (!visited.has(neighbor) && grid.get(neighbor) === '.') {
+                queue.enqueue({
+                    position: neighbor,
+                    length: length + 1,
+                });
             }
         }
     }
