@@ -1,7 +1,4 @@
-import path from "node:path";
-import {readInputLineByLine} from "@utils/io";
-
-type Computer = { regA: number, regB: number, regC: number, program: string };
+type Computer = { regA: bigint, regB: bigint, regC: bigint, program: string };
 
 export async function part1(computer: Computer) {
     return await day17(computer, calcOutput);
@@ -11,24 +8,24 @@ export async function part2(computer: Computer) {
     return await day17(computer, calcMinValue);
 }
 
-async function day17(computer: Computer, calcFn?: (computer: Computer) => string | number | undefined) {
+async function day17(computer: Computer, calcFn?: (computer: Computer) => string | bigint | undefined | null) {
     return calcFn?.(computer);
 }
 
 function calcOutput(computer: Computer) {
     let { regA, regB, regC } = computer;
-    const program = computer.program.split(",").map(s => Number.parseInt(s));
+    const program = computer.program.split(",").map(s => BigInt(s));
 
     let output = "";
 
-    function getCombo(operand: number) {
-        if (operand >= 0 && operand <= 3) {
+    function getCombo(operand: bigint) {
+        if (operand >= 0n && operand <= 3n) {
             return operand;
         }
-        if (operand === 4) return regA;
-        if (operand === 5) return regB;
-        if (operand === 6) return regC;
-        if (operand === 7) throw new Error("Invalid operand 7");
+        if (operand === 4n) return regA;
+        if (operand === 5n) return regB;
+        if (operand === 6n) return regC;
+        if (operand === 7n) throw new Error("Invalid operand 7");
     }
 
     let i = 0;
@@ -37,32 +34,32 @@ function calcOutput(computer: Computer) {
         const operand = program[i + 1];
 
         switch (opCode) {
-            case 0:
-                regA = adv(regA, Math.pow(2, getCombo(operand)!));
+            case 0n:
+                regA = BigInt(adv(regA, BigInt(Math.pow(2, Number(getCombo(operand)!)))));
                 break;
-            case 1:
+            case 1n:
                 regB = bxl(regB, operand);
                 break;
-            case 2:
+            case 2n:
                 regB = bst(getCombo(operand)!);
                 break;
-            case 3:
-                if (regA !== 0) {
-                    i = operand;
+            case 3n:
+                if (regA !== 0n) {
+                    i = Number(operand);
                     continue;
                 }
                 break;
-            case 4:
+            case 4n:
                 regB = bxc(regB, regC);
                 break;
-            case 5:
+            case 5n:
                 output += out(getCombo(operand)!) + ","
                 break;
-            case 6:
-                regB = bdv(regA, Math.pow(2, getCombo(operand)!));
+            case 6n:
+                regB = BigInt(bdv(regA, BigInt(Math.pow(2, Number(getCombo(operand)!)))));
                 break;
-            case 7:
-                regC = cdv(regA, Math.pow(2, getCombo(operand)!));
+            case 7n:
+                regC = BigInt(cdv(regA, BigInt(Math.pow(2, Number(getCombo(operand)!)))));
                 break;
         }
         i += 2;
@@ -71,39 +68,36 @@ function calcOutput(computer: Computer) {
 }
 
 function calcMinValue(computer: Computer) {
-    let i = BigInt(246291410000000);
+    const program = computer.program.split(',').map(num => BigInt(num));
 
-    while (i < 1000000000000000) {
-        const output = calcOutput({ regA: i, regB: 0, regC: 0, program: computer.program });
-        const outputSplit = output.split(",");
-        const programSplit = computer.program.split(",");
-        if (outputSplit.length === programSplit.length) {
-            if (outputSplit[15] == programSplit[15])
-                if (outputSplit[14] == programSplit[14])
-                    if (outputSplit[13] == programSplit[13])
-                        if (outputSplit[12] == programSplit[12])
-                            if (outputSplit[11] == programSplit[11])
-                                if (outputSplit[10] == programSplit[10])
-                                    if (outputSplit[9] == programSplit[9])
-                                        // if (outputSplit[8] == programSplit[8])
-                                            // if (outputSplit[7] == programSplit[7])
-                            console.log(i)
+    const searchA = (value: bigint, current: number): bigint => {
+        if (current < 0)
+            return value;
+
+        for (let i = value << 3n; i < (value << 3n) + 8n; i++) {
+            const output = calcOutput({ regA: i, regB: 0n, regC: 0n, program: computer.program })
+                .split(',').map(s => BigInt(s));
+
+            if (output[0] === program[current]) {
+                const finalVal = searchA(i, current - 1);
+                if (finalVal !== -1n) return finalVal;
+            }
         }
-        if (output === computer.program) {
-            return i;
-        }
-        i += 1000000000;
-    }
+
+        return -1n;
+    };
+
+    return searchA(0n, program.length - 1);
 }
 
-const adv = (first: number, second: number) => Math.trunc(first / second);
-const bdv = (first: number, second: number) => adv(first, second);
-const cdv = (first: number, second: number) => adv(first, second);
+const adv = (first: bigint, second: bigint): number => Math.trunc(Number(first / second));
+const bdv = (first: bigint, second: bigint) => adv(first, second);
+const cdv = (first: bigint, second: bigint) => adv(first, second);
 
-const bxl = (first: number, second: number) => first ^ second;
+const bxl = (first: bigint, second: bigint) => first ^ second;
 
-const bst = (num: number) => num % 8;
+const bst = (num: bigint) => num % 8n;
 
-const bxc = (regB: number, regC: number) => bxl(regB, regC);
+const bxc = (regB: bigint, regC: bigint) => bxl(regB, regC);
 
-const out = (num: number) => bst(num);
+const out = (num: bigint) => bst(num);
