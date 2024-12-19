@@ -18,5 +18,5 @@
 | [Day 14](https://adventofcode.com/2024/day/14) | Restroom Redoubt       | [code](day14/day14.ts) | [tests](day14/day14.test.ts) | grid, x y velocity, visual ID                     | 🧊🧊🧊     |        |
 | [Day 15](https://adventofcode.com/2025/day/15) | Warehouse Woes         | [code](day15/day15.ts) | [tests](day15/day15.test.ts) | grid, chains of boxes                             | 🧊🧊🧊🧊   |        |
 | [Day 16](https://adventofcode.com/2025/day/16) | Reindeer Maze          | [code](day16/day16.ts) | [tests](day16/day16.test.ts) | grid, best path, dijkstra                         | 🧊🧊🧊🧊   |        |
-| [Day 17](https://adventofcode.com/2025/day/17) | Chronospatial Computer | [code](day17/day17.ts) | [tests](day17/day17.test.ts) | program, opcodes                                  | 🧊🧊🧊     |        |
+| [Day 17](https://adventofcode.com/2025/day/17) | Chronospatial Computer | [code](day17/day17.ts) | [tests](day17/day17.test.ts) | program, opcodes, mod 8                           | 🧊🧊🧊🧊   |        |
 | [Day 18](https://adventofcode.com/2025/day/18) | RAM Run                | [code](day18/day18.ts) | [tests](day18/day18.test.ts) |                                                   |            |        |
