@@ -71,11 +71,6 @@ type State2 = {
     path: Coord[]
 }
 
-type TileState = {
-    pos: Coord,
-    dir: Cardinal,
-}
-
 function traverse(grid: Grid, start: Coord, end: Coord) {
     const paths = new Set<string>();
     let lowest = Infinity;
