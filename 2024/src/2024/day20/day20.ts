@@ -33,8 +33,10 @@ function countCheatsSavingAtLeast(grid: Grid, start: Coord, end: Coord, minCheat
     findCandidateCheats(grid).forEach(cheat => {
         const newGrid = new Map(grid);
         newGrid.set(cheat.serialize(), '.');
-        const newLength = calcRacetrackLength(newGrid, start, end);
-        cheatMap.set(cheat.serialize(), length - newLength);
+        const newLength = calcRacetrackLength(newGrid, start, end, length - minCheats);
+        if (newLength != -1) {
+            cheatMap.set(cheat.serialize(), length - newLength);
+        }
     });
 
     let count = 0;
@@ -52,7 +54,7 @@ type State = {
     length: number
 }
 
-function calcRacetrackLength(grid: Grid, start: Coord, end: Coord) {
+function calcRacetrackLength(grid: Grid, start: Coord, end: Coord, maxLength?: number) {
     let curr = new Coord(start.x, start.y);
     const visited = new Set<string>();
 
@@ -60,6 +62,10 @@ function calcRacetrackLength(grid: Grid, start: Coord, end: Coord) {
 
     while (queue.length > 0) {
         const { curr, length } = queue.shift()!;
+
+        if (maxLength && length > maxLength) {
+            return -1
+        }
 
         if (curr.equals(end)) {
             return length;
