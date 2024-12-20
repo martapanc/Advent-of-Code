@@ -2,14 +2,14 @@ import path from "node:path";
 import {readInputLineByLine} from "@utils/io";
 
 export async function part1(inputFile: string) {
-    return await day19(inputFile, findValidDesigns);
+    return await day19(inputFile, true);
 }
 
 export async function part2(inputFile: string) {
-    return await day19(inputFile);
+    return await day19(inputFile, false);
 }
 
-async function day19(inputFile: string, calcFn?: (patterns: string[], designs: string[]) => number) {
+async function day19(inputFile: string, isPart1: boolean) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
 
@@ -18,19 +18,24 @@ async function day19(inputFile: string, calcFn?: (patterns: string[], designs: s
     lines.slice(1).map(line => {
         designs.push(line);
     })
-    return calcFn?.(patterns, designs);
+    return findValidDesigns(patterns, designs, isPart1);
 }
 
 
-function findValidDesigns(patterns: string[], designs: string[]) {
+function findValidDesigns(patterns: string[], designs: string[], isPart1: boolean) {
     let validCount = 0;
+    let arrangementCount = 0
 
     for (const design of designs) {
-        if (isDesignValid(design, patterns)) {
+        const { isValid, validArrangements } = isDesignValid(design, patterns);
+
+        if (isValid) {
             validCount++;
         }
+        arrangementCount += validArrangements;
     }
-    return validCount;
+
+    return isPart1 ? validCount : arrangementCount;
 }
 
 type State = {
@@ -45,11 +50,15 @@ export function isDesignValid(design: string, allPatterns: string[]) {
     const queue: State[] = [{ patternList: [], index: 0}];
     const visited = new Set<number>();
 
+    let isValid = false;
+    let validArrangements = 0;
+
     while (queue.length > 0) {
         const { patternList, index } = queue.pop()!;
 
         if (index === design.length) {
-            return true;
+            isValid = true;
+            validArrangements++;
         }
 
         if (visited.has(index)) {
@@ -70,5 +79,6 @@ export function isDesignValid(design: string, allPatterns: string[]) {
         });
     }
 
-    return false;
+
+    return { validArrangements, isValid };
 }
