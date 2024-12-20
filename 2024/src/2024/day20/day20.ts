@@ -33,9 +33,10 @@ function countCheatsSavingAtLeast(grid: Grid, start: Coord, end: Coord, minCheat
     findCandidateCheats(grid).forEach(cheat => {
         const newGrid = new Map(grid);
         newGrid.set(cheat.serialize(), '.');
-        const newLength = calcRacetrackLength(newGrid, start, end, length - minCheats);
-        if (newLength != -1) {
-            cheatMap.set(cheat.serialize(), length - newLength);
+
+        const diff = calcLengthDiff(newGrid, cheat);
+        if (diff && diff >= minCheats) {
+            cheatMap.set(cheat.serialize(), diff);
         }
     });
 
@@ -52,6 +53,56 @@ function countCheatsSavingAtLeast(grid: Grid, start: Coord, end: Coord, minCheat
 type State = {
     curr: Coord,
     length: number
+}
+type State2 = {
+    curr: Coord,
+    length: number,
+    path: string
+}
+
+function calcLengthDiff(grid: Grid, cheat: Coord) {
+    let start: Coord;
+    let end: Coord;
+    const hNeighbors = getHorizontalNeighbors(cheat);
+    const vNeighbors = getVerticalNeighbors(cheat);
+    if (hNeighbors.every(n => grid.get(n.serialize()) === '.')) {
+        start = hNeighbors[0];
+        end = hNeighbors[1];
+    } else {
+        start = vNeighbors[0];
+        end = vNeighbors[1];
+    }
+
+    let oneEndReached = false;
+    let firstPathLength = -1;
+
+    const visited = new Set<string>();
+    const queue: State2[] = [{ curr: start, length: 0, path: start.serialize()}];
+    while (queue.length > 0) {
+        const { curr, length, path } = queue.shift()!;
+
+        const visitedKey = `${curr.serialize()}`
+
+        if (curr.equals(end)) {
+            if (oneEndReached) {
+                return Math.abs(firstPathLength - length);
+            }
+            firstPathLength = length
+            oneEndReached = true;
+            continue;
+        } else {
+            if (visited.has(visitedKey))
+                continue;
+
+            visited.add(visitedKey);
+        }
+        const neighbors = getNeighborCoords(curr).filter(c => grid.get(c.serialize()) === '.' && !visited.has(c.serialize()))!;
+        neighbors.forEach(n => {
+            queue.push({ curr: n, length: length + 1, path: path + n.serialize() });
+        });
+    }
+
+    console.log()
 }
 
 function calcRacetrackLength(grid: Grid, start: Coord, end: Coord, maxLength?: number) {
