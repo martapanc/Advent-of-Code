@@ -70,8 +70,8 @@ export function getNeighbors(source: Coord, grid: Grid, includeDiagonals: boolea
 export function getNeighborCoords(source: Coord, includeDiagonals: boolean = false) {
     const neighbors = [
         new Coord(source.x, source.y - 1), // N
-        new Coord(source.x, source.y + 1), // S
         new Coord(source.x + 1, source.y), // E
+        new Coord(source.x, source.y + 1), // S
         new Coord(source.x - 1, source.y), // W
     ];
     if (includeDiagonals) {
@@ -79,6 +79,20 @@ export function getNeighborCoords(source: Coord, includeDiagonals: boolean = fal
     }
 
     return neighbors;
+}
+
+export function getHorizontalNeighbors(source: Coord) {
+    return [
+        new Coord(source.x + 1, source.y), // E
+        new Coord(source.x - 1, source.y), // W
+    ];
+}
+
+export function getVerticalNeighbors(source: Coord) {
+    return [
+        new Coord(source.x, source.y - 1), // N
+        new Coord(source.x, source.y + 1), // S
+    ];
 }
 
 export function getNeighborCoordsWithDirections(coord: Coord): [Cardinal, Coord][] {
