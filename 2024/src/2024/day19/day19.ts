@@ -24,18 +24,21 @@ async function day19(inputFile: string, isPart1: boolean) {
 
 function findValidDesigns(patterns: string[], designs: string[], isPart1: boolean) {
     let validCount = 0;
-    let arrangementCount = 0
 
     for (const design of designs) {
-        const { isValid, validArrangements } = isDesignValid(design, patterns);
+        if (isPart1) {
+            const isValid = isDesignValid(design, patterns);
 
-        if (isValid) {
-            validCount++;
+            if (isValid) {
+                validCount++;
+            }
+        } else {
+            const validArrangements = findAllDesignCombinations(patterns, design);
+            validCount += validArrangements;
         }
-        arrangementCount += validArrangements;
     }
 
-    return isPart1 ? validCount : arrangementCount;
+    return validCount;
 }
 
 type State = {
@@ -50,15 +53,11 @@ export function isDesignValid(design: string, allPatterns: string[]) {
     const queue: State[] = [{ patternList: [], index: 0}];
     const visited = new Set<number>();
 
-    let isValid = false;
-    let validArrangements = 0;
-
     while (queue.length > 0) {
         const { patternList, index } = queue.pop()!;
 
         if (index === design.length) {
-            isValid = true;
-            validArrangements++;
+            return true;
         }
 
         if (visited.has(index)) {
@@ -80,5 +79,34 @@ export function isDesignValid(design: string, allPatterns: string[]) {
     }
 
 
-    return { validArrangements, isValid };
+    return false;
+}
+
+export function findAllDesignCombinations(allPatterns: string[], design: string): number {
+    const longestPattern = allPatterns.reduce((maxLength, str) => Math.max(maxLength, str.length), 0);
+    const memo: Map<number, number> = new Map();
+
+    function dfs(index: number): number {
+        if (index === design.length) {
+            return 1; // One valid combination
+        }
+
+        if (memo.has(index)) {
+            return memo.get(index)!;
+        }
+
+        let count = 0;
+
+        for (let i = 1; i <= longestPattern; i++) {
+            const substring = design.slice(index, index + i);
+            if (allPatterns.includes(substring)) {
+                count += dfs(index + i);
+            }
+        }
+
+        memo.set(index, count);
+        return count;
+    }
+
+    return dfs(0);
 }
