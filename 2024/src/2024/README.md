@@ -21,3 +21,4 @@
 | [Day 17](https://adventofcode.com/2025/day/17) | Chronospatial Computer | [code](day17/day17.ts) | [tests](day17/day17.test.ts) | program, opcodes, mod 8                           | 🧊🧊🧊🧊   |        |
 | [Day 18](https://adventofcode.com/2025/day/18) | RAM Run                | [code](day18/day18.ts) | [tests](day18/day18.test.ts) | bfs, tiles blocking path                          | 🧊🧊🧊     |        |
 | [Day 19](https://adventofcode.com/2025/day/19) | Linen Layout           | [code](day19/day19.ts) | [tests](day19/day19.test.ts) | combinations, dfs                                 | 🧊🧊🧊     |        |
+| [Day 20](https://adventofcode.com/2025/day/20) | Race Condition         | [code](day20/day20.ts) | [tests](day20/day20.test.ts) | grid, 'cheat' through walls                       | 🧊🧊🧊     |        |

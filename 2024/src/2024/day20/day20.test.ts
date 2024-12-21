@@ -11,8 +11,12 @@ describe('2024 Day 20', () => {
     });
 
     test('Part 2', async () => {
-        // expect(await part2('testInput1')).toEqual(31);
-        // expect(await part2('input')).toEqual(29379307);
+        expect(await part2('testInput1', 76)).toEqual(3);
+        expect(await part2('testInput1', 74)).toEqual(7);
+        expect(await part2('testInput1', 72)).toEqual(29);
+        expect(await part2('testInput1', 70)).toEqual(41);
+
+        expect(await part2('input', 100)).toEqual(961364);
     });
 
     test('calc racetrack length', () => {

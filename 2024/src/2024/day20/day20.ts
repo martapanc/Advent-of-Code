@@ -10,20 +10,41 @@ import {
 } from "@utils/grid";
 
 export async function part1(inputFile: string, minCheats: number) {
-    return await day20(inputFile, minCheats, countCheatsSavingAtLeast);
+    return await day20(inputFile, minCheats, false, countCheatsSavingAtLeast);
 }
 
 export async function part2(inputFile: string, minCheats: number) {
-    return await day20(inputFile, minCheats);
+    return await day20(inputFile, minCheats, true);
 }
 
-async function day20(inputFile: string, minCheats: number, calcFn?: (grid: Grid, start: Coord, end: Coord, minCheats: number) => number) {
+async function day20(inputFile: string, minCheats: number, isPart2: boolean, calcFn?: (grid: Grid, start: Coord, end: Coord, minCheats: number) => number) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
 
     const { grid, initialPos, endPos } = readLinesToGrid(lines, 'S', 'E');
 
-    return calcFn?.(grid, initialPos!, endPos!, minCheats);
+    if (isPart2) {
+        const distances = bfs(grid, endPos!);
+
+        let cheats = 0;
+        const walkable = Object.keys(distances);
+        for (let a of walkable) {
+            for (let b of walkable) {
+                if (a === b) continue;
+
+                const start = Coord.deserialize(a);
+                const end = Coord.deserialize(b);
+                const distance = Math.abs(start.x - end.x) + Math.abs(start.y - end.y);
+                if (distance <= 20 && distances[a] - distances[b] - distance >= minCheats) {
+                    cheats++
+                }
+            }
+        }
+
+        return cheats;
+    } else {
+        return calcFn?.(grid, initialPos!, endPos!, minCheats);
+    }
 }
 
 function countCheatsSavingAtLeast(grid: Grid, start: Coord, end: Coord, minCheats: number) {
@@ -42,11 +63,8 @@ function countCheatsSavingAtLeast(grid: Grid, start: Coord, end: Coord, minCheat
     return [...cheatMap.values()].length;
 }
 
+
 type State = {
-    curr: Coord,
-    length: number
-}
-type State2 = {
     curr: Coord,
     length: number,
     path: string
@@ -69,7 +87,7 @@ function calcLengthDiff(grid: Grid, cheat: Coord) {
     let firstPathLength = -1;
 
     const visited = new Set<string>();
-    const queue: State2[] = [{ curr: start, length: 0, path: start.serialize()}];
+    const queue: State[] = [{ curr: start, length: 0, path: start.serialize()}];
     while (queue.length > 0) {
         const { curr, length, path } = queue.shift()!;
 
@@ -93,39 +111,6 @@ function calcLengthDiff(grid: Grid, cheat: Coord) {
             queue.push({ curr: n, length: length + 1, path: path + n.serialize() });
         });
     }
-
-    console.log()
-}
-
-function calcRacetrackLength(grid: Grid, start: Coord, end: Coord, maxLength?: number) {
-    let curr = new Coord(start.x, start.y);
-    const visited = new Set<string>();
-
-    const queue: State[] = [{ curr, length: 0}];
-
-    while (queue.length > 0) {
-        const { curr, length } = queue.shift()!;
-
-        if (maxLength && length > maxLength) {
-            return -1
-        }
-
-        if (curr.equals(end)) {
-            return length;
-        }
-
-        if (visited.has(curr.serialize()))
-            continue;
-
-        visited.add(curr.serialize());
-
-        const neighbors = getNeighborCoords(curr).filter(c => grid.get(c.serialize()) === '.' && !visited.has(c.serialize()))!;
-        neighbors.forEach(n => {
-            queue.push({ curr: n, length: length + 1 });
-        });
-    }
-
-    return -1;
 }
 
 function findCandidateCheats(grid: Grid) {
@@ -146,4 +131,31 @@ function findCandidateCheats(grid: Grid) {
     });
 
     return candidates;
+}
+
+function bfs(grid: Grid, start: Coord) {
+    const queue: { coord: Coord, steps: number}[] = [];
+    const distances: { [key: string]: number } = {};
+
+    queue.push({ coord: start, steps: 0 });
+    distances[start.serialize()] = 0;
+
+    while (queue.length > 0) {
+        const current = queue.shift();
+        if (current === undefined) {
+            break;
+        }
+
+        for (const neighbor of getNeighborCoords(current.coord)) {
+            if (grid.get(neighbor.serialize()) === '.') {
+                const newDistance = current.steps + 1;
+                if (distances[neighbor.serialize()] === undefined || distances[neighbor.serialize()] > newDistance) {
+                    queue.push({ coord: neighbor, steps: current.steps + 1 });
+                    distances[neighbor.serialize()] = newDistance;
+                }
+            }
+        }
+    }
+
+    return distances;
 }
