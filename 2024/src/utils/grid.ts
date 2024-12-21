@@ -176,3 +176,20 @@ export function printGrid(grid: Map<string, string>, pos: Coord, width: number, 
     console.log('\n');
     return str;
 }
+
+export function findCoordsWithinManhattanDistance(source: Coord, distance: number) {
+    const coordinates: Coord[] = [];
+
+    for (let x = source.x - distance; x <= source.x + distance; x++) {
+        for (let y = source.y - distance; y <= source.y + distance; y++) {
+            if (Math.abs(x - source.x) + Math.abs(y - source.y) <= distance) {
+                const current = new Coord(x, y);
+                if (!current.equals(source)) {
+                    coordinates.push(current);
+                }
+            }
+        }
+    }
+
+    return coordinates;
+}

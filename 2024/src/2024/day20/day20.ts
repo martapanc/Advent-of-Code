@@ -27,7 +27,6 @@ async function day20(inputFile: string, minCheats: number, calcFn?: (grid: Grid,
 }
 
 function countCheatsSavingAtLeast(grid: Grid, start: Coord, end: Coord, minCheats: number) {
-    const length = calcRacetrackLength(grid, start, end);
     const cheatMap = new Map<string, number>();
 
     findCandidateCheats(grid).forEach(cheat => {
@@ -40,14 +39,7 @@ function countCheatsSavingAtLeast(grid: Grid, start: Coord, end: Coord, minCheat
         }
     });
 
-    let count = 0;
-    for (const value of cheatMap.values()) {
-        if (value >= minCheats) {
-            count++;
-        }
-    }
-
-    return count;
+    return [...cheatMap.values()].length;
 }
 
 type State = {

@@ -1,4 +1,4 @@
-import {Cardinal, Coord, Direction, getNeighborCoords, rotate} from "@utils/grid";
+import {Cardinal, Coord, Direction, findCoordsWithinManhattanDistance, getNeighborCoords, rotate} from "@utils/grid";
 
 test('get neighbor coords', () => {
     expect(getNeighborCoords(new Coord(0, 0))).toEqual(expect.arrayContaining([new Coord(0, 1), new Coord(0, -1), new Coord(-1, 0), new Coord(1, 0)]));
@@ -21,4 +21,11 @@ test('rotate', () => {
     expect(rotate(Cardinal.EAST, Direction.LEFT)).toEqual(Cardinal.NORTH);
     expect(rotate(Cardinal.SOUTH, Direction.LEFT)).toEqual(Cardinal.EAST);
     expect(rotate(Cardinal.WEST, Direction.LEFT)).toEqual(Cardinal.SOUTH);
+});
+
+test('find coords within Manhattan distance', () => {
+    expect(findCoordsWithinManhattanDistance(new Coord(0, 0), 1).map(c => c.serialize()))
+        .toEqual(['{-1,0}', '{0,-1}', '{0,1}', '{1,0}']);
+    expect(findCoordsWithinManhattanDistance(new Coord(0, 0), 2).map(c => c.serialize()))
+        .toEqual(["{-2,0}", "{-1,-1}", "{-1,0}", "{-1,1}", "{0,-2}", "{0,-1}", "{0,1}", "{0,2}", "{1,-1}", "{1,0}", "{1,1}", "{2,0}"]);
 });
