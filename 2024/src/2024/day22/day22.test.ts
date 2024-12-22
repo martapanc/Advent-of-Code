@@ -7,7 +7,7 @@ describe('2024 Day 22', () => {
     });
 
     test('Part 2', async () => {
-        expect(await part2('testInput1')).toEqual(31);
+        expect(await part2('testInput2')).toEqual(23);
         expect(await part2('input')).toEqual(29379307);
     });
 
@@ -19,11 +19,14 @@ describe('2024 Day 22', () => {
     })
 
     test('calcNthSecretNumber', () => {
-        expect(calcNthSecretNumber(123, 10)).toEqual(5908254);
-        expect(calcNthSecretNumber(1, 2000)).toEqual(8685429);
-        expect(calcNthSecretNumber(10, 2000)).toEqual(4700978);
-        expect(calcNthSecretNumber(100, 2000)).toEqual(15273692);
-        expect(calcNthSecretNumber(2024, 2000)).toEqual(8667524);
+        expect(calcNthSecretNumber(123, 10).nextSecretNumber).toEqual(5908254);
+        expect(calcNthSecretNumber(1, 2000).nextSecretNumber).toEqual(8685429);
+        expect(calcNthSecretNumber(10, 2000).nextSecretNumber).toEqual(4700978);
+        expect(calcNthSecretNumber(100, 2000).nextSecretNumber).toEqual(15273692);
+        expect(calcNthSecretNumber(2024, 2000).nextSecretNumber).toEqual(8667524);
+
+        const states = calcNthSecretNumber(123, 9).states;
+        expect(states[states.length - 1].diff).toEqual(-2);
     })
 
     test('mix & prune', () => {

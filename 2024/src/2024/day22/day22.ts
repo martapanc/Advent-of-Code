@@ -6,7 +6,7 @@ export async function part1(inputFile: string) {
 }
 
 export async function part2(inputFile: string) {
-    return await day22(inputFile);
+    return await day22(inputFile, optimiseBananaPurchases);
 }
 
 async function day22(inputFile: string, calcFn?: (lines: number[]) => number) {
@@ -19,20 +19,61 @@ async function day22(inputFile: string, calcFn?: (lines: number[]) => number) {
 function calcAndSumSecretNumbers(initial: number[]) {
     let sum = 0;
     initial.forEach(num => {
-        sum += calcNthSecretNumber(num, 2000);
+        sum += calcNthSecretNumber(num, 2000).nextSecretNumber;
     });
     return sum;
 }
 
+function optimiseBananaPurchases(initial: number[]) {
+    const res = getBestSequence(initial);
+
+    return res.bananas;
+}
+
+function getBestSequence(buyers: number[], steps = 2000) {
+    const sequenceScores: Map<string, number> = new Map();
+
+    for (const initial of buyers) {
+        const states = calcNthSecretNumber(initial, 1999).states;
+        const prices = states.map(s => s.lastDigit);
+        const diffs = states.map(s => s.diff);
+
+        for (let i = 0; i <= diffs.length - 4; i++) {
+            const seq = diffs.slice(i, i + 4).join(",");
+            if (!sequenceScores.has(seq)) sequenceScores.set(seq, 0);
+            sequenceScores.set(seq, sequenceScores.get(seq)! + prices[i + 4]);
+        }
+    }
+
+    let bestSequence = null;
+    let maxBananas = 0;
+
+    for (const [seq, score] of sequenceScores.entries()) {
+        if (score > maxBananas) {
+            maxBananas = score;
+            bestSequence = seq.split(",").map(Number);
+        }
+    }
+
+    return { sequence: bestSequence || [], bananas: maxBananas }
+}
+
+type SecretNumberState = { secretNum?: number, lastDigit: number, diff: number }
+
 export function calcNthSecretNumber(input: number, n: number) {
     let i = 0;
     let nextSecretNumber = input;
+    const states: SecretNumberState[] = [];
+    let prevLastDigit = input % 10;
+
     while (i < n) {
         nextSecretNumber = calcSecretNumber(nextSecretNumber);
+        states.push({ lastDigit: nextSecretNumber % 10, diff: (nextSecretNumber % 10) - prevLastDigit });
+        prevLastDigit = nextSecretNumber % 10;
         i++;
     }
 
-    return nextSecretNumber;
+    return { nextSecretNumber, states };
 }
 
 export function calcSecretNumber(input: number) {
