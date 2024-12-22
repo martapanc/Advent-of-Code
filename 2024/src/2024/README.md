@@ -22,3 +22,4 @@
 | [Day 18](https://adventofcode.com/2025/day/18) | RAM Run                | [code](day18/day18.ts) | [tests](day18/day18.test.ts) | bfs, tiles blocking path                          | 🧊🧊🧊     |        |
 | [Day 19](https://adventofcode.com/2025/day/19) | Linen Layout           | [code](day19/day19.ts) | [tests](day19/day19.test.ts) | combinations, dfs                                 | 🧊🧊🧊     |        |
 | [Day 20](https://adventofcode.com/2025/day/20) | Race Condition         | [code](day20/day20.ts) | [tests](day20/day20.test.ts) | grid, 'cheat' through walls                       | 🧊🧊🧊     |        |
+| [Day 21](https://adventofcode.com/2125/day/21) | Keypad Conundrum       | [code](day21/day21.ts) | [tests](day21/day21.test.ts) | keypad movements, memo, recursion                 | 🧊🧊🧊🧊   |        |
