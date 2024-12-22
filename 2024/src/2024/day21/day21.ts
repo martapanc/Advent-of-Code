@@ -3,7 +3,7 @@ import {readInputLineByLine} from "@utils/io";
 import {Coord} from "@utils/grid";
 
 export async function part1(inputFile: string) {
-    return await day21(inputFile);
+    return await day21(inputFile, calcComplexities);
 }
 
 export async function part2(inputFile: string) {
@@ -14,12 +14,42 @@ async function day21(inputFile: string, calcFn?: (lines: string[]) => number) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
 
-    for (const line of lines) {
-        encodeFirstLevel(line);
-    }
-
     return calcFn?.(lines);
 }
+
+function calcComplexities(lines: string[]) {
+    let complexityCount = 0;
+    for (const line of lines) {
+        const num = Number.parseInt(line.replace('A', ''));
+
+        const level3List: string[] = [];
+        const level1 = encodeFirstLevel(line);
+        for (const l1 of level1) {
+            const level2 = encodeSecondLevel(l1);
+
+            // console.log(`l2: ${uniqueLengths(level2)}`)
+
+            for (const l2 of level2) {
+                const level3 = encodeSecondLevel(l2);
+                // console.log(`  l3: ${uniqueLengths(level3)}`)
+                for (const l3 of level3) {
+                    // console.log(`${l3}:${l3.length}`)
+                    level3List.push(l3);
+                }
+            }
+        }
+
+        level3List.sort((a, b) => a.length - b.length);
+        complexityCount += num * level3List[0].length;
+    }
+    return complexityCount;
+}
+
+function uniqueLengths(arr: string[]): number[] {
+    const lengths = arr.map(str => str.length); // Get lengths of all strings
+    return [...new Set(lengths)]; // Use Set to get unique lengths and convert back to array
+}
+
 
 // +---+---+---+
 // | 7 | 8 | 9 |    0,0  1,0  2,0
@@ -45,14 +75,14 @@ export function encodeFirstLevel(input: string) {
         'A': new Coord(2, 3)
     }
 
-    const outputList: { [key: string]: string[] } = {};
+    const outputList: { [key: string]: string[] }[] = [];
     let curr = keyboardMap['A'];
 
     for (const inputKey of input.split('')) {
         const target = keyboardMap[inputKey];
-        const { movements } = findShortestPaths(curr, target);
+        const { movements } = findShortestPaths(curr, target, new Coord(0, 3));
 
-        outputList[inputKey] = movements;
+        outputList.push({[inputKey]: movements});
         curr = target;
     }
 
@@ -64,18 +94,37 @@ export function encodeFirstLevel(input: string) {
 // +---+---+---+
 // | < | v | > |    0,1  1,1  2,1
 // +---+---+---+
-function encodeSecondLevel(input: string) {
+export function encodeSecondLevel(input: string) {
+    const keyboardMap: { [key: string]: Coord } = {
+        '^': new Coord(1, 0),
+        'A': new Coord(2, 0),
+        '<': new Coord(0, 1),
+        'v': new Coord(1, 1),
+        '>': new Coord(2, 1)
+    }
 
+    const outputList: { [key: string]: string[] }[] = [];
+    let curr = keyboardMap['A'];
+
+    for (const inputKey of input.split('')) {
+        const target = keyboardMap[inputKey];
+        const { movements } = findShortestPaths(curr, target, new Coord(0, 0));
+
+        outputList.push({[inputKey]: movements});
+        curr = target;
+    }
+
+    return generateCombinations(outputList, input);
 }
 
-function findShortestPaths(start: Coord, end: Coord) {
+function findShortestPaths(start: Coord, end: Coord, gap: Coord) {
     const paths: Coord[][] = [];
     const movements: string[] = [];
 
     function backtrack(current: Coord, path: Coord[], mov: string) {
-        if (current.equals(end)) {
+        if (current.equals(end) && !path.some(c => c.serialize() === gap.serialize())) {
             paths.push([...path]);
-            movements.push(mov);
+            movements.push(mov + 'A');
             return;
         }
 
@@ -113,7 +162,7 @@ function findShortestPaths(start: Coord, end: Coord) {
     return { paths, movements };
 }
 
-function generateCombinations(map: { [key: string]: string[] }, keys: string): string[] {
+function generateCombinations(list: { [key: string]: string[] }[], keys: string): string[] {
     const result: string[] = [];
 
     function backtrack(index: number, currentCombination: string) {
@@ -122,8 +171,11 @@ function generateCombinations(map: { [key: string]: string[] }, keys: string): s
             return;
         }
 
-        for (const pattern of map[keys[index]]) {
-            backtrack(index + 1, currentCombination + pattern + 'A');
+        const key = keys[index];
+        const patterns = list[index][key];
+
+        for (const pattern of patterns) {
+            backtrack(index + 1, currentCombination + pattern);
         }
     }
 
