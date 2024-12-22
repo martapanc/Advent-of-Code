@@ -48,54 +48,94 @@ function calcComplexities(lines: string[]) {
 }
 
 function calcComplexities2(lines: string[]) {
-    let complexityCount = 0;
+    const memo: { [key: string]: number } = {};
 
-    for (const line of lines) {
-        let minLength = Infinity;
-        const num = Number.parseInt(line.replace('A', ''));
+    return lines.reduce((sum, code) => {
+        const numerical = parseInt((code.split('').filter(character => character.match(/\d/)).join('')));
+        return sum + numerical * getKeyPresses(KEYPAD, code, 25, memo);
+    }, 0);
+}
 
-        const level3List: string[] = [];
-        const level1 = encodeFirstLevel(line);
-        for (const l1 of level1) {
-            const level2 = encodeSecondLevel(l1);
+const BFS_DIRECTIONS = {
+    '^': new Coord(0, -1),
+    '>': new Coord(1, 0),
+    'v': new Coord(0, 1),
+    '<': new Coord(-1, 0)
+};
 
-            for (const l2 of level2) {
-                const level3 = encodeSecondLevel(l2);
+const KEYPAD: { [key: string]: Coord } = {
+    7: new Coord(0, 0),
+    8: new Coord(1, 0),
+    9: new Coord(2, 0),
+    4: new Coord(0, 1),
+    5: new Coord(1, 1),
+    6: new Coord(2, 1),
+    1: new Coord(0, 2),
+    2: new Coord(1, 2),
+    3: new Coord(2, 2),
+    X: new Coord(0, 3),
+    0: new Coord(1, 3),
+    A: new Coord(2, 3)
+};
 
-                for (const l3 of level3) {
-                    for (const l4 of encodeSecondLevel(l3)) {
-                        for (const l5 of encodeSecondLevel(l4)) {
-                            for (const l6 of encodeSecondLevel(l5)) {
-                                for (const l7 of encodeSecondLevel(l6)) {
-                                    for (const l8 of encodeSecondLevel(l7)) {
-                                        for (const l9 of encodeSecondLevel(l8)) {
-                                            for (const l10 of encodeSecondLevel(l9)) {
-                                                if (l10.length < minLength) {
-                                                    level3List.push(l10);
-                                                    minLength = l10.length;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+const DIRECTIONS: { [key: string]: Coord } = {
+    X:   new Coord(0, 0),
+    '^': new Coord(1, 0),
+    A:   new Coord(2, 0),
+    '<': new Coord(0, 1),
+    'v': new Coord(1, 1),
+    '>': new Coord(2, 1)
+};
+
+const getCommand = (input: { [key: string]: Coord }, start: string, end: string) => {
+    const queue = [{ ...input[start], path: '' }];
+    const distances: { [key: string]: number } = {};
+
+    if (start === end) return ['A'];
+
+    let allPaths: string[] = [];
+    while (queue.length) {
+        const current = queue.shift();
+        if (current === undefined) break;
+
+        if (current.x === input[end].x && current.y === input[end].y) allPaths.push(current.path + 'A');
+        if (distances[`${current.x},${current.y}`] !== undefined && distances[`${current.x},${current.y}`] < current.path.length) continue;
+
+        Object.entries(BFS_DIRECTIONS).forEach(([direction, vector]) => {
+            const position = { x: current.x + vector.x, y: current.y + vector.y };
+
+            if (input.X.x === position.x && input.X.y === position.y) return;
+
+            const button = Object.values(input).find(button => button.x === position.x && button.y === position.y);
+            if (button !== undefined) {
+                const newPath = current.path + direction;
+                if (distances[`${position.x},${position.y}`] === undefined || distances[`${position.x},${position.y}`] >= newPath.length) {
+                    queue.push({ ...position, path: newPath });
+                    distances[`${position.x},${position.y}`] = newPath.length;
                 }
             }
-        }
-
-        level3List.sort((a, b) => a.length - b.length);
-        complexityCount += num * level3List[0].length;
+        });
     }
-    return complexityCount;
+
+    return allPaths.sort((a, b) => a.length - b.length);
 }
 
-function uniqueLengths(arr: string[]): number[] {
-    const lengths = arr.map(str => str.length); // Get lengths of all strings
-    return [...new Set(lengths)]; // Use Set to get unique lengths and convert back to array
-}
+const getKeyPresses = (input: { [key: string]: Coord }, code: string, robot: number, memo: { [key: string]: number }): number => {
+    const key = `${code},${robot}`;
+    if (memo[key] !== undefined) return memo[key];
 
+    let current = 'A';
+    let length = 0;
+    for (let i = 0; i < code.length; i++) {
+        const moves = getCommand(input, current, code[i]);
+        if (robot === 0) length += moves[0].length;
+        else length += Math.min(...moves.map(move => getKeyPresses(DIRECTIONS, move, robot - 1, memo)));
+        current = code[i];
+    }
+
+    memo[key] = length;
+    return length;
+}
 
 // +---+---+---+
 // | 7 | 8 | 9 |    0,0  1,0  2,0

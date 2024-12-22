@@ -1,5 +1,4 @@
-import {encodeFirstLevel, encodeSecondLevel, part1 } from "./day21";
-import { part2 } from "./extra";
+import {encodeFirstLevel, encodeSecondLevel, part1, part2 } from "./day21";
 import {readInputLineByLine} from "@utils/io";
 
 describe('2024 Day 21', () => {
@@ -13,13 +12,8 @@ describe('2024 Day 21', () => {
     });
 
     test('Part 2', async () => {
-        // expect(await part2('testInput1')).toEqual(31);
-        expect(part2(["671A",
-            "083A",
-            "582A",
-            "638A",
-            "341A"])).toEqual(204040805018350);
-
+        expect(await part2('testInput1')).toEqual(154115708116294);
+        expect(await part2("input")).toEqual(204040805018350);
     });
 
     test('encode first level', () => {
