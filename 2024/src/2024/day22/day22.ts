@@ -25,37 +25,46 @@ function calcAndSumSecretNumbers(initial: number[]) {
 }
 
 function optimiseBananaPurchases(initial: number[]) {
-    const res = getBestSequence(initial);
+    const ranges: { [key: string]: number[] } = {};
+    initial.forEach(num => {
+        let secretNumber = num;
+        const visited = new Set<string>();
+        const differences: number[] = [];
 
-    return res.bananas;
-}
+        for (let i = 0; i < 2000; i++) {
+            const nextSecretNumber = calcSecretNumber(secretNumber);
+            differences.push(Number((nextSecretNumber % 10) - (secretNumber % 10)));
+            secretNumber = nextSecretNumber;
 
-function getBestSequence(buyers: number[], steps = 2000) {
-    const sequenceScores: Map<string, number> = new Map();
-
-    for (const initial of buyers) {
-        const states = calcNthSecretNumber(initial, 1999).states;
-        const prices = states.map(s => s.lastDigit);
-        const diffs = states.map(s => s.diff);
-
-        for (let i = 0; i <= diffs.length - 4; i++) {
-            const seq = diffs.slice(i, i + 4).join(",");
-            if (!sequenceScores.has(seq)) sequenceScores.set(seq, 0);
-            sequenceScores.set(seq, sequenceScores.get(seq)! + prices[i + 4]);
+            if (differences.length === 4) {
+                const key = differences.join(',');
+                if (!visited.has(key)) {
+                    if (ranges[key] === undefined) ranges[key] = [];
+                    ranges[key].push(Number((nextSecretNumber % 10)));
+                    visited.add(key);
+                }
+                differences.shift();
+            }
         }
+    });
+
+    const sums = [];
+    for (const range of Object.values(ranges)) {
+        let sum = 0;
+        for (const num of range) {
+            sum += num;
+        }
+        sums.push(sum);
     }
 
-    let bestSequence = null;
     let maxBananas = 0;
-
-    for (const [seq, score] of sequenceScores.entries()) {
-        if (score > maxBananas) {
-            maxBananas = score;
-            bestSequence = seq.split(",").map(Number);
+    for (const sum of sums) {
+        if (sum > maxBananas) {
+            maxBananas = sum;
         }
     }
 
-    return { sequence: bestSequence || [], bananas: maxBananas }
+    return maxBananas;
 }
 
 type SecretNumberState = { secretNum?: number, lastDigit: number, diff: number }
