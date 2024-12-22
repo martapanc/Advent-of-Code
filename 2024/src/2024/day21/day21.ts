@@ -19,7 +19,9 @@ async function day21(inputFile: string, calcFn?: (lines: string[]) => number) {
 
 function calcComplexities(lines: string[]) {
     let complexityCount = 0;
+
     for (const line of lines) {
+        let minLength = Infinity;
         const num = Number.parseInt(line.replace('A', ''));
 
         const level3List: string[] = [];
@@ -27,14 +29,14 @@ function calcComplexities(lines: string[]) {
         for (const l1 of level1) {
             const level2 = encodeSecondLevel(l1);
 
-            // console.log(`l2: ${uniqueLengths(level2)}`)
-
             for (const l2 of level2) {
                 const level3 = encodeSecondLevel(l2);
-                // console.log(`  l3: ${uniqueLengths(level3)}`)
+
                 for (const l3 of level3) {
-                    // console.log(`${l3}:${l3.length}`)
-                    level3List.push(l3);
+                    if (l3.length < minLength) {
+                        level3List.push(l3);
+                        minLength = l3.length;
+                    }
                 }
             }
         }
