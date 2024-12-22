@@ -7,7 +7,7 @@ export async function part1(inputFile: string) {
 }
 
 export async function part2(inputFile: string) {
-    return await day21(inputFile);
+    return await day21(inputFile, calcComplexities2);
 }
 
 async function day21(inputFile: string, calcFn?: (lines: string[]) => number) {
@@ -36,6 +36,50 @@ function calcComplexities(lines: string[]) {
                     if (l3.length < minLength) {
                         level3List.push(l3);
                         minLength = l3.length;
+                    }
+                }
+            }
+        }
+
+        level3List.sort((a, b) => a.length - b.length);
+        complexityCount += num * level3List[0].length;
+    }
+    return complexityCount;
+}
+
+function calcComplexities2(lines: string[]) {
+    let complexityCount = 0;
+
+    for (const line of lines) {
+        let minLength = Infinity;
+        const num = Number.parseInt(line.replace('A', ''));
+
+        const level3List: string[] = [];
+        const level1 = encodeFirstLevel(line);
+        for (const l1 of level1) {
+            const level2 = encodeSecondLevel(l1);
+
+            for (const l2 of level2) {
+                const level3 = encodeSecondLevel(l2);
+
+                for (const l3 of level3) {
+                    for (const l4 of encodeSecondLevel(l3)) {
+                        for (const l5 of encodeSecondLevel(l4)) {
+                            for (const l6 of encodeSecondLevel(l5)) {
+                                for (const l7 of encodeSecondLevel(l6)) {
+                                    for (const l8 of encodeSecondLevel(l7)) {
+                                        for (const l9 of encodeSecondLevel(l8)) {
+                                            for (const l10 of encodeSecondLevel(l9)) {
+                                                if (l10.length < minLength) {
+                                                    level3List.push(l10);
+                                                    minLength = l10.length;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
