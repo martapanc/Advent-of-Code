@@ -24,3 +24,4 @@
 | [Day 20](https://adventofcode.com/2024/day/20) | Race Condition         | [code](day20/day20.ts) | [tests](day20/day20.test.ts) | grid, 'cheat' through walls                       | 🧊🧊🧊     |        |
 | [Day 21](https://adventofcode.com/2024/day/21) | Keypad Conundrum       | [code](day21/day21.ts) | [tests](day21/day21.test.ts) | keypad movements, memo, recursion                 | 🧊🧊🧊🧊   |        |
 | [Day 22](https://adventofcode.com/2024/day/22) | Monkey Market          | [code](day22/day22.ts) | [tests](day22/day22.test.ts) | bananas, pseudorandom, sequences of price diffs   | 🧊🧊🧊🧊   |        |
+| [Day 23](https://adventofcode.com/2024/day/23) | LAN Party              | [code](day23/day23.ts) | [tests](day23/day23.test.ts) | networks, Bron-Kerbosch                           | 🧊🧊🧊🧊   |        |
