@@ -6,7 +6,7 @@ export async function part1(inputFile: string) {
 }
 
 export async function part2(inputFile: string) {
-    return await day24(inputFile);
+    return await day24(inputFile, findWiresToSwap);
 }
 
 type Op = 'AND' | 'OR' | 'XOR';
@@ -16,7 +16,7 @@ type Gate = {
     wire2: string;
 }
 
-async function day24(inputFile: string, calcFn?: (wires: Map<string, number>, gates: Map<string, Gate>) => number) {
+async function day24(inputFile: string, calcFn?: (wires: Map<string, number>, gates: Map<string, Gate>) => number | string) {
     const inputPath = path.join(__dirname, inputFile);
     const lines = await readInputLineByLine(inputPath);
     const wires = new Map<string, number>();
@@ -56,20 +56,53 @@ function findOutput(wires: Map<string, number>, gates: Map<string, Gate>) {
         }
     }
 
-    const zWires = new Map<number, number>();
+    const sortedObject = Object.fromEntries(
+        Array.from(solvedGates).sort(([keyA], [keyB]) => keyA.localeCompare(keyB)) // Sort keys alphabetically
+    );
+    console.log(JSON.stringify(sortedObject));
+
+    // Generate Graphviz DOT format
+    let dot = "digraph LogicGraph {\n";
+    dot += '  rankdir=LR;\n';
+    dot += '  node [shape=ellipse];\n';
+
+    // Add input wires (x and y)
+    for (const [key, value] of wires) {
+        dot += `  ${key} [label="${key}: ${value}", shape=box, style=filled, color=lightblue];\n`;
+    }
+
+    // Add gates
+    for (const [key, gate] of gates) {
+        const { wire1, wire2, op } = gate;
+        const result = solvedGates.has(key)
+            ? `\\nResult: ${solvedGates.get(key)}`
+            : "";
+        dot += `  ${key} [label="${op}\\n${key}${result}", shape=circle, style=filled, color=lightgreen];\n`;
+        dot += `  ${wire1} -> ${key};\n`;
+        dot += `  ${wire2} -> ${key};\n`;
+    }
+
+    // Add output wires (z)
     for (const [key, value] of solvedGates) {
         if (key.startsWith("z")) {
-            const index = Number.parseInt(key.replace("z", ""));
-            zWires.set(index, value);
+            dot += `  ${key} [label="${key}: ${value}", shape=box, style=filled, color=lightyellow];\n`;
         }
     }
 
-    const result = Array.from(zWires)
-        .sort((a, b) => b[0] - a[0])
-        .map(([_, value]) => value)
-        .join("");
+    dot += "}\n";
 
-    return Number.parseInt(result, 2);
+    console.log(dot);
+
+    return findNumberFromWires('z', solvedGates);
+}
+
+function findWiresToSwap(wires: Map<string, number>, gates: Map<string, Gate>) {
+
+    const x = findNumberFromWires('x', wires);
+    console.log({x});
+    const y = findNumberFromWires('y', wires);
+    console.log({y});
+    return "";
 }
 
 function and(a: number, b: number) {
@@ -111,4 +144,23 @@ function calc(gate: Gate, wires: Map<string, number>) {
     }
 
     return res;
+}
+
+function findNumberFromWires(id: string, wires: Map<string, number>) {
+    const zWires = new Map<number, number>();
+    for (const [key, value] of wires) {
+        if (key.startsWith(id)) {
+            const index = Number.parseInt(key.replace(id, ""));
+            zWires.set(index, value);
+        }
+    }
+
+    const result = Array.from(zWires)
+        .sort((a, b) => b[0] - a[0])
+        .map(([_, value]) => value)
+        .join("");
+
+    console.log({result});
+
+    return Number.parseInt(result, 2);
 }

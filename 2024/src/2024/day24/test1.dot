@@ -1,0 +1,43 @@
+digraph LogicGates {
+  rankdir=LR; // Makes the graph left-to-right
+
+  // Define inputs
+  "y00" [shape=circle, label="y00"];
+  "y01" [shape=circle, label="y01"];
+  "y02" [shape=circle, label="y02"];
+  "y03" [shape=circle, label="y03"];
+  "y04" [shape=circle, label="y04"];
+  "x00" [shape=circle, label="x00"];
+  "x01" [shape=circle, label="x01"];
+  "x03" [shape=circle, label="x03"];
+  "kwq" [shape=circle, label="kwq"];
+  "kpj" [shape=circle, label="kpj"];
+  "tgd" [shape=circle, label="tgd"];
+  "rvg" [shape=circle, label="rvg"];
+  "fgs" [shape=circle, label="fgs"];
+  "ntg" [shape=circle, label="ntg"];
+
+  // Define gates
+  "mjb" [shape=box, label="XOR"];
+  "tnw" [shape=box, label="OR"];
+  "z05" [shape=box, label="OR"];
+  "fst" [shape=box, label="OR"];
+  "z01" [shape=box, label="XOR"];
+
+  // Connections
+  "ntg" -> "mjb";
+  "fgs" -> "mjb";
+  "mjb" -> "tnw";
+
+  "y02" -> "tnw";
+  "x01" -> "tnw";
+
+  "kwq" -> "z05";
+  "kpj" -> "z05";
+
+  "x00" -> "fst";
+  "x03" -> "fst";
+
+  "tgd" -> "z01";
+  "rvg" -> "z01";
+}
