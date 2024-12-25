@@ -22,5 +22,5 @@ Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2
  Total:  500 / 500 ⭐
  ![Progress](https://progress-bar.xyz/100/)
 
- <img src="2015-2023/src/main/resources/static/all_stars.png" width="1023" alt="AoC screenshot"/>
+ <img src="2015-2023/src/main/resources/static/500_stars.png" width="1023" alt="AoC screenshot"/>
 
