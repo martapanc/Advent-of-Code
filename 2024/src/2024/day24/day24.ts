@@ -71,17 +71,30 @@ function findOutput(wires: Map<string, number>, gates: Map<string, Gate>) {
 function findWiresToSwap(_: Map<string, number>, gates: Map<string, Gate>) {
     const BIT_LENGTH = 45;
     const incorrect: string[] = [];
+
+    const findGate = (wire1: string, wire2: string, op: string) =>
+        [...gates.entries()].find(([_, g]) =>
+            ((g.wire1 === wire1 && g.wire2 === wire2) || (g.wire1 === wire2 && g.wire2 === wire1)) && g.op === op
+        );
+
+    // Helper function to find a gate by wire connection
+    const findNextGate = (wire: string) =>
+        [...gates.entries()].find(([_, g]) => g.wire1 === wire || g.wire2 === wire);
+
     for (let i = 0; i < BIT_LENGTH; i++) {
         const id = i.toString().padStart(2, '0');
-        const xor1 = [...gates.entries()].find(([_, g]) => ((g.wire1 === `x${id}` && g.wire2 === `y${id}`) || (g.wire1 === `y${id}` && g.wire2 === `x${id}`)) && g.op === 'XOR');
-        const and1 = [...gates.entries()].find(([_, g]) => ((g.wire1 === `x${id}` && g.wire2 === `y${id}`) || (g.wire1 === `y${id}` && g.wire2 === `x${id}`)) && g.op === 'AND');
-        const z = [...gates.entries()].find(([key]) => key === `z${id}`);
+        const wire1 = `x${id}`;
+        const wire2 = `y${id}`;
 
-        if (xor1 === undefined || and1 === undefined || z === undefined) continue;
+        const xorGate = findGate(wire1, wire2, 'XOR');
+        const andGate = findGate(wire1, wire2, 'AND');
+        const zGateEntry = [...gates.entries()].find(([key]) => key === `z${id}`);
 
-        const [xorKey] = xor1;
-        const [andKey] = and1;
-        const [zKey, zGate] = z;
+        if (!xorGate || !andGate || !zGateEntry) continue;
+
+        const [xorKey] = xorGate;
+        const [andKey] = andGate;
+        const [zKey, zGate] = zGateEntry;
 
         // All z nodes must be connected to a XOR
         if (zGate.op !== 'XOR') {
@@ -98,7 +111,7 @@ function findWiresToSwap(_: Map<string, number>, gates: Map<string, Gate>) {
         }
 
         // The first XOR must go to XOR or AND
-        const next = [...gates.entries()].find(([_, g]) => g.wire1 === xorKey || g.wire2 === xorKey);
+        const next = findNextGate(xorKey);
         if (next !== undefined) {
             const [_, nextGate] = next;
             if (nextGate.op === 'OR') {
