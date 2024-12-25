@@ -10,7 +10,7 @@ export async function part2(inputFile: string) {
 }
 
 type Op = 'AND' | 'OR' | 'XOR';
-type Gate = {
+export type Gate = {
     wire1: string;
     op: Op,
     wire2: string;
@@ -65,79 +65,42 @@ function findOutput(wires: Map<string, number>, gates: Map<string, Gate>) {
         }
     }
 
-    const sortedObject = Object.fromEntries(
-        Array.from(solvedGates).sort(([keyA], [keyB]) => keyA.localeCompare(keyB)) // Sort keys alphabetically
-    );
-    // console.log(JSON.stringify(sortedObject));
-
-    const diagram = generateMermaidDiagram(wires, gates, solvedGates);
-    console.log(diagram);
-
     return findNumberFromWires('z', solvedGates);
 }
 
-function generateMermaidDiagram(wires: Map<string, number>, gates: Map<string, Gate>, solvedGates: Map<string, number>) {
-    let diagram = "graph TD\n";
-
-    // Add input wires (x and y)
-    for (const [key, value] of wires) {
-        diagram += `    ${key}[<b>${key}: ${value}</b>] --> ${key}_node\n`;
-    }
-
-    // Add gates and their connections
-    for (const [key, gate] of gates) {
-        const { wire1, wire2, op } = gate;
-        const result = solvedGates.has(key) ? `\\n${solvedGates.get(key)}` : "";
-
-        // Define the gate node
-        diagram += `    ${key}_node[${op}] --> ${key}_result\n`;
-        diagram += `    ${wire1} --> ${key}_node\n`;
-        diagram += `    ${wire2} --> ${key}_node\n`;
-    }
-
-    // Add output wires (z)
-    for (const [key, value] of solvedGates) {
-        if (key.startsWith("z")) {
-            diagram += `    ${key}_result[<b>${key}: ${value}</b>]\n`;
-        }
-    }
-
-    return diagram;
-}
-
-function findWiresToSwap(wires: Map<string, number>, gates: Map<string, Gate>) {
+function findWiresToSwap(_: Map<string, number>, gates: Map<string, Gate>) {
     const BIT_LENGTH = 45;
     const incorrect: string[] = [];
     for (let i = 0; i < BIT_LENGTH; i++) {
         const id = i.toString().padStart(2, '0');
-        const xor1 = [...gates.entries()].find(([key, g]) => ((g.wire1 === `x${id}` && g.wire2 === `y${id}`) || (g.wire1 === `y${id}` && g.wire2 === `x${id}`)) && g.op === 'XOR');
-        const and1 = [...gates.entries()].find(([key, g]) => ((g.wire1 === `x${id}` && g.wire2 === `y${id}`) || (g.wire1 === `y${id}` && g.wire2 === `x${id}`)) && g.op === 'AND');
-        const z = [...gates.entries()].find(([key, g]) => key === `z${id}`);
+        const xor1 = [...gates.entries()].find(([_, g]) => ((g.wire1 === `x${id}` && g.wire2 === `y${id}`) || (g.wire1 === `y${id}` && g.wire2 === `x${id}`)) && g.op === 'XOR');
+        const and1 = [...gates.entries()].find(([_, g]) => ((g.wire1 === `x${id}` && g.wire2 === `y${id}`) || (g.wire1 === `y${id}` && g.wire2 === `x${id}`)) && g.op === 'AND');
+        const z = [...gates.entries()].find(([key]) => key === `z${id}`);
 
         if (xor1 === undefined || and1 === undefined || z === undefined) continue;
 
-        const [xorKey, xorGate] = xor1;
-        const [andKey, andGate] = and1;
+        const [xorKey] = xor1;
+        const [andKey] = and1;
         const [zKey, zGate] = z;
 
-        // All z nodes need to be connected to a XOR
+        // All z nodes must be connected to a XOR
         if (zGate.op !== 'XOR') {
             incorrect.push(zKey);
         }
 
         // All AND gates must go to an OR (excluding the first case, which starts the carry flag)
-        const or = [...gates.entries()].find(([key, g]) => g.wire1 === andKey || g.wire2 === andKey);
+        const or = [...gates.entries()].find(([_, g]) => g.wire1 === andKey || g.wire2 === andKey);
         if (or !== undefined) {
-            const [orKey, orGate] = or;
+            const [_, orGate] = or;
             if (orGate.op !== 'OR' && i > 0) {
-                incorrect.push(xorKey);
+                incorrect.push(andKey);
             }
         }
 
-        // The first XOR must to go to XOR or AND
-        const next = [...gates.entries()].find(([key, g]) => g.wire1 === xorKey || g.wire2 === xorKey);
+        // The first XOR must go to XOR or AND
+        const next = [...gates.entries()].find(([_, g]) => g.wire1 === xorKey || g.wire2 === xorKey);
         if (next !== undefined) {
-            const [nextKey, nextGate] = next;
+            const [_, nextGate] = next;
             if (nextGate.op === 'OR') {
                 incorrect.push(xorKey);
             }
@@ -148,7 +111,7 @@ function findWiresToSwap(wires: Map<string, number>, gates: Map<string, Gate>) {
     const wrongGates = [...gates.entries()].filter(([key, g]) =>
         !g.wire1[0].match(/[xy]/g) && !g.wire2[0].match(/[xy]/g) &&
         !key[0].match(/z/g) && g.op === 'XOR'
-    ).map(([key, g]) => key);
+    ).map(([key, _]) => key);
 
     incorrect.push(...wrongGates);
 
