@@ -26,3 +26,4 @@
 | [Day 22](https://adventofcode.com/2024/day/22) | Monkey Market          | [code](day22/day22.ts) | [tests](day22/day22.test.ts) | bananas, pseudorandom, sequences of price diffs   | 🧊🧊🧊🧊   |
 | [Day 23](https://adventofcode.com/2024/day/23) | LAN Party              | [code](day23/day23.ts) | [tests](day23/day23.test.ts) | networks, Bron-Kerbosch                           | 🧊🧊🧊🧊   |
 | [Day 24](https://adventofcode.com/2024/day/24) | Crossed Wires          | [code](day24/day24.ts) | [tests](day24/day24.test.ts) | logic gates, binary addition, gate swapping       | 🧊🧊🧊🧊🧊 |
+| [Day 25](https://adventofcode.com/2024/day/25) | Code Chronicle         | [code](day25/day25.ts) | [tests](day25/day25.test.ts) | grids, keys & locks fitting                       | 🧊🧊       |
