@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mermaid Diagram</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+        mermaid.initialize({
+            startOnLoad: true,
+            maxEdges: 1000  // Set the max edge limit higher
+        });
+
+        const diagram = `graph TD
+      x00[<b>x00: 1</b>] -->|Input| x00_node
+      y00[<b>y00: 1</b>] -->|Input| x00_node
+      x00_node[AND] -->|Output| mtk_result
+      x00 -->|Input| x00_node
+      y00 -->|Input| x00_node
+      grg[<b>grg: 1</b>] -->|Input| AND_bbk
+      twt[<b>twt: 0</b>] -->|Input| AND_bbk
+      AND_bbk[AND] -->|Output| bbk_result
+      vvt[<b>vvt: 1</b>] -->|Input| OR_vgs
+      wwt[<b>wwt: 1</b>] -->|Input| OR_vgs
+      OR_vgs[OR] -->|Output| vgs_result
+      x10[<b>x10: 0</b>] -->|Input| XOR_pmq
+      y10[<b>y10: 1</b>] -->|Input| XOR_pmq
+      XOR_pmq[XOR] -->|Output| pmq_result
+      mtk_result[<b>mtk: 1</b>]
+      bbk_result[<b>bbk: 0</b>]
+      vgs_result[<b>vgs: 1</b>]
+      pmq_result[<b>pmq: 1</b>]`;
+
+        document.getElementById('mermaid-diagram').innerHTML = diagram;
+        mermaid.contentLoaded();
+    </script>
+</head>
+<body>
+<h1>Mermaid Diagram Example</h1>
+<div id="mermaid-diagram">
+    <!-- The diagram will be rendered here -->
+</div>
+</body>
+</html>

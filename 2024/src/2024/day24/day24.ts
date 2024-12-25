@@ -29,9 +29,18 @@ async function day24(inputFile: string, calcFn?: (wires: Map<string, number>, ga
         } else {
             const split = line.split(" -> ");
             const gate = split[0].split(" ");
-            gates.set(split[1], { wire1: gate[0], op: gate[1] as Op, wire2: gate[2]});
+            let wire1 = gate[0];
+            let wire2 = gate[2];
+
+            // Alphabetical order
+            if (wire1 > wire2) {
+                [wire1, wire2] = [wire2, wire1];
+            }
+
+            gates.set(split[1], { wire1, op: gate[1] as Op, wire2});
         }
     })
+
     return calcFn?.(wires, gates);
 }
 
@@ -59,50 +68,91 @@ function findOutput(wires: Map<string, number>, gates: Map<string, Gate>) {
     const sortedObject = Object.fromEntries(
         Array.from(solvedGates).sort(([keyA], [keyB]) => keyA.localeCompare(keyB)) // Sort keys alphabetically
     );
-    console.log(JSON.stringify(sortedObject));
+    // console.log(JSON.stringify(sortedObject));
 
-    // Generate Graphviz DOT format
-    let dot = "digraph LogicGraph {\n";
-    dot += '  rankdir=LR;\n';
-    dot += '  node [shape=ellipse];\n';
+    const diagram = generateMermaidDiagram(wires, gates, solvedGates);
+    console.log(diagram);
+
+    return findNumberFromWires('z', solvedGates);
+}
+
+function generateMermaidDiagram(wires: Map<string, number>, gates: Map<string, Gate>, solvedGates: Map<string, number>) {
+    let diagram = "graph TD\n";
 
     // Add input wires (x and y)
     for (const [key, value] of wires) {
-        dot += `  ${key} [label="${key}: ${value}", shape=box, style=filled, color=lightblue];\n`;
+        diagram += `    ${key}[<b>${key}: ${value}</b>] --> ${key}_node\n`;
     }
 
-    // Add gates
+    // Add gates and their connections
     for (const [key, gate] of gates) {
         const { wire1, wire2, op } = gate;
-        const result = solvedGates.has(key)
-            ? `\\nResult: ${solvedGates.get(key)}`
-            : "";
-        dot += `  ${key} [label="${op}\\n${key}${result}", shape=circle, style=filled, color=lightgreen];\n`;
-        dot += `  ${wire1} -> ${key};\n`;
-        dot += `  ${wire2} -> ${key};\n`;
+        const result = solvedGates.has(key) ? `\\n${solvedGates.get(key)}` : "";
+
+        // Define the gate node
+        diagram += `    ${key}_node[${op}] --> ${key}_result\n`;
+        diagram += `    ${wire1} --> ${key}_node\n`;
+        diagram += `    ${wire2} --> ${key}_node\n`;
     }
 
     // Add output wires (z)
     for (const [key, value] of solvedGates) {
         if (key.startsWith("z")) {
-            dot += `  ${key} [label="${key}: ${value}", shape=box, style=filled, color=lightyellow];\n`;
+            diagram += `    ${key}_result[<b>${key}: ${value}</b>]\n`;
         }
     }
 
-    dot += "}\n";
-
-    console.log(dot);
-
-    return findNumberFromWires('z', solvedGates);
+    return diagram;
 }
 
 function findWiresToSwap(wires: Map<string, number>, gates: Map<string, Gate>) {
+    const BIT_LENGTH = 45;
+    const incorrect: string[] = [];
+    for (let i = 0; i < BIT_LENGTH; i++) {
+        const id = i.toString().padStart(2, '0');
+        const xor1 = [...gates.entries()].find(([key, g]) => ((g.wire1 === `x${id}` && g.wire2 === `y${id}`) || (g.wire1 === `y${id}` && g.wire2 === `x${id}`)) && g.op === 'XOR');
+        const and1 = [...gates.entries()].find(([key, g]) => ((g.wire1 === `x${id}` && g.wire2 === `y${id}`) || (g.wire1 === `y${id}` && g.wire2 === `x${id}`)) && g.op === 'AND');
+        const z = [...gates.entries()].find(([key, g]) => key === `z${id}`);
 
-    const x = findNumberFromWires('x', wires);
-    console.log({x});
-    const y = findNumberFromWires('y', wires);
-    console.log({y});
-    return "";
+        if (xor1 === undefined || and1 === undefined || z === undefined) continue;
+
+        const [xorKey, xorGate] = xor1;
+        const [andKey, andGate] = and1;
+        const [zKey, zGate] = z;
+
+        // All z nodes need to be connected to a XOR
+        if (zGate.op !== 'XOR') {
+            incorrect.push(zKey);
+        }
+
+        // All AND gates must go to an OR (excluding the first case, which starts the carry flag)
+        const or = [...gates.entries()].find(([key, g]) => g.wire1 === andKey || g.wire2 === andKey);
+        if (or !== undefined) {
+            const [orKey, orGate] = or;
+            if (orGate.op !== 'OR' && i > 0) {
+                incorrect.push(xorKey);
+            }
+        }
+
+        // The first XOR must to go to XOR or AND
+        const next = [...gates.entries()].find(([key, g]) => g.wire1 === xorKey || g.wire2 === xorKey);
+        if (next !== undefined) {
+            const [nextKey, nextGate] = next;
+            if (nextGate.op === 'OR') {
+                incorrect.push(xorKey);
+            }
+        }
+    }
+
+    // All XOR nodes must be connected to an x, y, or z node
+    const wrongGates = [...gates.entries()].filter(([key, g]) =>
+        !g.wire1[0].match(/[xy]/g) && !g.wire2[0].match(/[xy]/g) &&
+        !key[0].match(/z/g) && g.op === 'XOR'
+    ).map(([key, g]) => key);
+
+    incorrect.push(...wrongGates);
+
+    return incorrect.sort().join(",");
 }
 
 function and(a: number, b: number) {
@@ -159,8 +209,6 @@ function findNumberFromWires(id: string, wires: Map<string, number>) {
         .sort((a, b) => b[0] - a[0])
         .map(([_, value]) => value)
         .join("");
-
-    console.log({result});
 
     return Number.parseInt(result, 2);
 }
