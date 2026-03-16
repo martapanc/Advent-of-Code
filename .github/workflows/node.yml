@@ -26,11 +26,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: '2024/yarn.lock'
+          cache-dependency-path: '2024-2025/yarn.lock'
 
       - name: Install dependencies
         run: yarn install
-        working-directory: '2024'
+        working-directory: '2024-2025'
 
 #      - name: Run tests
 #        run: yarn test
