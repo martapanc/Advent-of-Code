@@ -2,11 +2,11 @@ import path from "node:path";
 import {readInputLineByLine} from "@utils/io";
 
 export async function part1(inputFile: string) {
-    return await day2(inputFile, findInvalidIds);
+    return await day2(inputFile, findInvalidIdsTwiceRule);
 }
 
 export async function part2(inputFile: string) {
-    return await day2(inputFile);
+    return await day2(inputFile, findInvalidIdsNTimesRule);
 }
 
 type NumRange = { from: number; to: number };
@@ -26,7 +26,7 @@ async function day2(inputFile: string, calcFn?: (ranges: NumRange[]) => number) 
     return calcFn?.(ranges);
 }
 
-function findInvalidIds(ranges: NumRange[]): number {
+function findInvalidIdsTwiceRule(ranges: NumRange[]): number {
     let invalidIdSum = 0;
     ranges.forEach(({ from, to }) => {
 
@@ -46,3 +46,42 @@ function findInvalidIds(ranges: NumRange[]): number {
 
     return invalidIdSum;
 }
+
+export const divisors = (num: number) => [...Array(num)]
+    .map((_,i) => i)
+    .filter(x => num % x === 0).slice(1);
+
+export function chunkString(str: string, size: number): string[] {
+    if (size <= 0) {
+        return [str];
+    }
+    const regex = new RegExp(`.{1,${size}}`, 'g');
+    return str.match(regex) || [];
+}
+
+export const chunkIntoNParts = (str: string, parts: number): string[] => chunkString(str, Math.floor(str.length / parts));
+
+function findInvalidIdsNTimesRule(ranges: NumRange[]): number {
+    let invalidIdSum = 0;
+    ranges.forEach(({ from, to }) => {
+        for (let n = from; n <= to; n++) {
+            const s = `${n}`;
+            const len = s.length;
+
+            // Only divisors of len produce equal-length chunks; skip k=1
+            for (let k = 2; k <= len; k++) {
+                if (len % k !== 0) continue;
+                const chunkSize = len / k;
+                const first = s.slice(0, chunkSize);
+                let equal = true;
+                for (let i = 1; i < k; i++) {
+                    if (s.slice(i * chunkSize, (i + 1) * chunkSize) !== first) { equal = false; break; }
+                }
+                if (equal) { invalidIdSum += n; break; }
+            }
+        }
+    });
+
+    return invalidIdSum;
+}
+
