@@ -8,6 +8,6 @@ describe('2025 Day 5', () => {
 
     test('Part 2', async () => {
         expect(await part2('testInput1')).toEqual(14);
-        expect(await part2('input')).toEqual(1111);
+        expect(await part2('input')).toEqual(345821388687084);
     });
 });
