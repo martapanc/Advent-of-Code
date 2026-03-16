@@ -6,7 +6,7 @@ export async function part1(inputFile: string) {
 }
 
 export async function part2(inputFile: string) {
-    return await day5(inputFile);
+    return await day5(inputFile, findTotalFreshIngredientCount);
 }
 
 type IdRange = { from: number; to: number };
@@ -42,5 +42,59 @@ function findFreshIngredients(idRanges: IdRange[], ingredientIds: number[]): num
                 break;
             }
         }
+    return freshCount;
+}
+
+function findTotalFreshIngredientCount(idRanges: IdRange[], _: number[]): number {
+    let reduceRanges = true;
+    let idRangesCopy = idRanges.slice();
+
+    while (reduceRanges) {
+        reduceRanges = false;
+        for (let i = 0; i < idRanges.length; i++){
+            const a = idRanges[i];
+            for (let j = i + 1; j < idRanges.length; j++) {
+                const b = idRanges[j];
+
+                if (a.from >= b.from && a.from <= b.to) {
+                    reduceRanges = true;
+                    idRangesCopy.splice(j, 1);
+                    idRangesCopy.splice(i, 1);
+                    if (a.to >= b.to) {
+                        idRangesCopy.push({ from: b.from, to: a.to });
+                    }
+                    if (b.to >= a.to) {
+                        idRangesCopy.push({ from: b.from, to: b.to });
+                    }
+                    break;
+                }
+
+                if (a.to >= b.from && a.to <= b.to) {
+                    reduceRanges = true;
+                    idRangesCopy.splice(j, 1);
+                    idRangesCopy.splice(i, 1);
+
+                    if (a.from >= b.from) {
+                        idRangesCopy.push({ from: b.from, to: b.to });
+                    }
+                    if (b.from >= a.from) {
+                        idRangesCopy.push({ from: a.from, to: b.to });
+                    }
+                    break;
+                }
+            }
+            if (reduceRanges) {
+                break;
+            }
+        }
+
+        idRanges = idRangesCopy.slice();
+    }
+
+    let freshCount = 0;
+    idRanges.forEach(idRange => {
+        freshCount += (idRange.to - idRange.from) + 1;
+    })
+
     return freshCount;
 }
