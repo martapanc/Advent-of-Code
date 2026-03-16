@@ -7,7 +7,7 @@ export async function part1(inputFile: string) {
 }
 
 export async function part2(inputFile: string) {
-    return await day4(inputFile);
+    return await day4(inputFile, findAndRemoveAccessiblePaperRolls);
 }
 
 async function day4(inputFile: string, calcFn?: (grid: Grid) => number) {
@@ -17,17 +17,34 @@ async function day4(inputFile: string, calcFn?: (grid: Grid) => number) {
     return calcFn?.(grid);
 }
 
-function findAccessiblePaperRolls(grid: Grid) {
-    let paperRolls = 0;
-
+function getRollCoords(grid: Map<string, string>): Coord[] {
+    let paperRolls: Coord[] = [];
     grid.forEach((value, coord) => {
         if (value === '@') {
             const adjacentCells = getNeighbors(Coord.deserialize(coord), grid, true);
             const rolls = adjacentCells.filter(cell => cell === '@').length;
             if (rolls < 4)
-                paperRolls += 1;
+                paperRolls.push(Coord.deserialize(coord));
         }
     });
-
     return paperRolls;
+}
+
+function findAccessiblePaperRolls(grid: Grid) {
+    return getRollCoords(grid).length;
+}
+
+function findAndRemoveAccessiblePaperRolls(grid: Grid) {
+    let totalAccessiblePaperRolls = 0;
+
+    let paperRollCoords: Coord[] = getRollCoords(grid);
+    while (paperRollCoords.length > 0) {
+        totalAccessiblePaperRolls += paperRollCoords.length;
+
+        paperRollCoords.forEach((p) => grid.set(p.serialize(), '.'));
+
+        paperRollCoords = getRollCoords(grid);
+    }
+
+    return totalAccessiblePaperRolls;
 }
