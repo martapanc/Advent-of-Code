@@ -6,7 +6,7 @@ export async function part1(inputFile: string): Promise<number> {
 }
 
 export async function part2(inputFile: string): Promise<number> {
-    return await day1(inputFile, countZeroPositions);
+    return await day1(inputFile, countZeroPassages);
 }
 
 type MovementType = { dir: string, value: number };
@@ -26,7 +26,7 @@ async function day1(inputFile: string, calcFn: ( movements: MovementType[]) => n
 
 
 function countZeroPositions(movements: MovementType[]): number {
-    let zeroPassages = 0;
+    let positionsOnZero = 0;
     let position = 50;
 
     movements.forEach(movement => {
@@ -34,10 +34,30 @@ function countZeroPositions(movements: MovementType[]): number {
         position = ((newPosition % 100) + 100) % 100; // handles all cases: positive, negative, multiple wraps
 
         if (position === 0) {
-            zeroPassages++;
+            positionsOnZero++;
         }
     })
 
-    return zeroPassages;
+    return positionsOnZero;
 }
 
+function countZeroPassages(movements: MovementType[]): number {
+    let count = 0;
+    let position = 50;
+
+    movements.forEach(({ dir, value }) => {
+        // firstK: the number of clicks until we first land on 0
+        // If position == 0 we already left it, so next landing is after a full circle
+        if (dir === 'R') {
+            const firstK = position === 0 ? 100 : 100 - position;
+            if (value >= firstK) count += Math.floor((value - firstK) / 100) + 1;
+            position = (position + value) % 100;
+        } else {
+            const firstK = position === 0 ? 100 : position;
+            if (value >= firstK) count += Math.floor((value - firstK) / 100) + 1;
+            position = ((position - value) % 100 + 100) % 100;
+        }
+    });
+
+    return count;
+}
