@@ -7,7 +7,7 @@ describe('2025 Day 3', () => {
     });
 
     test('Part 2', async () => {
-        // expect(await part2('testInput1')).toEqual(31);
-        // expect(await part2('input')).toEqual(29379307);
+        expect(await part2('testInput1')).toEqual(3121910778619);
+        expect(await part2('input')).toEqual(173577199527257);
     });
 });

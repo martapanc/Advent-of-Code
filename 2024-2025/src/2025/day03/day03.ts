@@ -6,7 +6,7 @@ export async function part1(inputFile: string) {
 }
 
 export async function part2(inputFile: string) {
-    return await day3(inputFile);
+    return await day3(inputFile, computeMaxJoltage12);
 }
 
 async function day3(inputFile: string, calcFn?: (batteryBanks: number[][]) => number) {
@@ -27,6 +27,26 @@ function getAllIndices(arr: number[], value: number): number[] {
         indexes.push(i);
     }
     return indexes;
+}
+
+function largestKDigits(bank: number[], k: number): number {
+    const toRemove = bank.length - k;
+    const stack: number[] = [];
+    let removed = 0;
+
+    for (const digit of bank) {
+        while (removed < toRemove && stack.length > 0 && stack[stack.length - 1] < digit) {
+            stack.pop();
+            removed++;
+        }
+        stack.push(digit);
+    }
+
+    return Number(stack.slice(0, k).join(''));
+}
+
+function computeMaxJoltage12(batteryBanks: number[][]): number {
+    return batteryBanks.reduce((sum, bank) => sum + largestKDigits(bank, 12), 0);
 }
 
 function computeTotalOutputJoltage(batteryBanks: number[][]): number {
