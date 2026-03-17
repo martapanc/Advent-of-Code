@@ -84,6 +84,10 @@ describe('${year} Day ${day}', () => {
         ws.write(content);
         ws.end();
 
+        const testInput1Path = path.join(`${dirName}/testInput1`);
+        fs.writeFileSync(testInput1Path, '');
+        console.log(`Empty testInput1 created!`);
+
         const inputPath = path.join(`${dirName}/input`);
 
         try {
