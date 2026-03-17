@@ -6,8 +6,8 @@ export async function part1(inputFile: string, isTestInput: boolean = false) {
     return await day8(inputFile, findCircuits, isTestInput);
 }
 
-export async function part2(inputFile: string, isTestInput: boolean = false) {
-    return await day8(inputFile, findCircuits, isTestInput);
+export async function part2(inputFile: string) {
+    return await day8(inputFile, findCircuitsPart2);
 }
 
 async function day8(inputFile: string, calcFn?: (boxes: Coord3d[], isTestInput: boolean) => number, isTestInput: boolean = false) {
@@ -69,4 +69,42 @@ function findCircuits(boxes: Coord3d[], isTestInput: boolean): number {
     sizes.sort((a, b) => b - a);
 
     return sizes[0] * sizes[1] * sizes[2];
+}
+
+function findCircuitsPart2(boxes: Coord3d[], _isTestInput: boolean): number {
+    const n = boxes.length;
+
+    const pairs: [number, number, number][] = [];
+    for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+            pairs.push([dist(boxes[i], boxes[j]), i, j]);
+        }
+    }
+    pairs.sort((a, b) => a[0] - b[0]);
+
+    const parent = Array.from({length: n}, (_, i) => i);
+    const size = new Array(n).fill(1);
+
+    function find(x: number): number {
+        while (parent[x] !== x) {
+            parent[x] = parent[parent[x]];
+            x = parent[x];
+        }
+        return x;
+    }
+
+    let components = n;
+    for (const [, i, j] of pairs) {
+        const ri = find(i), rj = find(j);
+        if (ri === rj) continue;
+        const [big, small] = size[ri] >= size[rj] ? [ri, rj] : [rj, ri];
+        parent[small] = big;
+        size[big] += size[small];
+        components--;
+        if (components === 1) {
+            return boxes[i].x * boxes[j].x;
+        }
+    }
+
+    return -1;
 }
