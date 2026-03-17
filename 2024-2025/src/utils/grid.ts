@@ -26,6 +26,30 @@ export interface Coord {
 
 export type Grid = Map<string, string>;
 
+export function getMaxX(grid: Grid): number {
+    let max = Number.NEGATIVE_INFINITY;
+    for (const key of grid.keys()) {
+        const { x } = Coord.deserialize(key);
+        if (x > max) max = x;
+    }
+    if (max === Number.NEGATIVE_INFINITY) {
+        throw new Error('Grid is empty');
+    }
+    return max;
+}
+
+export function getMaxY(grid: Grid): number {
+    let max = Number.NEGATIVE_INFINITY;
+    for (const key of grid.keys()) {
+        const { y } = Coord.deserialize(key);
+        if (y > max) max = y;
+    }
+    if (max === Number.NEGATIVE_INFINITY) {
+        throw new Error('Grid is empty');
+    }
+    return max;
+}
+
 export function readLinesToGrid(lines: string[], initialPosId?: string, endPosId?: string) {
     const grid: Grid = new Map();
     let initialPos: Coord | undefined = undefined;
