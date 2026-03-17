@@ -3,11 +3,12 @@
 ![Node.js CI](https://github.com/martapanc/Advent-of-Code/workflows/Node.js%20CI/badge.svg)
 
 
-Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2015-2024)
+Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2015-2025)
 
 
 ## Quick links
 
+- Advent of Code 2️⃣0️⃣2️⃣5️⃣ : [overview](2024-2025/src/2025/README.md) & [solutions](2024-2025/src/2025) - 24 / 24 ⭐️ &emsp; ![Progress](https://progress-bar.xyz/100/) 
 - Advent of Code 2️⃣0️⃣2️⃣4️⃣ : [overview](2024-2025/src/2024/README.md) & [solutions](2024-2025/src/2024) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.xyz/100/) 
 - Advent of Code 2️⃣0️⃣2️⃣3️⃣ : [overview](2015-2023/src/main/kotlin/aoc2023/README.md) & [solutions](2015-2023/src/main/kotlin/aoc2023) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.xyz/100/) 
 - Advent of Code 2️⃣0️⃣2️⃣2️⃣ : [overview](2015-2023/src/main/kotlin/aoc2022/README.md) & [solutions](2015-2023/src/main/kotlin/aoc2022) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.xyz/100/) 
@@ -19,8 +20,8 @@ Collection of my solutions to the [AoC](https://adventofcode.com/) challenges (2
 - Advent of Code 2️⃣0️⃣1️⃣6️⃣ : [overview](2015-2023/src/main/kotlin/aoc2016/README.md) & [solutions](2015-2023/src/main/kotlin/aoc2016) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.xyz/100/) 
 - Advent of Code 2️⃣0️⃣1️⃣5️⃣ : [overview](2015-2023/src/main/kotlin/aoc2015/README.md) & [solutions](2015-2023/src/main/kotlin/aoc2015) - 50 / 50 ⭐️ &emsp; ![Progress](https://progress-bar.xyz/100/) 
 
- Total:  500 / 500 ⭐
+ Total:  524 / 524 ⭐
  ![Progress](https://progress-bar.xyz/100/)
 
- <img src="2015-2023/src/main/resources/static/500_stars.png" width="1023" alt="AoC screenshot"/>
+ <img src="2015-2023/src/main/resources/static/524_stars.png" width="1024" alt="AoC screenshot"/>
 
