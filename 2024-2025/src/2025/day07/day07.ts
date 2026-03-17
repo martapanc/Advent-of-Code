@@ -7,7 +7,7 @@ export async function part1(inputFile: string) {
 }
 
 export async function part2(inputFile: string) {
-    return await day7(inputFile);
+    return await day7(inputFile, findBeanSplitTimelines);
 }
 
 async function day7(inputFile: string, calcFn?: (grid: Grid, initialPos: Coord) => number) {
@@ -49,4 +49,25 @@ function findBeanSplits(grid: Grid, initialPos: Coord): number {
     }
 
     return splits;
+}
+
+function findBeanSplitTimelines(grid: Grid, initialPos: Coord): number {
+    const memo = new Map<string, number>();
+
+    function timelines(coord: Coord): number {
+        const key = coord.serialize();
+        if (memo.has(key)) return memo.get(key)!;
+
+        const cellValue = grid.get(key);
+        if (cellValue === undefined) return 1;
+
+        const result = cellValue === '^'
+            ? timelines(move(coord, Cardinal.WEST)) + timelines(move(coord, Cardinal.EAST))
+            : timelines(move(coord, Cardinal.SOUTH));
+
+        memo.set(key, result);
+        return result;
+    }
+
+    return timelines(move(initialPos, Cardinal.SOUTH));
 }
