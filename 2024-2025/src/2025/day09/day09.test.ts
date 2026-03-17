@@ -8,8 +8,8 @@ describe('2025 Day 9', () => {
     });
 
     test('Part 2', async () => {
-        // expect(await part2('testInput1')).toEqual(31);
-        // expect(await part2('input')).toEqual(29379307);
+        expect(await part2('testInput1')).toEqual(24);
+        expect(await part2('input')).toEqual(1603439684);
     });
 
     test('findArea', async () => {
